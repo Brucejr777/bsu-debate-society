@@ -68,7 +68,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Summary Widgets */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {/* Pending Applications */}
         <a
           href="/admin/memberships"

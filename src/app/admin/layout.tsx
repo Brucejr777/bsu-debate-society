@@ -8,6 +8,9 @@ const adminLinks = [
   { label: "House Points", href: "/admin/points" },
   { label: "Messages", href: "/admin/messages" },
   { label: "League & Awards", href: "/admin/league" },
+  { label: "Discipline", href: "/admin/discipline" },
+  { label: "Finance", href: "/admin/finance" },
+  { label: "Meetings", href: "/admin/meetings" },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

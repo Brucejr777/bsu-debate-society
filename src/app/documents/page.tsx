@@ -38,52 +38,55 @@ export default function DocumentsPage() {
           {/* Introduction */}
           <article className="mx-auto max-w-3xl space-y-4 text-center">
             <p className="text-base leading-7 text-neutral-300">
-              The Debate Society is governed by two foundational documents that together
-              define its identity, structure, operations, and the rights of every member.
-              These documents are the supreme authority of the organization and bind all
-              Houses, Councils, and individual members.
+              The Debate Society is governed by two foundational documents — the Red Book
+              and the Blue Book — enacted under Article 9, Section 2 of the Constitution
+              by the Council of House Chancellors. Together they define the ethical
+              framework, operational mechanics, and the rights and duties of every member.
+            </p>
+            <p className="text-sm italic text-neutral-500">
+              — Constitution, Article 9, Section 2
             </p>
           </article>
 
           {/* Document Cards */}
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {/* The Constitution */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            {/* The Red Book (Constitution) */}
+            <article className="rounded-3xl border border-red-900/60 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-800">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-red-900/50">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="size-6 text-neutral-300"
+                      className="size-6 text-red-300"
                     >
                       <path
                         fillRule="evenodd"
-                        d="M7.502 3.422a4.164 4.164 0 0 1 2.943-1.219h4.11a4.164 4.164 0 0 1 2.943 1.219l4.282 4.283a4.164 4.164 0 0 1 1.219 2.942v4.11a4.164 4.164 0 0 1-1.219 2.943l-4.282 4.282a4.164 4.164 0 0 1-2.943 1.219h-4.11a4.164 4.164 0 0 1-2.943-1.219L3.22 17.7a4.164 4.164 0 0 1-1.219-2.943v-4.11c0-1.104.439-2.163 1.219-2.943l4.282-4.282Zm4.055 1.369a.664.664 0 0 0-.469.195L6.97 9.104a.664.664 0 0 0-.195.469v4.854c0 .176.07.346.195.47l4.118 4.118c.124.124.293.194.47.194h4.854c.176 0 .345-.07.47-.194l4.117-4.118c.125-.124.195-.293.195-.47V9.573a.664.664 0 0 0-.195-.47L16.887 4.986a.664.664 0 0 0-.47-.195h-4.854ZM9 11.5a1 1 0 0 1 1-1h4a1 1 0 0 1 0 2h-4a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h4a1 1 0 0 1 0 2h-4a1 1 0 0 1-1-1Zm-1-5a1 1 0 0 1 1-1h6a1 1 0 0 1 0 2H9a1 1 0 0 1-1-1Z"
+                        d="M12 .75a8.25 8.25 0 0 0-4.76 15.009c.528.346.906.872 1.04 1.483l.36 1.64a.75.75 0 0 0 1.278.369l.768-.914a19.803 19.803 0 0 0 1.314 0l.769.914a.75.75 0 0 0 1.277-.369l.36-1.64c.134-.612.512-1.137 1.04-1.484A8.25 8.25 0 0 0 12 .75ZM10.643 19.513a.75.75 0 0 0-.303.138L9.28 20.917l-.223-1.017a.75.75 0 0 0-.33-.48 6.752 6.752 0 1 1 7.146 0 .75.75 0 0 0-.33.48l-.223 1.017-1.06-1.266a.75.75 0 0 0-.303-.138 18.313 18.313 0 0 1-2.378 0ZM13.125 12a1.125 1.125 0 1 1-2.25 0 1.125 1.125 0 0 1 2.25 0ZM12 10.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"
                         clipRule="evenodd"
                       />
                     </svg>
                   </div>
                   <div>
-                    <h2 className="text-2xl font-semibold text-white">
-                      The Constitution
+                    <h2 className="text-2xl font-semibold text-red-200">
+                      The Red Book
                     </h2>
                     <p className="text-sm text-neutral-500">
-                      11 Articles &bull; Supreme Law
+                      The Constitution &bull; Ethical Framework — Art. 9, Sec. 2(b)
                     </p>
                   </div>
                 </div>
 
                 <p className="text-sm leading-7 text-neutral-300">
-                  The Constitution is the supreme governing document of the BSU Debate
-                  Society. It establishes the organization's name, vision, mission, and
-                  core principles; enshrines the rights of all members; defines the
-                  structure and authority of the four Society Houses (Bathala, Kabunian,
-                  Laon, Manama); and creates the three branches of governance — the High
-                  Council (executive), the Council of House Chancellors (legislative), and
-                  the High Tribunal (judicial). It also governs membership, disciplinary
-                  processes, and amendment procedures.
+                  The Red Book — the Constitution of the BSU Debate Society — is the
+                  supreme governing document and binding ethical framework of the
+                  organization. It establishes the Society&apos;s name, vision, mission,
+                  and Declaration of Principles; enshrines the rights of all members;
+                  translates the virtues of Leadership, Truth, Scholarship, and the Arts
+                  into the foundational identity of the Four Houses; and creates the three
+                  branches of governance — the High Council (executive), the Council of
+                  House Chancellors (legislative), and the High Tribunal (judicial).
                 </p>
 
                 <div className="space-y-3">
@@ -123,50 +126,59 @@ export default function DocumentsPage() {
                 </div>
 
                 <a
-                  href="#"
-                  className="inline-flex w-full items-center justify-center rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                  href="/documents/constitution"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-red-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
                 >
                   Read Full Text
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="size-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </a>
               </div>
             </article>
 
-            {/* Rules and Procedures */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            {/* The Blue Book (Rules and Procedures) */}
+            <article className="rounded-3xl border border-blue-900/60 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-800">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-blue-900/50">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="size-6 text-neutral-300"
+                      className="size-6 text-blue-300"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M12 2.25c-1.742 0-3.408.052-5.016.152a26.109 26.109 0 0 0-4.132.479 9.47 9.47 0 0 0-.564.129c-.18.05-.4.137-.595.31a4.659 4.659 0 0 0-.795 5.067 25.841 25.841 0 0 1-.44 10.823 4.642 4.642 0 0 0 .654 1.187c.13.172.34.312.527.386.087.033.278.093.56.157a25.782 25.782 0 0 0 9.804 0c.282-.064.474-.124.56-.157a.881.881 0 0 0 .528-.386 4.639 4.639 0 0 0 .653-1.187 25.841 25.841 0 0 0-.44-10.823 4.659 4.659 0 0 0-.795-5.067 1.123 1.123 0 0 0-.595-.31 9.457 9.457 0 0 0-.564-.129 26.115 26.115 0 0 0-4.132-.479A80.555 80.555 0 0 0 12 2.25Zm-2.889 14.4a.75.75 0 0 0 1.278-.614l-2.12-5.065a.75.75 0 0 0-1.278.614l2.12 5.065Zm4.016-5.065a.75.75 0 0 1 1.278.614L12.285 17.26a.75.75 0 0 1-1.278-.614l2.12-5.065Z"
-                        clipRule="evenodd"
-                      />
+                      <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.237 8.237 0 0 0 18 18.75c1.115 0 2.18.21 3.16.592a.75.75 0 0 0 .59-.707V4.257a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
                     </svg>
                   </div>
                   <div>
-                    <h2 className="text-2xl font-semibold text-white">
-                      Rules and Procedures
+                    <h2 className="text-2xl font-semibold text-blue-200">
+                      The Blue Book
                     </h2>
                     <p className="text-sm text-neutral-500">
-                      9 Articles &amp; Annexes &bull; Operational Framework
+                      Rules &amp; Procedures &bull; Operations Manual — Art. 9, Sec. 2(a)
                     </p>
                   </div>
                 </div>
 
                 <p className="text-sm leading-7 text-neutral-300">
-                  The Rules and Procedures document provides the detailed operational
-                  mechanisms that bring the Constitution to life. It establishes the House
-                  Point System for constructive competition, the Individual Recognition
-                  Framework, the Inter-House Debate Cup and League, financial and resource
-                  protocols, disciplinary and appeals procedures, the Presidential Conclave
-                  election process, records management policies, and the framework for
-                  amending the Rules themselves. It contains 9 Articles plus Annexes.
+                  The Blue Book — the Rules and Procedures — is the comprehensive
+                  operations manual of the Society, enacted under Article 9, Section 2(a)
+                  of the Constitution. It provides the detailed operational mechanisms that
+                  bring the Constitution to life: the House Point System, the Individual
+                  Recognition Framework, the Debate League and Inter-House Cup, financial
+                  and resource protocols, disciplinary and appeals procedures, the
+                  Presidential Conclave, records management, and the framework for amending
+                  the Rules themselves.
                 </p>
 
                 <div className="space-y-3">
@@ -210,10 +222,22 @@ export default function DocumentsPage() {
                 </div>
 
                 <a
-                  href="#"
-                  className="inline-flex w-full items-center justify-center rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                  href="/documents/rules"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
                 >
                   Read Full Text
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="size-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -226,11 +250,11 @@ export default function DocumentsPage() {
                 Additional Resources
               </h2>
               <p className="text-base leading-7 text-neutral-300">
-                The Rules and Procedures reference several Annexes that provide detailed
-                criteria, templates, and forms used in Society operations, including
-                Debate Performance Criteria, Point Transaction Forms, Accomplishment
-                Report templates, and Appeal Forms. These Annexes are maintained by the
-                Office of the Executive Secretary and are available upon request.
+                The Blue Book references several Annexes that provide detailed criteria,
+                templates, and forms used in Society operations, including Debate
+                Performance Criteria, Point Transaction Forms, Accomplishment Report
+                templates, and Appeal Forms. These Annexes are maintained by the Office of
+                the Executive Secretary and are available upon request.
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">

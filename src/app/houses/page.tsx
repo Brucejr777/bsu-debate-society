@@ -1,34 +1,6 @@
+import { HOUSES } from "@/lib/houses";
+
 export default function HousesPage() {
-  const houses = [
-    {
-      name: "House of Bathala",
-      value: "Leadership",
-      color: "#8b0000",
-      description:
-        "The House of Bathala embodies the value of Leadership. Through mentorship programs, leadership workshops, and member-driven initiatives, Bathala cultivates decision-making, team management, and the ability to empower others — preparing debaters who lead with integrity both within and beyond the Society.",
-    },
-    {
-      name: "House of Kabunian",
-      value: "Journalism",
-      color: "#280137",
-      description:
-        "The House of Kabunian embodies the value of Journalism. Dedicated to advancing communication, documentation, and media excellence, Kabunian produces high-quality debate chronicles, informative content, and engaging public records — sharpening members into articulate storytellers and truth-tellers.",
-    },
-    {
-      name: "House of Laon",
-      value: "Academic",
-      color: "#000b90",
-      description:
-        "The House of Laon embodies the value of Academic excellence. Through research forums, case briefs, academic skill-building sessions, and critical analysis workshops, Laon promotes intellectual growth and scholarly inquiry — building debaters grounded in rigor, evidence, and deep understanding.",
-    },
-    {
-      name: "House of Manama",
-      value: "Arts",
-      color: "#006400",
-      description:
-        "The House of Manama embodies the value of the Arts. By developing creativity, artistic expression, and cultural appreciation, Manama integrates performance and design into discourse — producing debaters who combine aesthetic vision with persuasive power.",
-    },
-  ];
 
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
@@ -82,10 +54,11 @@ export default function HousesPage() {
 
             {/* House Grid */}
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-              {houses.map((house) => (
-                <article
-                  key={house.name}
-                  className="group relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30 transition-all duration-300 hover:scale-[1.02]"
+              {HOUSES.map((house) => (
+                <a
+                  key={house.slug}
+                  href={`/houses/${house.slug}`}
+                  className="group relative block overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30 transition-all duration-300 hover:scale-[1.02]"
                 >
                   {/* Color accent bar */}
                   <div
@@ -111,8 +84,14 @@ export default function HousesPage() {
                     <p className="text-sm leading-7 text-neutral-300">
                       {house.description}
                     </p>
+                    <span className="mt-2 inline-flex items-center text-sm font-medium text-neutral-400 transition group-hover:text-white">
+                      View House Page
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-4">
+                        <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                      </svg>
+                    </span>
                   </div>
-                </article>
+                </a>
               ))}
             </div>
 
