@@ -46,17 +46,9 @@ export default function ApplyPage() {
       return;
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-    const res = await fetch(`${supabaseUrl}/rest/v1/membership_applications`, {
+    const res = await fetch("/api/apply", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: supabaseAnonKey,
-        Authorization: `Bearer ${supabaseAnonKey}`,
-        Prefer: "return=minimal",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         full_name: fullName,
         student_id: studentId,

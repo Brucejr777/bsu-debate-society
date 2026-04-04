@@ -5,8 +5,8 @@ import { isValidSession } from "@/lib/auth";
 import { adminLogout } from "@/actions/admin";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
@@ -68,7 +68,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Summary Widgets */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {/* Pending Applications */}
         <a
           href="/admin/memberships"
@@ -114,6 +114,22 @@ export default async function AdminDashboardPage() {
           </p>
           <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
             Add or deduct points →
+          </p>
+        </a>
+
+        {/* League & Awards Link */}
+        <a
+          href="/admin/league"
+          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
+        >
+          <p className="text-sm font-medium text-neutral-500">
+            League & Awards
+          </p>
+          <p className="mt-2 text-lg font-semibold text-white">
+            Manage
+          </p>
+          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
+            Members & recognition →
           </p>
         </a>
 

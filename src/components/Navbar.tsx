@@ -20,6 +20,7 @@ const adminLinks = [
   { label: "Memberships", href: "/admin/memberships" },
   { label: "House Points", href: "/admin/points" },
   { label: "Messages", href: "/admin/messages" },
+  { label: "League & Awards", href: "/admin/league" },
   { label: "Admin Login", href: "/admin/login" },
 ];
 

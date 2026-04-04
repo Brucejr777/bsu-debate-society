@@ -2,9 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
 const CATEGORIES = [
   "Competitive Excellence",
@@ -58,10 +55,7 @@ export default function AdminPointsPage() {
     setLoading(true);
     setError(null);
 
-    const res = await fetch(
-      `${supabaseUrl}/rest/v1/house_points?order=total_points.desc`,
-      { headers: { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}` } }
-    );
+    const res = await fetch("/api/admin/points");
 
     if (!res.ok) {
       setError("Failed to fetch house points.");
@@ -87,57 +81,21 @@ export default function AdminPointsPage() {
       return;
     }
 
-    // Find target house row
-    const target = points.find((p) => p.house_name === houseName);
-    if (!target) {
-      setActionMsg("House not found in ledger. Ensure seed data exists.");
-      setSubmitting(false);
-      return;
-    }
-
-    const categoryKey =
-      category === "Competitive Excellence"
-        ? "competitive_excellence"
-        : category === "Organizational Contribution"
-          ? "organizational_contribution"
-          : category === "Governance & Compliance"
-            ? "governance_compliance"
-            : "conduct_ethics";
-
-    const newVal = target[categoryKey] + amount;
-    const newTotal = target.total_points + amount;
-
-    const res = await fetch(
-      `${supabaseUrl}/rest/v1/house_points?id=eq.${target.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: supabaseAnonKey,
-          Authorization: `Bearer ${supabaseAnonKey}`,
-        },
-        body: JSON.stringify({
-          [categoryKey]: newVal,
-          total_points: newTotal,
-        }),
-      }
-    );
+    const res = await fetch("/api/admin/points", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ house_name: houseName, category, amount }),
+    });
 
     if (!res.ok) {
-      setActionMsg("Failed to update points.");
+      const err = await res.json();
+      setActionMsg(`Failed: ${err.error ?? "update points."}`);
       setSubmitting(false);
       return;
     }
 
-    setPoints((prev) =>
-      prev
-        .map((p) =>
-          p.id === target.id
-            ? { ...p, [categoryKey]: newVal, total_points: newTotal }
-            : p
-        )
-        .sort((a, b) => b.total_points - a.total_points)
-    );
+    // Refetch to get updated standings
+    await fetchPoints();
 
     setActionMsg(
       `${amount > 0 ? "Added" : "Deducted"} ${Math.abs(amount)} points ${

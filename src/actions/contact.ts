@@ -1,7 +1,7 @@
 "use server";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export async function submitContactMessage(
   _prevState: { success: boolean; message: string } | null,
@@ -20,8 +20,8 @@ export async function submitContactMessage(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      apikey: supabaseAnonKey,
-      Authorization: `Bearer ${supabaseAnonKey}`,
+      apikey: supabaseServiceKey,
+      Authorization: `Bearer ${supabaseServiceKey}`,
       Prefer: "return=minimal",
     },
     body: JSON.stringify({ name, email, subject, message }),
