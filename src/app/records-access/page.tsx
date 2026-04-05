@@ -98,7 +98,7 @@ export default function RecordsAccessPage() {
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Rules &amp; Procedures — Article VIII, Section 4
             </p>
-            <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#fbec5d] via-[#ffd700] to-[#ffbf00] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffec3a] via-[#ffd700] to-[#ffa100] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               Records Access Request
             </h1>
           </div>

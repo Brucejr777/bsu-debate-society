@@ -7,7 +7,7 @@ export default function Home() {
               <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
                 Benguet State University
               </p>
-              <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#fbec5d] via-[#ffd700] to-[#ffbf00] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+              <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffec3a] via-[#ffd700] to-[#ffa100] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
                 Debate Society
               </h1>
               <p className="mx-auto max-w-3xl text-lg leading-8 text-neutral-400 sm:text-xl">
@@ -73,7 +73,7 @@ export default function Home() {
                     <div className="space-y-3">
                       <a
                         href="/houses"
-                        className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#fbec5d] via-[#ffd700] to-[#ffbf00] px-6 py-3 text-sm font-semibold text-neutral-950 transition-all duration-200 hover:from-[#ffd700] hover:to-[#ffbf00] hover:shadow-lg hover:shadow-[#ffd700]/25"
+                        className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ffec3a] via-[#ffd700] to-[#ffa100] px-6 py-3 text-sm font-semibold text-neutral-950 transition-all duration-200 hover:from-[#ffd700] hover:to-[#ffa100] hover:shadow-lg hover:shadow-[#ffd700]/25"
                       >
                         Explore Our Houses
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4 transition-transform group-hover:translate-x-0.5">

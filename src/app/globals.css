@@ -30,9 +30,9 @@ body {
 .gold-shine {
   background: linear-gradient(
     90deg,
-    #fbec5d 0%,
+    #ffec3a 0%,
     #ffd700 50%,
-    #ffbf00 100%
+    #ffa100 100%
   );
   background-size: 400% auto;
   -webkit-background-clip: text;
@@ -55,9 +55,9 @@ body {
     linear-gradient(var(--card-bg, #0a0a0a), var(--card-bg, #0a0a0a)),
     linear-gradient(
       90deg,
-      #fbec5d,
+      #ffec3a,
       #ffd700,
-      #ffbf00
+      #ffa100
     );
   background-size: 100% 100%, 400% 100%;
   animation: gold-border-shine 3s linear infinite;
@@ -65,8 +65,8 @@ body {
 
 /* ── Gold Pulse Glow ── */
 @keyframes gold-pulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(251, 236, 93, 0.3), 0 0 25px rgba(255, 215, 0, 0.1); }
-  50% { box-shadow: 0 0 18px rgba(251, 236, 93, 0.6), 0 0 45px rgba(255, 215, 0, 0.3), 0 0 70px rgba(255, 191, 0, 0.15); }
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 236, 58, 0.3), 0 0 25px rgba(255, 215, 0, 0.1); }
+  50% { box-shadow: 0 0 18px rgba(255, 236, 58, 0.6), 0 0 45px rgba(255, 215, 0, 0.3), 0 0 70px rgba(255, 161, 0, 0.15); }
 }
 
 .gold-glow {
@@ -106,12 +106,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ffd700, #daa520, #ffbf00);
+  background: linear-gradient(180deg, #ffd700, #daa520, #ffa100);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #fbec5d, #ffd700, #daa520);
+  background: linear-gradient(180deg, #ffec3a, #ffd700, #daa520);
 }
 
 /* ── Animated Mesh Gradient Background ── */
@@ -138,7 +138,7 @@ body {
   height: 600px;
   top: 5%;
   left: 5%;
-  background: radial-gradient(circle, #fbec5d, transparent 70%);
+  background: radial-gradient(circle, #ffec3a, transparent 70%);
   animation: blob-move-1 20s infinite;
 }
 
@@ -168,7 +168,7 @@ body {
   height: 450px;
   bottom: 5%;
   left: 20%;
-  background: radial-gradient(circle, #ffbf00, transparent 70%);
+  background: radial-gradient(circle, #ffa100, transparent 70%);
   animation: blob-move-4 28s infinite;
 }
 
