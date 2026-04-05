@@ -30,19 +30,15 @@ body {
 .gold-shine {
   background: linear-gradient(
     90deg,
-    #b8860b 0%,
-    #daa520 20%,
-    #f5d76e 40%,
-    #fff8dc 50%,
-    #f5d76e 60%,
-    #daa520 80%,
-    #b8860b 100%
+    #fbec5d 0%,
+    #ffd700 50%,
+    #ffbf00 100%
   );
-  background-size: 300% auto;
+  background-size: 400% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gold-shine 4s ease-in-out infinite;
+  animation: gold-shine 3s ease-in-out infinite;
 }
 
 @keyframes gold-border-shine {
@@ -59,22 +55,18 @@ body {
     linear-gradient(var(--card-bg, #0a0a0a), var(--card-bg, #0a0a0a)),
     linear-gradient(
       90deg,
-      #b8860b,
-      #daa520,
-      #f5d76e,
+      #fbec5d,
       #ffd700,
-      #f5d76e,
-      #daa520,
-      #b8860b
+      #ffbf00
     );
-  background-size: 100% 100%, 300% 100%;
-  animation: gold-border-shine 4s linear infinite;
+  background-size: 100% 100%, 400% 100%;
+  animation: gold-border-shine 3s linear infinite;
 }
 
 /* ── Gold Pulse Glow ── */
 @keyframes gold-pulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(245, 215, 110, 0.15), 0 0 20px rgba(245, 215, 110, 0.05); }
-  50% { box-shadow: 0 0 15px rgba(245, 215, 110, 0.4), 0 0 40px rgba(245, 215, 110, 0.2), 0 0 60px rgba(245, 215, 110, 0.08); }
+  0%, 100% { box-shadow: 0 0 8px rgba(251, 236, 93, 0.3), 0 0 25px rgba(255, 215, 0, 0.1); }
+  50% { box-shadow: 0 0 18px rgba(251, 236, 93, 0.6), 0 0 45px rgba(255, 215, 0, 0.3), 0 0 70px rgba(255, 191, 0, 0.15); }
 }
 
 .gold-glow {
@@ -92,15 +84,15 @@ body {
       0deg,
       transparent,
       transparent 1px,
-      rgba(245, 215, 110, 0.015) 1px,
-      rgba(245, 215, 110, 0.015) 3px
+      rgba(255, 215, 0, 0.02) 1px,
+      rgba(255, 215, 0, 0.02) 3px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 1px,
-      rgba(245, 215, 110, 0.01) 1px,
-      rgba(245, 215, 110, 0.01) 3px
+      rgba(255, 215, 0, 0.015) 1px,
+      rgba(255, 215, 0, 0.015) 3px
     );
 }
 
@@ -114,12 +106,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #daa520, #f5d76e, #b8860b);
+  background: linear-gradient(180deg, #ffd700, #daa520, #ffbf00);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #f5d76e, #fff8dc, #daa520);
+  background: linear-gradient(180deg, #fbec5d, #ffd700, #daa520);
 }
 
 /* ── Animated Mesh Gradient Background ── */
@@ -146,7 +138,7 @@ body {
   height: 600px;
   top: 5%;
   left: 5%;
-  background: radial-gradient(circle, #f5d76e, transparent 70%);
+  background: radial-gradient(circle, #fbec5d, transparent 70%);
   animation: blob-move-1 20s infinite;
 }
 
@@ -176,19 +168,19 @@ body {
   height: 450px;
   bottom: 5%;
   left: 20%;
-  background: radial-gradient(circle, #b8860b, transparent 70%);
+  background: radial-gradient(circle, #ffbf00, transparent 70%);
   animation: blob-move-4 28s infinite;
 }
 
 /* ── Selection ── */
 ::selection {
-  background-color: rgba(245, 215, 110, 0.35);
+  background-color: rgba(255, 215, 0, 0.35);
   color: #fff;
 }
 
 /* ── Focus Ring ── */
 :focus-visible {
-  outline: 2px solid rgba(245, 215, 110, 0.7);
+  outline: 2px solid rgba(255, 215, 0, 0.7);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }

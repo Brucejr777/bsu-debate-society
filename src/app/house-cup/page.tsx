@@ -83,7 +83,7 @@ export default async function HouseCupPage() {
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Rules &amp; Procedures — Article I, Section 9
             </p>
-            <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#b8860b] via-[#ffd700] to-[#b8860b] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#fbec5d] via-[#ffd700] to-[#ffbf00] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               The House Cup
             </h1>
           </div>
