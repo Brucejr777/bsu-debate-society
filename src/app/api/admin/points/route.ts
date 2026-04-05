@@ -26,7 +26,7 @@ export async function GET() {
 }
 
 export async function PATCH(request: Request) {
-  const { house_name, category, amount } = await request.json();
+  const { house_name, category, amount, reason, evidence, proposing_house } = await request.json();
 
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
@@ -56,6 +56,23 @@ export async function PATCH(request: Request) {
       console.error("Points PATCH error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    // Record the transaction
+    const semester = existing.semester;
+    await supabase
+      .from("house_point_transactions")
+      .insert({
+        house_name,
+        category,
+        points: amount,
+        reason: reason || `${category} adjustment`,
+        evidence: evidence || null,
+        proposing_house: proposing_house || null,
+        semester,
+        status: "provisional",
+        running_total: newTotal,
+      });
+
     return NextResponse.json(data);
   }
 
@@ -79,6 +96,21 @@ export async function PATCH(request: Request) {
     console.error("Points INSERT error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  // Record the transaction
+  await supabase
+    .from("house_point_transactions")
+    .insert({
+      house_name,
+      category,
+      points: amount,
+      reason: reason || `${category} adjustment`,
+      evidence: evidence || null,
+      proposing_house: proposing_house || null,
+      semester,
+      status: "provisional",
+      running_total: amount,
+    });
 
   return NextResponse.json(data);
 }

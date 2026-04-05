@@ -273,6 +273,24 @@ export default async function LeaguePage() {
                   <p className="text-sm italic text-neutral-500">
                     — Article III, Section 4
                   </p>
+                  <a
+                    href="/league/support"
+                    className="inline-flex items-center justify-center rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                  >
+                    Request Support
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="ml-1.5 size-4"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </a>
                 </div>
               </article>
             )}

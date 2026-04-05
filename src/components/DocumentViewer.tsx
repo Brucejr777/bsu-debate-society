@@ -86,55 +86,116 @@ function parseDocument(text: string): Block[] {
           }
         }
 
-        blocks.push({ type: "section", content: rest, sectionNum: num });
+        // Collect continuation lines (non-empty, non-special lines that are
+        // part of the same paragraph)
         i++;
+        while (i < lines.length) {
+          const nextLine = lines[i].trim();
+          if (!nextLine) break;
+          if (nextLine.match(/^Section\s/i)) break;
+          if (nextLine.match(/^\(\d+\)/)) break;
+          if (nextLine.match(/^\([a-z]\)/)) break;
+          if (nextLine.match(/^\*\*Article\s/i)) break;
+          rest += " " + nextLine;
+          i++;
+        }
+
+        blocks.push({ type: "section", content: rest, sectionNum: num });
         continue;
       }
 
       // Numbered subsection: (1), (2), (3), etc.
       const numSubMatch = trimmed.match(/^\((\d+)\)\s+(.*)$/);
       if (numSubMatch) {
+        let content = numSubMatch[2];
+        i++;
+        // Collect continuation lines
+        while (i < lines.length) {
+          const nextLine = lines[i].trim();
+          if (!nextLine) break;
+          if (nextLine.match(/^Section\s/i)) break;
+          if (nextLine.match(/^\(\d+\)/)) break;
+          if (nextLine.match(/^\([a-z]\)/)) break;
+          if (nextLine.match(/^\*\*Article\s/i)) break;
+          content += " " + nextLine;
+          i++;
+        }
         blocks.push({
           type: "subsection",
-          content: numSubMatch[2],
+          content,
           sectionNum: numSubMatch[1],
         });
-        i++;
         continue;
       }
 
       // Letter subsection: (a), (b), (c), etc.
       const letterSubMatch = trimmed.match(/^\(([a-z])\)\s+(.*)$/);
       if (letterSubMatch) {
+        let content = letterSubMatch[2];
+        i++;
+        // Collect continuation lines
+        while (i < lines.length) {
+          const nextLine = lines[i].trim();
+          if (!nextLine) break;
+          if (nextLine.match(/^Section\s/i)) break;
+          if (nextLine.match(/^\(\d+\)/)) break;
+          if (nextLine.match(/^\([a-z]\)/)) break;
+          if (nextLine.match(/^\*\*Article\s/i)) break;
+          content += " " + nextLine;
+          i++;
+        }
         blocks.push({
           type: "subsection",
-          content: letterSubMatch[2],
+          content,
           sectionNum: letterSubMatch[1],
         });
-        i++;
         continue;
       }
 
-      // Letter subsection variant: a., b., c. (but not a. that's part of Roman numeral or something)
+      // Letter subsection variant: a., b., c.
       const letterVarMatch = trimmed.match(/^([a-z])\.\s+(.+)$/);
       if (letterVarMatch && letterVarMatch[2].length > 2) {
+        let content = letterVarMatch[2];
+        i++;
+        // Collect continuation lines
+        while (i < lines.length) {
+          const nextLine = lines[i].trim();
+          if (!nextLine) break;
+          if (nextLine.match(/^Section\s/i)) break;
+          if (nextLine.match(/^\(\d+\)/)) break;
+          if (nextLine.match(/^\([a-z]\)/)) break;
+          if (nextLine.match(/^\*\*Article\s/i)) break;
+          content += " " + nextLine;
+          i++;
+        }
         blocks.push({
           type: "letter",
-          content: letterVarMatch[2],
+          content,
           sectionNum: letterVarMatch[1],
         });
-        i++;
         continue;
       }
 
       // Roman numeral sub-subsection: (i), (ii), (iii), (iv), etc.
       const romanMatch = trimmed.match(/^\((\w+)\)\s+(.*)$/);
       if (romanMatch) {
+        let content = romanMatch[2];
+        i++;
+        // Collect continuation lines
+        while (i < lines.length) {
+          const nextLine = lines[i].trim();
+          if (!nextLine) break;
+          if (nextLine.match(/^Section\s/i)) break;
+          if (nextLine.match(/^\(\d+\)/)) break;
+          if (nextLine.match(/^\([a-z]\)/)) break;
+          if (nextLine.match(/^\*\*Article\s/i)) break;
+          content += " " + nextLine;
+          i++;
+        }
         blocks.push({
           type: "subsection",
-          content: `${romanMatch[1]}. ${romanMatch[2]}`,
+          content: `${romanMatch[1]}. ${content}`,
         });
-        i++;
         continue;
       }
 
@@ -160,19 +221,32 @@ function parseDocument(text: string): Block[] {
   return blocks;
 }
 
-function inlineFormat(text: string): React.ReactNode {
+function inlineFormat(
+  text: string,
+  options?: { skipBold?: boolean }
+): React.ReactNode {
   // Handle **bold**
   let parts = text.split(/(\*\*[^*]+\*\*)/g);
   let result: React.ReactNode[] = [];
 
   parts.forEach((part, idx) => {
     const boldMatch = part.match(/^\*\*(.+)\*\*$/);
-    if (boldMatch) {
+    if (boldMatch && !options?.skipBold) {
       // Process inner text for italics
       result.push(
         <strong key={idx} className="font-semibold text-neutral-200">
-          {inlineFormat(boldMatch[1])}
+          {inlineFormat(boldMatch[1], options)}
         </strong>
+      );
+      return;
+    }
+
+    // If skipBold, just render the stripped text without bold
+    if (boldMatch && options?.skipBold) {
+      result.push(
+        <span key={idx}>
+          {inlineFormat(boldMatch[1], options)}
+        </span>
       );
       return;
     }
@@ -188,7 +262,6 @@ function inlineFormat(text: string): React.ReactNode {
           </em>
         );
       } else {
-        // Handle en-dash and em-dash formatting
         result.push(<span key={`${idx}-${iIdx}`}>{ip}</span>);
       }
     });
@@ -264,39 +337,39 @@ export default function DocumentViewer({
             return (
               <p key={idx} className="mt-4 text-justify leading-7 text-neutral-300">
                 <span className="font-semibold text-neutral-100">
-                  Section {block.sectionNum}.
-                </span>{" "}
-                {inlineFormat(block.content)}
+                  Section {block.sectionNum}.{" "}
+                </span>
+                {inlineFormat(block.content, { skipBold: true })}
               </p>
             );
           }
 
           if (block.type === "subsection") {
             return (
-              <p key={idx} className="ml-6 mt-2 text-justify leading-7 text-neutral-300">
+              <p key={idx} className="ml-6 mt-4 text-justify leading-7 text-neutral-300">
                 <span className="font-medium text-neutral-400">
                   ({block.sectionNum}){" "}
                 </span>
-                {inlineFormat(block.content)}
+                {inlineFormat(block.content, { skipBold: true })}
               </p>
             );
           }
 
           if (block.type === "letter") {
             return (
-              <p key={idx} className="ml-8 mt-1.5 text-justify leading-7 text-neutral-400">
+              <p key={idx} className="ml-8 mt-3 text-justify leading-7 text-neutral-400">
                 <span className="font-medium text-neutral-500">
                   {block.sectionNum}.{" "}
                 </span>
-                {inlineFormat(block.content)}
+                {inlineFormat(block.content, { skipBold: true })}
               </p>
             );
           }
 
           // Regular text
           return (
-            <p key={idx} className="mt-2 text-justify leading-7 text-neutral-400">
-              {inlineFormat(block.content)}
+            <p key={idx} className="mt-0 text-justify leading-7 text-neutral-400">
+              {inlineFormat(block.content, { skipBold: true })}
             </p>
           );
         })}

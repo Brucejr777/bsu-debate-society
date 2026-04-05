@@ -6,14 +6,24 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Houses", href: "/houses" },
+  { label: "Membership", href: "/membership" },
   { label: "Standings", href: "/standings" },
+  { label: "House Cup", href: "/house-cup" },
+  { label: "House of Sem.", href: "/house-of-semester" },
+  { label: "Debate Cup", href: "/debate-cup" },
   { label: "League", href: "/league" },
+  { label: "Ledger", href: "/individual-ledger" },
   { label: "Governance", href: "/governance" },
   { label: "Finance", href: "/finance" },
   { label: "Meetings", href: "/meetings" },
   { label: "Discipline", href: "/discipline" },
   { label: "Elections", href: "/elections" },
+  { label: "Electoral Protest", href: "/electoral-protest" },
+  { label: "Appeals", href: "/appeals" },
   { label: "Documents", href: "/documents" },
+  { label: "Records Access", href: "/records-access" },
+  { label: "SOSA", href: "/sosa" },
+  { label: "Nominate", href: "/nominate" },
   { label: "Contact", href: "/contact" },
   { label: "Apply", href: "/apply" },
 ];
@@ -22,8 +32,18 @@ const adminLinks = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Memberships", href: "/admin/memberships" },
   { label: "House Points", href: "/admin/points" },
+  { label: "House Cup", href: "/admin/house-cup" },
+  { label: "House of Sem.", href: "/admin/house-of-semester" },
+  { label: "Indiv. Points", href: "/admin/individual-points" },
   { label: "Messages", href: "/admin/messages" },
   { label: "League & Awards", href: "/admin/league" },
+  { label: "Debate Cup", href: "/admin/debate-cup" },
+  { label: "Nominations", href: "/admin/nominations" },
+  { label: "Support Requests", href: "/admin/support-requests" },
+  { label: "Records Access", href: "/admin/records-access" },
+  { label: "Electoral Protests", href: "/admin/electoral-protests" },
+  { label: "Appeals", href: "/admin/appeals" },
+  { label: "SOSA", href: "/admin/sosa" },
   { label: "Discipline", href: "/admin/discipline" },
   { label: "Finance", href: "/admin/finance" },
   { label: "Meetings", href: "/admin/meetings" },
@@ -40,7 +60,7 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
           key={link.href}
           href={link.href}
           onClick={onClick}
-          className="block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition hover:bg-neutral-800 hover:text-white"
+          className="block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-neutral-800/80 hover:text-white"
         >
           {link.label}
         </a>
@@ -53,11 +73,11 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
   const [adminOpen, setAdminOpen] = useState(false);
 
   return (
-    <div className="mt-2 pt-2 border-t border-neutral-800">
+    <div className="mt-2 pt-2 border-t border-neutral-800/80">
       <button
         type="button"
         onClick={() => setAdminOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition hover:bg-neutral-800 hover:text-white"
+        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-neutral-800/80 hover:text-white"
       >
         <span>Admin</span>
         <svg
@@ -74,13 +94,13 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
         </svg>
       </button>
       {adminOpen && (
-        <div className="mt-1 space-y-1 pl-2">
+        <div className="mt-1 space-y-0.5 pl-2">
           {adminLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={onClick}
-              className="block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition hover:bg-neutral-800 hover:text-white"
+              className="block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-neutral-800/80 hover:text-white"
             >
               {link.label}
             </a>
@@ -98,14 +118,14 @@ export default function Navbar() {
     <>
       {/* ── Desktop Sidebar (lg+) ── */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-neutral-800 bg-neutral-950/95 backdrop-blur-sm lg:flex`}
+        className={`fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-neutral-800/80 bg-gradient-to-b from-neutral-950 via-neutral-950/98 to-neutral-950 backdrop-blur-xl lg:flex`}
       >
         {/* Brand */}
-        <a href="/" className="flex items-center gap-3 px-6 py-6">
-          <span className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950">
+        <a href="/" className="group flex items-center gap-3 px-6 py-6">
+          <span className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform group-hover:scale-105">
             BSU
           </span>
-          <span className="text-sm font-semibold tracking-wide text-white">
+          <span className="text-sm font-semibold tracking-wide text-white/90 transition-colors group-hover:text-white">
             Debate Society
           </span>
         </a>
@@ -118,11 +138,11 @@ export default function Navbar() {
       </aside>
 
       {/* ── Mobile Top Bar (< lg) ── */}
-      <header className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-900/90 backdrop-blur-sm lg:hidden">
+      <header className="sticky top-0 z-50 border-b border-neutral-800/80 bg-gradient-to-r from-neutral-950/95 via-neutral-900/95 to-neutral-950/95 backdrop-blur-xl lg:hidden">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
           {/* Logo */}
           <a href="/" className="flex items-center gap-3 text-sm font-semibold text-white">
-            <span className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950">
+            <span className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform hover:scale-105">
               BSU
             </span>
             <span className="tracking-wide">Debate Society</span>
@@ -149,7 +169,7 @@ export default function Navbar() {
 
         {/* Mobile Dropdown */}
         {open && (
-          <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-neutral-800 bg-neutral-950">
+          <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-neutral-800/80 bg-neutral-950/98 backdrop-blur-xl">
             <div className="space-y-0.5 px-6 py-4">
               <NavLinks onClick={() => setOpen(false)} />
               <AdminSection onClick={() => setOpen(false)} />

@@ -15,7 +15,8 @@
       "Bash(pgrep *)",
       "Bash(ss *)",
       "Bash(python3 *)",
-      "Bash(echo *)"
+      "Bash(echo *)",
+      "Bash(mv *)"
     ]
   },
   "$version": 3

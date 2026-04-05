@@ -94,6 +94,58 @@ export default function ContactPage() {
             </p>
           </article>
 
+          {/* ── Direct Contact ── */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <a
+              href="mailto:debatesociety@bsu.edu.ph"
+              className="group flex items-center gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg transition hover:border-neutral-700"
+            >
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-blue-900/40">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-blue-300">
+                  <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                  <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-neutral-500">Email</p>
+                <p className="text-sm font-medium text-white transition group-hover:text-blue-300">
+                  debatesociety@bsu.edu.ph
+                </p>
+              </div>
+            </a>
+
+            <a
+              href="tel:+639001234567"
+              className="group flex items-center gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg transition hover:border-neutral-700"
+            >
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-900/40">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-emerald-300">
+                  <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.308c.816 0 1.515.579 1.667 1.381l.592 3.119a1.5 1.5 0 0 1-.635 1.508L6.108 8.52A16.013 16.013 0 0 0 15.48 17.892l2.012-1.324a1.5 1.5 0 0 1 1.509-.635l3.119.592c.802.152 1.38.851 1.38 1.667V19.5a3 3 0 0 1-3 3h-1.5C10.16 22.5 1.5 13.84 1.5 4.5Z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-neutral-500">Phone / Text</p>
+                <p className="text-sm font-medium text-white transition group-hover:text-emerald-300">
+                  +63 900 123 4567
+                </p>
+              </div>
+            </a>
+
+            <div className="flex items-center gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-900/40">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-amber-300">
+                  <path fillRule="evenodd" d="M11.54 2.12a1.46 1.46 0 0 1 .92 0c4.01 1.23 6.54 3.47 8.07 5.77 1.53 2.3 2.17 5.08 2.17 8.11 0 1.27-.32 2.5-.79 3.59a9.144 9.144 0 0 1-1.59 2.64 1.46 1.46 0 0 1-.66.48c-2.07.72-4.24 1.12-6.66 1.12-2.42 0-4.59-.4-6.66-1.12a1.46 1.46 0 0 1-.66-.48 9.14 9.14 0 0 1-1.59-2.64A8.89 8.89 0 0 1 3.3 16c0-3.03.64-5.81 2.17-8.11 1.53-2.3 4.06-4.54 8.07-5.77Zm-3.2 14.07c.36-.66.9-1.06 1.59-1.22A2.95 2.95 0 0 1 12 14.5c.75 0 1.42.2 1.97.57.55.37.93.89 1.1 1.55a1.46 1.46 0 0 1-.47 1.57 3.03 3.03 0 0 1-1.72.7 2.9 2.9 0 0 1-2.12-.7 1.46 1.46 0 0 1-.47-1.57Z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-neutral-500">Office Hours</p>
+                <p className="text-sm font-medium text-white">
+                  Mon–Fri, 8 AM – 5 PM
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* ── Location ── */}
           <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
             <div className="mx-auto max-w-3xl space-y-4 text-center">

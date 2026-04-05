@@ -212,7 +212,7 @@ export default function AdminLeaguePage() {
       {/* Header */}
       <div className="space-y-2">
         <h1 className="text-2xl font-semibold text-white">
-          Debate League & Individual Recognition
+          Debate League &amp; Individual Recognition
         </h1>
         <p className="text-sm text-neutral-400">
           Manage league member rankings and individual recognition awards.

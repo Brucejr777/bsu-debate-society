@@ -84,7 +84,7 @@ export default function AdminPointsPage() {
     const res = await fetch("/api/admin/points", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ house_name: houseName, category, amount }),
+      body: JSON.stringify({ house_name: houseName, category, amount, reason, evidence }),
     });
 
     if (!res.ok) {
@@ -112,14 +112,22 @@ export default function AdminPointsPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-white">
-          House Points Ledger
-        </h1>
-        <p className="text-sm text-neutral-400">
-          Manage house point standings per Rules &amp; Procedures Article I. The
-          Secretary of Internal Affairs is the designated Point Keeper (Section 11).
-        </p>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold text-white">
+            House Points Ledger
+          </h1>
+          <p className="text-sm text-neutral-400">
+            Manage house point standings per Rules &amp; Procedures Article I. The
+            Secretary of Internal Affairs is the designated Point Keeper (Section 11).
+          </p>
+        </div>
+        <a
+          href="/standings/transactions"
+          className="shrink-0 text-sm font-medium text-neutral-400 transition hover:text-white"
+        >
+          View Transaction History →
+        </a>
       </div>
 
       {/* Feedback */}
