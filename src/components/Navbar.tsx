@@ -60,9 +60,9 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
           key={link.href}
           href={link.href}
           onClick={onClick}
-          className="block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-neutral-800/80 hover:text-white"
+          className="group block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-neutral-800/80"
         >
-          {link.label}
+          <span className="transition-colors group-hover:text-[#d4af37]">{link.label}</span>
         </a>
       ))}
     </>
@@ -73,18 +73,18 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
   const [adminOpen, setAdminOpen] = useState(false);
 
   return (
-    <div className="mt-2 pt-2 border-t border-neutral-800/80">
+    <div className="mt-2 pt-2 border-t border-[#b8962e]/20">
       <button
         type="button"
         onClick={() => setAdminOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-neutral-800/80 hover:text-white"
+        className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-neutral-800/80"
       >
-        <span>Admin</span>
+        <span className="transition-colors group-hover:text-[#d4af37]">Admin</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className={`size-4 transition-transform ${adminOpen ? "rotate-180" : ""}`}
+          className={`size-4 text-[#b8962e] transition-transform ${adminOpen ? "rotate-180" : ""}`}
         >
           <path
             fillRule="evenodd"
@@ -100,9 +100,9 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
               key={link.href}
               href={link.href}
               onClick={onClick}
-              className="block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-neutral-800/80 hover:text-white"
+              className="group block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-neutral-800/80"
             >
-              {link.label}
+              <span className="transition-colors group-hover:text-[#d4af37]">{link.label}</span>
             </a>
           ))}
         </div>
@@ -122,10 +122,10 @@ export default function Navbar() {
       >
         {/* Brand */}
         <a href="/" className="group flex items-center gap-3 px-6 py-6">
-          <span className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform group-hover:scale-105">
+          <span className="rounded-lg bg-gradient-to-br from-[#c5a44e] via-[#d4af37] to-[#8a7332] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform group-hover:scale-105 shadow-[0_0_12px_rgba(184,150,46,0.3)]">
             BSU
           </span>
-          <span className="text-sm font-semibold tracking-wide text-white/90 transition-colors group-hover:text-white">
+          <span className="gold-shine text-sm font-semibold tracking-wide">
             Debate Society
           </span>
         </a>
@@ -141,11 +141,13 @@ export default function Navbar() {
       <header className="sticky top-0 z-50 border-b border-neutral-800/80 bg-gradient-to-r from-neutral-950/95 via-neutral-900/95 to-neutral-950/95 backdrop-blur-xl lg:hidden">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-3 text-sm font-semibold text-white">
-            <span className="rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform hover:scale-105">
+          <a href="/" className="flex items-center gap-3 text-sm font-semibold">
+            <span className="rounded-lg bg-gradient-to-br from-[#c5a44e] via-[#d4af37] to-[#8a7332] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform hover:scale-105 shadow-[0_0_12px_rgba(184,150,46,0.3)]">
               BSU
             </span>
-            <span className="tracking-wide">Debate Society</span>
+            <span className="gold-shine tracking-wide">
+              Debate Society
+            </span>
           </a>
 
           {/* Hamburger */}

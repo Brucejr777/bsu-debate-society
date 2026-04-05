@@ -21,6 +21,91 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Gold Shine Shimmer (True Metallic Gold) ── */
+@keyframes gold-shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-shine {
+  background: linear-gradient(
+    90deg,
+    #8a7332 0%,
+    #b8962e 12%,
+    #e8d5a3 25%,
+    #f5e6c8 35%,
+    #d4af37 50%,
+    #f5e6c8 65%,
+    #e8d5a3 75%,
+    #b8962e 88%,
+    #8a7332 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shine 5s linear infinite;
+}
+
+@keyframes gold-border-shine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.gold-border-shine {
+  position: relative;
+  border: 2px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image:
+    linear-gradient(var(--card-bg, #0a0a0a), var(--card-bg, #0a0a0a)),
+    linear-gradient(
+      90deg,
+      #7a6830,
+      #b8962e,
+      #e8d5a3,
+      #d4af37,
+      #e8d5a3,
+      #b8962e,
+      #7a6830
+    );
+  background-size: 100% 100%, 200% 100%;
+  animation: gold-border-shine 6s linear infinite;
+}
+
+/* ── Gold Pulse Glow ── */
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(184, 150, 46, 0.08); }
+  50% { box-shadow: 0 0 20px rgba(184, 150, 46, 0.2), 0 0 40px rgba(184, 150, 46, 0.08); }
+}
+
+.gold-glow {
+  animation: gold-pulse 4s ease-in-out infinite;
+}
+
+/* ── Silk Overlay ── */
+.silk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(184, 150, 46, 0.008) 2px,
+      rgba(184, 150, 46, 0.008) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(184, 150, 46, 0.005) 2px,
+      rgba(184, 150, 46, 0.005) 4px
+    );
+}
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 8px;
@@ -31,12 +116,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #404040;
+  background: linear-gradient(180deg, #8a7332, #b8962e, #8a7332);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #525252;
+  background: linear-gradient(180deg, #b8962e, #d4af37, #b8962e);
 }
 
 /* ── Animated Mesh Gradient Background ── */
@@ -51,61 +136,61 @@ body {
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.06;
+  filter: blur(120px);
+  opacity: 0.08;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
-/* Bathala red — top-left blob */
+/* Light gold — top-left blob */
 .blob-red {
   width: 600px;
   height: 600px;
   top: 5%;
   left: 5%;
-  background: radial-gradient(circle, #8b0000, transparent 70%);
+  background: radial-gradient(circle, #c5a44e, transparent 70%);
   animation: blob-move-1 20s infinite;
 }
 
-/* Laon blue — bottom-right blob */
+/* Metallic gold — bottom-right blob */
 .blob-blue {
   width: 550px;
   height: 550px;
   top: 55%;
   right: 5%;
-  background: radial-gradient(circle, #000b90, transparent 70%);
+  background: radial-gradient(circle, #b8962e, transparent 70%);
   animation: blob-move-2 25s infinite;
 }
 
-/* Kabunian purple — center blob */
+/* Warm gold — center blob */
 .blob-purple {
   width: 500px;
   height: 500px;
   top: 35%;
   left: 40%;
-  background: radial-gradient(circle, #280137, transparent 70%);
+  background: radial-gradient(circle, #d4af37, transparent 70%);
   animation: blob-move-3 22s infinite;
 }
 
-/* Manama green — bottom-left blob */
+/* Deep gold — bottom-left blob */
 .blob-green {
   width: 450px;
   height: 450px;
   bottom: 5%;
   left: 20%;
-  background: radial-gradient(circle, #006400, transparent 70%);
+  background: radial-gradient(circle, #8a7332, transparent 70%);
   animation: blob-move-4 28s infinite;
 }
 
 /* ── Selection ── */
 ::selection {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(184, 150, 46, 0.25);
   color: #fff;
 }
 
 /* ── Focus Ring ── */
 :focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline: 2px solid rgba(184, 150, 46, 0.5);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }

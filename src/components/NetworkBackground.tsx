@@ -64,7 +64,7 @@ export default function NetworkBackground() {
       }
 
       // Draw connections (the net)
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+      ctx.strokeStyle = "rgba(212, 175, 55, 0.06)";
       ctx.lineWidth = 0.5;
 
       for (let i = 0; i < particles.length; i++) {
@@ -74,8 +74,8 @@ export default function NetworkBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * 0.12;
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+            const alpha = (1 - dist / maxDist) * 0.14;
+            ctx.strokeStyle = `rgba(212, 175, 55, ${alpha})`;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -88,7 +88,7 @@ export default function NetworkBackground() {
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+        ctx.fillStyle = "rgba(212, 175, 55, 0.18)";
         ctx.fill();
       }
 

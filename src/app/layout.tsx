@@ -39,6 +39,7 @@ export default function RootLayout({
           <div className="blob blob-purple" />
           <div className="blob blob-green" />
         </div>
+        <div className="silk-overlay" />
         <Navbar />
         <main className="flex-1 lg:pl-64">{children}</main>
         <Footer />

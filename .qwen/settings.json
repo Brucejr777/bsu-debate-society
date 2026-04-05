@@ -16,7 +16,8 @@
       "Bash(ss *)",
       "Bash(python3 *)",
       "Bash(echo *)",
-      "Bash(mv *)"
+      "Bash(mv *)",
+      "Bash(sed *)"
     ]
   },
   "$version": 3
