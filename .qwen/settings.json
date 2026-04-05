@@ -17,7 +17,11 @@
       "Bash(python3 *)",
       "Bash(echo *)",
       "Bash(mv *)",
-      "Bash(sed *)"
+      "Bash(sed *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(do)",
+      "Bash(done)"
     ]
   },
   "$version": 3

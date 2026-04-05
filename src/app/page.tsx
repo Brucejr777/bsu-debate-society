@@ -1,13 +1,13 @@
 export default function Home() {
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
-      <section className="rounded-3xl border border-[#b8962e]/30 bg-gradient-to-br from-neutral-950/90 via-neutral-900/70 to-neutral-950/80 p-10 shadow-2xl shadow-black/40 backdrop-blur-xl">
+      <section className="rounded-3xl border border-[#d4af37]/30 bg-gradient-to-br from-neutral-950/90 via-neutral-900/70 to-neutral-950/80 p-10 shadow-2xl shadow-black/40 backdrop-blur-xl">
           <div className="space-y-10">
             <div className="space-y-4 text-center">
-              <p className="gold-shine text-sm uppercase tracking-[0.35em]">
-                Benguet State University Debate Society
+              <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
+                Benguet State University
               </p>
-              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#c5a44e] via-[#e8c840] to-[#c5a44e] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
                 BSU Debate Society
               </h1>
               <p className="mx-auto max-w-3xl text-lg leading-8 text-neutral-400 sm:text-xl">
@@ -17,43 +17,43 @@ export default function Home() {
 
             <div className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr]">
               <div className="space-y-8">
-                <article className="group rounded-3xl border border-[#b8962e]/30 bg-neutral-950/90 p-8 shadow-lg shadow-black/20 transition-all duration-200 hover:border-[#c5a44e]/50 hover:shadow-xl hover:shadow-[#b8962e]/10">
-                  <h2 className="gold-shine text-2xl font-semibold">Mission Statement</h2>
+                <article className="group rounded-3xl border border-[#d4af37]/30 bg-neutral-950/90 p-8 shadow-lg shadow-black/20 transition-all duration-200 hover:border-[#d4af37]/50 hover:shadow-xl hover:shadow-[#d4af37]/10">
+                  <h2 className="text-2xl font-semibold text-white">Mission Statement</h2>
                   <p className="mt-4 text-base leading-7 text-neutral-300">
                     The Society envisions a vibrant, inclusive, and intellectually stimulating community where individuals from diverse backgrounds come together to engage in respectful discourse.
                   </p>
                 </article>
 
-                <article className="group rounded-3xl border border-[#b8962e]/30 bg-neutral-950/90 p-8 shadow-lg shadow-black/20 transition-all duration-200 hover:border-[#c5a44e]/50 hover:shadow-xl hover:shadow-[#b8962e]/10">
-                  <h2 className="gold-shine text-2xl font-semibold">Vision Statement</h2>
+                <article className="group rounded-3xl border border-[#d4af37]/30 bg-neutral-950/90 p-8 shadow-lg shadow-black/20 transition-all duration-200 hover:border-[#d4af37]/50 hover:shadow-xl hover:shadow-[#d4af37]/10">
+                  <h2 className="text-2xl font-semibold text-white">Vision Statement</h2>
                   <p className="mt-4 text-base leading-7 text-neutral-300">
                     The Society is dedicated to fostering critical thinking, effective communication, and a spirit of intellectual curiosity.
                   </p>
                 </article>
 
-                <div className="rounded-3xl border border-[#b8962e]/30 bg-neutral-950/90 p-8 shadow-lg shadow-black/20">
-                  <h2 className="gold-shine text-2xl font-semibold">Our Core Principles</h2>
+                <div className="rounded-3xl border border-[#d4af37]/30 bg-neutral-950/90 p-8 shadow-lg shadow-black/20">
+                  <h2 className="text-2xl font-semibold text-white">Our Core Principles</h2>
                   <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div className="group rounded-2xl border border-[#b8962e]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#c5a44e]/40 hover:bg-neutral-900">
-                      <h3 className="text-lg font-semibold text-[#d4af37]">Reasoned Dialogue</h3>
+                    <div className="group rounded-2xl border border-[#d4af37]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#d4af37]/40 hover:bg-neutral-900">
+                      <h3 className="text-lg font-semibold text-white">Reasoned Dialogue</h3>
                       <p className="mt-2 text-sm leading-6 text-neutral-300">
                         We champion thoughtful conversation rooted in evidence, respect, and clarity.
                       </p>
                     </div>
-                    <div className="group rounded-2xl border border-[#b8962e]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#c5a44e]/40 hover:bg-neutral-900">
-                      <h3 className="text-lg font-semibold text-[#d4af37]">Diversity &amp; Inclusion</h3>
+                    <div className="group rounded-2xl border border-[#d4af37]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#d4af37]/40 hover:bg-neutral-900">
+                      <h3 className="text-lg font-semibold text-white">Diversity &amp; Inclusion</h3>
                       <p className="mt-2 text-sm leading-6 text-neutral-300">
                         We celebrate varied perspectives and create a welcoming environment for all members.
                       </p>
                     </div>
-                    <div className="group rounded-2xl border border-[#b8962e]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#c5a44e]/40 hover:bg-neutral-900">
-                      <h3 className="text-lg font-semibold text-[#d4af37]">Democratic Leadership</h3>
+                    <div className="group rounded-2xl border border-[#d4af37]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#d4af37]/40 hover:bg-neutral-900">
+                      <h3 className="text-lg font-semibold text-white">Democratic Leadership</h3>
                       <p className="mt-2 text-sm leading-6 text-neutral-300">
                         We embrace shared governance, accountability, and collaborative decision-making.
                       </p>
                     </div>
-                    <div className="group rounded-2xl border border-[#b8962e]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#c5a44e]/40 hover:bg-neutral-900">
-                      <h3 className="text-lg font-semibold text-[#d4af37]">Ethical Conduct</h3>
+                    <div className="group rounded-2xl border border-[#d4af37]/20 bg-neutral-900/80 p-5 transition-all duration-200 hover:border-[#d4af37]/40 hover:bg-neutral-900">
+                      <h3 className="text-lg font-semibold text-white">Ethical Conduct</h3>
                       <p className="mt-2 text-sm leading-6 text-neutral-300">
                         We uphold honesty, fairness, and a strong sense of responsibility in every action.
                       </p>
@@ -63,17 +63,17 @@ export default function Home() {
               </div>
 
               <aside className="space-y-6">
-                <div className="rounded-3xl border border-[#b8962e]/40 bg-gradient-to-b from-neutral-950 to-neutral-900/90 p-8 shadow-lg shadow-black/20 gold-glow">
+                <div className="rounded-3xl border border-[#d4af37]/40 bg-gradient-to-b from-neutral-950 to-neutral-900/90 p-8 shadow-lg shadow-black/20 gold-glow">
                   <div className="space-y-6">
                     <div>
-                      <p className="gold-shine text-sm uppercase tracking-[0.3em]">Get involved</p>
+                      <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">Get involved</p>
                       <h3 className="mt-3 text-2xl font-semibold text-white">Discover the Society</h3>
                     </div>
 
                     <div className="space-y-3">
                       <a
                         href="/houses"
-                        className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d4af37] to-yellow-600 px-6 py-3 text-sm font-semibold text-neutral-950 transition-all duration-200 hover:from-[#e8d5a3] hover:to-yellow-500 hover:shadow-lg hover:shadow-[#d4af37]/20"
+                        className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#c5a44e] to-[#e8c840] px-6 py-3 text-sm font-semibold text-neutral-950 transition-all duration-200 hover:from-[#e8c840] hover:to-[#f0d860] hover:shadow-lg hover:shadow-[#e8c840]/20"
                       >
                         Explore Our Houses
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4 transition-transform group-hover:translate-x-0.5">
@@ -82,13 +82,13 @@ export default function Home() {
                       </a>
                       <a
                         href="/documents"
-                        className="group inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#b8962e]/50 bg-neutral-950 px-6 py-3 text-sm font-semibold text-[#d4af37] transition-all duration-200 hover:border-[#c5a44e] hover:bg-neutral-800/80"
+                        className="group inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#d4af37]/50 bg-neutral-950 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-[#d4af37] hover:bg-neutral-800/80"
                       >
                         Read the Constitution
                       </a>
                       <a
                         href="/about"
-                        className="group inline-flex w-full items-center justify-center rounded-full border border-[#b8962e]/50 bg-neutral-800/80 px-6 py-3 text-sm font-semibold text-[#d4af37] transition-all duration-200 hover:border-[#c5a44e] hover:bg-neutral-700/80"
+                        className="group inline-flex w-full items-center justify-center rounded-full border border-[#d4af37]/50 bg-neutral-800/80 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-[#d4af37] hover:bg-neutral-700/80"
                       >
                         About the Society
                       </a>
@@ -96,8 +96,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="rounded-3xl border border-[#b8962e]/30 bg-neutral-950/80 p-5 shadow-sm shadow-black/20">
-                  <p className="text-sm font-medium text-[#d4af37]">Academic spirit</p>
+                <div className="rounded-3xl border border-[#d4af37]/30 bg-neutral-950/80 p-5 shadow-sm shadow-black/20">
+                  <p className="text-sm font-medium text-white">Academic spirit</p>
                   <p className="mt-3 text-sm leading-6 text-neutral-300">
                     Rooted in debate, research, and respectful exchange, the BSU Debate Society supports growth for every member across campus.
                   </p>

@@ -245,7 +245,7 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                 className="size-4 rounded-full"
                 style={{ backgroundColor: house.color }}
               />
-              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#e8c840] via-[#e8c840] to-[#e8c840] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
                 {house.name}
               </h1>
             </div>

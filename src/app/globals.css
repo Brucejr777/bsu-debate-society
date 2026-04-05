@@ -30,15 +30,14 @@ body {
 .gold-shine {
   background: linear-gradient(
     90deg,
-    #8a7332 0%,
-    #b8962e 12%,
-    #e8d5a3 25%,
-    #f5e6c8 35%,
-    #d4af37 50%,
-    #f5e6c8 65%,
-    #e8d5a3 75%,
-    #b8962e 88%,
-    #8a7332 100%
+    #b8962e 0%,
+    #d4af37 15%,
+    #e8c840 30%,
+    #f0d860 45%,
+    #e8c840 55%,
+    #d4af37 70%,
+    #b8962e 85%,
+    #d4af37 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -61,13 +60,13 @@ body {
     linear-gradient(var(--card-bg, #0a0a0a), var(--card-bg, #0a0a0a)),
     linear-gradient(
       90deg,
-      #7a6830,
       #b8962e,
-      #e8d5a3,
       #d4af37,
-      #e8d5a3,
-      #b8962e,
-      #7a6830
+      #e8c840,
+      #f0d860,
+      #e8c840,
+      #d4af37,
+      #b8962e
     );
   background-size: 100% 100%, 200% 100%;
   animation: gold-border-shine 6s linear infinite;
@@ -75,8 +74,8 @@ body {
 
 /* ── Gold Pulse Glow ── */
 @keyframes gold-pulse {
-  0%, 100% { box-shadow: 0 0 5px rgba(184, 150, 46, 0.08); }
-  50% { box-shadow: 0 0 20px rgba(184, 150, 46, 0.2), 0 0 40px rgba(184, 150, 46, 0.08); }
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.1); }
+  50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.12); }
 }
 
 .gold-glow {
@@ -94,15 +93,15 @@ body {
       0deg,
       transparent,
       transparent 2px,
-      rgba(184, 150, 46, 0.008) 2px,
-      rgba(184, 150, 46, 0.008) 4px
+      rgba(212, 175, 55, 0.012) 2px,
+      rgba(212, 175, 55, 0.012) 4px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 2px,
-      rgba(184, 150, 46, 0.005) 2px,
-      rgba(184, 150, 46, 0.005) 4px
+      rgba(212, 175, 55, 0.008) 2px,
+      rgba(212, 175, 55, 0.008) 4px
     );
 }
 
@@ -116,12 +115,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #8a7332, #b8962e, #8a7332);
+  background: linear-gradient(180deg, #b8962e, #d4af37, #b8962e);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #b8962e, #d4af37, #b8962e);
+  background: linear-gradient(180deg, #d4af37, #e8c840, #d4af37);
 }
 
 /* ── Animated Mesh Gradient Background ── */
@@ -137,7 +136,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.08;
+  opacity: 0.1;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
@@ -148,7 +147,7 @@ body {
   height: 600px;
   top: 5%;
   left: 5%;
-  background: radial-gradient(circle, #c5a44e, transparent 70%);
+  background: radial-gradient(circle, #d4af37, transparent 70%);
   animation: blob-move-1 20s infinite;
 }
 
@@ -158,7 +157,7 @@ body {
   height: 550px;
   top: 55%;
   right: 5%;
-  background: radial-gradient(circle, #b8962e, transparent 70%);
+  background: radial-gradient(circle, #c5a44e, transparent 70%);
   animation: blob-move-2 25s infinite;
 }
 
@@ -168,7 +167,7 @@ body {
   height: 500px;
   top: 35%;
   left: 40%;
-  background: radial-gradient(circle, #d4af37, transparent 70%);
+  background: radial-gradient(circle, #e8c840, transparent 70%);
   animation: blob-move-3 22s infinite;
 }
 
@@ -178,19 +177,19 @@ body {
   height: 450px;
   bottom: 5%;
   left: 20%;
-  background: radial-gradient(circle, #8a7332, transparent 70%);
+  background: radial-gradient(circle, #b8962e, transparent 70%);
   animation: blob-move-4 28s infinite;
 }
 
 /* ── Selection ── */
 ::selection {
-  background-color: rgba(184, 150, 46, 0.25);
+  background-color: rgba(212, 175, 55, 0.3);
   color: #fff;
 }
 
 /* ── Focus Ring ── */
 :focus-visible {
-  outline: 2px solid rgba(184, 150, 46, 0.5);
+  outline: 2px solid rgba(212, 175, 55, 0.6);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }
