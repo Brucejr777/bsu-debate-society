@@ -21,29 +21,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Gold Shine Shimmer (True Metallic Gold) ── */
+/* ── Gold Shine Shimmer (Silk Gold) ── */
 @keyframes gold-shine {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% { background-position: -100% center; }
+  100% { background-position: 100% center; }
 }
 
 .gold-shine {
   background: linear-gradient(
     90deg,
-    #b8962e 0%,
-    #d4af37 15%,
-    #e8c840 30%,
-    #f0d860 45%,
-    #e8c840 55%,
-    #d4af37 70%,
-    #b8962e 85%,
-    #d4af37 100%
+    #b8860b 0%,
+    #daa520 20%,
+    #f5d76e 40%,
+    #fff8dc 50%,
+    #f5d76e 60%,
+    #daa520 80%,
+    #b8860b 100%
   );
-  background-size: 200% auto;
+  background-size: 300% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gold-shine 5s linear infinite;
+  animation: gold-shine 4s ease-in-out infinite;
 }
 
 @keyframes gold-border-shine {
@@ -60,26 +59,26 @@ body {
     linear-gradient(var(--card-bg, #0a0a0a), var(--card-bg, #0a0a0a)),
     linear-gradient(
       90deg,
-      #b8962e,
-      #d4af37,
-      #e8c840,
-      #f0d860,
-      #e8c840,
-      #d4af37,
-      #b8962e
+      #b8860b,
+      #daa520,
+      #f5d76e,
+      #ffd700,
+      #f5d76e,
+      #daa520,
+      #b8860b
     );
-  background-size: 100% 100%, 200% 100%;
-  animation: gold-border-shine 6s linear infinite;
+  background-size: 100% 100%, 300% 100%;
+  animation: gold-border-shine 4s linear infinite;
 }
 
 /* ── Gold Pulse Glow ── */
 @keyframes gold-pulse {
-  0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.1); }
-  50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.12); }
+  0%, 100% { box-shadow: 0 0 8px rgba(245, 215, 110, 0.15), 0 0 20px rgba(245, 215, 110, 0.05); }
+  50% { box-shadow: 0 0 15px rgba(245, 215, 110, 0.4), 0 0 40px rgba(245, 215, 110, 0.2), 0 0 60px rgba(245, 215, 110, 0.08); }
 }
 
 .gold-glow {
-  animation: gold-pulse 4s ease-in-out infinite;
+  animation: gold-pulse 3s ease-in-out infinite;
 }
 
 /* ── Silk Overlay ── */
@@ -92,16 +91,16 @@ body {
     repeating-linear-gradient(
       0deg,
       transparent,
-      transparent 2px,
-      rgba(212, 175, 55, 0.012) 2px,
-      rgba(212, 175, 55, 0.012) 4px
+      transparent 1px,
+      rgba(245, 215, 110, 0.015) 1px,
+      rgba(245, 215, 110, 0.015) 3px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
-      transparent 2px,
-      rgba(212, 175, 55, 0.008) 2px,
-      rgba(212, 175, 55, 0.008) 4px
+      transparent 1px,
+      rgba(245, 215, 110, 0.01) 1px,
+      rgba(245, 215, 110, 0.01) 3px
     );
 }
 
@@ -115,12 +114,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #b8962e, #d4af37, #b8962e);
+  background: linear-gradient(180deg, #daa520, #f5d76e, #b8860b);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #d4af37, #e8c840, #d4af37);
+  background: linear-gradient(180deg, #f5d76e, #fff8dc, #daa520);
 }
 
 /* ── Animated Mesh Gradient Background ── */
@@ -135,8 +134,8 @@ body {
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.1;
+  filter: blur(100px);
+  opacity: 0.15;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
@@ -147,7 +146,7 @@ body {
   height: 600px;
   top: 5%;
   left: 5%;
-  background: radial-gradient(circle, #d4af37, transparent 70%);
+  background: radial-gradient(circle, #f5d76e, transparent 70%);
   animation: blob-move-1 20s infinite;
 }
 
@@ -157,7 +156,7 @@ body {
   height: 550px;
   top: 55%;
   right: 5%;
-  background: radial-gradient(circle, #c5a44e, transparent 70%);
+  background: radial-gradient(circle, #ffd700, transparent 70%);
   animation: blob-move-2 25s infinite;
 }
 
@@ -167,7 +166,7 @@ body {
   height: 500px;
   top: 35%;
   left: 40%;
-  background: radial-gradient(circle, #e8c840, transparent 70%);
+  background: radial-gradient(circle, #daa520, transparent 70%);
   animation: blob-move-3 22s infinite;
 }
 
@@ -177,19 +176,19 @@ body {
   height: 450px;
   bottom: 5%;
   left: 20%;
-  background: radial-gradient(circle, #b8962e, transparent 70%);
+  background: radial-gradient(circle, #b8860b, transparent 70%);
   animation: blob-move-4 28s infinite;
 }
 
 /* ── Selection ── */
 ::selection {
-  background-color: rgba(212, 175, 55, 0.3);
+  background-color: rgba(245, 215, 110, 0.35);
   color: #fff;
 }
 
 /* ── Focus Ring ── */
 :focus-visible {
-  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline: 2px solid rgba(245, 215, 110, 0.7);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }

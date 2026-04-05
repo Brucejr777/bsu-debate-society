@@ -74,7 +74,7 @@ export default async function TransactionsPage() {
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Rules &amp; Procedures — Article I, Section 7
             </p>
-            <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#e8c840] via-[#e8c840] to-[#e8c840] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#b8860b] via-[#ffd700] to-[#b8860b] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               Point Transaction History
             </h1>
           </div>

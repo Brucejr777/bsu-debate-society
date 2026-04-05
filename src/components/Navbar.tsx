@@ -60,9 +60,9 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
           key={link.href}
           href={link.href}
           onClick={onClick}
-          className="group block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#e8c840]/15 hover:to-[#c5a44e]/5"
+          className="group block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#b8860b]/8"
         >
-          <span className="transition-colors group-hover:text-[#e8c840]">{link.label}</span>
+          <span className="transition-colors group-hover:text-[#fff8dc]">{link.label}</span>
         </a>
       ))}
     </>
@@ -73,18 +73,18 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
   const [adminOpen, setAdminOpen] = useState(false);
 
   return (
-    <div className="mt-2 pt-2 border-t border-[#e8c840]/20">
+    <div className="mt-2 pt-2 border-t border-[#daa520]/20">
       <button
         type="button"
         onClick={() => setAdminOpen((prev) => !prev)}
-        className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#e8c840]/15 hover:to-[#c5a44e]/5"
+        className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#b8860b]/8"
       >
-        <span className="transition-colors group-hover:text-[#e8c840]">Admin</span>
+        <span className="transition-colors group-hover:text-[#fff8dc]">Admin</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className={`size-4 text-[#c5a44e] transition-transform ${adminOpen ? "rotate-180" : ""}`}
+          className={`size-4 text-[#ffd700] transition-transform ${adminOpen ? "rotate-180" : ""}`}
         >
           <path
             fillRule="evenodd"
@@ -100,9 +100,9 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
               key={link.href}
               href={link.href}
               onClick={onClick}
-              className="group block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-gradient-to-r hover:from-[#e8c840]/15 hover:to-[#c5a44e]/5"
+              className="group block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#b8860b]/8"
             >
-              <span className="transition-colors group-hover:text-[#e8c840]">{link.label}</span>
+              <span className="transition-colors group-hover:text-[#fff8dc]">{link.label}</span>
             </a>
           ))}
         </div>
@@ -122,7 +122,7 @@ export default function Navbar() {
       >
         {/* Brand */}
         <a href="/" className="group flex items-center gap-3 px-6 py-6">
-          <span className="rounded-lg bg-gradient-to-br from-[#c5a44e] via-[#e8c840] to-[#b8962e] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform group-hover:scale-105 shadow-[0_0_12px_rgba(232,200,64,0.3)]">
+          <span className="rounded-lg bg-gradient-to-br from-[#b8860b] via-[#ffd700] to-[#b8860b] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform group-hover:scale-105 shadow-[0_0_12px_rgba(255,215,0,0.3)]">
             BSU
           </span>
           <span className="text-sm font-semibold tracking-wide text-neutral-200 transition-colors group-hover:text-white">
@@ -142,7 +142,7 @@ export default function Navbar() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
           {/* Logo */}
           <a href="/" className="flex items-center gap-3 text-sm font-semibold">
-            <span className="rounded-lg bg-gradient-to-br from-[#c5a44e] via-[#e8c840] to-[#b8962e] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform hover:scale-105 shadow-[0_0_12px_rgba(232,200,64,0.3)]">
+            <span className="rounded-lg bg-gradient-to-br from-[#b8860b] via-[#ffd700] to-[#b8860b] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform hover:scale-105 shadow-[0_0_12px_rgba(255,215,0,0.3)]">
               BSU
             </span>
             <span className="tracking-wide text-neutral-200">Debate Society</span>
