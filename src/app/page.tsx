@@ -8,7 +8,7 @@ export default function Home() {
                 Benguet State University
               </p>
               <h1 className="inline-block rounded-lg bg-gradient-to-r from-[#fbec5d] via-[#ffd700] to-[#ffbf00] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
-                BSU Debate Society
+                Debate Society
               </h1>
               <p className="mx-auto max-w-3xl text-lg leading-8 text-neutral-400 sm:text-xl">
                 Fostering critical thinking, effective communication, and intellectual curiosity.
