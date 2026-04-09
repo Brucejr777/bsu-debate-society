@@ -3,15 +3,18 @@
 
 ## DEBATE SOCIETY
 
-**Article I.
-HOUSE POINT SYSTEM**
-Section 1. Purpose and Scope.
+## **Article I. HOUSE POINT SYSTEM**
+
+#### Section 1. Purpose and Scope.
+
 The House Point System is established as an operational mechanism under these Rules and
 Procedures to promote and ensure constructive and healthy competition among Society Houses,
 recognize excellence in debate and organizational contribution, and strengthen House identity
 and camaraderie in accordance with Article 3, Section 7 of the Society Constitution.
 Amendments to this System shall follow the procedures in Article IX.
-Section 2. Definitions.
+
+#### Section 2. Definitions.
+
 For purposes of this System, the following terms shall be defined as follows:
 (1) _House-wide event_ shall mean an activity organized by a House primarily for its members,
 though open to other Society members for observation or participation. For the purpose
@@ -30,7 +33,6 @@ matters, harassment or intimidation of fellow members, intentional disruption of
 or Society activities, repeated minor violations after receiving a formal written warning,
 or any act that brings disrepute to the House or Society.
 
-
 (6) _Accomplishment Report_ shall mean a formal submission by a House documenting an
 activity eligible for points under this System, containing the elements specified in Section
 5(1), and certified by the House Chancellor or designated officer.
@@ -43,7 +45,9 @@ adversarial mandate of Constitution Art. 10, Sec. 3. Voting on the point transac
 be conducted by the three uninvolved Chancellors, unless the Constitution expressly
 requires the participation of all four. The High Tribunal shall convene only when a formal
 petition is filed regarding a point transaction.
-Section 3. Point Categories and Values.
+
+#### Section 3. Point Categories and Values.
+
 Points shall be awarded or deducted across four (4) primary categories.
 (1) The first category shall be known as Competitive Excellence. Houses shall earn one
 hundred (+100) points for first place in an inter-House debate tournament, seventy-five
@@ -66,7 +70,6 @@ cultivate decision-making and team management skills, shall earn one hundred
 outcomes, or evidence of skill development.
 (b) For House of Kabunian (Journalism): A House-led initiative that advances
 communication, documentation, or media excellence, such as producing
-
 
 high-quality debate chronicles, creating informative content about Society
 activities, conducting interviews with notable speakers, or maintaining accurate
@@ -105,7 +108,6 @@ without prior approval from the House Council, shall result in a deduction equal
 seventy-five percent (-75%) of the House's current point total at the time of the violation.
 (4) The fourth category shall be known as Conduct and Ethics.
 
-
 (a) _Minor Violations_. A minor disciplinary sanction, as defined in Section 2(4), shall
 result in a five-point (-5) deduction to the member's House.
 (b) _Major Violations_. A major disciplinary sanction, as defined in Section 2(5), shall
@@ -123,7 +125,9 @@ Violation sanction to the Society OIA within the prescribed period shall be
 classified as a Major Violation (Dishonesty/Concealment) under Article VI,
 Section 2(2)(b) or Article I, Section 2(5), resulting in a thirty-point (-30)
 deduction and potential disciplinary action against the House Council officers.
-Section 4. Authority to Award Points.
+
+#### Section 4. Authority to Award Points.
+
 The authority to award or deduct points under this System is divided between administrative
 posting and judicial adjudication. The Secretary of Internal Affairs shall have the authority to
 post points provisionally based on submitted Accomplishment Reports that are sufficient in form
@@ -134,13 +138,14 @@ Presiding Judge of the High Tribunal during point dispute proceedings to ensure 
 other officer, including House Chancellors, House Councils, or individual members, possesses
 independent authority to award or deduct points outside of this process. All point transactions
 must follow the process outlined in Section 5.
-Section 5. Point Transaction Process.
+
+#### Section 5. Point Transaction Process.
+
 (1) Any House that conducts an activity eligible for points under Section 3 or Section 10
 shall submit an Accomplishment Report to the Secretary of Internal Affairs within seven
 (7) calendar days of the activity's completion. The Accomplishment Report must include
 the name, date, and primary purpose of the activity, the category under which points are
 claimed, the specific point amount claimed with reference to the applicable subsection,
-
 
 supporting documentation such as attendance sheets or photos, and the signature of the
 House Chancellor certifying the report's accuracy.
@@ -179,8 +184,8 @@ removed, and the points shall become final and executory. The Secretary of Inter
 Affairs shall update the Ledger accordingly and notify the submitting House of
 finalization.
 
+#### Section 6. Provisional Sanctions for Major Violations.
 
-Section 6. Provisional Sanctions for Major Violations.
 In cases where a House Council independently initiates disciplinary action against one of its own
 members for a major violation as defined in Section 2(5), the House Council may recommend a
 provisional point deduction pending full review by the High Council. Such provisional deduction
@@ -189,7 +194,9 @@ overturns the sanction. The Secretary of Internal Affairs shall note the provisi
 Master House Point Ledger until final disposition. This provision shall not apply to complaints
 initiated by external parties, which shall follow the standard process in Section 5 without
 provisional deduction.
-Section 7. Tracking and Transparency.
+
+#### Section 7. Tracking and Transparency.
+
 (1) The Master House Point Ledger shall be maintained in digital format by the Secretary of
 Internal Affairs, with the Executive Secretary serving as the formal custodian of all
 records in accordance with Article 8, Section 6 of the Constitution and Article VIII of
@@ -204,7 +211,9 @@ category breakdowns shall be presented monthly at the Society Assembly Meeting. 
 published standings shall display each House's total points along with a breakdown by
 category to ensure transparency and allow Houses to track their progress across different
 areas of contribution.
-Section 8. Appeals and Dispute Resolution.
+
+#### Section 8. Appeals and Dispute Resolution.
+
 (1) This Section shall govern appeals of final point transactions only. A House may appeal a
 final point transaction only on the grounds of alleged violation of constitutional rights
 under Article 4 (Rights of Members) of the Constitution. The appeal must be submitted
@@ -215,8 +224,8 @@ business days. A decision shall be rendered within fourteen(14) calendar days of
 appeal filing. The Council of House Chancellors may provide advisory input, but the
 Adviser's decision shall be final per Constitution Art. 10, Sec. 5.
 
+#### Section 9. The House Cup.
 
-Section 9. The House Cup.
 (1) The House Cup shall be awarded at the end of each academic year to the House with the
 highest cumulative point total. The competition period shall begin on the first day of the
 First Semester and end on the last day of the Second Semester. Points shall reset to zero
@@ -241,7 +250,9 @@ awarded to the top House at the end of each semester. This House shall receive a
 certificate and public recognition, and shall carry over ten (+10) bonus points to the next
 semester. This semester recognition is separate from and does not affect the House Cup
 competition.
-Section 10. Special Competitions and Bonuses.
+
+#### Section 10. Special Competitions and Bonuses.
+
 (1) An Inter-House Debate Cup shall be held each semester as a distinct competition series
 with mandatory participation from all Houses in a round-robin format where each House
 debates every other House once. Points awarded under this subsection are separate from
@@ -252,7 +263,6 @@ the High Council prior to the event. Points for the League shall be awarded as f
 fifteen (+15) points for a win, seven (+7) points for a draw, and three (+3) points for
 participation. Placement points and participation points are mutually exclusive; a House
 that earns placement points shall not receive additional participation points for the same
-
 
 match. An additional five (+5) bonus points shall be awarded for the best team
 performance as determined by tournament judges.
@@ -291,8 +301,8 @@ letter, or published result; and (c) the award is submitted to the Secretary of 
 Affairs within fourteen days (14) of receipt. A House that hosts a visit from an external
 organization shall earn ten (+10) bonus points.
 
+#### Section 11. Administration and the Point Keeper.
 
-Section 11. Administration and the Point Keeper.
 (1) The Point Keeper shall be the Secretary of Internal Affairs of the High Council. The
 Point Keeper shall serve for one academic year and may be renewed at the discretion of
 the High Council President. Qualifications for the role include being a member in good
@@ -307,7 +317,9 @@ coordination with the Executive Secretary, and coordinating with House Chancello
 point-related matters. The Point Keeper may designate an Assistant Point Keeper to assist
 with data entry and verification, serve as backup during absence, and help with
 publication and communication.
-Section 12. Transitory Provisions.
+
+#### Section 12. Transitory Provisions.
+
 Upon adoption of this House Point System, points shall commence from the date of ratification
 by members in a general meeting in accordance with Article 11, Section 1 of the Constitution.
 All Houses shall start with a baseline of zero (0) points. The first House Cup competition period
@@ -317,16 +329,17 @@ transition period shall be observed from the adoption date to allow for orientat
 Chancellors on procedures, setup of the Master House Point Ledger, distribution of Point
 Transaction Forms, and training of the Point Keeper. During this transition period, point awards
 may be processed with a relaxed five-day submission deadline instead of the standard three days.
-Section 13. Effectivity.
+
+#### Section 13. Effectivity.
+
 This House Point System, as part of the Rules and Procedures of the BSU Debate Society, shall
 take effect upon ratification by majority vote of members in a general meeting in accordance
 with Article 11, Section 1 of the Constitution. It shall remain in effect until amended or repealed
 according to the procedures outlined in Section 12.
-**Article II.
-INDIVIDUAL RECOGNITION FRAMEWORK**
+## **Article II. INDIVIDUAL RECOGNITION FRAMEWORK**
 
+#### Section 1. Purpose and Scope.
 
-Section 1. Purpose and Scope.
 The Individual Recognition Framework is established to acknowledge and celebrate the
 contributions, growth, and excellence of individual members of the Society. This Framework
 operates alongside the House Point System and is designed to complement, not replace, the
@@ -335,7 +348,7 @@ honorary; it shall not confer voting rights, office eligibility, or material ben
 explicitly stated herein. All individual recognition shall align with the Society's principles under
 Article 3 of the Constitution, particularly Sections 7 (constructive competition), 9 (continuous
 growth), and 10 (education as empowerment).
-Section 2. Categories of Individual Recognition**.**
+#### Section 2. Categories of Individual Recognition.
 Individual members may be recognized for excellence in four categories, each aligned with the
 embodied value of a Society House.
 (1) _Leadership Excellence._ This category recognizes members who demonstrate exceptional
@@ -363,7 +376,6 @@ elements into debate formats; organizing cultural showcases or artistic workshop
 producing original creative works that reflect the Society's values. Nominees must have
 contributed at least two documented creative outputs during the recognition period.
 
-
 (5) Individual recognition categories are aligned with the embodied values of Society Houses
 for symbolic and aspirational purposes only. Eligibility for nomination and selection in
 any category shall be open to all active members of the Society, irrespective of their
@@ -371,7 +383,9 @@ House affiliation, provided that their contributions meet the criteria for the n
 category. When a member receives individual recognition, the corresponding bonus
 points under Section 5 shall be awarded to the member's own House, not to the House
 whose embodied value aligns with the award category.
-Section 3. Nomination and Selection Process.
+
+#### Section 3. Nomination and Selection Process.
+
 (1) Any active member of the Society may nominate a fellow member for individual
 recognition by submitting a Nomination Form directly to the Secretary of Internal Affairs
 for the attention of the Selection Committee. The form must include: the nominee's name
@@ -402,14 +416,15 @@ nomination. They shall not be present during the discussion of their candidacy. 
 shall not be counted for that specific decision. They shall retain their seat for all other
 nominations where no conflict exists.
 
-
 (5) Selected recipients shall be announced at the Society Assembly Meeting following the
 Selection Committee's decision. Recognition shall include: a certificate of achievement
 bearing the Society seal and the recipient's name, category, and cycle; public
 acknowledgment in the Society's official communications; and, if applicable, a
 ceremonial pin or token representing the category. Recipients may also be featured in the
 Society Chronicle or official digital platforms, subject to their consent.
-Section 4. Recognition Tiers and Cumulative Honor.
+
+#### Section 4. Recognition Tiers and Cumulative Honor.
+
 (1) Individual recognition may be awarded at three tiers, based on the scope and impact of
 the member's contributions.
 (a) _Emerging Contributor_. Awarded to members in their first or second semester of
@@ -430,7 +445,9 @@ distinction. A Society Fellow may be recognized only once per member.
 higher tier in subsequent cycles. Recognition is cumulative in honor but not in privilege;
 higher tiers do not grant additional governance rights or material benefits beyond those
 stated in Section 1.
-Section 5. Individual Achievements and House Points.
+
+#### Section 5. Individual Achievements and House Points.
+
 To maintain alignment with the House-focused competition framework, individual recognition
 shall not award points directly to the individual. However, when a member receives individual
 recognition under this Framework, their House shall earn bonus points under Section 10(3) of the
@@ -438,10 +455,11 @@ House Point System as follows: Emerging Contributor: five (+5) bonus points; Dis
 Member: ten (+10) bonus points; Society Fellow: fifteen (+15) bonus points. These points are
 cumulative with other bonus point opportunities and shall be posted to the Master House Point
 
-
 Ledger by the Secretary of Internal Affairs within three business days of the recognition
 announcement.
-Section 6. Tracking, Privacy, and Transparency.
+
+#### Section 6. Tracking, Privacy, and Transparency.
+
 (1) The Secretary of Internal Affairs shall maintain a confidential Individual Recognition
 Ledger recording all nominations, endorsements, selections, and recognitions. This
 Ledger shall include: nominee name and House; category and tier; nomination materials
@@ -455,9 +473,10 @@ embodied value, the Individual Recognition Ledger shall note both the recipient'
 and the award's aligned House for statistical and historical purposes. This notation shall
 not affect point allocation, which shall always credit the recipient's own House per
 Section 5.
-**Article III.
-THE DEBATE LEAGUE**
-Section 1. Purpose and Scope.
+## **Article III. THE DEBATE LEAGUE**
+
+#### Section 1. Purpose and Scope.
+
 The Debate League is established as a merit-based framework to identify, select, and support the
 Society's designated representatives in external competitions. This Article operates alongside the
 House Point System (Article I) and the Individual Recognition Framework (Article II).
@@ -465,12 +484,13 @@ Membership in the Debate League signifies that a member has earned the Society's
 to provide for their competitive needs when representing Benguet State University in external
 tournaments. This framework is founded on the principle that excellence in Society and House
 debate activities shall be rewarded with institutional support for external representation.
-Section 2. Individual Debate Point System.
+
+#### Section 2. Individual Debate Point System.
+
 (1) Every active member of the Society shall have an Individual Debate Point tally tracked
 separately from House Points and Individual Recognition Awards. Individual Debate
 Points shall be accumulated based on competitive performance in Society-wide debates
 and House-wide debates approved by the High Council for point eligibility.
-
 
 (2) Specific criteria for earning Individual Debate Points, including point values for
 participation, match wins, speaker awards, tournament placements, and other
@@ -482,7 +502,9 @@ Debate League.
 I (House Point System) and Article II (Individual Recognition Framework). Points
 awarded under this Section are solely for determining Debate League eligibility and do
 not constitute honorary awards or House bonuses under other Articles.
-Section 3. Composition and Selection of the Debate League.
+
+#### Section 3. Composition and Selection of the Debate League.
+
 (1) The Debate League shall be composed of the eight (8) members with the highest
 cumulative Individual Debate Point totals at the end of each semester.
 (2) Selection shall occur on the last day of the semester. The Secretary of Internal Affairs
@@ -503,10 +525,11 @@ Society President.
 who becomes inactive, resigns from the Society, or receives a major disciplinary sanction
 during their term shall be removed from the Debate League. The next highest-ranking
 
-
 eligible member from the semester's final standings shall be promoted to fill the vacancy
 for the remainder of the term.
-Section 4. Society Support for Debate League Members.
+
+#### Section 4. Society Support for Debate League Members.
+
 (1) When a Debate League member is registered to compete in an external tournament
 representing Benguet State University, the Society shall provide for the following needs,
 subject to the availability of resources and prior coordination with the High Council:
@@ -537,14 +560,15 @@ When resources are limited, the High Council shall prioritize support based on: 
 tournament's prestige and relevance to the Society's mission; (b) the member's standing
 within the Debate League; and (c) the reasonableness and necessity of the requested
 
-
 support. Decisions regarding resource allocation shall be made transparently and
 communicated in writing to affected members.
 (4) Nothing in this Article shall prohibit any Society member or university student from
 independently participating in external tournaments using personal resources. However,
 participation without Debate League membership shall not entitle a member to the
 support mechanisms outlined in this Section.
-Section 5. Rights and Responsibilities of Debate League Members.
+
+#### Section 5. Rights and Responsibilities of Debate League Members.
+
 (1) Debate League members shall have priority nomination when the Society is allocated a
 limited number of slots for an external tournament.
 (2) Debate League members shall serve as mentors to novice members and may be assigned
@@ -557,7 +581,9 @@ potential removal from the Debate League by the High Council.
 in any Society-wide or House-wide debate activity for a continuous period of two (2)
 months during their term, without valid reason approved by the High Council, may result
 in removal from the League.
-Section 6. Tracking and Transparency.
+
+#### Section 6. Tracking and Transparency.
+
 (1) The Individual Debate Point Ledger shall be maintained in digital format by the Secretary
 of Internal Affairs. The Ledger shall record the date, member name, House, points added,
 running total, and specific activity or reason for each transaction.
@@ -572,8 +598,8 @@ roster; (b) a summary of Society support provided to League members for external
 tournaments; and (c) the competitive outcomes achieved by League members. This report
 shall be presented at the first Society Assembly Meeting of the following semester.
 
+#### Section 7. Amendment and Review.
 
-Section 7. Amendment and Review.
 (1) This Debate League framework may be amended through the process outlined in Article
 IX. The framework shall be reviewed annually alongside the House Point System and
 Individual Recognition Framework.
@@ -584,14 +610,17 @@ semester.
 (3) Annex A: Debate Performance Criteria may be updated by majority vote of the High
 Council with notice to members, provided that such updates do not retroactively alter
 point values for activities already completed.
-Section 8. Transitory Provision.
+
+#### Section 8. Transitory Provision.
+
 Upon adoption of this Article, the first selection for the Debate League shall occur at the end of
 the current semester. Individual Debate Points accumulated prior to adoption may be counted
 toward the inaugural selection if they derive from activities that would qualify under Annex A.
 The High Council shall ratify Annex A within thirty (30) days of this Article's adoption.
-**Article IV.
-MEETINGS AND DELIBERATIVE PROCEDURES**
-Section 1. Purpose and Scope.
+## **Article IV. MEETINGS AND DELIBERATIVE PROCEDURES**
+
+#### Section 1. Purpose and Scope.
+
 This Article establishes operational procedures for Society meetings and decision-making
 processes. It implements the meeting requirements under Article 8 of the Constitution and
 provides a simplified parliamentary framework based on Robert's Rules of Order, Newly
@@ -599,11 +628,12 @@ Revised, adapted for accessibility and efficiency. This Article does not alter c
 quorum requirements, voting thresholds, or member rights, but specifies administrative
 workflows to facilitate their exercise. All proceedings shall prioritize clarity, inclusivity, and
 productive deliberation over procedural complexity.
-Section 2. Types of Meetings.
+
+#### Section 2. Types of Meetings.
+
 (1) _Society Assembly Meeting_. A gathering of all active Society members, convened monthly
 as mandated by Article 8, Section 1 of the Constitution. General Meetings shall:
 (a) Receive reports from the High Council and Council of House Chancellors;
-
 
 (b) Deliberate and vote on constitutional amendments, policy ratifications, and
 matters requiring member approval under Article 9, Section 2 of the Constitution;
@@ -639,8 +669,8 @@ percent (25%) of active members (for Society Assembly Meetings) or House members
 Chancellors, or relevant House Council; and (c) at least forty-eight (48) hours' notice to
 all entitled participants unless waived by unanimous consent.
 
+#### Section 3. Notice and Agenda.
 
-Section 3. Notice and Agenda.
 (1) Written notice of any Society Assembly Meeting, High Council Meeting, Council of
 House Chancellors Meeting, or House Assembly shall be distributed through the
 Society's official digital platform at least seventy-two (72) hours prior to the meeting.
@@ -656,7 +686,9 @@ agenda with the meeting notice.
 (3) At the start of each meeting, the Presiding Officer shall present the proposed agenda.
 Members may move to add, remove, or reorder items by majority vote. Once adopted, the
 agenda shall guide the meeting unless amended by majority vote.
-Section 4. Presiding Officer and Meeting Conduct.
+
+#### Section 4. Presiding Officer and Meeting Conduct.
+
 (1) The following officers shall serve as the designated Presiding Officer for each type of
 meeting:
 (a) Society Assembly Meetings and High Council Meetings: The President;
@@ -670,7 +702,6 @@ least forty-eight (48) hours prior to the meeting;
 (b) If the Vice President or the second-in-rank officer is also absent, the Presiding
 Officer shall designate in writing a qualified active member in good standing to
 serve as temporary chair for that specific meeting only;
-
 
 (c) The designation shall include the name of the temporary chair, the meeting date
 and type, and the scope of authority granted (which shall be limited to presiding
@@ -701,7 +732,6 @@ However, a temporary chair shall NOT:
 President's or House Chancellor's signature;
 (b) Preside over elections for permanent officers or constitutional amendments;
 
-
 (c) Exercise veto power or other executive authorities reserved to the regular
 Presiding Officer by the Constitution;
 (d) Serve beyond the conclusion of that specific meeting.
@@ -718,7 +748,9 @@ by the Presiding Officer, the Presiding Officer shall have the sole authority to
 member to leave the meeting for the remainder of that session. Such removal must be
 justified by specific grounds recorded in the minutes of the meeting and may be appealed
 through the disciplinary procedures under Article VI.
-Section 5. Simplified Motion and Voting Procedures.
+
+#### Section 5. Simplified Motion and Voting Procedures.
+
 (1) _Making a Motion_. Any member entitled to vote may propose action by stating: "I move to
 [clear action]." The motion must be seconded by another entitled member to be
 considered. The Presiding Officer shall then restate the motion clearly before debate.
@@ -733,7 +765,6 @@ methods shall be:
 (a) _Vote by Hand_ : The default method. The Presiding Officer asks those in favor to
 raise their right hand, holds for a clear count, then asks those opposed to raise
 their right hand, holds for a clear count, and announces the result. If the count is
-
 
 unclear or contested, the Presiding Officer may order a second count or proceed to
 a Rising Vote.
@@ -765,8 +796,8 @@ with Presiding Officer speaking first, majority vote to overturn).
 member who voted on the prevailing side moves reconsideration; (b) the motion is made
 on the same day or the next scheduled meeting; and (c) it is seconded and passes by
 majority vote. Each motion may be reconsidered only once.
-Section 6. Points of Order and Appeals (Simplified).
 
+#### Section 6. Points of Order and Appeals (Simplified).
 
 (1) _Point of Order_. Any member may raise a point of order by stating "Point of Order" when
 they believe a rule has been violated. The member must briefly state the specific rule or
@@ -778,7 +809,9 @@ Presiding Officer shall briefly explain their ruling, then the member appealing 
 briefly state their position. Debate is limited to these two statements unless the Presiding
 Officer permits one additional speaker per side. The assembly shall vote by majority to
 uphold or overturn the ruling. If the vote is tied, the Presiding Officer's ruling stands.
-Section 7. Minutes and Documentation.
+
+#### Section 7. Minutes and Documentation.
+
 (1) The Executive Secretary (for Society meetings) or House Secretariat Director (for House
 meetings) shall record minutes for each meeting. Minutes shall include: date, time,
 location, type of meeting, presiding officer, members present/absent, agenda items
@@ -791,7 +824,9 @@ official record and may only be corrected by a subsequent motion to amend the re
 (3) Approved minutes shall be posted to the Society's official digital platform within five (5)
 business days of approval. Members shall have view access to all approved minutes.
 Draft minutes and unapproved records shall remain confidential until formally adopted.
-Section 8. Quorum and Participation.
+
+#### Section 8. Quorum and Participation.
+
 (1) _Quorum Requirement_. As mandated by Article 8, Section 3 of the Constitution, a quorum
 for any Society meeting shall be a majority of active members. For House Assemblies, a
 quorum shall be a majority of the House's bona fide members as recorded in the official
@@ -802,13 +837,14 @@ quorum through a roll call or digital attendance check. If quorum is not present
 meeting may proceed for discussion only; no binding votes may be taken until quorum is
 achieved.
 
-
 (3) _Participation Rights_. Only active members in good standing may make motions, second
 motions, or vote. Executive Interns may participate in debate at House Assemblies and
 Society Assembly Meetings but may not vote on constitutional amendments, officer
 elections, or House policy changes until elevated to Full Member status per Article 5 of
 the Constitution.
-Section 9. Virtual and Hybrid Meetings.
+
+#### Section 9. Virtual and Hybrid Meetings.
+
 (1) Meetings may be conducted wholly or partially via virtual platform when approved by
 the High Council, relevant House Council, or when necessitated by extraordinary
 circumstances. The Presiding Officer shall ensure the platform allows for: (a) clear
@@ -820,9 +856,10 @@ recognition to ensure virtual participants are not disadvantaged.
 (3) If technical issues prevent a member from participating, they may request a brief recess
 to resolve the issue. If a quorum is lost due to technical disconnections, the meeting shall
 recess until quorum is restored or be adjourned to a later time.
-**Article V.
-FINANCIAL AND RESOURCE MANAGEMENT PROTOCOLS**
-Section 1. Purpose and Scope.
+## **Article V. FINANCIAL AND RESOURCE MANAGEMENT PROTOCOLS**
+
+#### Section 1. Purpose and Scope.
+
 This Article establishes operational procedures for the management of Society-wide and
 House-level financial resources, assets, and logistical support. It implements the fiscal authority
 provisions under Article 7 and Article 8, Sections 9–11 of the Constitution, and provides detailed
@@ -831,12 +868,13 @@ constitutional thresholds for fee-setting, budget approval, or audit requirement
 administrative processes to facilitate their exercise. All financial and resource management shall
 align with the Society's principles under Article 3, particularly Sections 5 (honesty and ethical
 conduct) and 10 (education as empowerment).
-Section 2. Classification of Resources.
+
+#### Section 2. Classification of Resources.
+
 (1) _Society-Wide Resources_. Resources managed by the High Council for the benefit of the
 entire Society, including:
 (a) _The General Fund_ : Membership dues, tournament revenues, external grants, and
 donations collected at the Society level;
-
 
 (b) _Society Assets_ : Equipment, materials, digital platforms, or intellectual property
 owned by the Society as a whole;
@@ -856,7 +894,9 @@ Section 7. Society-Wide Resources shall be managed by the Office of Financial an
 Resource Affairs (OFRA) under the oversight of the High Council. No House shall
 commingle Society-Wide and House Resources without prior written approval from the
 President and the Council of House Chancellors.
-Section 3. Budget Preparation and Approval.
+
+#### Section 3. Budget Preparation and Approval.
+
 (1) _Society-Wide Budget_.
 (a) Timeline: The OFRA shall draft the Annual Society Budget at least thirty (30)
 days prior to the start of each academic year.
@@ -868,7 +908,6 @@ of House Chancellors; and (b) the concurrence of the President.
 (d) Publication: The approved budget shall be posted to the Society's official digital
 platform within five (5) business days of adoption.
 (2) _House Budget_.
-
 
 (a) Timeline: Each House Council shall draft its Semester House Budget at least
 fourteen (14) days prior to the start of each semester.
@@ -887,7 +926,9 @@ Council shall collect every financial resource of all Houses into a central cust
 start of the next academic year, eighty percent (80%) of said funds shall be returned to the
 respective Houses. The remaining twenty percent (20%) shall be retained as a
 Society-wide tax.
-Section 4. Disbursement and Reimbursement Procedures.
+
+#### Section 4. Disbursement and Reimbursement Procedures.
+
 (1) _Authorization Thresholds_.
 (a) _Minor Disbursements_ (up to ₱500): May be authorized by the relevant House
 Chancellor or High Council Secretary with prior budget allocation.
@@ -903,7 +944,6 @@ Request Form within seven (7) calendar days of incurring the expense. The form
 must include: official receipts, purpose of expense, budget line reference, and
 signature of the authorizing officer.
 
-
 (b) Verification: The OFRA (for Society-wide) or House Financial Director (for
 House-level) shall verify receipts and budget alignment within three (3) business
 days.
@@ -913,7 +953,9 @@ documented method.
 (3) Debate League Support. Reimbursement or advance requests under Article III, Section
 4(1)(f) shall follow the Standard or Major Disbursement process based on amount, with
 the additional requirement of a post-tournament report under Article III, Section 4(2)(c).
-Section 5. Procurement and Asset Management.
+
+#### Section 5. Procurement and Asset Management.
+
 (1) _Procurement Guidelines_.
 (a) Quotation Requirement: Purchases above ₱1,000 shall require at least two (2)
 price quotations from different suppliers, documented and attached to the
@@ -935,8 +977,8 @@ based on negligence.
 (c) _Annual Audit_ : A physical inventory audit shall be conducted at the end of every
 semester, Discrepancies shall be reported to the High Council and relevant House
 Council for resolution.
-Section 6. Income-Generating Projects and External Funding.
 
+#### Section 6. Income-Generating Projects and External Funding.
 
 (1) Society-Wide Projects. Income-Generating Projects (IGPs) managed at the Society level
 shall be proposed by any High Council office or House Council. Proposals shall include:
@@ -955,7 +997,9 @@ donations shall be coordinated through the Office of External Affairs. Agreement
 be reviewed by the President and, if affecting multiple Houses or Society-wide
 obligations, ratified by the Council of House Chancellors. Funds received shall be
 allocated per the agreement terms and documented in the appropriate ledger.
-Section 7. Financial Reporting and Transparency.
+
+#### Section 7. Financial Reporting and Transparency.
+
 (1) _Monthly Financial Snapshot_. The OFRA shall publish a Monthly Financial Snapshot on
 the Society's official digital platform within ten (10) business days after the end of each
 month. The Snapshot shall include: opening balance, income received, expenses incurred,
@@ -974,8 +1018,8 @@ The Committee shall review the Annual Financial Statements and issue a Report of
 Findings to the Society Assembly Meeting. The Committee shall have access to all
 financial records but shall maintain confidentiality of sensitive information.
 
+#### Section 8. Prohibited Acts and Sanctions.
 
-Section 8. Prohibited Acts and Sanctions.
 (1) _Prohibited Acts_. The following acts are strictly prohibited:
 (a) _Commingling_ : Using Society-Wide Resources for exclusive House benefit, or vice
 versa, without prior written approval;
@@ -992,7 +1036,7 @@ Article VI. In addition to disciplinary sanctions, financial violations may resu
 restitution of misused funds; (b) suspension of financial privileges for the responsible
 officer or House; (c) mandatory financial management training; or (d) referral to
 University authorities if criminal conduct is alleged; and (e) expulsion from the Society.
-Section 9. Loan Services
+#### Section 9. Loan Services
 (1) _Authority to Lend_. The Society may offer loan services to Houses or active members for
 approved Society-related activities.
 (2) _Prohibition on Borrowing_. The Society itself is prohibited from securing external loans or
@@ -1002,11 +1046,10 @@ Installment payments may be an option subject to approval by the Office of Finan
 Resource Affairs.
 (4) _Default_. Failure to repay loans within the stipulated period shall result in the suspension
 of financial privileges and may be treated as a Major Violation under Article VI.
-**Article VI.
-DISCIPLINARY PROCEDURES AND DUE PROCESS IMPLEMENTATION**
+## **Article VI. DISCIPLINARY PROCEDURES AND DUE PROCESS IMPLEMENTATION**
 
+#### Section 1. Purpose and Scope.
 
-Section 1. Purpose and Scope.
 This Article establishes operational procedures for addressing alleged violations of the Society's
 Constitution, Rules and Procedures, House Charters, or Code of Conduct. It implements the due
 process rights guaranteed under Article 4, Sections 11-12 of the Constitution and the judicial
@@ -1016,7 +1059,9 @@ administrative workflows to ensure fair, timely, and transparent resolution of d
 matters. All proceedings under this Article shall uphold the Society's principles under Article 3,
 particularly Sections 5 (honesty and ethical conduct), 7 (constructive competition), and 10
 (education as empowerment).
-Section 2. Jurisdiction and Classification.
+
+#### Section 2. Jurisdiction and Classification.
+
 (1) _Jurisdiction_.
 (a) House Councils shall have original jurisdiction over Minor Violations involving
 members of their respective House, as authorized under Article 7, Section 1(2)(e)
@@ -1041,10 +1086,11 @@ disrepute to the Society or University.
 (3) _Initial Classification_. The Office of Internal Affairs (OIA) shall make an initial
 classification of a reported violation within three (3) business days of receipt of a
 
-
 complaint. This classification is provisional and subject to review by the adjudicating
 body (House Council or High Tribunal).
-Section 3. Reporting and Preliminary Review.
+
+#### Section 3. Reporting and Preliminary Review.
+
 (1) _Filing a Complaint_. Any active member may report an alleged violation by submitting a
 written Complaint Form to the Office of Internal Affairs (for Society-wide/Major
 violations) or the relevant House Council's Office of Internal Affairs (for
@@ -1063,7 +1109,9 @@ sufficient, the matter shall proceed to adjudication.
 business days of the determination of sufficiency. The notice shall include: a summary of
 allegations, specific provisions implicated, classification, the adjudicating body, and a
 statement of their rights under Article 4 of the Constitution and this Article.
-Section 4. Adjudication of Minor Violations (House Council).
+
+#### Section 4. Adjudication of Minor Violations (House Council).
+
 (1) _Procedure_. House Councils shall conduct hearings for Minor Violations within seven (7)
 calendar days of the Respondent's notification. Proceedings shall be informal but
 documented.
@@ -1077,7 +1125,6 @@ mandatory for the sanction to be considered executory. The Society OIA shall rec
 sanction in the Society Disciplinary Ledger and instruct the Point Keeper to apply the
 corresponding House Point deduction under Article I, Section 3(4).
 
-
 (4) _Sanctions_. Sanctions for Minor Violations may include: (a) verbal or written warning; (b)
 required community service within the House (up to ten (10) hours); (c) temporary
 suspension from House activities (up to two (2) weeks); or (d) point deductions to the
@@ -1089,7 +1136,9 @@ The OIA shall review and render a decision within seven (7) business days.
 that was not reported to the Society OIA may file a Confidential Disclosure Form directly
 with the Society OIA. If verified, the House Council responsible for concealment shall be
 subject to the Concealment Penalty under Article I, Section 3(4)(e).
-Section 5. Adjudication of Major Violations (High Tribunal).
+
+#### Section 5. Adjudication of Major Violations (High Tribunal).
+
 (1) _Constitutional Composition_. Proceedings for Major Violations shall be conducted by the
 High Tribunal as constituted under Article 10 of the Constitution:
 (a) _Presiding Judge_ : The Society President;
@@ -1109,7 +1158,6 @@ declared and approved by the Presiding Judge.
 (d) _Right to Counsel_ : The Respondent may retain additional counsel (who must be a
 Society member or University-recognized legal aid) to assist the Defense
 Chancellor.
-
 
 (3) _Forms of Address and Procedural Protocol_. To maintain decorum, clarity, and respect for
 the judicial nature of High Tribunal proceedings, the following forms of address and
@@ -1145,11 +1193,12 @@ these rights are protected throughout.
 (6) _Sanctions_. Sanctions for Major Violations may include: (a) formal reprimand; (b)
 suspension from Society activities (up to one (1) semester); (c) removal from office, the
 
-
 Debate League, or other positions; (d) probation; or (e) recommendation for expulsion to
 the society, subject to ratification under Article 9, Section 2 of the Constitution. Point
 deductions under Article I, Section 3(4) shall automatically apply upon final verdict.
-Section 6. Appeal and Re-Trial.
+
+#### Section 6. Appeal and Re-Trial.
+
 (1) _Right to Appeal_. In accordance with Article 10, Section 5 of the Constitution, any party
 aggrieved by the High Tribunal's verdict reserves the right to a singular appeal.
 (2) _Re-Trial Procedure_. Upon filing a timely appeal within five (5) calendar days of the
@@ -1162,7 +1211,9 @@ remain consistent with Section 5(2).
 (3) _Effect of Appeal_. Filing an appeal shall not automatically stay the imposition of a
 sanction, unless the Presiding Judge or the Adviser expressly orders a stay pending
 resolution.
-Section 7. Provisional Measures.
+
+#### Section 7. Provisional Measures.
+
 (1) _Immediate Risk_. In cases involving alleged Major Violations that pose an immediate risk
 to member safety, Society integrity, or preservation of evidence, the President may
 impose provisional measures pending final adjudication.
@@ -1172,11 +1223,12 @@ activities or external representation; (b) restriction from accessing Society re
 (3) _Duration_. Provisional measures shall not exceed fourteen (14) days and must be reviewed
 by the High Tribunal at its first session. The Respondent may request an expedited
 hearing to challenge the measure.
-Section 8. Records, Confidentiality, and Restoration.
+
+#### Section 8. Records, Confidentiality, and Restoration.
+
 (1) _Disciplinary Ledger_. The Society Office of Internal Affairs (OIA) shall maintain a
 confidential Society Disciplinary Ledger recording all complaints, hearings, decisions,
 and sanctions for both Minor and Major Violations.
-
 
 (2) _Access_. Access shall be restricted to the High Council, relevant House Chancellors, and
 the Respondent regarding their own record. However, the Point Keeper (Secretary of
@@ -1193,7 +1245,7 @@ rehabilitation may petition the High Council for restoration of privileges (e.g.
 League eligibility, office candidacy). The petition shall include a statement of reflection
 and endorsements from two (2) Society members. The High Council shall review within
 fourteen (14) days.
-Section 9. Checks and Balances
+#### Section 9. Checks and Balances
 (1) _Escalation_. While House Councils have original jurisdiction over Minor Violations, the
 High Council may intervene if a Minor Violation reveals patterns of systemic abuse or if
 the House Council fails to act within the prescribed timeline.
@@ -1202,24 +1254,26 @@ preliminary fact-finding if the violation originated within House activities, pr
 House Council recuses itself from the final adjudication.
 (3) _Oversight_. The High Council retains the authority to review sanctions imposed by House
 Councils to ensure proportionality and consistency across the Society.
-Section 10. Prosecution Recommendation
+#### Section 10. Prosecution Recommendation
 After the determination of sufficiency, the three prosecuting Chancellors shall review the case
 and forward to the Presiding Judge their recommended sanction for the Respondent. This
 recommendation shall be considered during deliberation but shall not bind the High Tribunal's
 final verdict.
-Section 11. Membership Terms and Continuing Jurisdiction.
+
+#### Section 11. Membership Terms and Continuing Jurisdiction.
+
 (1) _Terms of Membership_. All Society members must sign a Terms and Conditions agreement
 upon admission.
-
 
 (2) _Continuing Jurisdiction_. Resignation from membership does not signify that the Debate
 Society no longer has jurisdiction over the member regarding cases they might have been
 involved in prior to resignation. If a member committed violations while active, even if
 they resign, they may still be called to the High Tribunal for their case. Sanctions may
 include permanent bans from re-admission or recognition.
-**Article VII.
-THE PRESIDENTIAL CONCLAVE**
-Section 1. Declaration, Purpose, and Schedule.
+## **Article VII. THE PRESIDENTIAL CONCLAVE**
+
+#### Section 1. Declaration, Purpose, and Schedule.
+
 (1) _The Presidential Conclave_. The election of the Society President shall be conducted
 through a specialized deliberative body known as the “Presidential Conclave.” This
 process is designed to ensure that the Society President possesses the confidence, respect,
@@ -1246,7 +1300,6 @@ procedural reminders.
 President” shall refer to the first individual to hold the office of the Society President
 upon the ratification of the Constitution and Rules and Procedures, which establishes the
 
-
 Four-House structure, the Presidential Conclave election system, and the High Council
 framework codified herein.
 (a) _Historical Acknowledgement_. The Society’s existence prior to the ratification date
@@ -1260,7 +1313,9 @@ therein.
 (c) _Non-Renewable Designation_. The title “Founding President” is unique to the
 individual who first assumes office under this framework and shall not be
 transferable, inheritable, or applicable to any subsequent Society President.
-Section 2. The Presiding Officer and Oversight.
+
+#### Section 2. The Presiding Officer and Oversight.
+
 (1) _Presiding Officer_. The outgoing Society President shall serve as the Presiding Officer of
 the Conclave. Their role shall be limited to:
 (a) Overseeing the flow of proceedings and enforcing time limits;
@@ -1276,14 +1331,15 @@ of the Conclave. They shall be responsible for:
 (c) Serving as the official timekeeper under Section 8;
 (d) Certifying the results and issuing the formal Proclamation of Election;
 
-
 (e) Maintaining the official Conclave Record.
 The Vice President shall not possess voting rights or tie-breaking authority within the
 Conclave.
 (3) _Seclusion_. During the interrogation and voting phases, the Conclave shall be in closed
 session. No external communication shall be permitted until a verdict is reached and the
 results are certified.
-Section 3. Platform Presentation and Interrogation Proceedings.
+
+#### Section 3. Platform Presentation and Interrogation Proceedings.
+
 (1) _Platform Presentation (Pre-Round)_. Before interrogation rounds commence, each
 Chancellor-candidate shall be afforded a fifteen (15) minute period to present their
 platform, vision, and qualifications before the Conclave. Presentations shall be delivered
@@ -1304,11 +1360,12 @@ be grounds for immediate censure by the Presiding Officer.
 (3) _Post-Interrogation Deliberation_. After all four Chancellor-candidates have been
 interrogated in a round, the Conclave shall enter a brief closed deliberation period
 (maximum five (5) minutes) to reflect on the responses before proceeding to vote.
-Section 4. Voting Protocol.
+
+#### Section 4. Voting Protocol.
+
 (1) _The Proceed Vote_. Following each complete cycle of interrogation and deliberation, the
 Conclave shall conduct a vote on the following question: “ _Shall the Conclave proceed to
 the Election by Secret Ballot?_ ”
-
 
 (2) _Threshold_. To proceed to the Election by Secret Ballot, the motion requires an affirmative
 vote of at least three (3) of the four (4) House Chancellors (supermajority).
@@ -1324,7 +1381,9 @@ reached.
 after five (5) complete cycles, the Conclave shall continue to conduct interrogation
 rounds and Proceed Votes until the threshold is met or the time limit under Section 8 is
 reached. No external officer shall intervene to break the deadlock.
-Section 5. Election by Secret Ballot.
+
+#### Section 5. Election by Secret Ballot.
+
 (1) _Method_. Upon a successful Proceed Vote, the Conclave shall conduct the final election
 via secret ballot. The Secretary of the Conclave shall distribute blank ballots to the four
 (4) House Chancellors.
@@ -1342,12 +1401,13 @@ Section 3 (Interrogation Proceedings) for another full round of interrogation.
 proceed to Section 4 (Proceed Vote). If the Proceed Vote passes, the Conclave
 shall conduct another Secret Ballot under this Section.
 
-
 (d) _No External Tie-Breaker_. Under no circumstances shall the Vice President,
 President, or any external officer cast a tie-breaking vote. The decision must
 originate strictly from the four (4) House Chancellors through continued
 deliberation and voting.
-Section 6. Contingency: Inability, Ineligibility, or Substitution of a Chancellor-Candidate.
+
+#### Section 6. Contingency: Inability, Ineligibility, or Substitution of a Chancellor-Candidate.
+
 (1) _Grounds for Substitution_. If a House Chancellor-candidate is unable to continue in the
 Conclave, is ineligible to run, or if elected, is unable to assume the Presidency due to
 special circumstances. The following grounds shall apply:
@@ -1374,7 +1434,6 @@ Section 2(3).
 (c) _Special Nomination Assembly_. If all sitting House Council officers are ineligible
 or unable to serve as the substitute candidate, the House Council shall convene a
 Special Nomination Assembly within the same forty-eight (48) hour period.
-
 
 (i) The Assembly shall be open to all bona fide Full Members of that House;
 (ii) House members may nominate eligible Full Members to serve as the
@@ -1406,7 +1465,6 @@ remaining eligible House Chancellors or their duly nominated substitutes under
 Subsection (2);
 (c) If fewer than three (3) Chancellors remain eligible, the succession protocols under
 Subsection (5) and (6) shall apply.
-
 
 (5) _Insufficient Quorum of Eligible Electors_. If, after exhausting the Succession Hierarchy
 and Nomination Assembly procedures, the number of eligible Chancellors remaining is
@@ -1442,7 +1500,6 @@ through the following process:
 who meet the constitutional qualifications for President under Article 8,
 Section 2(3) of the Constitution shall be eligible for selection.
 
-
 (ii) _Nomination_. Any Alumni Member in good standing may nominate an
 eligible candidate. Nominations must be seconded and approved by
 majority vote of Alumni Members present.
@@ -1468,7 +1525,9 @@ of the High Council.
 (or being substituted under this Section), their position as House Chancellor shall be
 deemed vacated. The respective House Council shall appoint an interim Chancellor in
 accordance with their House Charter within seven (7) days.
-Section 7. Proclamation and Announcement.
+
+#### Section 7. Proclamation and Announcement.
+
 (1) _The Signal_. Upon the conclusion of a successful secret ballot vote, the Presiding Officer
 shall signal the end of the Conclave by striking the gavel three (3) times. The doors of the
 Conclave chamber shall then be opened to the Society Assembly.
@@ -1477,7 +1536,6 @@ forward to announce the result to the Society Assembly or via the Society’s of
 digital platform.
 (3) _Formal Declaration_. The announcement shall be made using the following formal
 protocol:
-
 
 (a) The Vice President shall state: “ _Members of the Debate Society, the Presidential
 Conclave has concluded._ ”
@@ -1491,7 +1549,9 @@ Society._ ”
 (4) _Certification_. The results shall be documented in the Official Election Report, signed by
 the Presiding Officer and the Vice President, and filed with the Office of the Executive
 Secretary.
-Section 8. Time Limit and Adjournment.
+
+#### Section 8. Time Limit and Adjournment.
+
 (1) _Maximum Duration_. The Presidential Conclave shall not exceed four (4) hours (240
 minutes), calculated from the moment the Presiding Officer declares the Conclave in
 session to the moment of Proclamation or adjournment. This time limit is absolute and
@@ -1512,7 +1572,6 @@ verification;
 official timekeeper. They shall provide verbal warnings at the three (3) hour mark and the
 three-hour-thirty (3:30) minute mark. At the four (4) hour mark, the Presiding Officer
 shall immediately halt all proceedings, regardless of the stage of the Conclave.
-
 
 (4) _Mandatory Adjournment_. If the four (4) hour limit is reached before a President is elected
 and proclaimed:
@@ -1537,14 +1596,16 @@ reconvened Conclave shall:
 reaching the time limit a third time, or if the High Council fails to schedule a
 reconvened Conclave within the prescribed period, the succession protocols under
 Section (6)(6) and (6)(7) shall apply.
-Section 9. Assumption of Office.
+
+#### Section 9. Assumption of Office.
+
 (1) _Effectivity_. The elected President shall assume office immediately following the
 Proclamation, unless a specific transition date is set by the High Council.
 (2) Oath. The newly elected President shall take the Oath of Office administered by the
 Society Chief Adviser or the outgoing President during the next Society Assembly
 Meeting.
-Section 10. Electoral Disputes.
 
+#### Section 10. Electoral Disputes.
 
 (1) _Grounds for Protest_. Any House Chancellor may file an electoral protest within three (3)
 days of the Proclamation on grounds of procedural violation, vote tampering, or
@@ -1554,7 +1615,9 @@ by the Society Chief Adviser. The decision of the Tribunal shall be final and ex
 (3) _Recall_. In the event that the election is nullified by the High Tribunal, a new Conclave
 shall be convened within fourteen (14) days following the same procedures outlined in
 this Article.
-Section 11. Transitory Provision: Foundational Term Extension and Conclave Deferral.
+
+#### Section 11. Transitory Provision: Foundational Term Extension and Conclave Deferral.
+
 (1) _Purpose_. Recognizing that the Society is in its foundational period, this Section grants
 limited authority to defer the Presidential Conclave and extend the term of the Founding
 President to ensure institutional stability, capacity-building, and the successful
@@ -1578,7 +1641,6 @@ year);
 concurred by the Founding President;
 (e) Be published to the Society Assembly at least fourteen (14) days prior to the
 scheduled Conclave date.
-
 
 (4) _Conditions of Extension_. If a Resolution under this Section is adopted:
 (a) The founding President shall retain all powers, duties, and responsibilities under
@@ -1612,12 +1674,12 @@ Article 8, Section 2(3)(e) of the Constitution;
 Article 9, Section 1 of the Constitution (Amendment and Revision). Should any provision
 of this Section be deemed inconsistent with the Constitution, the Constitutional provision
 
-
 shall prevail, and the High Council shall initiate the appropriate amendment process to
 align these Rules with the Society's foundational needs.
-**Article VIII.
-RECORDS MANAGEMENT, TRANSPARENCY, AND INFORMATION ACCESS**
-Section 1. Purpose and Scope.
+## **Article VIII. RECORDS MANAGEMENT, TRANSPARENCY, AND INFORMATION ACCESS**
+
+#### Section 1. Purpose and Scope.
+
 This Article establishes operational procedures for the creation, classification, retention, access,
 and publication of Society records. It implements the right to information guaranteed under
 Article 4, Section 5 of the Constitution and provides detailed workflows to ensure transparency,
@@ -1626,7 +1688,9 @@ custodianship under Article 7, or privacy protections, but specifies administrat
 facilitate their exercise. All records management shall align with the Society's principles under
 Article 3, particularly Sections 5 (honesty and ethical conduct) and 10 (education as
 empowerment).
-Section 2. Classification of Records.
+
+#### Section 2. Classification of Records.
+
 (1) _Public Records_. Records that shall be accessible to all Society members upon request,
 including:
 (a) Approved minutes of Society Assembly Meetings, House Assemblies, and
@@ -1642,7 +1706,6 @@ Article VII;
 (f) The Constitution, Rules and Procedures, House Charters, and approved annexes.
 (g) Activity Designs for both Society-wide and House-wide events;
 (h) Loan transactions (subject to deliberation and privacy redactions);
-
 
 (2) _Restricted Records_. Records accessible only to authorized officers or upon demonstrated
 need, including:
@@ -1666,7 +1729,9 @@ compromise ongoing investigations, or violate University data privacy policies.
 (4) _Classification Authority_. The Executive Secretary, in consultation with the Director of
 Internal Affairs and relevant House Secretariat Directors, shall classify records upon
 creation. Misclassification may be appealed to the High Council.
-Section 3. Retention Schedules and Custodianship.
+
+#### Section 3. Retention Schedules and Custodianship.
+
 (1) _Retention Periods_. Records shall be retained according to the following minimum
 schedules:
 (a) Permanent: Constitution, Rules and Procedures, House Charters, ratified
@@ -1674,7 +1739,6 @@ amendments, annual financial statements, election results, and House Cup
 winners.
 (b) Ten (10) Years: Approved meeting minutes, finalized point ledgers, disciplinary
 decisions with sanctions, and major project reports.
-
 
 (c) Five (5) Years: Draft documents, provisional reports, routine correspondence, and
 semester financial snapshots.
@@ -1699,7 +1763,9 @@ archived permanently if designated; (b) securely destroyed if no longer needed, 
 destruction log maintained; or (c) transferred to University archives if required by
 institutional policy. Destruction of any record classified as Permanent or involving
 disciplinary sanctions requires written approval from the High Council.
-Section 4. Access Request Procedures.
+
+#### Section 4. Access Request Procedures.
+
 (1) _Request Submission_. Any active member may request access to Public or Restricted
 Records by submitting a written Access Request Form to the Executive Secretary (for
 Society-wide records) or relevant House Secretariat Director (for House records). The
@@ -1709,8 +1775,7 @@ request, and preferred format (digital copy, in-person review, or summary).
 days. If granted, access shall be provided within three (3) business days of the response.
 If denied, the response shall state the specific ground for denial (e.g., confidential
 classification, privacy protection, pending proceeding) and the appeal process under
-Section 6.
-
+#### Section 6.
 
 (3) _Access Methods_.
 (a) _Digital Access_ : Public Records shall be posted to the Society's official digital
@@ -1725,7 +1790,9 @@ sensitive information.
 (4) _Fees_. No fee shall be charged for access to Public Records. Reasonable copying or
 printing costs may be charged for physical copies of Restricted Records, with prior notice
 to the requester.
-Section 5. Publication and Proactive Disclosure.
+
+#### Section 5. Publication and Proactive Disclosure.
+
 (1) _Mandatory Publications_. The following records shall be proactively published without
 request:
 (a) Monthly: House Point standings (Article I, Section 7), Debate League standings
@@ -1742,8 +1809,8 @@ Affairs shall ensure consistent formatting, accessibility, and archival of publi
 materials.
 (3) _Notification_. Members shall be notified of new publications through the Society's official
 communication channels (e.g., group chat, email, announcement at General Meetings).
-Section 6. Appeals and Dispute Resolution.
 
+#### Section 6. Appeals and Dispute Resolution.
 
 (1) _Appeal Grounds_. A member may appeal a denial of access or classification decision on
 grounds of: (a) misclassification of a record; (b) unreasonable delay in processing; (c)
@@ -1757,7 +1824,9 @@ decision by majority vote.
 (3) _Finality_. The High Council's decision on access appeals shall be final and executory,
 except where a constitutional violation is alleged, in which case the matter may be
 referred to the High Tribunal under Article 10 of the Constitution.
-Section 7. Data Privacy and Protection.
+
+#### Section 7. Data Privacy and Protection.
+
 (1) _Personal Data Principles_. The Society shall collect, process, and store personal data in
 accordance with the following principles:
 (a) _Lawfulness and Transparency_ : Data collection shall have a legitimate Society
@@ -1777,13 +1846,14 @@ necessary for Society purposes; and (d) withdraw consent for non-essential data
 processing. Requests shall be submitted to the Secretary of Internal Affairs and processed
 within ten (10) business days.
 
-
 (3) _Breach Response_. In the event of a data breach involving personal information, the High
 Council shall: (a) contain the breach and assess its scope; (b) notify affected members
 within seventy-two (72) hours if sensitive data is compromised; (c) report to University
 authorities if required by institutional policy; and (d) implement corrective measures to
 prevent recurrence.
-Section 8. Digital Platform Management.
+
+#### Section 8. Digital Platform Management.
+
 (1) _Platform Standards_. The Society's official digital platform shall: (a) provide secure,
 role-based access controls; (b) maintain an audit log of document views, edits, and
 downloads; (c) support version control for collaborative documents; and (d) ensure
@@ -1796,9 +1866,10 @@ content remain current.
 (3) _Backup and Recovery_. Critical Society records shall be backed up at least weekly to a
 secure, off-platform location. A disaster recovery plan shall be maintained by the
 Executive Secretary and tested annually.
-**Article IX.
-AMENDMENT PROCEDURES, REVIEW CYCLES, AND EFFECTIVITY**
-Section 1. Purpose and Scope.
+## **Article IX. AMENDMENT PROCEDURES, REVIEW CYCLES, AND EFFECTIVITY**
+
+#### Section 1. Purpose and Scope.
+
 This Article establishes unified procedures for proposing, deliberating, ratifying, and
 implementing amendments to these Rules and Procedures. It implements the amendment
 authority under Article 9 of the Constitution and provides detailed workflows to ensure that
@@ -1807,10 +1878,11 @@ Article does not alter constitutional amendment thresholds or member rights, but
 administrative processes to facilitate their exercise. All amendments shall uphold the Society's
 principles under Article 3, particularly Sections 8 (adaptation to changing needs) and 10
 (education as empowerment).
-Section 2. Classification of Amendments.
+
+#### Section 2. Classification of Amendments.
+
 (1) Amendments to these Rules and Procedures shall be classified as Procedural or
 Substantive based on their scope and impact.
-
 
 (2) Procedural Amendments include changes to:
 (a) Administrative timelines, submission deadlines, or reporting frequencies;
@@ -1835,11 +1907,12 @@ as guaranteed under Article 4 of the Constitution.
 High Council President, shall make an initial classification of any proposed amendment.
 This classification is provisional and subject to review by the General Meeting if a
 member petitions that a Procedural Amendment is in fact Substantive.
-Section 3. Proposal and Deliberation Process.
+
+#### Section 3. Proposal and Deliberation Process.
+
 (1) _Who May Propose_. Amendments may be proposed by:
 (a) The High Council President;
 (b) The Council of House Chancellors by majority vote;
-
 
 (c) A petition signed by at least twenty-five percent (25%) of active Society
 members; or
@@ -1862,7 +1935,9 @@ comment.
 and the Council of House Chancellors. The proposing body shall present the amendment,
 followed by open discussion. Members may submit written comments for inclusion in the
 record.
-Section 4. Approval and Ratification.
+
+#### Section 4. Approval and Ratification.
+
 (1) _Procedural Amendments_. Procedural Amendments shall be approved by:
 (a) A majority vote of the Council of House Chancellors; and
 (b) The concurrence of the High Council President.
@@ -1870,7 +1945,6 @@ Upon approval, the amendment shall be posted to the Society's official digital p
 and take effect immediately or on a date specified in the approving resolution.
 (2) _Substantive Amendments_. Substantive Amendments shall be approved by:
 (a) A majority vote of the Council of House Chancellors;
-
 
 (b) The concurrence of the High Council President; and
 (c) Ratification by majority vote of active members in a Society Assembly Meeting
@@ -1885,7 +1959,9 @@ ratification, the High Tribunal may be requested by any House Chancellor or the
 President to issue an advisory opinion on whether the amendment is consistent with the
 Constitution. Such opinion shall be non-binding but shall be included in the materials
 presented to the General Meeting.
-Section 5. Annex Updates and Flexible Revision.
+
+#### Section 5. Annex Updates and Flexible Revision.
+
 (1) _Annex Authority_. Annexes to these Rules and Procedures (e.g., Annex A: Debate
 Performance Criteria) may be updated by majority vote of the High Council with notice
 to members at least seven (7) days prior to the update taking effect.
@@ -1898,12 +1974,13 @@ main Articles;
 with a change log summarizing revisions. Members may petition the Council of House
 Chancellors to review an annex update if they believe it exceeds the authority granted
 under this Section.
-Section 6. Review Cycles and Sunset Provisions.
+
+#### Section 6. Review Cycles and Sunset Provisions.
+
 (1) _Annual Review_. These Rules and Procedures shall be reviewed annually at the end of the
 Second Semester, following the awarding of the House Cup. The review shall be led by
 the Council of House Chancellors in coordination with the High Council and shall assess:
 (a) The effectiveness and fairness of operational frameworks;
-
 
 (b) Alignment with constitutional principles and Society values;
 (c) Responsiveness to member feedback and institutional changes;
@@ -1914,7 +1991,9 @@ Amendments may be adopted at this time.
 (3) _Sunset Review for Pilot Provisions_. Any provision adopted as a pilot or temporary
 measure shall include a sunset clause specifying its expiration date. Extension or
 permanent adoption shall require the full amendment process under Section 4.
-Section 7. Effectivity, Transitory Provisions, and Constitutional Supremacy.
+
+#### Section 7. Effectivity, Transitory Provisions, and Constitutional Supremacy.
+
 (1) _Effectivity_. These Rules and Procedures, and any amendments thereto, shall take effect
 upon:
 (a) _For Procedural Amendments_ : Approval by the Council of House Chancellors and
@@ -1934,8 +2013,8 @@ Procedures and the Constitution of the BSU Debate Society, the Constitution shal
 prevail. Any provision of these Rules found to be inconsistent with the Constitution shall
 be deemed null and void to the extent of the inconsistency, without affecting the validity
 of the remaining provisions.
-Section 8. Publication, Accessibility, and Member Education.
 
+#### Section 8. Publication, Accessibility, and Member Education.
 
 (1) _Publication_. The full text of these Rules and Procedures, as amended, shall be posted to
 the Society's official digital platform within five (5) business days of effectivity. A
@@ -1947,7 +2026,9 @@ history with effective dates and amendment summaries.
 shall conduct an orientation session on these Rules and Procedures for new members
 within the first month of each academic year. Summary guides, flowcharts, or FAQs may
 be issued as non-binding instructional materials.
-Section 9. Final Provisions.
+
+#### Section 9. Final Provisions.
+
 (1) _Severability_. If any provision of these Rules and Procedures is held invalid or
 unenforceable, the remaining provisions shall continue in full force and effect.
 (2) _Repealer_. All prior rules, procedures, or guidelines inconsistent with these Rules and
@@ -1960,15 +2041,17 @@ principles under Article 3 shall prevail.
 (4) _Custodianship_. The Executive Secretary shall serve as the formal custodian of these
 Rules and Procedures, responsible for maintaining the official text, archiving
 amendments, and certifying copies for official use.
-**ANNEX A: DEBATE PERFORMANCE CRITERIA**
+### **ANNEX A: DEBATE PERFORMANCE CRITERIA**
 _Individual Debate Point System under Article III, Section 2(2) of the Rules and Procedures_
-Section 1. Purpose and Scope.
+
+#### Section 1. Purpose and Scope.
+
 This Annex establishes the specific criteria and point values for earning Individual Debate Points under
 Article III (The Debate League) of the Rules and Procedures. These points determine eligibility for
 Debate League membership and are tracked separately from House Points (Article I) and Individual
 Recognition Awards (Article II).
-Section 2. Eligible Activities.
 
+#### Section 2. Eligible Activities.
 
 Individual Debate Points may be earned through participation in the following activities, provided they
 are approved by the High Council for point eligibility:
@@ -1984,7 +2067,7 @@ are approved by the High Council for point eligibility:
 (a) Tournaments where members represent Benguet State University or the Debate Society.
 (b) Competitions recognized by the High Council as legitimate academic, student, or
 professional debating events.
-Section 3. Point Values by Activity Type
+#### Section 3. Point Values by Activity Type
 A. Society-Wide and Approved House-Wide Debates
 Performance Metric Points Awarded Notes
 Match Win +15 points Awarded to each debater on
@@ -2000,7 +2083,6 @@ tournament)
 +5 points each For 2nd and 3rd place speaker
 awards
 B. External Competitions (Representing BSU/Debate Society)
-
 
 Achievement Level Points Awarded Documentation Required
 International
@@ -2055,7 +2137,6 @@ place)
 speaker rankings, or official
 award certificate
 
-
 Best Rebuttal/Reply Speaker +10 points Award certificate, official
 communication from
 organizing body, or official
@@ -2066,7 +2147,7 @@ Award
 +10 points Certificate, published results,
 or official communication
 from organizing body
-Section 4. Point Accumulation Rules
+#### Section 4. Point Accumulation Rules
 (1) _Cumulative Tracking_.
 (a) Individual Debate Points accumulate throughout the academic year.
 (b) Points reset to zero (0) at the start of each new academic year (Article III, Section 2(3)).
@@ -2081,7 +2162,7 @@ competition.
 competition.
 (b) Alternate debaters who did not speak in any round shall receive 50% of participation
 points only, unless they contributed to case preparation documented by the team captain,
-Section 5. Documentation and Verification
+#### Section 5. Documentation and Verification
 (1) _Submission Requirements_. Members claiming Individual Debate Points must submit a Point
 Claim Form to the Secretary of Internal Affairs within fourteen (14) calendar days of the
 activity’s completion, including:
@@ -2089,7 +2170,6 @@ activity’s completion, including:
 (b) Date, name, and organizing body of the activity.
 (c) Category of points claimed with reference to this Annex.
 (d) Specific point amount claimed.
-
 
 (e) Supporting documentation:
 (i) For Society/House debates: signed attendance sheet, judge’s decision sheet, or
@@ -2112,14 +2192,15 @@ documentation, misclassification, or procedural error.
 (4) _Finalization_.
 (a) If no petition is filed within the seven day period, points become final and executory.
 (b) Finalized points shall be used for Debate League selection under Article III, Section 3.
-Section 6. Dispute Resolution.
+
+#### Section 6. Dispute Resolution.
+
 (1) _Grounds for Petition_. A member may petition a point posting on the following grounds:
 (a) The activity does not qualify under Section 2 of this Annex;
 (b) Documentation is insufficient, inaccurate, or fabricated;
 (c) Point value claimed does not match the criteria in Section 3; or
 (d) The member was not an active participant in the claimed capacity.
 (2) _Adjudication_.
-
 
 (a) Petitions shall be reviewed by the High Tribunal convened for point disputes (Article I,
 Section 2(7)).
@@ -2135,7 +2216,9 @@ inaccurate information:
 Individual Debate Point tally; and
 (c) The matter may be referred to the Office of Internal Affairs for disciplinary review under
 Article VI.
-Section 7. Special Provisions.
+
+#### Section 7. Special Provisions.
+
 (1) _Hybrid or Online Competitions_.
 (a) Points for online or hybrid-format debates shall follow the same values as in-person
 events, provided the competition maintains formal judging, documented results, and
@@ -2152,5 +2235,4 @@ organization, points shall be awarded only if:
 (c) Results are jointly certified and submitted per Section 5.
 (4) _Retroactive Claims_. Points may not be claimed for activities completed prior to the ratification of
 this Annex, except as provided in Article III, Section 8 (Transitory Provision).
-
 

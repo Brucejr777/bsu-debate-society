@@ -100,7 +100,7 @@ export default async function LeaguePage() {
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Rules &amp; Procedures — Articles II &amp; III
             </p>
-            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#ffb800] to-[#ff4d00] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               Debate League &amp; Individual Recognition
             </h1>
           </div>
