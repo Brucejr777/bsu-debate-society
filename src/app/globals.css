@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
+  --background: #000000;
   --foreground: #ededed;
 }
 
@@ -12,16 +12,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* ── Base ── */
+/* ── Base - Pure Black ── */
 body {
-  background: var(--background);
+  background: #000000;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Gold Shine Shimmer (Silk Gold) ── */
+/* ── Gold Shine Shimmer ── */
 @keyframes gold-shine {
   0% { background-position: -100% center; }
   100% { background-position: 100% center; }
@@ -52,7 +52,7 @@ body {
   background-origin: border-box;
   background-clip: padding-box, border-box;
   background-image:
-    linear-gradient(var(--card-bg, #0a0a0a), var(--card-bg, #0a0a0a)),
+    linear-gradient(var(--card-bg, #000000), var(--card-bg, #000000)),
     linear-gradient(
       90deg,
       #ffde00,
@@ -73,144 +73,49 @@ body {
   animation: gold-pulse 3s ease-in-out infinite;
 }
 
-/* ── Silk Overlay ── */
-.silk-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 1px,
-      rgba(255, 184, 0, 0.02) 1px,
-      rgba(255, 184, 0, 0.02) 3px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 1px,
-      rgba(255, 184, 0, 0.015) 1px,
-      rgba(255, 184, 0, 0.015) 3px
-    );
+/* ── Pure Black Background - NO CIRCLES, NO BLOBS, NO MESH ── */
+.bg-mesh,
+.blob,
+.silk-overlay,
+.network-background {
+  display: none !important;
 }
 
-/* ── Scrollbar ── */
+/* ── Gold Scrollbar - Chrome, Edge, Safari ── */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #0a0a0a;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ffde00, #eecf02, #efa706);
-  border-radius: 4px;
+  background: linear-gradient(135deg, #ffde00 0%, #eecf02 50%, #efa706 100%);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #eecf02, #ffde00, #eecf02);
+  background: linear-gradient(135deg, #ffea33 0%, #f5d41a 50%, #f5b81a 100%);
 }
 
-/* ── Animated Mesh Gradient Background ── */
-.bg-mesh {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-/* Light gold — top-left blob */
-.blob-red {
-  width: 600px;
-  height: 600px;
-  top: 5%;
-  left: 5%;
-  background: radial-gradient(circle, #ffde00, transparent 70%);
-  animation: blob-move-1 20s infinite;
-}
-
-/* Metallic gold — bottom-right blob */
-.blob-blue {
-  width: 550px;
-  height: 550px;
-  top: 55%;
-  right: 5%;
-  background: radial-gradient(circle, #eecf02, transparent 70%);
-  animation: blob-move-2 25s infinite;
-}
-
-/* Warm gold — center blob */
-.blob-purple {
-  width: 500px;
-  height: 500px;
-  top: 35%;
-  left: 40%;
-  background: radial-gradient(circle, #efa706, transparent 70%);
-  animation: blob-move-3 22s infinite;
-}
-
-/* Deep gold — bottom-left blob */
-.blob-green {
-  width: 450px;
-  height: 450px;
-  bottom: 5%;
-  left: 20%;
-  background: radial-gradient(circle, #ffde00, transparent 70%);
-  animation: blob-move-4 28s infinite;
+/* ── Gold Scrollbar - Firefox ── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #eecf02 #0a0a0a;
 }
 
 /* ── Selection ── */
 ::selection {
-  background-color: rgba(255, 222, 0, 0.35);
-  color: #fff;
+  background-color: rgba(255, 222, 0, 0.3);
+  color: #ffffff;
 }
 
 /* ── Focus Ring ── */
 :focus-visible {
-  outline: 2px solid rgba(255, 222, 0, 0.7);
+  outline: 2px solid rgba(255, 222, 0, 0.5);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }
-
-@keyframes blob-move-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(80px, -60px) scale(1.15); }
-  50% { transform: translate(-40px, 80px) scale(0.9); }
-  75% { transform: translate(60px, 40px) scale(1.08); }
-}
-
-@keyframes blob-move-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-70px, 50px) scale(1.1); }
-  50% { transform: translate(50px, -70px) scale(0.92); }
-  75% { transform: translate(-40px, -50px) scale(1.12); }
-}
-
-@keyframes blob-move-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, -80px) scale(1.1); }
-  66% { transform: translate(-80px, 60px) scale(0.95); }
-}
-
-@keyframes blob-move-4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  20% { transform: translate(60px, -40px) scale(1.05); }
-  40% { transform: translate(-30px, 70px) scale(1.15); }
-  60% { transform: translate(70px, 30px) scale(0.9); }
-  80% { transform: translate(-50px, -60px) scale(1.1); }
-}
-
-
