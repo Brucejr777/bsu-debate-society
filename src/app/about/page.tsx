@@ -45,6 +45,36 @@ export default function AboutPage() {
       description:
         "The Society affirms that education is not solely the acquisition of knowledge, but also the cultivation of awareness, empathy, and agency. It serves as a platform for empowerment through discourse, recognizing that learning is a means to liberation — personally, socially, and morally.",
     },
+    {
+      title: "Academic & Community Ties",
+      description:
+        "The Society recognizes and upholds the vital ties among students, faculty, administration, and other sectors of the academic community within Benguet State University. It shall serve as a platform for the peaceful and intellectual discussion of issues, concerns, and institutional initiatives.",
+    },
+    {
+      title: "Technology & Innovation",
+      description:
+        "The Society upholds the responsible and ethical integration of emerging technologies, including artificial intelligence, into debate preparation, research, and administrative operations. All members and officers shall ensure that technological tools are employed transparently, with proper attribution, and in strict compliance with academic standards.",
+    },
+    {
+      title: "Environmental Sustainability",
+      description:
+        "The Society integrates environmental sustainability into its procurement practices, event planning, and daily operations. Recognizing that intellectual discourse thrives within a healthy and resilient community, the Society shall prioritize eco-conscious resource allocation, minimize waste, and promote sustainable engagement with its physical and digital environments.",
+    },
+    {
+      title: "Well-Being & Mental Health",
+      description:
+        "The Society prioritizes the holistic well-being and mental health of its members in the design, scheduling, and execution of all activities and competitive engagements. It fosters a supportive environment that normalizes rest, provides accessible wellness resources, and rejects cultures of burnout or excessive strain.",
+    },
+    {
+      title: "Transparency & Accountability",
+      description:
+        "The Society establishes and maintains a confidential, non-retaliatory mechanism for the reporting of misconduct, ethical violations, or administrative malfeasance. Any member who discloses information in good faith regarding breaches of the Constitution, financial irregularities, or threats to institutional integrity shall be protected from retaliation, intimidation, or adverse action.",
+    },
+    {
+      title: "Alumni & Legacy",
+      description:
+        "The Society cultivates a structured and meaningful relationship with its alumni, recognizing their enduring contributions to the organization's legacy and intellectual tradition. Formal alumni engagement is facilitated through advisory roles, mentorship programs, and institutional partnerships, while preserving student-led governance.",
+    },
   ];
 
   return (
@@ -76,7 +106,7 @@ export default function AboutPage() {
           {/* Header */}
           <div className="space-y-4 text-center">
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
-              Articles 1–3 — Identity &amp; Principles
+              Articles 1–3 — Identity & Principles
             </p>
             <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               About the Society
@@ -87,7 +117,7 @@ export default function AboutPage() {
           <article className="mx-auto max-w-3xl space-y-4 text-center">
             <p className="text-base leading-7 text-neutral-300">
               The Debate Society is defined by its Constitution — the supreme governing
-              document that establishes its identity, vision, mission, and the nine core
+              document that establishes its identity, vision, mission, and the 15 core
               principles that guide every debate, event, and member experience.
             </p>
           </article>
@@ -99,7 +129,7 @@ export default function AboutPage() {
                 Organization Identity
               </h2>
               <p className="text-sm italic text-neutral-500">
-                — Constitution, Article 1 &amp; Article 2
+                — Constitution, Article 1 & Article 2
               </p>
             </div>
             <p className="mx-auto max-w-3xl text-center text-base leading-7 text-neutral-300">
@@ -139,7 +169,7 @@ export default function AboutPage() {
                 Declaration of Principles
               </h2>
               <p className="text-sm italic text-neutral-500">
-                — Constitution, Article 3 — Nine Core Principles
+                — Constitution, Article 3 — The 15 Principles
               </p>
             </div>
 
