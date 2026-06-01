@@ -57,9 +57,26 @@ export default function Home() {
                       <p className="mt-2 text-sm leading-6 text-neutral-300">
                         We uphold honesty, fairness, and a strong sense of responsibility in every action.
                       </p>
-                    </div>
                   </div>
+                  <p className="mt-6 text-center text-xs text-neutral-500">
+                    Selected principles — see the{" "}
+                    <a
+                      href="/about"
+                      className="font-medium text-neutral-400 underline underline-offset-2 transition hover:text-white"
+                    >
+                      About page
+                    </a>{" "}
+                    or the{" "}
+                    <a
+                      href="/documents/constitution"
+                      className="font-medium text-neutral-400 underline underline-offset-2 transition hover:text-white"
+                    >
+                      Constitution
+                    </a>{" "}
+                    for the full Declaration.
+                  </p>
                 </div>
+              </div>
               </div>
 
               <aside className="space-y-6">
