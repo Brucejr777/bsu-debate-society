@@ -256,42 +256,6 @@ export default function ElectionsPage() {
         </div>
       </section>
 
-      {/* Historical Note */}
-      <section className="space-y-6">
-        <h2 className="text-2xl font-semibold tracking-tight text-white">
-          Historical Note: The Founding President
-        </h2>
-        <div className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6 sm:p-8">
-          <p className="text-neutral-300">
-            The term <span className="font-semibold text-white">&ldquo;Founding President&rdquo;</span> refers
-            to the first individual to hold the office of Society President upon the ratification
-            of the Constitution and Rules and Procedures that established the Four-House
-            structure, the Presidential Conclave election system, and the High Council framework.
-          </p>
-          <p className="mt-4 text-neutral-300">
-            Under the transitory provisions of{" "}
-            <span className="font-medium text-neutral-200">Article VII, Section 11</span>, the High
-            Council may, by Resolution, authorize:
-          </p>
-          <ul className="mt-3 space-y-2">
-            <li className="flex gap-2 text-neutral-400">
-              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-neutral-600" />
-              Extension of the Founding President&apos;s term for one (1) additional academic year
-            </li>
-            <li className="flex gap-2 text-neutral-400">
-              <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-neutral-600" />
-              Deferral of the Presidential Conclave for the academic year immediately following
-              the Founding President&apos;s first term
-            </li>
-          </ul>
-          <p className="mt-4 text-sm text-neutral-500">
-            This designation is unique to the individual who first assumes office under this
-            framework and shall not be transferable, inheritable, or applicable to any subsequent
-            Society President.
-          </p>
-        </div>
-      </section>
-
       {/* Footer CTA */}
       <div className="rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-8 text-center">
         <p className="text-lg text-neutral-400">
