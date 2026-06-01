@@ -264,6 +264,84 @@ export default function MembershipPage() {
           </div>
 
           {/* ═══════════════════════════════════════ */}
+          {/* RE-ADMISSION OF FORMER MEMBERS           */}
+          {/* ═══════════════════════════════════════ */}
+          <div className="space-y-6">
+            <div className="space-y-4 text-center">
+              <h2 className="text-3xl font-semibold text-white">
+                Re-admission of Former Members
+              </h2>
+              <p className="text-sm italic text-neutral-500">
+                — Article 5, Section 10
+              </p>
+            </div>
+
+            <article className="rounded-3xl border border-purple-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-3xl space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-purple-900/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-purple-400">
+                      <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 0 0-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634Zm4.314 0c-.54 0-.828.419-.936.634a1.96 1.96 0 0 0-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634Zm2.813 5.25a.75.75 0 0 1 0 1.5h-6.5a.75.75 0 0 1 0-1.5h6.5Z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-purple-200">
+                    Return to the Society
+                  </h3>
+                </div>
+                <p className="text-base leading-7 text-neutral-300">
+                  Individuals who previously held <strong className="text-white">Full Membership</strong> status
+                  and departed the Society in <strong className="text-white">good standing</strong> — as certified
+                  by the Office of Internal Affairs — may petition for re-admission.
+                </p>
+                <p className="text-sm italic text-neutral-500">
+                  — Article 5, Section 10
+                </p>
+              </div>
+            </article>
+
+            {/* Re-admission Steps */}
+            <div className="space-y-4">
+              {[
+                {
+                  step: "1",
+                  title: "Submit Petition",
+                  desc: "Submit a written petition to the relevant House Council including: a statement of intent, evidence of prior good standing, and a commitment to abide by all current Society policies.",
+                },
+                {
+                  step: "2",
+                  title: "House Council Vote",
+                  desc: "The House Council votes on the petition. Approval requires a majority vote of the Council.",
+                },
+                {
+                  step: "3",
+                  title: "OIA Verification",
+                  desc: "The Society Office of Internal Affairs verifies that the petitioner departed in good standing.",
+                },
+                {
+                  step: "4",
+                  title: "President's Concurrence",
+                  desc: "The President of the Society must concur with the re-admission decision.",
+                },
+                {
+                  step: "5",
+                  title: "Restoration to Full Membership",
+                  desc: "Upon approval, the member is restored to Full Membership status without repeating the Executive Internship — provided their departure occurred no more than three (3) academic years prior. They retain all rights and privileges, subject to any constitutional amendments enacted during their absence.",
+                },
+              ].map((item) => (
+                <article key={item.step} className="flex items-start gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-neutral-800 text-sm font-bold text-white">
+                    {item.step}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-neutral-400">{item.desc}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          {/* ═══════════════════════════════════════ */}
           {/* MEMBER OBLIGATIONS                      */}
           {/* ═══════════════════════════════════════ */}
           <div className="space-y-6">
@@ -320,7 +398,7 @@ export default function MembershipPage() {
                   Executive Internship
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-neutral-400">
-                  Provisional members must complete one (1) academic year of
+                  Provisional members must complete one (1) academic semester of
                   service within an Office of the High Council as an Executive
                   Intern to attain Full Membership status.
                 </p>

@@ -145,6 +145,10 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
+          <p className="text-center text-xs text-amber-500/70">
+            ⚠ These contact details should be verified with the High Council
+            to ensure they are officially correct and authorized.
+          </p>
 
           {/* ── Location ── */}
           <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">

@@ -247,6 +247,256 @@ export default async function StandingsPage() {
             </div>
           )}
 
+          {/* ── How the Point System Works ── */}
+          <div className="space-y-6">
+            <div className="space-y-4 text-center">
+              <h2 className="text-3xl font-semibold text-white">
+                How the Point System Works
+              </h2>
+              <p className="text-sm italic text-neutral-500">
+                — Rules and Procedures, Article I, Sections 3–7 & 10–11
+              </p>
+            </div>
+
+            {/* Point Categories Explanation */}
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-4xl space-y-6">
+                <h3 className="text-2xl font-semibold text-white text-center">
+                  Four Point Categories
+                </h3>
+
+                {/* 1. Competitive Excellence */}
+                <div className="rounded-2xl border border-emerald-900/40 bg-neutral-950/95 p-6 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-900/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 text-emerald-400">
+                        <path fillRule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8.5V5.5a3 3 0 0 0-6 0V9.5h6Z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-semibold text-emerald-200">Competitive Excellence</h4>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <p className="text-sm font-semibold text-white mb-2">Inter-House Tournaments</p>
+                      <ul className="space-y-1.5 text-sm text-neutral-400">
+                        <li className="flex justify-between"><span>1st Place</span><span className="font-semibold text-emerald-400">+100 pts</span></li>
+                        <li className="flex justify-between"><span>2nd Place</span><span className="font-semibold text-emerald-400">+75 pts</span></li>
+                        <li className="flex justify-between"><span>3rd Place</span><span className="font-semibold text-emerald-400">+50 pts</span></li>
+                        <li className="flex justify-between"><span>Best Speaker</span><span className="font-semibold text-emerald-400">+25 pts</span></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white mb-2">External Competitions</p>
+                      <ul className="space-y-1.5 text-sm text-neutral-400">
+                        <li className="flex justify-between"><span>Championship Win</span><span className="font-semibold text-emerald-400">+50 pts</span></li>
+                        <li className="flex justify-between"><span>Finalist / Semi-Finalist</span><span className="font-semibold text-emerald-400">+30 pts</span></li>
+                        <li className="flex justify-between"><span>Participation</span><span className="font-semibold text-emerald-400">+10 pts</span></li>
+                      </ul>
+                      <p className="mt-2 text-xs italic text-neutral-500">Placement and participation points are mutually exclusive.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Organizational Contribution */}
+                <div className="rounded-2xl border border-blue-900/40 bg-neutral-950/95 p-6 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-900/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 text-blue-400">
+                        <path d="M10.362 1.093a.75.75 0 0 0-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925ZM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0 0 18 14.25V6.443ZM9.25 18.693v-8.25l-7.25-4v7.807a.75.75 0 0 0 .388.657l6.862 3.786Z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-semibold text-blue-200">Organizational Contribution</h4>
+                  </div>
+                  <p className="text-sm text-neutral-400 mb-3">Each House earns points by leading initiatives that demonstrate its core embodied value:</p>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8b0000" }}>
+                      <p className="text-sm font-semibold text-white">House of Bathala</p>
+                      <p className="text-xs text-neutral-400">Leadership initiative</p>
+                      <p className="text-lg font-semibold text-emerald-400">+100</p>
+                    </div>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #280137" }}>
+                      <p className="text-sm font-semibold text-white">House of Kabunian</p>
+                      <p className="text-xs text-neutral-400">Journalism initiative</p>
+                      <p className="text-lg font-semibold text-emerald-400">+100</p>
+                    </div>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #000b90" }}>
+                      <p className="text-sm font-semibold text-white">House of Laon</p>
+                      <p className="text-xs text-neutral-400">Academic initiative</p>
+                      <p className="text-lg font-semibold text-emerald-400">+100</p>
+                    </div>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #006400" }}>
+                      <p className="text-sm font-semibold text-white">House of Manama</p>
+                      <p className="text-xs text-neutral-400">Arts initiative</p>
+                      <p className="text-lg font-semibold text-emerald-400">+100</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div className="rounded-xl bg-neutral-900 p-3">
+                      <p className="text-sm text-neutral-400">Co-hosted event (2 Houses)</p>
+                      <p className="text-lg font-semibold text-emerald-400">+20 each</p>
+                    </div>
+                    <div className="rounded-xl bg-neutral-900 p-3">
+                      <p className="text-sm text-neutral-400">New member (active 1+ semester)</p>
+                      <p className="text-lg font-semibold text-emerald-400">+5 each</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Governance & Compliance */}
+                <div className="rounded-2xl border border-amber-900/40 bg-neutral-950/95 p-6 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-900/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 text-amber-400">
+                        <path fillRule="evenodd" d="M10 2a3 3 0 0 0-3 3v1H5a3 3 0 0 0-3 3v2.382l2.447.895A.75.75 0 0 0 6 9.232V9h8v.232a.75.75 0 0 0 .553.71l2.447-.895V9a3 3 0 0 0-3-3h-2V5a3 3 0 0 0-3-3Zm3 4V5a1.5 1.5 0 0 0-3 0v1h3Z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-semibold text-amber-200">Governance & Compliance</h4>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <p className="text-sm font-semibold text-white mb-2">Additions</p>
+                      <ul className="space-y-1.5 text-sm text-neutral-400">
+                        <li className="flex justify-between"><span>On-time report submission</span><span className="font-semibold text-emerald-400">+5</span></li>
+                        <li className="flex justify-between"><span>Full Council meeting attendance</span><span className="font-semibold text-emerald-400">+3</span></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white mb-2">Deductions</p>
+                      <ul className="space-y-1.5 text-sm text-neutral-400">
+                        <li className="flex justify-between"><span>Late submission (per day)</span><span className="font-semibold text-red-400">-3 (max -15)</span></li>
+                        <li className="flex justify-between"><span>No financial report submitted</span><span className="font-semibold text-red-400">-20</span></li>
+                        <li className="flex justify-between"><span>Unauthorized use of House Resources</span><span className="font-semibold text-red-400">-75% of total points</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Conduct & Ethics */}
+                <div className="rounded-2xl border border-red-900/40 bg-neutral-950/95 p-6 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-900/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 text-red-400">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-semibold text-red-200">Conduct & Ethics</h4>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <div className="rounded-xl bg-neutral-900 p-3">
+                      <p className="text-sm font-semibold text-amber-300">Minor Violation</p>
+                      <p className="mt-1 text-xs text-neutral-400">First-time failure to complete tasks, minor disrespect</p>
+                      <p className="mt-2 text-2xl font-bold text-red-400">-5</p>
+                    </div>
+                    <div className="rounded-xl bg-neutral-900 p-3">
+                      <p className="text-sm font-semibold text-red-300">Major Violation</p>
+                      <p className="mt-1 text-xs text-neutral-400">Dishonesty, harassment, intentional disruption</p>
+                      <p className="mt-2 text-2xl font-bold text-red-400">-15</p>
+                    </div>
+                    <div className="rounded-xl bg-neutral-900 p-3">
+                      <p className="text-sm font-semibold text-red-300">Severe Violation</p>
+                      <p className="mt-1 text-xs text-neutral-400">Discrimination, intentional misrepresentation</p>
+                      <p className="mt-2 text-2xl font-bold text-red-400">-30</p>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-xs italic text-neutral-500">Point deductions are applied by the OIA based on the Society Disciplinary Ledger. Concealment of a violation results in an additional -30 penalty.</p>
+                </div>
+
+                {/* Special Competitions & Bonuses */}
+                <div className="rounded-2xl border border-purple-900/40 bg-neutral-950/95 p-6 shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-purple-900/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 text-purple-400">
+                        <path d="M15.98 1.804a1 1 0 0 0-1.96 0l-.24 1.192a1 1 0 0 1-.784.785l-1.192.238a1 1 0 0 0 0 1.962l1.192.238a1 1 0 0 1 .785.785l.238 1.192a1 1 0 0 0 1.962 0l.238-1.192a1 1 0 0 1 .785-.785l1.192-.238a1 1 0 0 0 0-1.962l-1.192-.238a1 1 0 0 1-.785-.785l-.238-1.192ZM6.949 5.684a1 1 0 0 0-1.898 0l-.683 2.051a1 1 0 0 1-.633.633l-2.051.683a1 1 0 0 0 0 1.898l2.051.683a1 1 0 0 1 .633.633l.683 2.051a1 1 0 0 0 1.898 0l.683-2.051a1 1 0 0 1 .633-.633l2.051-.683a1 1 0 0 0 0-1.898l-2.051-.683a1 1 0 0 1-.633-.633l-.683-2.051Z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-semibold text-purple-200">Special Competitions & Bonuses</h4>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <p className="text-sm font-semibold text-white mb-2">Annual Excellence Awards</p>
+                      <ul className="space-y-1.5 text-sm text-neutral-400">
+                        <li className="flex justify-between"><span>Historical Integrity</span><span className="font-semibold text-emerald-400">+25</span></li>
+                        <li className="flex justify-between"><span>Commitment to Inclusive Dialogue</span><span className="font-semibold text-emerald-400">+25</span></li>
+                        <li className="flex justify-between"><span>Innovation in Debate</span><span className="font-semibold text-emerald-400">+25</span></li>
+                        <li className="flex justify-between"><span>Community Impact</span><span className="font-semibold text-emerald-400">+25</span></li>
+                        <li className="flex justify-between"><span>Member Development</span><span className="font-semibold text-emerald-400">+25</span></li>
+                        <li className="flex justify-between"><span>Rising House Award</span><span className="font-semibold text-emerald-400">+25</span></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white mb-2">Bonus Opportunities</p>
+                      <ul className="space-y-1.5 text-sm text-neutral-400">
+                        <li className="flex justify-between"><span>Perfect attendance (all meetings)</span><span className="font-semibold text-emerald-400">+15</span></li>
+                        <li className="flex justify-between"><span>≥90% attendance (all meetings)</span><span className="font-semibold text-emerald-400">+10</span></li>
+                        <li className="flex justify-between"><span>Zero conduct violations (semester)</span><span className="font-semibold text-emerald-400">+10</span></li>
+                        <li className="flex justify-between"><span>Cross-House collaboration (3+ Houses)</span><span className="font-semibold text-emerald-400">+30</span></li>
+                        <li className="flex justify-between"><span>External individual award</span><span className="font-semibold text-emerald-400">+15</span></li>
+                        <li className="flex justify-between"><span>Host external organization visit</span><span className="font-semibold text-emerald-400">+10</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            {/* Transaction Process */}
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h3 className="text-2xl font-semibold text-white">
+                  Point Transaction Process
+                </h3>
+                <p className="text-base leading-7 text-neutral-300">
+                  Houses submit an Accomplishment Report within <strong className="text-white">seven (7) calendar days</strong> of
+                  an eligible activity. The Secretary of Internal Affairs posts claimed points provisionally within{" "}
+                  <strong className="text-white">three (3) business days</strong>. Other Houses have{" "}
+                  <strong className="text-white">seven (7) calendar days</strong> to file a petition challenging the
+                  posting. If no petition is filed, points become final and executory.
+                </p>
+                <p className="text-sm italic text-neutral-500">
+                  — Article I, Section 5
+                </p>
+              </div>
+            </article>
+
+            {/* Point Keeper */}
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h3 className="text-2xl font-semibold text-white">
+                  Point Keeper & Ledger Management
+                </h3>
+                <p className="text-base leading-7 text-neutral-300">
+                  The <strong className="text-white">Secretary of Internal Affairs</strong> serves as the Point Keeper,
+                  maintaining the Master House Point Ledger in digital format. All Society members have view access
+                  to the Ledger through the Society's official online platform. A summary report with category
+                  breakdowns is presented monthly at the Society Assembly Meeting.
+                </p>
+                <p className="text-sm italic text-neutral-500">
+                  — Article I, Sections 7 & 11
+                </p>
+              </div>
+            </article>
+
+            {/* Dispute Resolution */}
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h3 className="text-2xl font-semibold text-white">
+                  Dispute Resolution
+                </h3>
+                <p className="text-base leading-7 text-neutral-300">
+                  If a petition is filed within the 7-day provisional period, the{" "}
+                  <strong className="text-white">High Tribunal</strong> is convened with the President as Presiding
+                  Judge and the three uninvolved House Chancellors voting on the point transaction. A decision
+                  is rendered within <strong className="text-white">fourteen (14) calendar days</strong>. The House
+                  that submitted the report may appeal on constitutional grounds to the{" "}
+                  <strong className="text-white">Society Adviser</strong>, whose decision is final.
+                </p>
+                <p className="text-sm italic text-neutral-500">
+                  — Article I, Sections 5(4) & 8
+                </p>
+              </div>
+            </article>
+          </div>
+
           {/* ── House Cup Info ── */}
           <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
             <div className="mx-auto max-w-3xl space-y-4 text-center">

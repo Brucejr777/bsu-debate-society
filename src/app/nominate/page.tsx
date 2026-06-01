@@ -5,7 +5,7 @@ import { HOUSES } from "@/lib/houses";
 
 const AWARD_CATEGORIES = [
   "Leadership Excellence",
-  "Communication Excellence",
+  "Communication and Documentation Excellence",
   "Academic Excellence",
   "Creative Excellence",
 ];
