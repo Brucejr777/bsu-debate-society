@@ -206,8 +206,12 @@ export default function AboutPage() {
                 freedom of speech and peaceful assembly, the right to file candidacy for
                 elective office, suffrage, access to official records, protection from
                 exploitation and unjust punishment, due process in disciplinary proceedings,
-                and the right to form, assist, and join organizations for their integral
-                development.
+                the right to form, assist, and join organizations for their integral
+                development, the right to petition for redress of grievances, the right to
+                be informed of the rules governing them, the right to avail Society
+                facilities and resources for school-related activities, protection from
+                punishment based on political beliefs and aspirations, and the right against
+                compelled self-incrimination.
               </p>
             </div>
           </article>
