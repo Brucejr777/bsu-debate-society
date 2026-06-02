@@ -176,8 +176,8 @@ export default async function IndividualLedgerPage() {
                                   tx.points > 0
                                     ? "text-emerald-400"
                                     : tx.points < 0
-                                      ? "text-red-400"
-                                      : "text-neutral-400"
+                                    ? "text-red-400"
+                                    : "text-neutral-400"
                                 }`}
                               >
                                 {tx.points > 0 ? "+" : ""}
@@ -244,8 +244,8 @@ export default async function IndividualLedgerPage() {
                               tx.points > 0
                                 ? "text-emerald-400"
                                 : tx.points < 0
-                                  ? "text-red-400"
-                                  : "text-neutral-400"
+                                ? "text-red-400"
+                                : "text-neutral-400"
                             }`}
                           >
                             {tx.points > 0 ? "+" : ""}
@@ -297,51 +297,33 @@ export default async function IndividualLedgerPage() {
             </article>
           )}
 
-          {/* Point Categories */}
-          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8">
-            <div className="mx-auto max-w-3xl space-y-4 text-center">
-              <h2 className="text-xl font-semibold text-white">
-                Individual Point Values
-              </h2>
-              <p className="text-sm text-neutral-400">
-                Points are awarded for internal debates, external
-                competitions, and individual performance achievements as
-                specified in Annex A of the Rules and Procedures.
+          {/* Point Criteria Link (Replaces old summary) */}
+          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            <div className="mx-auto max-w-3xl space-y-6 text-center">
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-900/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-6 text-amber-400">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.536-4.464a.75.75 0 1 0-1.061-1.061 3.5 3.5 0 0 1-4.95 0 .75.75 0 0 0-1.06 1.06 5 5 0 0 0 7.07 0Z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-white">Debate Performance Criteria</h2>
+              </div>
+              <p className="text-base leading-7 text-neutral-300">
+                For the complete and detailed breakdown of Individual Debate Point values—including Society debates, external competition placements, speaker awards, and accumulation rules—please refer to the official performance criteria page.
               </p>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl bg-neutral-900 p-5">
-                  <h3 className="text-sm font-semibold text-white">
-                    Society Debates
-                  </h3>
-                  <ul className="mt-2 space-y-1 text-xs text-neutral-400">
-                    <li>Match Win: +15</li>
-                    <li>Match Draw: +7</li>
-                    <li>Participation: +3</li>
-                    <li>Best Speaker: +10</li>
-                  </ul>
-                </div>
-                <div className="rounded-2xl bg-neutral-900 p-5">
-                  <h3 className="text-sm font-semibold text-white">
-                    External Competitions
-                  </h3>
-                  <ul className="mt-2 space-y-1 text-xs text-neutral-400">
-                    <li>International 1st: +50</li>
-                    <li>National 1st: +45</li>
-                    <li>Regional 1st: +35</li>
-                    <li>Local 1st: +25</li>
-                  </ul>
-                </div>
-                <div className="rounded-2xl bg-neutral-900 p-5">
-                  <h3 className="text-sm font-semibold text-white">
-                    Speaker Awards
-                  </h3>
-                  <ul className="mt-2 space-y-1 text-xs text-neutral-400">
-                    <li>Best Speaker (ext.): +20</li>
-                    <li>Top 2/3 Speaker: +12</li>
-                    <li>Best Rebuttal: +10</li>
-                    <li>Best Case: +10</li>
-                  </ul>
-                </div>
+              <p className="text-sm italic text-neutral-500">
+                — Rules and Procedures, Annex A
+              </p>
+              <div className="pt-2">
+                <a
+                  href="/league/criteria"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-amber-700"
+                >
+                  View Full Performance Criteria
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                    <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                  </svg>
+                </a>
               </div>
             </div>
           </article>

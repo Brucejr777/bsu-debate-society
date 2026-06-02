@@ -131,7 +131,7 @@ export default async function LeaguePage() {
                 The Debate League identifies and selects the top 8 members of the
                 Society based on individual performance points accumulated across
                 all debate tournaments and Society events. These top-ranked members
-                are designated as the Society's official external representatives
+                are designated as the Society&apos;s official external representatives
                 for national and international competitions.
               </p>
               <p className="text-sm italic text-neutral-500">
@@ -263,6 +263,7 @@ export default async function LeaguePage() {
                       </h3>
                     </div>
                   </div>
+                  
                   <p className="text-base leading-7 text-neutral-300">
                     Members ranked in the top 8 receive institutional support for
                     external competition participation, including travel fund
@@ -273,24 +274,33 @@ export default async function LeaguePage() {
                   <p className="text-sm italic text-neutral-500">
                     — Article III, Section 4
                   </p>
-                  <a
-                    href="/league/support"
-                    className="inline-flex items-center justify-center rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
-                  >
-                    Request Support
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="ml-1.5 size-4"
+
+                  <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <a
+                      href="/league/support"
+                      className="inline-flex items-center justify-center rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </a>
+                      Request Support
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="ml-1.5 size-4"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </a>
+                    <a
+                      href="/league/criteria"
+                      className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-300 transition hover:text-white hover:border-neutral-500"
+                    >
+                      View Debate Performance Criteria (Annex A)
+                    </a>
+                  </div>
                 </div>
               </article>
             )}
@@ -316,7 +326,7 @@ export default async function LeaguePage() {
                 categories — Leadership, Communication, Academic, and Creative
                 Excellence — each aligned with the embodied value of a House. Awards
                 are tiered by contribution level and serve as ceremonial recognition
-                of outstanding commitment to the Society's mission.
+                of outstanding commitment to the Society&apos;s mission.
               </p>
               <p className="text-sm italic text-neutral-500">
                 — Article II, Section 1 &amp; Section 2
@@ -343,7 +353,6 @@ export default async function LeaguePage() {
                   const badgeStyle =
                     TIER_BADGE_STYLE[award.tier] ??
                     "bg-neutral-800 text-neutral-300 ring-neutral-600";
-
                   return (
                     <article
                       key={award.id}
@@ -362,7 +371,6 @@ export default async function LeaguePage() {
                             {HOUSE_LABELS[award.house] ?? award.house}
                           </p>
                         </div>
-
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <svg
@@ -396,9 +404,9 @@ export default async function LeaguePage() {
                 <div className="mx-auto max-w-3xl space-y-2 text-center">
                   <p className="text-sm leading-6 text-neutral-400">
                     Individual recognition awards are categorized according to the
-                    four Houses' embodied values — Leadership (Bathala), Journalism
+                    four Houses&apos; embodied values — Leadership (Bathala), Journalism
                     (Kabunian), Academic (Laon), and Arts (Manama) — but points are
-                    credited to the member's actual House affiliation, regardless of
+                    credited to the member&apos;s actual House affiliation, regardless of
                     which category the award falls under.
                   </p>
                   <p className="text-xs italic text-neutral-500">

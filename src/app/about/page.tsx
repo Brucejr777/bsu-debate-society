@@ -16,6 +16,11 @@ export default function AboutPage() {
         "The Society adheres to the principles of democratic leadership, discipline, cooperation, industry, brotherhood, and harmony among its constituents, providing avenues for the development and application of such competencies.",
     },
     {
+      title: "Academic & Community Ties",
+      description:
+        "The Society recognizes and upholds the vital ties among students, faculty, administration, and other sectors of the academic community within Benguet State University. It shall serve as a platform for the peaceful and intellectual discussion of issues, concerns, and institutional initiatives.",
+    },
+    {
       title: "Ethical Conduct",
       description:
         "The Society and its members uphold the highest standards of honesty, fairness, and ethical conduct. All actions undertaken in the name of the Society are guided by a shared sense of responsibility: to truth, to one another, and to the duties entrusted to each member.",
@@ -44,11 +49,6 @@ export default function AboutPage() {
       title: "Education as Empowerment",
       description:
         "The Society affirms that education is not solely the acquisition of knowledge, but also the cultivation of awareness, empathy, and agency. It serves as a platform for empowerment through discourse, recognizing that learning is a means to liberation — personally, socially, and morally.",
-    },
-    {
-      title: "Academic & Community Ties",
-      description:
-        "The Society recognizes and upholds the vital ties among students, faculty, administration, and other sectors of the academic community within Benguet State University. It shall serve as a platform for the peaceful and intellectual discussion of issues, concerns, and institutional initiatives.",
     },
     {
       title: "Technology & Innovation",
@@ -172,7 +172,6 @@ export default function AboutPage() {
                 — Constitution, Article 3 — The 15 Principles
               </p>
             </div>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {principles.map((principle) => (
                 <article

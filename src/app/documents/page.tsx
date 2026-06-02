@@ -216,6 +216,10 @@ export default function DocumentsPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-neutral-600" />
+                      Article IX: Amendment Procedures
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-neutral-600" />
                       Annexes: Debate Performance Criteria &amp; Templates
                     </li>
                   </ul>
@@ -243,6 +247,32 @@ export default function DocumentsPage() {
             </article>
           </div>
 
+          {/* Amendment Procedures Guide */}
+          <article className="rounded-3xl border border-amber-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-900/30">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-amber-400">
+                  <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="flex-1 space-y-2">
+                <h2 className="text-xl font-semibold text-white">Amendment &amp; Review Procedures</h2>
+                <p className="text-sm leading-6 text-neutral-400">
+                  Learn how the Rules and Procedures are proposed, classified (Procedural vs. Substantive), deliberated, and ratified under Article IX of the Blue Book and Article 13 of the Constitution.
+                </p>
+              </div>
+              <a
+                href="/documents/amendments"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-amber-800 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-700"
+              >
+                View Guide
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                  <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </article>
+
           {/* Additional Resources */}
           <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8">
             <div className="mx-auto max-w-3xl space-y-6 text-center">
@@ -257,14 +287,10 @@ export default function DocumentsPage() {
                 the Executive Secretary and are available upon request.
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">
-                  <h3 className="text-sm font-semibold text-white">
-                    Debate Performance Criteria
-                  </h3>
-                  <p className="mt-2 text-xs leading-5 text-neutral-400">
-                    Scoring rubrics and speaker evaluation standards for all debate formats.
-                  </p>
-                </div>
+                <a href="/league/criteria" className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                  <h3 className="text-sm font-semibold text-white">Debate Performance Criteria</h3>
+                  <p className="mt-2 text-xs leading-5 text-neutral-400">Scoring rubrics and speaker evaluation standards (Annex A).</p>
+                </a>
                 <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">
                   <h3 className="text-sm font-semibold text-white">
                     Point Transaction Forms
