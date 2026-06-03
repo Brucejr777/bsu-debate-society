@@ -1,7 +1,7 @@
 import DocumentViewer from "@/components/DocumentViewer";
 
 export default function RulesPage() {
-  // Paste your rules text here, or fetch it from Supabase later
+  // Paste or fetch? keep in mind the formatting
   const content = `
 content is underway...
   `;

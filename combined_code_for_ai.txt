@@ -12,13 +12,12 @@ FILES INCLUDED (126):
        668 B  ./package.json
        101 B  ./postcss.config.mjs
       1486 B  ./README.md
-     29337 B  ./REPORT.md
       1332 B  ./scripts/create-admin.mjs
        586 B  ./scripts/generate-admin-hash.mjs
       2138 B  ./src/actions/admin.ts
       1294 B  ./src/actions/contact.ts
       6442 B  ./src/app/about/EXPLANATION.md
-     12761 B  ./src/app/about/page.tsx
+     12759 B  ./src/app/about/page.tsx
      14476 B  ./src/app/admin/appeals/page.tsx
       9233 B  ./src/app/admin/dashboard/page.tsx
      24068 B  ./src/app/admin/debate-cup/page.tsx
@@ -78,9 +77,10 @@ FILES INCLUDED (126):
      22210 B  ./src/app/debate-cup/page.tsx
      13535 B  ./src/app/discipline/page.tsx
      17473 B  ./src/app/documents/amendments/page.tsx
-       657 B  ./src/app/documents/constitution/page.tsx
-     18234 B  ./src/app/documents/page.tsx
-       770 B  ./src/app/documents/rules/page.tsx
+       417 B  ./src/app/documents/constitution/page.tsx
+     22750 B  ./src/app/documents/page.tsx
+       392 B  ./src/app/documents/rules/page.tsx
+     13350 B  ./src/app/documents/templates/page.tsx
      13735 B  ./src/app/elections/page.tsx
      24286 B  ./src/app/electoral-protest/page.tsx
      41048 B  ./src/app/finance/page.tsx
@@ -88,7 +88,7 @@ FILES INCLUDED (126):
      13671 B  ./src/app/governance/page.tsx
      27991 B  ./src/app/house-cup/page.tsx
      19477 B  ./src/app/house-of-semester/page.tsx
-     36137 B  ./src/app/houses/[slug]/page.tsx
+     36141 B  ./src/app/houses/[slug]/page.tsx
       7918 B  ./src/app/houses/page.tsx
      16067 B  ./src/app/individual-ledger/page.tsx
       1127 B  ./src/app/layout.tsx
@@ -96,7 +96,7 @@ FILES INCLUDED (126):
      20412 B  ./src/app/league/page.tsx
      22406 B  ./src/app/league/support/page.tsx
      10261 B  ./src/app/meetings/page.tsx
-     27786 B  ./src/app/membership/page.tsx
+     33471 B  ./src/app/membership/page.tsx
      20372 B  ./src/app/nominate/page.tsx
       8692 B  ./src/app/page.tsx
      46054 B  ./src/app/points/page.tsx
@@ -271,561 +271,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-================================================================================
-FILE: ./REPORT.md  (29337 bytes)
-================================================================================
-
-# Website vs. Governing Documents — Compliance Report
-
-**Date:** June 1, 2026  
-**Scope:** Comparison of the BSU Debate Society website (`src/app/`) against the official **Constitution** (976 lines) and **Rules and Procedures** (2,823 lines) PDFs.
-
----
-
-## Executive Summary
-
-The website provides a thorough, accurate, and well-structured representation of the Constitution and Rules and Procedures. Nearly all major provisions are faithfully reproduced, correctly attributed, and organized logically. However, several factual errors, omissions, and inconsistencies were identified and are detailed below.
-
-**Overall Compliance Rating: ~85%** — Strong foundation with specific gaps to address.
-
----
-
-## 1. Constitution Compliance
-
-### 1.1 Mission & Vision (Article 1–2) — ✅ MATCH
-**Pages:** `/` (Home), `/about`
-- Mission: "vibrant, inclusive, and intellectually stimulating community ... engage in respectful discourse" — ✅ matches PDF
-- Vision: "fostering critical thinking, effective communication, and a spirit of intellectual curiosity" — ✅ matches PDF
-
-### 1.2 Declaration of Principles (Article 3) — ✅ MATCH (reordered)
-**Page:** `/about` — Lists all 15 principles correctly. The PDF order is §1–15; website reorders them but content is accurate.
-
-### 1.3 Rights of Members (Article 4) — ✅ MATCH
-**Page:** `/about`
-- All 12 enumerated rights are summarized accurately. Due process rights, suffrage, access to information, freedom of speech, etc. — all present.
-
-### 1.4 Membership (Article 5) — ⚠️ PARTIAL (issues found)
-**Page:** `/membership`
-
-| Provision | Website | PDF | Status |
-|---|---|---|---|
-| Open to all BSU students | ✅ | ✅ (Art 5, §1) | **Match** |
-| Admission = Provisional Membership | ✅ | ✅ (Art 5, §2) | **Match** |
-| 1-semester Executive Internship | ❌ **says "year"** | ✅ "one (1) academic **semester**" | **ERROR** |
-| House Council approves applications | ✅ | ✅ (Art 5, §3(a)) | **Match** |
-| One House at a time | ✅ | ✅ (Art 5, §3(b)) | **Match** |
-| Public Membership Policy | ✅ | ✅ (Art 5, §4) | **Match** |
-| Transfers require mutual consent | ✅ | ✅ (Art 5, §5) | **Match** |
-| Renewal = House Council only | ✅ | ✅ (Art 5, §6) | **Match** |
-| Members abide by House/Society policies | ✅ | ✅ (Art 5, §7) | **Match** |
-| Sanctions for misconduct | ✅ | ✅ (Art 5, §8) | **Match** |
-| Membership fee (COC + President) | ✅ | ✅ (Art 5, §11) | **Match** |
-| **Alumni Associate Membership** | ❌ NOT FOUND | ✅ (Art 5, §9) | **MISSING** |
-| **Re-admission of Former Members** | ❌ NOT FOUND | ✅ (Art 5, §10) | **MISSING** |
-| 4 competency modules for Executive Interns | ⚠️ partial | ✅ Detailed in (Art 5, §2(b)) | **Incomplete** |
-
-#### ❌ **CRITICAL ERROR (Membership Page):**
-Line 323 of `/membership/page.tsx` states:
-> "Provisional members must complete one (1) academic **year** of service within an Office of the High Council as an Executive Intern to attain Full Membership status."
-
-The PDF Constitution, **Article 5, Section 2** states clearly: "**one (1) academic semester** of service."
-
-This is a **factual error** — one semester ≠ one year. This could affect member expectations and progression tracking.
-
-#### ❌ **MISSING SECTIONS (Membership):**
-- **Alumni Associate Membership** (Art 5, §9): The entire provision about graduated members retaining advisory privileges is absent from the website.
-- **Re-admission of Former Members** (Art 5, §10): The process for former members to petition for re-admission is entirely absent.
-- **Detailed Competency Modules** (Art 5, §2(b)): The website mentions "Executive Internship" generically but omits the four competency modules (parliamentary procedure, debate theory, ethical conduct, organizational management) and the mentorship pairing requirements.
-
-### 1.5 Society Houses (Article 6) — ✅ MATCH
-**Page:** `/houses`, `/houses/[slug]` (individual house pages)
-- Four permanent Houses (Bathala, Laon, Manama, Kabunian) — ✅ matches PDF
-- House values, colors, and descriptions in `src/lib/houses.ts` — ✅ accurate
-- Process for establishing new Houses (Art 6, §2(2)) — ❌ **NOT mentioned** on website (minor omission)
-
-### 1.6 House Councils (Article 7) — ✅ MATCH (partial)
-**Page:** `/houses`
-- "Each House is governed by its own House Council" — ✅ accurate summary
-- All 8 standard offices listed — ✅ match PDF
-- **20% Sustainability Levy** (§2(10)) — ❌ NOT mentioned on website
-- **Conflict of Interest Recusal** (§3(1)(h)) — ❌ NOT mentioned on website
-
-### 1.7 High Council (Article 8) — ✅ MATCH
-**Page:** `/governance`
-- All 8 offices correctly listed with accurate role descriptions — ✅
-- President as Chief Executive — ✅
-- VP as Chief Coordinator presiding over COC — ✅
-- **Emergency Continuity provisions** (§2(5)) — ❌ NOT mentioned on website
-- **President qualifications** detailed on `/elections` page — ✅
-
-### 1.8 Council of House Chancellors (Article 9) — ✅ MATCH
-**Page:** `/governance`
-- "Supreme legislative and representative body" — ✅ matches PDF
-- VP as ex-officio Presiding Officer with tie-breaking vote — ✅
-- Blue Book and Red Book authorities — ✅
-
-### 1.9 High Tribunal (Article 10) — ✅ MATCH
-**Page:** `/governance`
-- Composition (President as Presiding Judge + 4 Chancellors as Jury of Pillars) — ✅
-- Jurisdiction (constitutional interpretation, inter-House grievances, serious breaches) — ✅
-- **Adversarial mandate** (Defense Chancellor + Commission on Prosecution) — ❌ NOT detailed on website
-- **Appeal to Chief Adviser** (§5) — ❌ NOT mentioned on website
-
-### 1.10 Elections (Article 11) — ✅ MATCH
-**Page:** `/elections`
-- Presidential Conclave described accurately — ✅
-- "Elected exclusively through the Presidential Conclave" — ✅
-
-### 1.11 Meetings (Article 12) — ❌ NOT ON WEBSITE
-- Monthly general meetings, quorum requirements — not represented as a dedicated page
-- (Partially covered by Rules and Procedures Article IV)
-
-### 1.12 Amendment & Revision (Article 13–15) — ❌ NOT ON WEBSITE
-- Amendment procedures, separability, effectivity clauses — not on any public page
-
----
-
-## 2. Rules and Procedures Compliance
-
-### 2.1 House Point System (Article I, R&P) — ✅ MATCH (partial)
-**Pages:** `/house-cup`, `/debate-cup`
-
-| Provision | Website | PDF | Status |
-|---|---|---|---|
-| House Cup awarded annually | ✅ | ✅ (§9(1)) | **Match** |
-| Points reset to zero yearly | ✅ | ✅ | **Match** |
-| Tiebreaker sequence (5 steps) | ✅ | ✅ (§9(2)) | **Match** |
-| House of the Semester (+10 bonus) | ✅ | ✅ (§9(4)) | **Match** |
-| Trophy + ₱200 budget + finals qualification + topic proposal | ✅ | ✅ (§9(3)) | **Match** |
-| Inter-House Debate Cup (round-robin) | ✅ | ✅ (§10(1)) | **Match** |
-| Cup point values (+15/+7/+3/+5) | ✅ | ✅ | **Match** |
-
-#### ❌ **MISSING from website:**
-- **Point Categories and Values (§3):** Competitive Excellence (100/75/50), Organizational Contribution (100 pts per House value), Governance & Compliance (±5/-3/-20), Conduct & Ethics (-5/-15/-30) — **not detailed on any public page**
-- **Point Transaction Process (§5):** Accomplishment Reports, 7-day submission, provisional posting period — **not shown**
-- **Authority to Award Points (§4):** Secretary of Internal Affairs posts provisionally; High Tribunal adjudicates disputes — **not shown**
-- **Tracking and Transparency (§7):** Master House Point Ledger, monthly summary reports — **not shown**
-- **Appeals and Dispute Resolution (§8):** Constitutional appeal process to Society Adviser — **not shown**
-- **Special Competitions and Bonuses (§10):** Annual Excellence Awards (5 categories × 25 pts), Attendance bonuses — **not shown**
-- **Administration and Point Keeper (§11):** Secretary of Internal Affairs as Point Keeper — **not shown**
-- **Provisional Sanctions for Major Violations (§6):** House Council-initiated provisional deductions — **not shown**
-
-### 2.2 Individual Recognition Framework (Article II, R&P) — ✅ MATCH
-**Pages:** `/nominate`, `/league`
-- **4 award categories** (Leadership, Communication, Academic, Creative Excellence) — ✅
-- **3 tiers** (Emerging Contributor, Distinguished Member, Society Fellow) — ✅ with accurate descriptions
-- Nomination form with justification and supporting docs — ✅
-- **Cross-House eligibility** (points credited to member's House regardless of award category) — ✅
-- **Selection Committee composition** (§3(3)) — ⚠️ **not detailed on the nominate page**, but the data model supports it
-- **House Points for recognition** (Emerging +5, Distinguished +10, Society Fellow +15) (§5) — ⚠️ **not explicitly stated on the website**
-
-### 2.3 Debate League (Article III, R&P) — ✅ MATCH
-**Pages:** `/league`, `/league/support`
-- Top 8 members selected by individual points — ✅
-- Benefits (travel fund, mentorship, certification) — ✅
-- Tie-breaking sequence — ⚠️ mentioned in PDF but NOT detailed on website
-- Individual Debate Point System (Annex A) — ⚠️ detailed point values **not shown** on website (the system is implemented in the database but not explained on UI)
-
-### 2.4 Meetings and Deliberative Procedures (Article IV, R&P) — ❌ NOT DEDICATED PAGE
-- The website has no `/meetings` informational page explaining meeting types, quorum, voting procedures
-- An `/meetings` page exists in the admin section but is administrative
-
-### 2.5 Financial and Resource Management (Article V, R&P) — ❌ NOT ON PUBLIC WEBSITE
-**Page:** `/finance` exists (needs verification)
-- Budget preparation, disbursement thresholds, procurement guidelines — not present on public-facing pages
-- Loan services, prohibited acts — not shown
-
-<read_file>
-<path>src/app/finance/page.tsx</path>
-</read_file>
-
-### 2.6 Disciplinary Procedures (Article VI, R&P) — ✅ MATCH
-**Page:** `/discipline`
-- Complaint form with complainant/respondent info — ✅
-- 14-day filing deadline — ✅
-- Violation classification (Minor vs Major) — ✅ with descriptions
-- Due process notice — ✅
-
-#### ⚠️ **Missing details:**
-- **Pre-Trial Conference and Trial Timeline** (§5(4)) — not shown
-- **Sanctions** (§5(6) & §4(4)) — not listed
-- **Appeal and Re-Trial procedure** (§6) — not explained on the discipline page (though `/appeals` page exists)
-- **Provisional Measures** (§7) — not mentioned
-- **Whistleblower protections** (§4(6)) — not mentioned on this page
-- **Mental Health Consideration** (§5(6)(f)) — not mentioned
-
-### 2.7 Presidential Conclave (Article VII, R&P) — ✅ EXCELLENT MATCH
-**Page:** `/elections`, `/governance`
-- Detailed step-by-step process (Platform, Interrogation, Proceed Vote, Secret Ballot) — ✅
-- Electors: 4 House Chancellors — ✅
-- Presiding Officer (outgoing President), Secretary (VP) — ✅
-- Qualifications for President — ✅
-- 4-hour time limit — ✅
-- Proclamation protocol ("Habemus Praesidem") — ✅
-- **Contingency/substitution procedures** (§6) — ❌ NOT on website
-- **Electoral Disputes** (§10) — ❌ NOT on website (page exists at `/electoral-protest`)
-
-<read_file>
-<path>src/app/electoral-protest/page.tsx</path>
-</read_file>
-
-### 2.8 Records Management (Article VIII, R&P) — ✅ MATCH
-**Page:** `/records-access`
-- Public/Restricted/Confidential classification — ✅
-- Access request form with required fields — ✅
-- Processing timeline (10 working days) — ✅
-- No fees for Public Records — ✅
-- Appeal process referenced — ✅
-- **Retention schedules** (§3) — ❌ NOT on website
-- **Data Privacy principles** (§7) — ⚠️ partially covered (no mention of Moral Rights/Attribution)
-- **Digital Platform standards** (§8) — ❌ NOT on website
-
-### 2.9 Amendment Procedures (Article IX, R&P) — ❌ NOT ON WEBSITE
-- Procedural vs Substantive classification — not shown
-- Proposal and deliberation process — not shown
-- Annual review cycles — not shown
-
-### 2.10 Annex A: Debate Performance Criteria — ❌ NOT ON WEBSITE
-- Detailed point values for Society/House debates (+15 win, +7 draw, +3 participation, +10 Best Speaker) — partially shown on `/debate-cup` but not as a comprehensive criteria document
-- External competition point values (International: +50 to +15, National: +45 to +12, etc.) — not shown
-- Speaker and Individual Performance Awards — not shown
-- Documentation and verification requirements — not shown
-
-### 2.11 Annex B: Operational Compliance Templates — ❌ NOT ON WEBSITE
-- Conflict of Interest Disclosure Form — not available
-- AI-Assisted Case Research Disclosure — not available
-- Emergency Continuity Activation Checklist — not available
-- Mentorship Pairing & Progress Ledger — not available
-- Whistleblower Confidential Intake Form — not available
-
----
-
-## 3. Summary of All Discrepancies
-
-### ❌ Factual Errors
-
-| Error | Location | PDF Says | Website Says |
-|---|---|---|---|
-| Executive Internship duration | `/membership` line 323 | "one (1) academic **semester**" (Art 5, §2) | "one (1) academic **year**" |
-
-### ❌ Missing Major Sections (Not Present on Any Public Page)
-
-| Section | PDF Provision | Importance |
-|---|---|---|
-| Alumni Associate Membership | Constitution Art 5, §9 | Medium |
-| Re-admission of Former Members | Constitution Art 5, §10 | Medium |
-| Meetings (types, quorum, notice) | Constitution Art 12 / R&P Art IV | Medium |
-| Amendment & Revision procedures | Constitution Art 13 / R&P Art IX | Medium |
-| Detailed Point Categories/Values | R&P Art I, §3 | High (core system) |
-| Point Transaction Process | R&P Art I, §5 | Medium |
-| Financial & Resource Management | R&P Art V | High |
-| Emergency Continuity provisions | Constitution Art 8, §2(5) | Low (edge case) |
-| 20% Sustainability Levy | Constitution Art 7, §2(10) | Medium |
-| Retention Schedules | R&P Art VIII, §3 | Low |
-| Debate Performance Criteria (full) | R&P Annex A | Medium |
-| Operational Compliance Templates | R&P Annex B | Low |
-
-### ⚠️ Missing Minor Details
-
-| Detail | Location in PDF | Status |
-|---|---|---|
-| Process for establishing new Houses | Art 6, §2(2) | Minor omission |
-| Detailed competency modules for interns | Art 5, §2(b) | Minor omission |
-| Conflict of Interest Recusal | Art 7, §3(1)(h) | Minor omission |
-| Adversarial mandate of High Tribunal | Art 10, §3 | Minor omission |
-| Appeal to Chief Adviser | Art 10, §5 | Minor omission |
-| Constitutional Supremacy clause | R&P Art IX, §7(3) | Minor omission |
-
----
-
-## 4. Recommendations
-
-### Priority 1 (Fix Error):
-1. **`/membership/page.tsx` line 323:** Change "one (1) academic **year**" to "one (1) academic **semester**" to match the Constitution.
-
-### Priority 2 (Add Missing Features):
-1. **House Point System details:** Add a page or section explaining the four point categories, transaction process, and tracking mechanisms from R&P Article I, §3-7.
-2. **Alumni Associate Membership & Re-admission:** Add these two missing membership provisions to the `/membership` page.
-3. **Financial/Resource Management:** Make the `/finance` page a public-facing guide to Society financial protocols (R&P Art V).
-
-### Priority 3 (Polish & Completeness):
-1. **Debate Performance Criteria (Annex A):** Add a page or downloadable document showing the full point values for individual debate points.
-2. **Meetings page:** Create a public guide to meeting types, quorum, and voting procedures (R&P Art IV).
-3. **Amendment procedures:** Add a brief explanation of how the Rules can be amended (R&P Art IX).
-4. **Electoral protest procedure:** Expand the `/electoral-protest` page to include the full dispute timeline.
-5. **Re-order principles on `/about`:** Consider matching the PDF order for the 15 principles to avoid confusion.
-
----
-
-## 5. Action Plan to Fix All Discrepancies
-
-Below is a detailed, step-by-step implementation plan organized by priority. Each item includes the specific file to modify, what to change, and the exact text or logic required.
-
----
-
-### Phase 1: Critical Error Fix (1 task, ~5 minutes)
-
-#### Fix 1: Correct Executive Internship Duration
-- **File:** `src/app/membership/page.tsx`
-- **Line:** 323
-- **Change:** `"year"` → `"semester"`
-- **Current text:** `Provisional members must complete one (1) academic year of service within an Office of the High Council as an Executive Intern to attain Full Membership status.`
-- **Correct text:** `Provisional members must complete one (1) academic semester of service within an Office of the High Council as an Executive Intern to attain Full Membership status.`
-- **Rationale:** Constitution Art 5, §2 explicitly states "one (1) academic semester"
-- **Effort:** 1 line change, 5 minutes
-
----
-
-### Phase 2: Add Missing Membership Sections (2 tasks, ~2 hours)
-
-#### Fix 2: Add Alumni Associate Membership
-- **File:** `src/app/membership/page.tsx`
-- **Insert after:** Membership Fees section (after line 109)
-- **Content to add:** A new section explaining:
-  - Alumni Associate status for graduated Full Members in good standing
-  - Advisory privileges (receive communications, attend open events, provide consultative input)
-  - Restrictions (no voting rights, no office eligibility, no participation in internal discipline)
-  - Governance by policies established by COC + President
-- **Reference:** Constitution Art 5, §9
-- **Design:** Use similar card layout as existing sections with a distinct color theme (e.g., purple/gold for alumni)
-
-#### Fix 3: Add Re-admission of Former Members
-- **File:** `src/app/membership/page.tsx`
-- **Insert after:** New Alumni Associate section
-- **Content to add:** A section explaining:
-  - Petition process to relevant House Council
-  - Requirements: statement of intent, evidence of prior good standing, commitment to current policies
-  - Approval: majority House Council vote + OIA verification + President concurrence
-  - Restored to Full Membership without repeating Executive Internship (if departed ≤ 3 academic years)
-  - Retains all rights subject to amendments during absence
-- **Reference:** Constitution Art 5, §10
-- **Design:** Card with step-by-step process similar to Transfer section
-
----
-
-### Phase 3: Add House Point System Details (1 task, ~4 hours)
-
-#### Fix 4: Create Point System Explanation Page or Section
-- **Option A:** New page at `src/app/points/page.tsx`
-- **Option B:** Expand existing `/house-cup` page with detailed point system sections
-- **Content to add (from R&P Art I, §3-7):**
-
-  **a) Four Point Categories (§3):**
-  - **Competitive Excellence:** Inter-House: 1st=+100, 2nd=+75, 3rd=+50, Best Speaker=+25; External: Win=+50, Finalist=+30, Participation=+10
-  - **Organizational Contribution (§3(2)):** Bathala (Leadership)=+100, Kabunian (Journalism)=+100, Laon (Academic)=+100, Manama (Arts)=+100; Co-host (2 Houses)=+20 each; Recruitment=+5 per new member
-  - **Governance & Compliance (§3(3)):** On-time reports=+5; Full Council attendance=+3; Late submission=-3/day (max -15); No financial report=-20; Unauthorized resource use=-75% of total points
-  - **Conduct & Ethics (§3(4)):** Minor=-5; Major=-15; Severe (discrimination)= -30; Concealment penalty=-30
-
-  **b) Point Transaction Process (§5):**
-  - Accomplishment Report within 7 days of activity
-  - Secretary of Internal Affairs posts provisionally within 3 business days
-  - 7-day petition period for other Houses to challenge
-  - High Tribunal adjudicates disputes within 14 days
-  - Penalties for false claims
-
-  **c) Point Keeper role (§11):** Secretary of Internal Affairs
-
-  **d) Special Competitions (§10):**
-  - Annual Excellence Awards (5 categories × 25 points each)
-  - Attendance bonuses (perfect=+15, ≥90%=+10)
-  - Zero conduct violations=+10
-  - Cross-House collaboration (3+ Houses)=+30
-  - External individual award=+15 per member
-
-- **Reference:** R&P Art I, §3-7, §10-11
-- **Effort:** 4 hours for new page or section
-
----
-
-### Phase 4: Add Financial/Resource Management Page (1 task, ~3 hours)
-
-#### Fix 5: Create Public Finance Page
-- **File:** `src/app/finance/page.tsx` (enhance existing or create new)
-- **Content to add (from R&P Art V):**
-  - Resource classification (Society-Wide vs House Resources)
-  - Budget preparation timeline and approval process
-  - Disbursement thresholds: Minor (≤₱500), Standard (₱501-₱2,000), Major (>₱2,000)
-  - Reimbursement process (7-day submission, verification, processing)
-  - Procurement guidelines (quotation requirement at ₱1,000+, sustainable procurement at ₱2,000+)
-  - Income-Generating Projects (IGPs) approval process
-  - Loan services (authority, prohibition on borrowing, repayment terms)
-  - Prohibited acts and sanctions
-  - 20% Sustainability Levy (cross-reference from Constitution Art 7, §2(10))
-- **Reference:** R&P Art V, §1-9
-- **Effort:** 3 hours
-
----
-
-### Phase 5: Add Missing Minor Pages (3 tasks, ~4 hours total)
-
-#### Fix 6: Create Meetings Information Page
-- **File:** `src/app/meetings/page.tsx` (new public page, or expand admin sidebar)
-- **Content (from R&P Art IV):**
-  - Types: Society Assembly, High Council, COC, House Council, House Assembly, Special
-  - Notice requirements (72 hours for regular, 48 for special)
-  - Agenda submission process
-  - Presiding Officers for each meeting type
-  - Quorum requirements (majority of officers and active members)
-  - Simplified motion procedures (main motion, amend, refer, postpone, previous question, point of order, appeal)
-  - Voting methods (hand, rising, secret ballot)
-  - Minutes and documentation process
-  - Virtual/hybrid meeting protocols
-- **Reference:** R&P Art IV, §1-9 + Constitution Art 12
-- **Effort:** 2 hours
-
-#### Fix 7: Create Amendment Procedures Page
-- **File:** `src/app/documents/amendments/page.tsx` or add to `/documents` page
-- **Content (from R&P Art IX):**
-  - Who can propose amendments (President, COC majority, 25% member petition, House Council resolution)
-  - Classification: Procedural vs Substantive
-  - Approval process for each type
-  - Constitutional consistency review
-  - Annual review cycle and mid-year check-in
-  - Sunset provisions for pilot measures
-  - Effectivity and transitory provisions
-- **Reference:** R&P Art IX, §1-9 + Constitution Art 13
-- **Effort:** 1 hour
-
-#### Fix 8: Expand Electoral Protest Page
-- **File:** `src/app/electoral-protest/page.tsx`
-- **Content to add (from R&P Art VII, §10):**
-  - Grounds for protest (procedural violation, vote tampering, eligibility issues)
-  - 3-day filing deadline from Proclamation
-  - Adjudication by High Tribunal presided by Chief Adviser
-  - Decision is final and executory
-  - If election nullified, new Conclave within 14 days
-  - Recall provisions
-- **Also add Contingency/Substitution procedures (§6):**
-  - Grounds for substitution (withdrawal, disqualification, incapacity, death, graduating status)
-  - Succession hierarchy (Vice Chancellor → Director → Special Nomination Assembly)
-  - Pre-Conclave vs During-Conclave vs Post-Election procedures
-  - Insufficient quorum protocols (3-4 vs 2 or fewer)
-  - Vice Presidential succession
-  - Period of Discontinuation and Alumni Convention
-- **Reference:** R&P Art VII, §6, §10
-- **Effort:** 1 hour
-
----
-
-### Phase 6: Add Annex A Content (1 task, ~2 hours)
-
-#### Fix 9: Create Debate Performance Criteria Page
-- **File:** `src/app/league/criteria/page.tsx` or add to `/league` page
-- **Content (from Annex A):**
-  - **Society/House debate points:** Win=+15, Draw=+7, Participation=+3, Best Speaker=+10, Top 3 Speaker=+5
-  - **External competition points table:**
-    | Level | Champion | Finalist/Semi | Participation |
-    |---|---|---|---|
-    | International | +50 | +40 | +15 |
-    | National | +45 | — | +12 |
-    | Regional | +35 | +25 | +10 |
-    | Local/Inter-School | +25 | +18 | +8 |
-  - **Speaker awards:** Best Speaker=+20, Top 3 Speaker=+12, Best Rebuttal/Reply=+10, Best Case Construction=+10
-  - **Accumulation rules:** Non-stacking, Team vs Individual attribution, Role-based eligibility
-  - **Documentation requirements:** Point Claim Form within 14 days, supporting docs
-  - **Verification process:** Secretary verifies within 5 business days, provisional for 7 days
-  - **Dispute resolution:** Petition to High Tribunal within 7 days, penalty for false claims
-- **Reference:** R&P Annex A, §1-7
-- **Effort:** 2 hours
-
----
-
-### Phase 7: Minor Detail Fixes (5 tasks, ~2 hours total)
-
-#### Fix 10: Add Constitution Article 6 §2(2) Detail — New House Establishment
-- **File:** `src/app/houses/page.tsx`
-- **Add after** existing introduction paragraph (around line 53)
-- **Content:** A brief mention that groups may apply to establish a new House by submitting a Charter with motto, emblem, core values, House Council structure, membership policy, and code of conduct — subject to approval by the Council
-- **Effort:** 20 minutes
-
-#### Fix 11: Add Constitution Art 7 §2(10) — 20% Sustainability Levy
-- **File:** `src/app/houses/page.tsx` (House Councils section, around line 117)
-- **Content:** Add one sentence mentioning the 20% semester-end surplus remittance to the Society General Fund
-- **Effort:** 10 minutes
-
-#### Fix 12: Add Constitution Art 7 §3(1)(h) — Conflict of Interest Recusal
-- **File:** `src/app/houses/page.tsx`
-- **Content:** Add a brief note that officers must recuse themselves from matters where they have financial interest, competitive advantage, or personal relationship that may impair impartiality
-- **Effort:** 10 minutes
-
-#### Fix 13: Add Constitution Art 10 §3,§5 — High Tribunal Details
-- **File:** `src/app/governance/page.tsx`
-- **Content:** Add the adversarial mandate (Defense Chancellor + Commission on Prosecution) and the right to appeal to the Chief Adviser for a Re-Trial
-- **Effort:** 15 minutes
-
-#### Fix 14: Re-order Principles on About Page to Match PDF Order
-- **File:** `src/app/about/page.tsx`
-- **Reorder** the `principles` array to match the PDF Constitution Article 3 order:
-  1. Reasoned Dialogue (§1)
-  2. Diversity & Inclusion (§2)
-  3. Democratic Leadership (§3)
-  4. Academic & Community Ties (§4) — *currently #10*
-  5. Ethical Conduct (§5)
-  6. Filipino Culture & Heritage (§6)
-  7. Constructive Competition (§7)
-  8. Tradition & Innovation (§8)
-  9. Continuous Growth (§9)
-  10. Education as Empowerment (§10)
-  11. Technology & Innovation (§11)
-  12. Environmental Sustainability (§12)
-  13. Well-Being & Mental Health (§13)
-  14. Transparency & Accountability (§14)
-  15. Alumni & Legacy (§15)
-- **Effort:** 10 minutes
-
----
-
-## Implementation Summary
-
-| Phase | Tasks | Est. Time | Dependencies |
-|---|---|---|---|
-| 1: Critical Error Fix | 1 | 5 min | None |
-| 2: Missing Membership | 2 | 2 hrs | Phase 1 |
-| 3: House Point System | 1 | 4 hrs | None |
-| 4: Finance Page | 1 | 3 hrs | None |
-| 5: Missing Minor Pages | 3 | 4 hrs | None |
-| 6: Annex A Content | 1 | 2 hrs | None |
-| 7: Minor Detail Fixes | 5 | 2 hrs | None |
-| **Total** | **14** | **~17 hours** | — |
-
-## Files to Modify (Complete List)
-
-| # | File | Change Type |
-|---|---|---|
-| 1 | `src/app/membership/page.tsx` | Fix "year"→"semester" + add Alumni + Re-admission |
-| 2 | `src/app/house-cup/page.tsx` or new `src/app/points/page.tsx` | Add point system details |
-| 3 | `src/app/finance/page.tsx` | Add public finance guide |
-| 4 | `src/app/meetings/page.tsx` (new) | Create meetings info page |
-| 5 | `src/app/documents/amendments/page.tsx` (new) or enhance `/documents` | Add amendment procedures |
-| 6 | `src/app/electoral-protest/page.tsx` | Add full dispute + contingency details |
-| 7 | `src/app/league/criteria/page.tsx` (new) or enhance `/league` | Add Annex A criteria |
-| 8 | `src/app/houses/page.tsx` | Add new House process, levy, recusal |
-| 9 | `src/app/governance/page.tsx` | Add High Tribunal adversarial mandate |
-| 10 | `src/app/about/page.tsx` | Re-order principles |
-
-
-
-## 6. Verified Correct Pages
-
-These pages were checked and **fully match** their corresponding PDF provisions:
-
-| Page | PDF Reference | Verdict |
-|---|---|---|
-| `/` (Home) | Constitution Art 1-3 | ✅ |
-| `/about` | Constitution Art 1-4 | ✅ (reordered) |
-| `/houses` | Constitution Art 6-7 | ✅ |
-| `/governance` | Constitution Art 8-10 | ✅ |
-| `/membership` | Constitution Art 5 | ⚠️ (see errors) |
-| `/elections` | R&P Art VII | ✅ Excellent |
-| `/house-cup` | R&P Art I §9-10 | ✅ |
-| `/debate-cup` | R&P Art I §10(1) | ✅ |
-| `/league` | R&P Art II-III | ✅ |
-| `/nominate` | R&P Art II | ✅ |
-| `/discipline` | R&P Art VI | ✅ |
-| `/records-access` | R&P Art VIII | ✅ |
-| `/documents` | R&P Art IX references | ✅ |
-| `/documents/constitution` | Full Constitution text | ✅ (renders from file) |
 
 ================================================================================
 FILE: ./scripts/create-admin.mjs  (1332 bytes)
@@ -1189,7 +634,7 @@ The page follows a consistent **dark theme** with:
 This creates the **main layout structure**: a full-height page wrapper with a centered, glassmorphic card containing all the content sections, starting with the "Back to Home" navigation link.
 
 ================================================================================
-FILE: ./src/app/about/page.tsx  (12761 bytes)
+FILE: ./src/app/about/page.tsx  (12759 bytes)
 ================================================================================
 
 export default function AboutPage() {
@@ -1208,6 +653,11 @@ export default function AboutPage() {
       title: "Democratic Leadership",
       description:
         "The Society adheres to the principles of democratic leadership, discipline, cooperation, industry, brotherhood, and harmony among its constituents, providing avenues for the development and application of such competencies.",
+    },
+    {
+      title: "Academic & Community Ties",
+      description:
+        "The Society recognizes and upholds the vital ties among students, faculty, administration, and other sectors of the academic community within Benguet State University. It shall serve as a platform for the peaceful and intellectual discussion of issues, concerns, and institutional initiatives.",
     },
     {
       title: "Ethical Conduct",
@@ -1238,11 +688,6 @@ export default function AboutPage() {
       title: "Education as Empowerment",
       description:
         "The Society affirms that education is not solely the acquisition of knowledge, but also the cultivation of awareness, empathy, and agency. It serves as a platform for empowerment through discourse, recognizing that learning is a means to liberation — personally, socially, and morally.",
-    },
-    {
-      title: "Academic & Community Ties",
-      description:
-        "The Society recognizes and upholds the vital ties among students, faculty, administration, and other sectors of the academic community within Benguet State University. It shall serve as a platform for the peaceful and intellectual discussion of issues, concerns, and institutional initiatives.",
     },
     {
       title: "Technology & Innovation",
@@ -1366,7 +811,6 @@ export default function AboutPage() {
                 — Constitution, Article 3 — The 15 Principles
               </p>
             </div>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {principles.map((principle) => (
                 <article
@@ -11813,27 +11257,28 @@ export default function AmendmentsPage() {
 }
 
 ================================================================================
-FILE: ./src/app/documents/constitution/page.tsx  (657 bytes)
+FILE: ./src/app/documents/constitution/page.tsx  (417 bytes)
 ================================================================================
 
-import fs from "fs";
-import path from "path";
 import DocumentViewer from "@/components/DocumentViewer";
 
 export default function ConstitutionPage() {
-  const filePath = path.join(process.cwd(), "CONSTITUTION.md");
-  let content = fs.readFileSync(filePath, "utf-8");
+  // Paste your constitution text here, or fetch it from Supabase later
+  const content = `
+content is underway...
+  `;
 
-  // Strip the markdown title header so the DocumentViewer parser
-  // (which looks for **Article ... ** blocks) isn't confused
-  // by the leading "# CONSTITUTION" line.
-  content = content.replace(/^#\s+CONSTITUTION\s*\n+/i, "");
-
-  return <DocumentViewer content={content} title="The Red Book — The Constitution" subtitle="Ethical Framework — Art. 9, Sec. 2(b)" />;
+  return (
+    <DocumentViewer 
+      content={content} 
+      title="The Red Book — The Constitution" 
+      subtitle="Ethical Framework — Art. 9, Sec. 2(b)" 
+    />
+  );
 }
 
 ================================================================================
-FILE: ./src/app/documents/page.tsx  (18234 bytes)
+FILE: ./src/app/documents/page.tsx  (22750 bytes)
 ================================================================================
 
 export default function DocumentsPage() {
@@ -11915,7 +11360,6 @@ export default function DocumentsPage() {
                     </p>
                   </div>
                 </div>
-
                 <p className="text-sm leading-7 text-neutral-300">
                   The Red Book — the Constitution of the BSU Debate Society — is the
                   supreme governing document and binding ethical framework of the
@@ -11926,7 +11370,6 @@ export default function DocumentsPage() {
                   branches of governance — the High Council (executive), the Council of
                   House Chancellors (legislative), and the High Tribunal (judicial).
                 </p>
-
                 <div className="space-y-3">
                   <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
                     Key Articles
@@ -11962,7 +11405,6 @@ export default function DocumentsPage() {
                     </li>
                   </ul>
                 </div>
-
                 <a
                   href="/documents/constitution"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-red-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
@@ -12007,7 +11449,6 @@ export default function DocumentsPage() {
                     </p>
                   </div>
                 </div>
-
                 <p className="text-sm leading-7 text-neutral-300">
                   The Blue Book — the Rules and Procedures — is the comprehensive
                   operations manual of the Society, enacted under Article 9, Section 2(a)
@@ -12018,7 +11459,6 @@ export default function DocumentsPage() {
                   Presidential Conclave, records management, and the framework for amending
                   the Rules themselves.
                 </p>
-
                 <div className="space-y-3">
                   <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
                     Key Articles
@@ -12062,7 +11502,6 @@ export default function DocumentsPage() {
                     </li>
                   </ul>
                 </div>
-
                 <a
                   href="/documents/rules"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
@@ -12125,29 +11564,78 @@ export default function DocumentsPage() {
                 the Executive Secretary and are available upon request.
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <a href="/league/criteria" className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                <a href="/league/criteria" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
                   <h3 className="text-sm font-semibold text-white">Debate Performance Criteria</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">Scoring rubrics and speaker evaluation standards (Annex A).</p>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    View Criteria
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                 </a>
-                <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">
-                  <h3 className="text-sm font-semibold text-white">
-                    Point Transaction Forms
-                  </h3>
+                
+                {/* Task 3: Updated Point Transaction Forms Placeholder */}
+                <a href="/documents/templates" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                  <h3 className="text-sm font-semibold text-white">Point Transaction Forms</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">
-                    Standardized forms for submitting Accomplishment Reports and claiming House Points.
+                    Standardized forms including the House Point Transaction Form (Accomplishment Report, R&P Art I, Sec 5) and Individual Debate Point Claim Form (R&P Annex A, Sec 5).
                   </p>
-                </div>
-                <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">
-                  <h3 className="text-sm font-semibold text-white">
-                    Appeal Forms
-                  </h3>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    View Point Claim Templates
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </a>
+
+                <a href="/appeals" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                  <h3 className="text-sm font-semibold text-white">Appeal Forms</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">
                     Templates for filing constitutional appeals through the Council of House Chancellors.
                   </p>
-                </div>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    View Appeal Forms
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </a>
               </div>
             </div>
           </article>
+
+          {/* Task 4: Annex B: Operational Compliance Templates Section */}
+          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            <div className="mx-auto max-w-3xl space-y-6 text-center">
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-neutral-300">
+                    <path fillRule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-white">
+                  Annex B: Operational Compliance Templates
+                </h2>
+              </div>
+              <p className="text-base leading-7 text-neutral-300">
+                The Office of the Executive Secretary maintains five (5) mandatory standardized administrative templates required by the Rules & Procedures (Annex B). These templates ensure uniformity, accountability, and compliance across all Society operations, meetings, and official correspondence.
+              </p>
+              <div className="pt-2">
+                <a
+                  href="/documents/templates"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                >
+                  View Annex B Templates
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                    <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
         </div>
       </section>
     </div>
@@ -12155,24 +11643,362 @@ export default function DocumentsPage() {
 }
 
 ================================================================================
-FILE: ./src/app/documents/rules/page.tsx  (770 bytes)
+FILE: ./src/app/documents/rules/page.tsx  (392 bytes)
 ================================================================================
 
-import fs from "fs";
-import path from "path";
 import DocumentViewer from "@/components/DocumentViewer";
 
 export default function RulesPage() {
-  const filePath = path.join(process.cwd(), "RULES_AND_PROCEDURES.md");
-  let content = fs.readFileSync(filePath, "utf-8");
+  // Paste or fetch? keep in mind the formatting
+  const content = `
+content is underway...
+  `;
 
-  // Strip the markdown title headers so the DocumentViewer parser
-  // (which looks for **Article ... ** blocks) isn't confused
-  // by the leading "# RULES AND PROCEDURES" and "## DEBATE SOCIETY" lines.
-  content = content.replace(/^#\s+RULES AND PROCEDURES\s*\n+/i, "");
-  content = content.replace(/^##\s+DEBATE SOCIETY\s*\n+/i, "");
+  return (
+    <DocumentViewer 
+      content={content} 
+      title="The Blue Book — Rules and Procedures" 
+      subtitle="Operations Manual — Art. 9, Sec. 2(a)" 
+    />
+  );
+}
 
-  return <DocumentViewer content={content} title="The Blue Book — Rules and Procedures" subtitle="Operations Manual — Art. 9, Sec. 2(a)" />;
+================================================================================
+FILE: ./src/app/documents/templates/page.tsx  (13350 bytes)
+================================================================================
+
+"use client";
+
+import { useState } from "react";
+
+interface TemplateCardProps {
+  title: string;
+  reference: string;
+  content: string;
+}
+
+function TemplateCard({ title, reference, content }: TemplateCardProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(content);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-1">
+          <h3 className="text-xl font-semibold text-white">{title}</h3>
+          <p className="text-sm italic text-neutral-500">{reference}</p>
+        </div>
+        <button
+          onClick={handleCopy}
+          className="shrink-0 inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-300 transition hover:border-neutral-500 hover:text-white"
+        >
+          {copied ? (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="size-4 text-emerald-400"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Copied!
+            </>
+          ) : (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="size-4"
+              >
+                <path d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z" />
+                <path d="M4.5 6A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h7a1.5 1.5 0 0 0 1.5-1.5v-5.879a1.5 1.5 0 0 0-.44-1.06L9.44 6.439A1.5 1.5 0 0 0 8.378 6H4.5Z" />
+              </svg>
+              Copy to Clipboard
+            </>
+          )}
+        </button>
+      </div>
+      <div className="mt-4 overflow-x-auto rounded-xl border border-neutral-800 bg-neutral-900/50 p-4">
+        <pre className="font-mono text-sm leading-6 text-neutral-300 whitespace-pre">
+          {content}
+        </pre>
+      </div>
+    </article>
+  );
+}
+
+export default function TemplatesPage() {
+  const templates = [
+    {
+      title: "House Point Transaction Form (Accomplishment Report)",
+      reference: "Rules & Procedures, Article I, Section 5",
+      content: `HOUSE POINT TRANSACTION FORM (Accomplishment Report)
+
+[ ] Submitting House: _______________________
+[ ] Activity Name: __________________________
+[ ] Date of Activity: _______________________
+[ ] Primary Purpose: ________________________
+[ ] Point Category Claimed: _________________
+[ ] Specific Point Amount: __________________
+[ ] Reference to Applicable Subsection: _____
+[ ] Supporting Documentation Attached: [ ] Yes  [ ] No
+
+House Chancellor Certification:
+I certify that the information provided is accurate and the activity complies with Society policies.
+
+Name: _______________________
+Signature: ____________________
+Date: ________________________`,
+    },
+    {
+      title: "Individual Debate Point Claim Form",
+      reference: "Rules & Procedures, Annex A, Section 5",
+      content: `INDIVIDUAL DEBATE POINT CLAIM FORM
+
+CLAIMANT INFORMATION:
+[ ] Full Name: __________________________
+[ ] House: ______________________________
+[ ] Membership Status: __________________
+
+ACTIVITY DETAILS:
+[ ] Date of Activity: ___________________
+[ ] Activity Name: ______________________
+[ ] Organizing Body: ____________________
+
+CLAIM DETAILS:
+[ ] Point Category: _____________________
+[ ] Amount Claimed: _____________________
+[ ] Annex Reference: ____________________
+
+SUPPORTING DOCUMENTATION CHECKLIST:
+[ ] Official Certificate / Results Sheet
+[ ] Signed Attendance / Participation Proof
+[ ] Other: ______________________________
+
+GOOD FAITH DECLARATION:
+I declare under penalty of disciplinary action that the information provided is true and accurate to the best of my knowledge. I understand that false claims may result in point forfeiture and disciplinary review.
+
+Signature: ____________________ 
+Date: _________`,
+    },
+    {
+      title: "Annual Conflict of Interest Disclosure Form",
+      reference: "Rules & Procedures, Annex B, Section 2",
+      content: `ANNUAL CONFLICT OF INTEREST DISCLOSURE FORM
+
+OFFICER INFORMATION:
+[ ] Name: _______________________________
+[ ] Office / Position: ____________________
+[ ] House Affiliation: ____________________
+
+DISCLOSURE CHECKLIST (Check all that apply to matters currently under your purview):
+[ ] Financial Interest: I have a direct or indirect financial interest in the matter.
+[ ] Competitive Advantage: I or my House stand to gain a competitive advantage.
+[ ] Personal Relationship: I have a personal relationship that may impair objectivity.
+[ ] Prior Consultation: I have previously consulted on this matter externally.
+
+CERTIFICATION STATEMENT:
+If any box is checked above, I commit to formally recusing myself from deliberation, discussion, and voting on the specified matter, and will notify the High Council / House Chancellor in writing.
+
+Signature: ____________________ 
+Date: _________`,
+    },
+    {
+      title: "AI-Assisted Case & Research Disclosure Template",
+      reference: "Rules & Procedures, Annex B, Section 3",
+      content: `AI-ASSISTED CASE & RESEARCH DISCLOSURE TEMPLATE
+
+SUBMISSION METADATA:
+[ ] Case / Document Title: ________________
+[ ] Date of Submission: ___________________
+[ ] Preparing Member(s): __________________
+
+AI TOOL DISCLOSURE:
+[ ] AI Tool(s) Used: ______________________
+[ ] Purpose of Use (e.g., brainstorming, formatting, research summarization): 
+    _______________________________________
+[ ] Extent of Use (e.g., <25%, 25-50%, >50% of draft): ___________
+
+HUMAN VERIFICATION STATEMENT:
+I certify that all AI-generated content has been thoroughly reviewed, fact-checked, and edited by human members to ensure accuracy, originality, and compliance with academic and Society standards.
+
+ATTRIBUTION LOG:
+[ ] Specific prompts or sections generated with AI assistance are documented in the appendix of this submission.
+
+Signature: ____________________ 
+Date: _________`,
+    },
+    {
+      title: "Emergency Continuity Activation Checklist",
+      reference: "Rules & Procedures, Annex B, Section 4",
+      content: `EMERGENCY CONTINUITY ACTIVATION CHECKLIST
+
+ACTIVATION AUTHORITY:
+[ ] Activated By (Name/Title): ____________
+[ ] Date & Time of Activation: ____________
+[ ] Reason for Activation: ________________
+
+QUORUM VERIFICATION PROTOCOL:
+[ ] Minimum required officers notified: [ ] Yes
+[ ] Alternative quorum mechanism invoked: [ ] Yes
+[ ] Verification logged by Secretariat: [ ] Yes
+
+ACTION DOCUMENTATION REQUIREMENTS:
+[ ] All emergency decisions recorded in writing.
+[ ] Rationale for deviation from standard procedure documented.
+[ ] Affected parties notified within 24 hours.
+
+RATIFICATION TIMELINE:
+[ ] Emergency actions to be presented for formal ratification at the next valid Council meeting within ____ days.
+
+Signature of Activating Authority: ___________ 
+Date: _________`,
+    },
+    {
+      title: "Mentorship Pairing & Progress Ledger",
+      reference: "Rules & Procedures, Annex B, Section 5",
+      content: `MENTORSHIP PAIRING & PROGRESS LEDGER
+
+PAIRING INFORMATION:
+[ ] Executive Intern Name: ________________
+[ ] Designated Full Member Mentor: ________
+[ ] Semester / Academic Year: _____________
+
+COMPETENCY MODULE TRACKING:
+[ ] Module 1: Parliamentary Procedure   [ ] Completed  [ ] In Progress
+[ ] Module 2: Debate Theory             [ ] Completed  [ ] In Progress
+[ ] Module 3: Ethical Conduct           [ ] Completed  [ ] In Progress
+[ ] Module 4: Organizational Management [ ] Completed  [ ] In Progress
+[ ] Module 5: Operational Protocols     [ ] Completed  [ ] In Progress
+
+MILESTONE EVALUATION:
+[ ] Mentor Feedback Summary: _________________________________________
+[ ] Intern Self-Assessment: __________________________________________
+
+PROGRESSION DETERMINATION:
+[ ] Recommend Elevation to Full Membership: [ ] Yes  [ ] No
+[ ] Recommend Extension of Provisional Status: [ ] Yes  [ ] No
+
+Mentor Signature: ___________ 
+Intern Signature: ___________ 
+Date: _________`,
+    },
+    {
+      title: "Whistleblower Confidential Intake Form",
+      reference: "Rules & Procedures, Annex B, Section 6",
+      content: `WHISTLEBLOWER CONFIDENTIAL INTAKE FORM
+
+REPORTING CHANNEL SELECTION:
+[ ] Submitted to: 
+    [ ] Office of Internal Affairs  
+    [ ] High Council President  
+    [ ] External Auditor
+
+DISCLOSER PREFERENCES:
+[ ] Desired Level of Anonymity: 
+    [ ] Fully Anonymous  
+    [ ] Confidential (Name known only to investigator)  
+    [ ] Open
+
+DISCLOSURE CONTENT:
+[ ] Nature of Misconduct (e.g., financial irregularity, ethical violation): 
+    _________________________________________________________________
+[ ] Parties Involved (Names/Roles, if known): ________________________
+[ ] Factual Summary (Dates, locations, specific incidents): 
+    _________________________________________________________________
+    _________________________________________________________________
+
+GOOD FAITH CERTIFICATION:
+I certify that this disclosure is made in good faith, based on reasonable belief of misconduct, and not for malicious or retaliatory purposes. I understand the Society's non-retaliation policy protects me from adverse action.
+
+Signature (Optional if Anonymous): ___________ 
+Date: _________`,
+    },
+  ];
+
+  return (
+    <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
+      <section className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-10 shadow-xl shadow-black/30 backdrop-blur-sm">
+        <div className="space-y-10">
+          {/* Go Back Navigation */}
+          <div>
+            <a
+              href="/documents"
+              className="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 transition hover:text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="size-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Back to Documents
+            </a>
+          </div>
+
+          {/* Header */}
+          <div className="space-y-4 text-center">
+            <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
+              Operational Templates &amp; Forms
+            </p>
+            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+              Standardized Templates
+            </h1>
+          </div>
+
+          {/* Introduction */}
+          <article className="mx-auto max-w-3xl space-y-4 text-center">
+            <p className="text-base leading-7 text-neutral-300">
+              The Office of the Executive Secretary maintains these mandatory
+              standardized administrative templates required by the Rules &amp;
+              Procedures. Officers and members may use the "Copy to Clipboard"
+              button to easily extract, print, or adapt these forms for official
+              Society business.
+            </p>
+          </article>
+
+          {/* Templates Grid */}
+          <div className="space-y-8">
+            {templates.map((template, index) => (
+              <TemplateCard
+                key={index}
+                title={template.title}
+                reference={template.reference}
+                content={template.content}
+              />
+            ))}
+          </div>
+
+          {/* Footer Note */}
+          <article className="rounded-3xl border border-amber-900/40 bg-amber-950/20 p-6 text-center">
+            <p className="text-sm leading-6 text-amber-300/80">
+              <strong>Note:</strong> These templates are subject to periodic
+              review and updates by the Council of House Chancellors. Always
+              ensure you are using the most current version available on this
+              page.
+            </p>
+          </article>
+        </div>
+      </section>
+    </div>
+  );
 }
 
 ================================================================================
@@ -14759,7 +14585,7 @@ export default async function HouseOfSemesterPage() {
 }
 
 ================================================================================
-FILE: ./src/app/houses/[slug]/page.tsx  (36137 bytes)
+FILE: ./src/app/houses/[slug]/page.tsx  (36141 bytes)
 ================================================================================
 
 import { notFound } from "next/navigation";
@@ -15206,7 +15032,7 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20">
                 <h3 className="text-lg font-semibold text-white">Full Membership</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-300">
-                  Provisional members must complete one (1) academic year of service within
+                  Provisional members must complete one (1) academic semester of service within
                   an Office of the High Council as an Executive Intern. Upon satisfactory
                   performance, the individual is elevated to Full Member status.
                 </p>
@@ -17484,7 +17310,7 @@ export default function MeetingsPage() {
 }
 
 ================================================================================
-FILE: ./src/app/membership/page.tsx  (27786 bytes)
+FILE: ./src/app/membership/page.tsx  (33471 bytes)
 ================================================================================
 
 import { HOUSES, HOUSE_COLORS, HOUSE_LABELS } from "@/lib/houses";
@@ -17539,7 +17365,6 @@ export default function MembershipPage() {
                 — Article 5, Section 9
               </p>
             </div>
-
             <article className="rounded-3xl border border-emerald-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <div className="flex items-center justify-center gap-3">
@@ -17565,7 +17390,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
@@ -17609,7 +17433,6 @@ export default function MembershipPage() {
                 — Article 5, Section 6
               </p>
             </div>
-
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <p className="text-base leading-7 text-neutral-300">
@@ -17624,7 +17447,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <div className="flex items-center gap-3">
@@ -17642,7 +17464,6 @@ export default function MembershipPage() {
                   Presidential approval is needed, streamlining the process.
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <div className="flex items-center gap-3">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-neutral-800">
@@ -17674,7 +17495,6 @@ export default function MembershipPage() {
                 — Article 5, Section 5
               </p>
             </div>
-
             <article className="rounded-3xl border border-blue-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <p className="text-base leading-7 text-neutral-300">
@@ -17688,7 +17508,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             {/* Transfer Steps */}
             <div className="space-y-4">
               {[
@@ -17729,7 +17548,6 @@ export default function MembershipPage() {
                 </article>
               ))}
             </div>
-
             <article className="rounded-3xl border border-amber-900/60 bg-amber-950/30 p-6 shadow-lg">
               <div className="flex items-start gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 size-5 shrink-0 text-amber-400">
@@ -17753,7 +17571,7 @@ export default function MembershipPage() {
           </div>
 
           {/* ═══════════════════════════════════════ */}
-          {/* RE-ADMISSION OF FORMER MEMBERS           */}
+          {/* RE-ADMISSION OF FORMER MEMBERS          */}
           {/* ═══════════════════════════════════════ */}
           <div className="space-y-6">
             <div className="space-y-4 text-center">
@@ -17764,7 +17582,6 @@ export default function MembershipPage() {
                 — Article 5, Section 10
               </p>
             </div>
-
             <article className="rounded-3xl border border-purple-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <div className="flex items-center justify-center gap-3">
@@ -17787,7 +17604,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             {/* Re-admission Steps */}
             <div className="space-y-4">
               {[
@@ -17831,6 +17647,84 @@ export default function MembershipPage() {
           </div>
 
           {/* ═══════════════════════════════════════ */}
+          {/* ALUMNI ASSOCIATE MEMBERSHIP             */}
+          {/* ═══════════════════════════════════════ */}
+          <div className="space-y-6">
+            <div className="space-y-4 text-center">
+              <h2 className="text-3xl font-semibold text-white">
+                Alumni Associate Membership
+              </h2>
+              <p className="text-sm italic text-neutral-500">
+                — Article 5, Section 9
+              </p>
+            </div>
+            <article className="rounded-3xl border border-amber-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-3xl space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-900/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-amber-400">
+                      <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-amber-200">
+                    Continuing the Legacy
+                  </h3>
+                </div>
+                <p className="text-base leading-7 text-neutral-300">
+                  Graduated Full Members who departed the Society in <strong className="text-white">good standing</strong> may retain an Alumni Associate Membership, maintaining their connection to the Society's intellectual tradition and community.
+                </p>
+                <p className="text-sm italic text-neutral-500">
+                  — Article 5, Section 9
+                </p>
+              </div>
+            </article>
+            
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+                <h3 className="text-sm font-semibold text-emerald-300">Privileges</h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-neutral-400">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    Right to receive official Society communications.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    Attend open Society events as observers.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    Provide consultative input to House Councils or the High Council upon invitation.
+                  </li>
+                </ul>
+              </article>
+              <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+                <h3 className="text-sm font-semibold text-red-300">Restrictions</h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-neutral-400">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500" />
+                    No voting rights in any Society or House matters.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500" />
+                    No eligibility to hold elective or appointive office.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500" />
+                    No participation in internal disciplinary proceedings (except as witnesses or character references).
+                  </li>
+                </ul>
+              </article>
+            </div>
+
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+              <h3 className="text-sm font-semibold text-white">Governance</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-400">
+                The terms, conditions, and specific privileges of Alumni Associate Membership are governed by policies established by the <strong className="text-white">Council of House Chancellors</strong> and subject to the final approval of the <strong className="text-white">President</strong>.
+              </p>
+            </article>
+          </div>
+
+          {/* ═══════════════════════════════════════ */}
           {/* MEMBER OBLIGATIONS                      */}
           {/* ═══════════════════════════════════════ */}
           <div className="space-y-6">
@@ -17839,7 +17733,6 @@ export default function MembershipPage() {
                 Member Obligations
               </h2>
             </div>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
@@ -17853,7 +17746,6 @@ export default function MembershipPage() {
                   — Article 5, Section 7
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
                   Conduct &amp; Discipline
@@ -17867,7 +17759,6 @@ export default function MembershipPage() {
                   — Article 5, Section 8
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
                   Membership Fees
@@ -17881,7 +17772,6 @@ export default function MembershipPage() {
                   — Article 5, Section 9
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
                   Executive Internship
@@ -17889,10 +17779,15 @@ export default function MembershipPage() {
                 <p className="mt-2 text-sm leading-6 text-neutral-400">
                   Provisional members must complete one (1) academic semester of
                   service within an Office of the High Council as an Executive
-                  Intern to attain Full Membership status.
+                  Intern to attain Full Membership status. This structured training curriculum 
+                  <strong className="text-white"> must </strong> include five (5) defined competency modules: 
+                  (1) Parliamentary procedure, (2) Debate theory, (3) Ethical conduct, (4) Organizational management, 
+                  and (5) Operational protocols. Furthermore, each Executive Intern 
+                  <strong className="text-white"> shall be paired with a designated Full Member mentor </strong> 
+                  for guidance, performance feedback, and professional development.
                 </p>
                 <p className="mt-2 text-xs italic text-neutral-500">
-                  — Article 5, Section 2
+                  — Article 5, Section 2(b)
                 </p>
               </article>
             </div>
@@ -17910,7 +17805,7 @@ export default function MembershipPage() {
                 {[
                   { label: "Apply", desc: "Submit application to a House" },
                   { label: "Provisional", desc: "Admitted as provisional member" },
-                  { label: "Executive Intern", desc: "1-year High Council service" },
+                  { label: "Executive Intern", desc: "1-semester High Council service" },
                   { label: "Full Member", desc: "Elevated to full membership" },
                   { label: "Renew", desc: "Annual House Council approval" },
                 ].map((stage, i) => (
@@ -22693,4 +22588,4 @@ BUNDLE SUMMARY
   Files written         : 126
   Files skipped (large) : 0
   Files skipped (error) : 0
-  Total embedded bytes  : 1013161
+  Total embedded bytes  : 1006759

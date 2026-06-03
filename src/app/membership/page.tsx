@@ -50,7 +50,6 @@ export default function MembershipPage() {
                 — Article 5, Section 9
               </p>
             </div>
-
             <article className="rounded-3xl border border-emerald-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <div className="flex items-center justify-center gap-3">
@@ -76,7 +75,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
@@ -120,7 +118,6 @@ export default function MembershipPage() {
                 — Article 5, Section 6
               </p>
             </div>
-
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <p className="text-base leading-7 text-neutral-300">
@@ -135,7 +132,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <div className="flex items-center gap-3">
@@ -153,7 +149,6 @@ export default function MembershipPage() {
                   Presidential approval is needed, streamlining the process.
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <div className="flex items-center gap-3">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-neutral-800">
@@ -185,7 +180,6 @@ export default function MembershipPage() {
                 — Article 5, Section 5
               </p>
             </div>
-
             <article className="rounded-3xl border border-blue-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <p className="text-base leading-7 text-neutral-300">
@@ -199,7 +193,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             {/* Transfer Steps */}
             <div className="space-y-4">
               {[
@@ -240,7 +233,6 @@ export default function MembershipPage() {
                 </article>
               ))}
             </div>
-
             <article className="rounded-3xl border border-amber-900/60 bg-amber-950/30 p-6 shadow-lg">
               <div className="flex items-start gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 size-5 shrink-0 text-amber-400">
@@ -264,7 +256,7 @@ export default function MembershipPage() {
           </div>
 
           {/* ═══════════════════════════════════════ */}
-          {/* RE-ADMISSION OF FORMER MEMBERS           */}
+          {/* RE-ADMISSION OF FORMER MEMBERS          */}
           {/* ═══════════════════════════════════════ */}
           <div className="space-y-6">
             <div className="space-y-4 text-center">
@@ -275,7 +267,6 @@ export default function MembershipPage() {
                 — Article 5, Section 10
               </p>
             </div>
-
             <article className="rounded-3xl border border-purple-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4">
                 <div className="flex items-center justify-center gap-3">
@@ -298,7 +289,6 @@ export default function MembershipPage() {
                 </p>
               </div>
             </article>
-
             {/* Re-admission Steps */}
             <div className="space-y-4">
               {[
@@ -342,6 +332,84 @@ export default function MembershipPage() {
           </div>
 
           {/* ═══════════════════════════════════════ */}
+          {/* ALUMNI ASSOCIATE MEMBERSHIP             */}
+          {/* ═══════════════════════════════════════ */}
+          <div className="space-y-6">
+            <div className="space-y-4 text-center">
+              <h2 className="text-3xl font-semibold text-white">
+                Alumni Associate Membership
+              </h2>
+              <p className="text-sm italic text-neutral-500">
+                — Article 5, Section 9
+              </p>
+            </div>
+            <article className="rounded-3xl border border-amber-900/40 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-3xl space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-900/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-amber-400">
+                      <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-amber-200">
+                    Continuing the Legacy
+                  </h3>
+                </div>
+                <p className="text-base leading-7 text-neutral-300">
+                  Graduated Full Members who departed the Society in <strong className="text-white">good standing</strong> may retain an Alumni Associate Membership, maintaining their connection to the Society's intellectual tradition and community.
+                </p>
+                <p className="text-sm italic text-neutral-500">
+                  — Article 5, Section 9
+                </p>
+              </div>
+            </article>
+            
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+                <h3 className="text-sm font-semibold text-emerald-300">Privileges</h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-neutral-400">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    Right to receive official Society communications.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    Attend open Society events as observers.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    Provide consultative input to House Councils or the High Council upon invitation.
+                  </li>
+                </ul>
+              </article>
+              <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+                <h3 className="text-sm font-semibold text-red-300">Restrictions</h3>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-neutral-400">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500" />
+                    No voting rights in any Society or House matters.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500" />
+                    No eligibility to hold elective or appointive office.
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-red-500" />
+                    No participation in internal disciplinary proceedings (except as witnesses or character references).
+                  </li>
+                </ul>
+              </article>
+            </div>
+
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
+              <h3 className="text-sm font-semibold text-white">Governance</h3>
+              <p className="mt-2 text-sm leading-6 text-neutral-400">
+                The terms, conditions, and specific privileges of Alumni Associate Membership are governed by policies established by the <strong className="text-white">Council of House Chancellors</strong> and subject to the final approval of the <strong className="text-white">President</strong>.
+              </p>
+            </article>
+          </div>
+
+          {/* ═══════════════════════════════════════ */}
           {/* MEMBER OBLIGATIONS                      */}
           {/* ═══════════════════════════════════════ */}
           <div className="space-y-6">
@@ -350,7 +418,6 @@ export default function MembershipPage() {
                 Member Obligations
               </h2>
             </div>
-
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
@@ -364,7 +431,6 @@ export default function MembershipPage() {
                   — Article 5, Section 7
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
                   Conduct &amp; Discipline
@@ -378,7 +444,6 @@ export default function MembershipPage() {
                   — Article 5, Section 8
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
                   Membership Fees
@@ -392,7 +457,6 @@ export default function MembershipPage() {
                   — Article 5, Section 9
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
                 <h3 className="text-sm font-semibold text-white">
                   Executive Internship
@@ -400,10 +464,15 @@ export default function MembershipPage() {
                 <p className="mt-2 text-sm leading-6 text-neutral-400">
                   Provisional members must complete one (1) academic semester of
                   service within an Office of the High Council as an Executive
-                  Intern to attain Full Membership status.
+                  Intern to attain Full Membership status. This structured training curriculum 
+                  <strong className="text-white"> must </strong> include five (5) defined competency modules: 
+                  (1) Parliamentary procedure, (2) Debate theory, (3) Ethical conduct, (4) Organizational management, 
+                  and (5) Operational protocols. Furthermore, each Executive Intern 
+                  <strong className="text-white"> shall be paired with a designated Full Member mentor </strong> 
+                  for guidance, performance feedback, and professional development.
                 </p>
                 <p className="mt-2 text-xs italic text-neutral-500">
-                  — Article 5, Section 2
+                  — Article 5, Section 2(b)
                 </p>
               </article>
             </div>
@@ -421,7 +490,7 @@ export default function MembershipPage() {
                 {[
                   { label: "Apply", desc: "Submit application to a House" },
                   { label: "Provisional", desc: "Admitted as provisional member" },
-                  { label: "Executive Intern", desc: "1-year High Council service" },
+                  { label: "Executive Intern", desc: "1-semester High Council service" },
                   { label: "Full Member", desc: "Elevated to full membership" },
                   { label: "Renew", desc: "Annual House Council approval" },
                 ].map((stage, i) => (

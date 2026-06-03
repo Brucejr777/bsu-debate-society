@@ -442,7 +442,7 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20">
                 <h3 className="text-lg font-semibold text-white">Full Membership</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-300">
-                  Provisional members must complete one (1) academic year of service within
+                  Provisional members must complete one (1) academic semester of service within
                   an Office of the High Council as an Executive Intern. Upon satisfactory
                   performance, the individual is elevated to Full Member status.
                 </p>

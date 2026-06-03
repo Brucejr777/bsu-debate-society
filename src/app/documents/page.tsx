@@ -77,7 +77,6 @@ export default function DocumentsPage() {
                     </p>
                   </div>
                 </div>
-
                 <p className="text-sm leading-7 text-neutral-300">
                   The Red Book — the Constitution of the BSU Debate Society — is the
                   supreme governing document and binding ethical framework of the
@@ -88,7 +87,6 @@ export default function DocumentsPage() {
                   branches of governance — the High Council (executive), the Council of
                   House Chancellors (legislative), and the High Tribunal (judicial).
                 </p>
-
                 <div className="space-y-3">
                   <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
                     Key Articles
@@ -124,7 +122,6 @@ export default function DocumentsPage() {
                     </li>
                   </ul>
                 </div>
-
                 <a
                   href="/documents/constitution"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-red-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
@@ -169,7 +166,6 @@ export default function DocumentsPage() {
                     </p>
                   </div>
                 </div>
-
                 <p className="text-sm leading-7 text-neutral-300">
                   The Blue Book — the Rules and Procedures — is the comprehensive
                   operations manual of the Society, enacted under Article 9, Section 2(a)
@@ -180,7 +176,6 @@ export default function DocumentsPage() {
                   Presidential Conclave, records management, and the framework for amending
                   the Rules themselves.
                 </p>
-
                 <div className="space-y-3">
                   <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
                     Key Articles
@@ -224,7 +219,6 @@ export default function DocumentsPage() {
                     </li>
                   </ul>
                 </div>
-
                 <a
                   href="/documents/rules"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
@@ -287,29 +281,78 @@ export default function DocumentsPage() {
                 the Executive Secretary and are available upon request.
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <a href="/league/criteria" className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                <a href="/league/criteria" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
                   <h3 className="text-sm font-semibold text-white">Debate Performance Criteria</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">Scoring rubrics and speaker evaluation standards (Annex A).</p>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    View Criteria
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                 </a>
-                <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">
-                  <h3 className="text-sm font-semibold text-white">
-                    Point Transaction Forms
-                  </h3>
+                
+                {/* Task 3: Updated Point Transaction Forms Placeholder */}
+                <a href="/documents/templates" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                  <h3 className="text-sm font-semibold text-white">Point Transaction Forms</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">
-                    Standardized forms for submitting Accomplishment Reports and claiming House Points.
+                    Standardized forms including the House Point Transaction Form (Accomplishment Report, R&P Art I, Sec 5) and Individual Debate Point Claim Form (R&P Annex A, Sec 5).
                   </p>
-                </div>
-                <div className="rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20">
-                  <h3 className="text-sm font-semibold text-white">
-                    Appeal Forms
-                  </h3>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    View Point Claim Templates
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </a>
+
+                <a href="/appeals" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
+                  <h3 className="text-sm font-semibold text-white">Appeal Forms</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">
                     Templates for filing constitutional appeals through the Council of House Chancellors.
                   </p>
-                </div>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    View Appeal Forms
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </a>
               </div>
             </div>
           </article>
+
+          {/* Task 4: Annex B: Operational Compliance Templates Section */}
+          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            <div className="mx-auto max-w-3xl space-y-6 text-center">
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-neutral-300">
+                    <path fillRule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-white">
+                  Annex B: Operational Compliance Templates
+                </h2>
+              </div>
+              <p className="text-base leading-7 text-neutral-300">
+                The Office of the Executive Secretary maintains five (5) mandatory standardized administrative templates required by the Rules & Procedures (Annex B). These templates ensure uniformity, accountability, and compliance across all Society operations, meetings, and official correspondence.
+              </p>
+              <div className="pt-2">
+                <a
+                  href="/documents/templates"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                >
+                  View Annex B Templates
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                    <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
         </div>
       </section>
     </div>
