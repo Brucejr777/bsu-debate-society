@@ -173,7 +173,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <p className="text-base leading-7 text-neutral-300">
-                Benguet State University — Governor Pack Road, Baguio City, Benguet,
+                Benguet State University — KM. 6 Road, La Trinidad, Benguet, 2601,
                 Philippines. The Debate Society operates within the campus and conducts
                 its activities, meetings, and tournaments at designated university
                 facilities.
