@@ -11,14 +11,14 @@ export function getApprovalEmail(applicantName: string, houseName: string) {
           <h2 style="color: #D4AF37; font-size: 20px;">Welcome, ${applicantName}!</h2>
           <p style="line-height: 1.6; color: #e0e0e0;">We are pleased to inform you that your membership application has been <strong style="color: #ffffff;">approved</strong>.</p>
           <p style="line-height: 1.6; color: #e0e0e0;">You have been officially accepted into the <strong style="color: #D4AF37;">House of ${houseName}</strong>.</p>
+          
           <div style="background-color: #1a1a1a; border-left: 4px solid #D4AF37; padding: 15px; margin: 20px 0;">
-            <p style="margin: 0; font-size: 14px; color: #ffffff;"><strong>Next Steps:</strong></p>
-            <ul style="margin: 10px 0 0 20px; padding: 0; font-size: 14px; color: #e0e0e0;">
-              <li>Check the official website for the orientation schedule.</li>
-              <li>Complete your Executive Internship deployment.</li>
-              <li>Connect with your House Council for further instructions.</li>
-            </ul>
+            <p style="margin: 0; font-size: 16px; color: #ffffff; font-weight: bold;">Next Steps:</p>
+            <p style="margin-top: 10px; font-size: 14px; line-height: 1.6; color: #e0e0e0;">
+              Please wait for further updates and announcements regarding your onboarding. We will be in touch soon with all the details and instructions you need to get started. No further action is required from you at this moment.
+            </p>
           </div>
+
           <p style="line-height: 1.6; color: #e0e0e0;">Welcome to the legacy of <em>Veritas • Ratio • Impactus</em>.</p>
         </div>
         <div style="background-color: #111111; padding: 20px; text-align: center; font-size: 12px; color: #888888; border-top: 1px solid #333333;">
