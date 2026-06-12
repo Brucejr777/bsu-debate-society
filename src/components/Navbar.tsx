@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 const navLinks = [
@@ -71,7 +70,6 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
 
 function AdminSection({ onClick }: { onClick?: () => void }) {
   const [adminOpen, setAdminOpen] = useState(false);
-
   return (
     <div className="mt-2 pt-2 border-t border-[#daa520]/20">
       <button
@@ -122,9 +120,11 @@ export default function Navbar() {
       >
         {/* Brand */}
         <a href="/" className="group flex items-center gap-3 px-6 py-6">
-          <span className="rounded-full bg-gradient-to-br from-[#ffde00] via-[#eecf02] to-[#efa706] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform group-hover:scale-105 shadow-[0_0_12px_rgba(255,215,0,0.3)]">
-            BSU
-          </span>
+          <img
+            src="/logos/society-logo.png"
+            alt="BSU Debate Society Logo"
+            className="size-10 rounded-full object-contain shadow-[0_0_12px_rgba(255,215,0,0.3)] transition-transform group-hover:scale-105"
+          />
           <span className="text-sm font-semibold tracking-wide text-neutral-200 transition-colors group-hover:text-white">
             Debate Society
           </span>
@@ -142,9 +142,11 @@ export default function Navbar() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
           {/* Logo */}
           <a href="/" className="flex items-center gap-3 text-sm font-semibold">
-            <span className="rounded-full bg-gradient-to-br from-[#ffde00] via-[#eecf02] to-[#efa706] px-2.5 py-1 text-xs font-bold tracking-widest text-neutral-950 transition-transform hover:scale-105 shadow-[0_0_12px_rgba(255,215,0,0.3)]">
-              BSU
-            </span>
+            <img
+              src="/logos/society-logo.png"
+              alt="BSU Debate Society Logo"
+              className="size-8 rounded-full object-contain shadow-[0_0_12px_rgba(255,215,0,0.3)] transition-transform hover:scale-105"
+            />
             <span className="tracking-wide text-neutral-200">Debate Society</span>
           </a>
 

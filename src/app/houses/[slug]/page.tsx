@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { HOUSES, HOUSE_BY_SLUG, VALID_HOUSE_SLUGS, type HouseInfo } from "@/lib/houses";
-
 export const dynamic = "force-dynamic";
 
 interface LeagueMember {
@@ -43,6 +42,43 @@ interface MembershipApplication {
   status: string;
   created_at: string;
 }
+
+// ── Emblem Explanations Data ──
+const EMBLEM_DETAILS: Record<string, { elements: { name: string; desc: string }[] }> = {
+  bathala: {
+    elements: [
+      { name: "The Eagle", desc: "Represents vision, authority, and foresight—essential qualities of effective leaders." },
+      { name: "Flame-Like Wings", desc: "Symbolize passion, drive, and dynamic energy that inspires others to action and growth." },
+      { name: "Shield Base", desc: "Represents strength, protection, and integrity—the foundation upon which principled leadership is built." },
+      { name: "The Guiding Star", desc: "Signifies excellence, standards, and direction—a constant reminder to uphold the highest ideals." },
+      { name: "Color Orange/Amber", desc: "Signifies energy, enthusiasm, vitality, and achievement—the vibrant spirit of leadership." },
+    ],
+  },
+  kabunian: {
+    elements: [
+      { name: "Eagle with Quill", desc: "Combines keen vision with the quill pen, representing truthful communication and accurate documentation." },
+      { name: "Flowing Streams", desc: "Represent the continuous flow of information, narrative, and the transmission of knowledge across time." },
+      { name: "Feather Motifs", desc: "Emphasize the written word, media excellence, and the power of the press." },
+      { name: "Silver Color", desc: "Symbolizes clarity, precision, and the reflective nature of journalism that mirrors society's truths." },
+    ],
+  },
+  laon: {
+    elements: [
+      { name: "Owl", desc: "The universal symbol of wisdom, scholarly pursuit, and the tireless quest for knowledge." },
+      { name: "Open Book", desc: "Represents knowledge, research, intellectual inquiry, and the foundation of all academic endeavor." },
+      { name: "Mountain with Star", desc: "Represents the ascent to academic excellence and the pursuit of intellectual heights." },
+      { name: "Green Color", desc: "Symbolizes growth, learning, renewal, and the flourishing of the mind through continuous development." },
+    ],
+  },
+  manama: {
+    elements: [
+      { name: "Spear/Pen", desc: "Symbolizes the artistic weapon of expression, creative discourse, and the power to pierce convention." },
+      { name: "Purple Flames", desc: "Flowing flame-like elements rising upward represent creative passion, artistic inspiration, and transformative expression." },
+      { name: "Upward Movement", desc: "Upward-flowing elements represent the aspirational nature of arts, striving toward beauty and higher expression." },
+      { name: "Purple Color", desc: "Signifies creativity, imagination, innovation, and artistic excellence in aesthetic achievement." },
+    ],
+  },
+};
 
 export function generateStaticParams() {
   return VALID_HOUSE_SLUGS.map((slug) => ({ slug }));
@@ -235,11 +271,19 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
             </a>
           </div>
 
-          {/* ── House Header ── */}
-          <div className="space-y-4 text-center">
+          {/* ── House Header & Emblem ── */}
+          <div className="space-y-6 text-center">
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Article 6 — The Society Houses
             </p>
+            
+            {/* House Emblem Image */}
+            <img
+              src={`/logos/${slug}.png`}
+              alt={`${house.name} Emblem`}
+              className="mx-auto w-44 h-44 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            />
+
             <div className="flex items-center justify-center gap-3">
               <div
                 className="size-4 rounded-full"
@@ -267,6 +311,31 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
             <p className="text-base leading-7 text-neutral-300">{house.description}</p>
           </article>
 
+          {/* ── Emblem & Symbolism Explanation ── */}
+          {EMBLEM_DETAILS[slug] && (
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+              <div className="mx-auto max-w-4xl space-y-6 text-center">
+                <h2 className="text-2xl font-semibold text-white">Emblem &amp; Symbolism</h2>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-left">
+                  {EMBLEM_DETAILS[slug].elements.map((el) => (
+                    <div
+                      key={el.name}
+                      className="rounded-2xl bg-neutral-900 p-5 border border-neutral-800"
+                    >
+                      <h3
+                        className="text-sm font-semibold mb-2"
+                        style={{ color: house.color }}
+                      >
+                        {el.name}
+                      </h3>
+                      <p className="text-xs text-neutral-400 leading-relaxed">{el.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          )}
+
           {/* ── House Points Snapshot ── */}
           {latestPoints && (
             <article className="relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
@@ -282,7 +351,9 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                   <p className="text-5xl font-bold tabular-nums text-white sm:text-6xl">
                     {latestPoints.total_points.toLocaleString()}
                   </p>
-                  <p className="text-sm text-neutral-500">points — {latestPoints.semester}</p>
+                  <p className="text-sm text-neutral-500">
+                    points — {latestPoints.semester}
+                  </p>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   <div className="rounded-2xl bg-neutral-900 p-3 text-center">
@@ -426,7 +497,6 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                   — Article 5, Section 1
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20">
                 <h3 className="text-lg font-semibold text-white">Admission</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-300">
@@ -438,7 +508,6 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                   — Article 5, Sections 2 &amp; 3
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20">
                 <h3 className="text-lg font-semibold text-white">Full Membership</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-300">
@@ -450,7 +519,6 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                   — Article 5, Section 2
                 </p>
               </article>
-
               <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20">
                 <h3 className="text-lg font-semibold text-white">Renewal &amp; Transfer</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-300">
@@ -495,7 +563,6 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                   — Debate League Rankings
                 </p>
               </div>
-
               <div className="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 shadow-xl shadow-black/30">
                 {/* Desktop Table */}
                 <div className="hidden sm:block">
@@ -538,7 +605,6 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
                     </tbody>
                   </table>
                 </div>
-
                 {/* Mobile Cards */}
                 <div className="space-y-3 p-4 sm:hidden">
                   {members.map((m) => (
@@ -577,23 +643,26 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
           {awards.length > 0 && (
             <div className="space-y-6">
               <div className="space-y-4 text-center">
-                <h2 className="text-3xl font-semibold text-white">Awards &amp; Recognition</h2>
+                <h2 className="text-3xl font-semibold text-white">
+                  Awards &amp; Recognition
+                </h2>
                 <p className="text-sm italic text-neutral-500">
                   — Individual Recognition Framework
                 </p>
               </div>
-
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {awards.map((award) => {
                   const tierStyles: Record<string, string> = {
-                    "Society Fellow": "bg-amber-900/60 text-amber-300 ring-amber-700",
-                    "Distinguished Member": "bg-purple-900/60 text-purple-300 ring-purple-700",
-                    "Emerging Contributor": "bg-neutral-800 text-neutral-300 ring-neutral-600",
+                    "Society Fellow":
+                      "bg-amber-900/60 text-amber-300 ring-amber-700",
+                    "Distinguished Member":
+                      "bg-purple-900/60 text-purple-300 ring-purple-700",
+                    "Emerging Contributor":
+                      "bg-neutral-800 text-neutral-300 ring-neutral-600",
                   };
                   const badgeStyle =
                     tierStyles[award.tier] ??
                     "bg-neutral-800 text-neutral-300 ring-neutral-600";
-
                   return (
                     <article
                       key={award.id}

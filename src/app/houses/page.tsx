@@ -3,13 +3,13 @@ import { HOUSES } from "@/lib/houses";
 export default function HousesPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
-      <section className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-10 shadow-xl shadow-black/30 backdrop-blur-sm">
+      <section className="rounded-3xl border border-[#D4AF37]/30 bg-neutral-950/95 p-10 shadow-xl shadow-black/30 backdrop-blur-sm">
         <div className="space-y-10">
           {/* Go Back Navigation */}
           <div>
             <a
               href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 transition hover:text-white"
+              className="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 transition hover:text-[#D4AF37]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export default function HousesPage() {
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Article 6 — The Society Houses
             </p>
-            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F5D76E] to-[#D4AF37] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               The Society Houses
             </h1>
           </div>
@@ -51,7 +51,7 @@ export default function HousesPage() {
             </p>
           </article>
 
-          {/* FIX 10: New House Establishment */}
+          {/* New House Establishment */}
           <article className="mx-auto max-w-3xl space-y-4 text-center">
             <p className="text-base leading-7 text-neutral-300">
               While the Society is currently composed of four permanent Houses, groups of members may apply for the formal establishment of a new House by submitting a House Charter to the Council. The Charter must include the proposed House motto, emblem, and core values, the intended structure of its House Council, its initial membership policy, and a code of conduct — subject to approval and in full accordance with the Constitution and policies of the Society.
@@ -67,7 +67,7 @@ export default function HousesPage() {
               <a
                 key={house.slug}
                 href={`/houses/${house.slug}`}
-                className="group relative block overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30 transition-all duration-300 hover:scale-[1.02]"
+                className="group relative block overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30 transition-all duration-300 hover:scale-[1.02] hover:border-[#D4AF37]/40"
               >
                 {/* Color accent bar */}
                 <div
@@ -92,7 +92,7 @@ export default function HousesPage() {
                   <p className="text-sm leading-7 text-neutral-300">
                     {house.description}
                   </p>
-                  <span className="mt-2 inline-flex items-center text-sm font-medium text-neutral-400 transition group-hover:text-white">
+                  <span className="mt-2 inline-flex items-center text-sm font-medium text-neutral-400 transition group-hover:text-[#D4AF37]">
                     View House Page
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-4">
                       <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
@@ -104,7 +104,7 @@ export default function HousesPage() {
           </div>
 
           {/* House Councils Section */}
-          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+          <article className="rounded-3xl border border-[#D4AF37]/30 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
             <div className="mx-auto max-w-3xl space-y-4 text-center">
               <h2 className="text-2xl font-semibold text-white">
                 House Councils
@@ -118,17 +118,14 @@ export default function HousesPage() {
                 requiring the concurrence of a majority of sitting Council members and the
                 approval of the House Chancellor.
               </p>
-              
-              {/* FIX 11: 20% Sustainability Levy */}
+              {/* 20% Sustainability Levy */}
               <p className="text-base leading-7 text-neutral-300">
                 To ensure the long-term operational sustainability of the Society, each House Council is mandated to remit <strong className="text-white">twenty percent (20%)</strong> of its unrestricted semester-end surplus funds to the Society General Fund as a mandatory Sustainability Levy, with the remaining eighty percent (80%) retained for exclusive House management.
               </p>
-
-              {/* FIX 12: Conflict of Interest Recusal */}
+              {/* Conflict of Interest Recusal */}
               <p className="text-base leading-7 text-neutral-300">
                 Furthermore, to maintain integrity and impartiality, any officer of the House Council must formally recuse themselves from deliberation, discussion, and voting on any matter in which they have a direct or indirect financial interest, a competitive advantage, or a personal relationship that may reasonably be perceived to impair their objectivity.
               </p>
-
               <p className="text-sm italic text-neutral-500">
                 — Constitution, Article 7 — The House Councils
               </p>
