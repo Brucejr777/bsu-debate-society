@@ -10,7 +10,7 @@ export default function Home() {
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
               Benguet State University
             </p>
-            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F5D76E] to-[#D4AF37] px-6 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
+            <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               Debate Society
             </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-neutral-300 sm:text-xl">
