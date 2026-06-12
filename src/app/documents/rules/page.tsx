@@ -1,16 +1,16 @@
 import DocumentViewer from "@/components/DocumentViewer";
 
 export default function RulesPage() {
-  // Paste or fetch? keep in mind the formatting
+  // NO FILE READING. Just a hardcoded string.
   const content = `
-content is underway...
+under construction
   `;
 
   return (
-    <DocumentViewer 
-      content={content} 
-      title="The Blue Book — Rules and Procedures" 
-      subtitle="Operations Manual — Art. 9, Sec. 2(a)" 
+    <DocumentViewer
+      content={content}
+      title="The Blue Book — Rules and Procedures"
+      subtitle="Operations Manual — Art. 9, Sec. 2(a)"
     />
   );
 }
