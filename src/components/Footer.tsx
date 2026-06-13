@@ -11,9 +11,21 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Benguet State University Debate Society. All rights reserved.
             </p>
           </div>
-          <p className="text-xs italic text-neutral-600 sm:max-w-xs">
-            &quot;Reasoned dialogue rooted in evidence, respect, and clarity.&quot;
-          </p>
+          
+          <div className="flex flex-col items-center gap-3 sm:items-end">
+            {/* Discrete Whistleblower Link */}
+            <a
+              href="/whistleblower"
+              className="text-xs font-medium text-neutral-500 transition hover:text-red-400"
+              title="Confidential Whistleblower Reporting"
+            >
+              Confidential Reporting
+            </a>
+            
+            <p className="text-xs italic text-neutral-600 sm:max-w-xs">
+              &quot;Reasoned dialogue rooted in evidence, respect, and clarity.&quot;
+            </p>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,23 +1,19 @@
 "use client";
-
 import { useState } from "react";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
   Laon: "House of Laon",
   Manama: "House of Manama",
 };
-
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
   Kabunian: "#280137",
   Laon: "#000b90",
   Manama: "#006400",
 };
-
 const STATUS_BADGE: Record<string, string> = {
   provisional: "bg-amber-900/60 text-amber-300",
   final: "bg-emerald-900/60 text-emerald-300",
@@ -59,6 +55,9 @@ export default function AdminIndividualPointsPage() {
   const [form, setForm] = useState(emptyForm);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [notes, setNotes] = useState<Record<number, string>>({});
+  
+  // Default to "pending" to immediately highlight member-submitted claims
+  const [view, setView] = useState<"all" | "pending">("pending");
 
   async function fetchTransactions() {
     setLoading(true);
@@ -78,13 +77,11 @@ export default function AdminIndividualPointsPage() {
   async function submitTransaction(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-
     const points = parseInt(form.points, 10);
     if (isNaN(points) || points === 0) {
       setError("Points must be a non-zero number.");
       return;
     }
-
     const res = await fetch("/api/admin/individual-points", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -97,13 +94,11 @@ export default function AdminIndividualPointsPage() {
         semester: form.semester,
       }),
     });
-
     if (!res.ok) {
       const err = await res.json();
       setError(err.error ?? "Failed to submit.");
       return;
     }
-
     setActionMsg(
       `${points > 0 ? "Added" : "Deducted"} ${Math.abs(points)} points ${points > 0 ? "to" : "from"} ${form.member_name}.`
     );
@@ -125,12 +120,10 @@ export default function AdminIndividualPointsPage() {
         reviewed_at: new Date().toISOString(),
       }),
     });
-
     if (!res.ok) {
       setActionMsg("Failed to update.");
       return;
     }
-
     setTransactions((prev) =>
       prev.map((t) => (t.id === id ? { ...t, status, notes: note } : t))
     );
@@ -144,16 +137,22 @@ export default function AdminIndividualPointsPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
-
     if (!res.ok) {
       setActionMsg("Failed to delete.");
       return;
     }
-
     setTransactions((prev) => prev.filter((t) => t.id !== id));
     setActionMsg("Transaction deleted.");
     setTimeout(() => setActionMsg(null), 3000);
   }
+
+  // Filter transactions based on the active view tab
+  const filteredTransactions =
+    view === "pending"
+      ? transactions.filter((t) => t.status === "provisional")
+      : transactions;
+
+  const pendingCount = transactions.filter((t) => t.status === "provisional").length;
 
   const inputCls =
     "w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500";
@@ -172,12 +171,11 @@ export default function AdminIndividualPointsPage() {
         </h1>
         <p className="text-sm text-neutral-400">
           Record and manage individual member debate points per Article III,
-          Section 6. All transactions are recorded with date, member, House,
-          points, reason, and running total.
+          Section 6. Review and approve member-submitted claims.
         </p>
       </div>
 
-      {/* Feedback */}
+      {/* Feedback Messages */}
       {error && (
         <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
           {error}
@@ -189,38 +187,68 @@ export default function AdminIndividualPointsPage() {
         </div>
       )}
 
-      {/* Load / Add buttons */}
-      <div className="flex gap-2">
-        {!fetched && (
+      {/* Tabs & Actions */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex gap-2 rounded-xl bg-neutral-900 p-1">
           <button
-            onClick={fetchTransactions}
-            disabled={loading}
-            className={btnPrimary}
+            onClick={() => setView("pending")}
+            className={`relative rounded-lg px-4 py-2 text-sm font-medium transition ${
+              view === "pending"
+                ? "bg-neutral-800 text-white shadow-sm"
+                : "text-neutral-400 hover:text-white"
+            }`}
           >
-            {loading ? "Loading…" : "Load Transactions"}
+            Pending Claims
+            {pendingCount > 0 && (
+              <span className="ml-2 rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
+                {pendingCount}
+              </span>
+            )}
           </button>
-        )}
-        {fetched && !showForm && (
           <button
-            onClick={() => {
-              setShowForm(true);
-              setForm(emptyForm);
-            }}
-            className={btnPrimary}
+            onClick={() => setView("all")}
+            className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+              view === "all"
+                ? "bg-neutral-800 text-white shadow-sm"
+                : "text-neutral-400 hover:text-white"
+            }`}
           >
-            + Add Points
+            All Transactions
           </button>
-        )}
+        </div>
+
+        <div className="flex gap-2">
+          {!fetched && (
+            <button
+              onClick={fetchTransactions}
+              disabled={loading}
+              className={btnPrimary}
+            >
+              {loading ? "Loading…" : "Load Ledger"}
+            </button>
+          )}
+          {fetched && !showForm && (
+            <button
+              onClick={() => {
+                setShowForm(true);
+                setForm(emptyForm);
+              }}
+              className={btnPrimary}
+            >
+              + Manual Entry
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Form */}
+      {/* Manual Entry Form */}
       {showForm && (
         <form
           onSubmit={submitTransaction}
           className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-lg"
         >
           <h2 className="mb-6 text-lg font-semibold text-white">
-            Add / Deduct Individual Points
+            Manual Point Entry
           </h2>
           <div className="mx-auto max-w-xl space-y-4">
             <div>
@@ -337,19 +365,27 @@ export default function AdminIndividualPointsPage() {
       )}
 
       {/* Transactions List */}
-      {fetched && transactions.length === 0 && (
-        <p className="text-sm text-neutral-500">No transactions recorded yet.</p>
+      {fetched && filteredTransactions.length === 0 && (
+        <div className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 text-center text-neutral-400">
+          {view === "pending"
+            ? "No pending member claims to review."
+            : "No transactions recorded yet."}
+        </div>
       )}
 
-      {fetched && transactions.length > 0 && (
+      {fetched && filteredTransactions.length > 0 && (
         <div className="space-y-4">
-          {transactions.map((tx) => {
+          {filteredTransactions.map((tx) => {
             const color = HOUSE_COLORS[tx.house] ?? "#666";
             const isExpanded = expandedId === tx.id;
             return (
               <article
                 key={tx.id}
-                className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg"
+                className={`rounded-3xl border bg-neutral-950/95 p-6 shadow-lg transition-all ${
+                  tx.status === "provisional"
+                    ? "border-amber-800/60 ring-1 ring-amber-800/30"
+                    : "border-neutral-800"
+                }`}
               >
                 <div className="flex flex-wrap items-center gap-3">
                   <div
@@ -373,8 +409,8 @@ export default function AdminIndividualPointsPage() {
                         tx.points > 0
                           ? "text-emerald-400"
                           : tx.points < 0
-                            ? "text-red-400"
-                            : "text-neutral-400"
+                          ? "text-red-400"
+                          : "text-neutral-400"
                       }`}
                     >
                       {tx.points > 0 ? "+" : ""}
@@ -390,7 +426,6 @@ export default function AdminIndividualPointsPage() {
                     {tx.status}
                   </span>
                 </div>
-
                 <div className="mt-3">
                   <p className="text-sm text-neutral-300">{tx.reason}</p>
                   {tx.evidence && (
@@ -400,16 +435,16 @@ export default function AdminIndividualPointsPage() {
                   )}
                 </div>
 
-                {/* Expand for review */}
+                {/* Expand for review (Only shown for provisional/claims) */}
                 {tx.status === "provisional" && (
                   <div className="mt-4">
                     <button
                       onClick={() =>
                         setExpandedId(isExpanded ? null : tx.id)
                       }
-                      className="text-sm font-medium text-neutral-400 transition hover:text-white"
+                      className="text-sm font-medium text-amber-400 transition hover:text-amber-300"
                     >
-                      {isExpanded ? "Hide review" : "Review"}
+                      {isExpanded ? "Hide review" : "Review Claim"}
                     </button>
                     {isExpanded && (
                       <div className="mt-3 space-y-3 border-t border-neutral-800 pt-4">
@@ -433,9 +468,7 @@ export default function AdminIndividualPointsPage() {
                             Approve (Final)
                           </button>
                           <button
-                            onClick={() =>
-                              updateStatus(tx.id, "disputed")
-                            }
+                            onClick={() => updateStatus(tx.id, "disputed")}
                             className="rounded-full bg-red-800 px-4 py-1.5 text-xs font-semibold text-red-200 transition hover:bg-red-700"
                           >
                             Dispute

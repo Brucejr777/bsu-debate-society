@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Debate Cup", href: "/debate-cup" },
   { label: "League", href: "/league" },
   { label: "Ledger", href: "/individual-ledger" },
+  { label: "Claim Points", href: "/claim-points" },
   { label: "Governance", href: "/governance" },
   { label: "Finance", href: "/finance" },
   { label: "Meetings", href: "/meetings" },
@@ -49,8 +50,6 @@ const adminLinks = [
   { label: "Admin Login", href: "/admin/login" },
 ];
 
-const SIDEBAR_WIDTH = "w-64";
-
 function NavLinks({ onClick }: { onClick?: () => void }) {
   return (
     <>
@@ -61,7 +60,9 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
           onClick={onClick}
           className="group block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#daa520]/8"
         >
-          <span className="transition-colors group-hover:text-[#ffd700]">{link.label}</span>
+          <span className="transition-colors group-hover:text-[#ffd700]">
+            {link.label}
+          </span>
         </a>
       ))}
     </>
@@ -70,6 +71,7 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
 
 function AdminSection({ onClick }: { onClick?: () => void }) {
   const [adminOpen, setAdminOpen] = useState(false);
+
   return (
     <div className="mt-2 pt-2 border-t border-[#daa520]/20">
       <button
@@ -77,12 +79,16 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
         onClick={() => setAdminOpen((prev) => !prev)}
         className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#daa520]/8"
       >
-        <span className="transition-colors group-hover:text-[#ffd700]">Admin</span>
+        <span className="transition-colors group-hover:text-[#ffd700]">
+          Admin
+        </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className={`size-4 text-[#ffd700] transition-transform ${adminOpen ? "rotate-180" : ""}`}
+          className={`size-4 text-[#ffd700] transition-transform ${
+            adminOpen ? "rotate-180" : ""
+          }`}
         >
           <path
             fillRule="evenodd"
@@ -100,7 +106,9 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
               onClick={onClick}
               className="group block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#daa520]/8"
             >
-              <span className="transition-colors group-hover:text-[#ffd700]">{link.label}</span>
+              <span className="transition-colors group-hover:text-[#ffd700]">
+                {link.label}
+              </span>
             </a>
           ))}
         </div>
@@ -115,9 +123,7 @@ export default function Navbar() {
   return (
     <>
       {/* ── Desktop Sidebar (lg+) ── */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-neutral-800/80 bg-gradient-to-b from-neutral-950 via-neutral-950/98 to-neutral-950 backdrop-blur-xl lg:flex`}
-      >
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-neutral-800/80 bg-gradient-to-b from-neutral-950 via-neutral-950/98 to-neutral-950 backdrop-blur-xl lg:flex">
         {/* Brand */}
         <a href="/" className="group flex items-center gap-3 px-6 py-6">
           <img
@@ -147,7 +153,9 @@ export default function Navbar() {
               alt="BSU Debate Society Logo"
               className="size-8 rounded-full object-contain shadow-[0_0_12px_rgba(255,215,0,0.3)] transition-transform hover:scale-105"
             />
-            <span className="tracking-wide text-neutral-200">Debate Society</span>
+            <span className="tracking-wide text-neutral-200">
+              Debate Society
+            </span>
           </a>
 
           {/* Hamburger */}
@@ -158,12 +166,26 @@ export default function Navbar() {
             onClick={() => setOpen((prev) => !prev)}
           >
             {open ? (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="size-6"
+              >
                 <path d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                <path fillRule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="size-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+                  clipRule="evenodd"
+                />
               </svg>
             )}
           </button>

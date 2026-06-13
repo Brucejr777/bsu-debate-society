@@ -1,10 +1,8 @@
 "use client";
-
 import { useState, type FormEvent } from "react";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
 const VIOLATION_TYPES = ["Minor Violation", "Major Violation"];
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
@@ -102,7 +100,7 @@ export default function DisciplinePage() {
           {/* Header */}
           <div className="space-y-4 text-center">
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
-              Article VI — Rules & Procedures
+              Article VI — Rules &amp; Procedures
             </p>
             <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
               File a Disciplinary Complaint
@@ -121,6 +119,31 @@ export default function DisciplinePage() {
             <p className="text-sm italic text-neutral-500">
               — Rules and Procedures, Article VI, Section 3(1)
             </p>
+          </article>
+
+          {/* Whistleblower Notice */}
+          <article className="rounded-3xl border border-amber-900/40 bg-amber-950/20 p-6 shadow-lg">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-900/30">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5 text-amber-400">
+                  <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-amber-200">Confidential or Anonymous Reporting</h3>
+                <p className="text-sm leading-6 text-amber-300/80">
+                  This form is for standard disciplinary complaints, which require your name and are processed with full due process (including the respondent's right to confront accusers). 
+                  If you wish to report misconduct, ethical violations, or administrative malfeasance <strong className="text-white">anonymously or confidentially</strong>, please use our secure{" "}
+                  <a href="/whistleblower" className="font-semibold text-amber-200 underline underline-offset-4 transition hover:text-white">
+                    Whistleblower Reporting Portal
+                  </a>
+                  .
+                </p>
+                <p className="text-xs italic text-amber-500/80">
+                  — Constitution, Article 3, Section 14 &amp; Rules, Article VI, Section 4(6)
+                </p>
+              </div>
+            </div>
           </article>
 
           {/* Violation Classification Info */}

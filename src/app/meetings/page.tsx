@@ -1,6 +1,6 @@
 "use client";
-
 import { useEffect, useState } from "react";
+import { downloadIcs } from "@/lib/ics-generator";
 
 const TYPE_LABELS: Record<string, string> = {
   society_assembly: "Society Assembly",
@@ -85,10 +85,10 @@ export default function MeetingsPage() {
           {/* Header */}
           <div className="space-y-4 text-center">
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
-              Article IV — Rules & Procedures
+              Article IV — Rules &amp; Procedures
             </p>
             <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
-              Meetings & Minutes
+              Meetings &amp; Minutes
             </h1>
           </div>
 
@@ -126,12 +126,27 @@ export default function MeetingsPage() {
                         {TYPE_LABELS[m.meeting_type] ?? m.meeting_type}
                       </p>
                     </div>
-                    <button
-                      onClick={() => setExpanded(expanded === m.id ? null : m.id)}
-                      className="rounded-full border border-neutral-700 px-4 py-1.5 text-xs font-medium text-neutral-400 transition hover:text-white"
-                    >
-                      {expanded === m.id ? "Collapse" : "Details"}
-                    </button>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => downloadIcs({
+                          title: m.title,
+                          date: m.meeting_date,
+                          time: m.meeting_time || "00:00",
+                          venue: m.venue || undefined,
+                          virtualLink: m.virtual_link || undefined,
+                          agenda: m.agenda || undefined,
+                        }, `bsu-meeting-${m.meeting_type}-${m.meeting_date}.ics`)}
+                        className="rounded-full border border-emerald-800 px-4 py-1.5 text-xs font-medium text-emerald-400 transition hover:bg-emerald-900/30 hover:text-emerald-300"
+                      >
+                        Add to Calendar
+                      </button>
+                      <button
+                        onClick={() => setExpanded(expanded === m.id ? null : m.id)}
+                        className="rounded-full border border-neutral-700 px-4 py-1.5 text-xs font-medium text-neutral-400 transition hover:text-white"
+                      >
+                        {expanded === m.id ? "Collapse" : "Details"}
+                      </button>
+                    </div>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-neutral-400">
                     <p>
@@ -162,7 +177,7 @@ export default function MeetingsPage() {
           {/* Past Meetings / Minutes */}
           {!loading && past.length > 0 && (
             <div className="space-y-4">
-              <h2 className="text-2xl font-semibold text-white">Past Meetings & Minutes</h2>
+              <h2 className="text-2xl font-semibold text-white">Past Meetings &amp; Minutes</h2>
               {past.map((m) => (
                 <article key={m.id} className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6">
                   <div className="flex flex-wrap items-start justify-between gap-3">

@@ -1,5 +1,4 @@
 // src/app/league/criteria/page.tsx
-
 export default function LeagueCriteriaPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
@@ -17,7 +16,7 @@ export default function LeagueCriteriaPage() {
               Back to Debate League
             </a>
           </div>
-
+          
           {/* Header */}
           <div className="space-y-4 text-center">
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
@@ -34,9 +33,7 @@ export default function LeagueCriteriaPage() {
             </p>
           </div>
 
-          {/* ═══════════════════════════════════════ */}
-          {/* 1. SOCIETY & HOUSE-WIDE DEBATES         */}
-          {/* ═══════════════════════════════════════ */}
+          {/* 1. SOCIETY & HOUSE-WIDE DEBATES */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-2xl font-semibold text-white">Society &amp; House-Wide Debates</h2>
@@ -66,9 +63,7 @@ export default function LeagueCriteriaPage() {
             </div>
           </div>
 
-          {/* ═══════════════════════════════════════ */}
-          {/* 2. EXTERNAL COMPETITIONS                */}
-          {/* ═══════════════════════════════════════ */}
+          {/* 2. EXTERNAL COMPETITIONS */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-2xl font-semibold text-white">External Competitions</h2>
@@ -114,9 +109,7 @@ export default function LeagueCriteriaPage() {
             </div>
           </div>
 
-          {/* ═══════════════════════════════════════ */}
-          {/* 3. SPEAKER & INDIVIDUAL AWARDS          */}
-          {/* ═══════════════════════════════════════ */}
+          {/* 3. SPEAKER & INDIVIDUAL AWARDS */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-2xl font-semibold text-white">Speaker &amp; Individual Performance Awards</h2>
@@ -142,9 +135,7 @@ export default function LeagueCriteriaPage() {
             </div>
           </div>
 
-          {/* ═══════════════════════════════════════ */}
-          {/* 4. ACCUMULATION RULES                   */}
-          {/* ═══════════════════════════════════════ */}
+          {/* 4. ACCUMULATION RULES */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-2xl font-semibold text-white">Accumulation Rules</h2>
@@ -178,9 +169,7 @@ export default function LeagueCriteriaPage() {
             </div>
           </div>
 
-          {/* ═══════════════════════════════════════ */}
-          {/* 5. DOCUMENTATION & VERIFICATION         */}
-          {/* ═══════════════════════════════════════ */}
+          {/* 5. DOCUMENTATION & VERIFICATION */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-2xl font-semibold text-white">Documentation &amp; Verification Process</h2>
@@ -194,6 +183,15 @@ export default function LeagueCriteriaPage() {
                   <p className="mt-1 text-sm leading-6 text-neutral-400">
                     Members must submit a <strong className="text-neutral-200">Point Claim Form</strong> to the Secretary of Internal Affairs within <strong className="text-white">fourteen (14) calendar days</strong> of the activity's completion, including official certificates, published results, or signed attendance sheets.
                   </p>
+                  <a 
+                    href="/claim-points" 
+                    className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-800 px-4 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-700"
+                  >
+                    Submit Point Claim Now
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div className="flex gap-4 rounded-2xl border border-neutral-800 bg-neutral-900 p-6">
@@ -217,15 +215,12 @@ export default function LeagueCriteriaPage() {
             </div>
           </div>
 
-          {/* ═══════════════════════════════════════ */}
-          {/* 6. DISPUTE RESOLUTION & PENALTIES       */}
-          {/* ═══════════════════════════════════════ */}
+          {/* 6. DISPUTE RESOLUTION & PENALTIES */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
               <h2 className="text-2xl font-semibold text-white">Dispute Resolution &amp; Penalties</h2>
               <p className="text-sm italic text-neutral-500">— Annex A, Section 6</p>
             </div>
-            
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Dispute Resolution */}
               <article className="rounded-2xl border border-blue-900/40 bg-blue-950/20 p-6">
@@ -245,7 +240,6 @@ export default function LeagueCriteriaPage() {
                   </li>
                 </ul>
               </article>
-
               {/* Penalties */}
               <article className="rounded-2xl border border-red-900/40 bg-red-950/20 p-6">
                 <h3 className="text-lg font-semibold text-red-200">Penalties for False Claims</h3>
@@ -269,6 +263,28 @@ export default function LeagueCriteriaPage() {
               </article>
             </div>
           </div>
+
+          {/* Ready to Claim CTA */}
+          <article className="rounded-3xl border border-emerald-900/40 bg-emerald-950/20 p-8 text-center shadow-lg">
+            <div className="mx-auto max-w-3xl space-y-4">
+              <h2 className="text-2xl font-semibold text-emerald-200">Ready to Claim Your Points?</h2>
+              <p className="text-base leading-7 text-emerald-100/80">
+                If you have participated in an eligible debate activity or competition, you can proactively submit your Individual Debate Point claim through our member-facing portal. Ensure you have your evidence links (e.g., certificates, published results) ready.
+              </p>
+              <a
+                href="/claim-points"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-800 px-8 py-3 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-700"
+              >
+                Submit Point Claim
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                  <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                </svg>
+              </a>
+              <p className="text-xs italic text-emerald-500/70">
+                — Rules and Procedures, Annex A, Section 5
+              </p>
+            </div>
+          </article>
 
           {/* Footer Note */}
           <div className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 text-center">
