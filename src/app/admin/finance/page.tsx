@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { downloadFinancialReportPDF } from "@/components/FinancialReportPDF";
 
 const RECORD_TYPES = [
   { value: "snapshot", label: "Monthly Snapshot" },
@@ -52,7 +53,6 @@ export default function AdminFinancePage() {
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
-
     const body = {
       record_type: fd.get("record_type") as string,
       period_start: fd.get("period_start") as string,
@@ -67,7 +67,6 @@ export default function AdminFinancePage() {
       notes: (fd.get("notes") as string) || null,
       published: fd.get("published") === "on",
     };
-
     const res = editing
       ? await fetch("/api/finance", {
           method: "PUT",
@@ -79,9 +78,7 @@ export default function AdminFinancePage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         });
-
     if (!res.ok) { const err = await res.json(); setError(err.error ?? "Failed."); return; }
-
     flash(editing ? "Record updated." : "Record published.");
     setShowForm(false);
     setEditing(null);
@@ -104,7 +101,6 @@ export default function AdminFinancePage() {
   const btnPrimary = "rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200";
   const btnDanger = "rounded-full bg-red-800/60 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-700";
   const btnEdit = "rounded-full bg-neutral-800 px-3 py-1.5 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700";
-
   const fmt = (n: number) => n.toLocaleString("en-PH", { style: "currency", currency: "PHP" });
 
   return (
@@ -133,11 +129,22 @@ export default function AdminFinancePage() {
         </button>
       )}
 
-      {/* Add Button */}
+      {/* Actions Bar */}
       {loaded && (
-        <button onClick={() => { setShowForm(true); setEditing(null); }} className={btnPrimary}>
-          + Add Record
-        </button>
+        <div className="flex flex-wrap gap-3">
+          <button onClick={() => { setShowForm(true); setEditing(null); }} className={btnPrimary}>
+            + Add Record
+          </button>
+          <button 
+            onClick={() => downloadFinancialReportPDF(records)}
+            className="rounded-full border border-neutral-700 bg-neutral-900 px-6 py-2.5 text-sm font-semibold text-neutral-300 transition hover:bg-neutral-800 hover:text-white flex items-center gap-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+              <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+            </svg>
+            Download Report (PDF)
+          </button>
+        </div>
       )}
 
       {/* Form */}

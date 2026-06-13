@@ -42,6 +42,7 @@ export default function AdminPointsPage() {
   const [fetched, setFetched] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [actionMsg, setActionMsg] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Add points form
   const [houseName, setHouseName] = useState("Bathala");
@@ -54,15 +55,12 @@ export default function AdminPointsPage() {
   async function fetchPoints() {
     setLoading(true);
     setError(null);
-
     const res = await fetch("/api/admin/points");
-
     if (!res.ok) {
       setError("Failed to fetch house points.");
       setLoading(false);
       return;
     }
-
     const data = await res.json();
     setPoints(data);
     setFetched(true);
@@ -73,30 +71,25 @@ export default function AdminPointsPage() {
     e.preventDefault();
     setSubmitting(true);
     setActionMsg(null);
-
     const amount = parseInt(pointAmount, 10);
     if (isNaN(amount) || amount === 0) {
       setActionMsg("Point amount must be a non-zero number.");
       setSubmitting(false);
       return;
     }
-
     const res = await fetch("/api/admin/points", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ house_name: houseName, category, amount, reason, evidence }),
     });
-
     if (!res.ok) {
       const err = await res.json();
       setActionMsg(`Failed: ${err.error ?? "update points."}`);
       setSubmitting(false);
       return;
     }
-
     // Refetch to get updated standings
     await fetchPoints();
-
     setActionMsg(
       `${amount > 0 ? "Added" : "Deducted"} ${Math.abs(amount)} points ${
         amount > 0 ? "to" : "from"
@@ -108,6 +101,47 @@ export default function AdminPointsPage() {
     setSubmitting(false);
     setTimeout(() => setActionMsg(null), 4000);
   }
+
+  const exportToCSV = () => {
+    const headers = [
+      "House Name",
+      "Semester",
+      "Total Points",
+      "Competitive Excellence",
+      "Organizational Contribution",
+      "Governance & Compliance",
+      "Conduct & Ethics",
+      "Last Updated",
+    ];
+    const rows = filteredPoints.map((p) => [
+      `"${HOUSE_LABELS[p.house_name] ?? p.house_name}"`,
+      p.semester,
+      p.total_points,
+      p.competitive_excellence,
+      p.organizational_contribution,
+      p.governance_compliance,
+      p.conduct_ethics,
+      new Date(p.created_at).toLocaleDateString(),
+    ]);
+
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      headers.join(",") +
+      "\n" +
+      rows.map((r) => r.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `house_points_ledger_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const filteredPoints = points.filter((p) =>
+    p.house_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="space-y-8">
@@ -153,12 +187,51 @@ export default function AdminPointsPage() {
         </button>
       )}
 
+      {/* Filters and Actions Bar */}
+      {fetched && (
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="relative flex-1 max-w-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-neutral-500"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search by house name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 py-2 pl-10 pr-4 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+            />
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              onClick={exportToCSV}
+              className="rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-4">
+                <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+              </svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Current Standings */}
-      {fetched && points.length > 0 && (
+      {fetched && filteredPoints.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-white">Current Standings</h2>
           <div className="space-y-3">
-            {points.map((hp, idx) => {
+            {filteredPoints.map((hp, idx) => {
               const color = HOUSE_COLORS[hp.house_name] ?? "#666";
               return (
                 <article
@@ -211,6 +284,12 @@ export default function AdminPointsPage() {
         </div>
       )}
 
+      {fetched && filteredPoints.length === 0 && (
+        <div className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 text-center text-neutral-400">
+          {points.length === 0 ? "No house points recorded yet." : "No houses match your search."}
+        </div>
+      )}
+
       {/* Add / Deduct Points Form */}
       <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
         <div className="space-y-2 text-center">
@@ -221,7 +300,6 @@ export default function AdminPointsPage() {
             Provide reason and evidence for transparency. Negative values deduct points.
           </p>
         </div>
-
         <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-lg space-y-4">
           {/* House */}
           <div className="space-y-2">
@@ -239,7 +317,6 @@ export default function AdminPointsPage() {
               ))}
             </select>
           </div>
-
           {/* Category */}
           <div className="space-y-2">
             <label htmlFor="category" className="block text-sm font-medium text-neutral-300">
@@ -256,7 +333,6 @@ export default function AdminPointsPage() {
               ))}
             </select>
           </div>
-
           {/* Points */}
           <div className="space-y-2">
             <label htmlFor="amount" className="block text-sm font-medium text-neutral-300">
@@ -272,7 +348,6 @@ export default function AdminPointsPage() {
               className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
             />
           </div>
-
           {/* Reason */}
           <div className="space-y-2">
             <label htmlFor="reason" className="block text-sm font-medium text-neutral-300">
@@ -288,7 +363,6 @@ export default function AdminPointsPage() {
               className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
             />
           </div>
-
           {/* Evidence */}
           <div className="space-y-2">
             <label htmlFor="evidence" className="block text-sm font-medium text-neutral-300">
@@ -303,7 +377,6 @@ export default function AdminPointsPage() {
               className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
             />
           </div>
-
           <button
             type="submit"
             disabled={submitting}

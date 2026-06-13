@@ -14,13 +14,11 @@ export async function GET() {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json(data);
 }
 
 export async function POST(request: Request) {
   const body = await request.json();
-
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   // Get the member's current points to compute running total
@@ -69,15 +67,25 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  const { id, ...updates } = await request.json();
-
+  const body = await request.json();
+  const { id, ids, ...updates } = body;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+  // Support both single 'id' and array of 'ids' for bulk operations
+  const targetIds = ids ? ids : (id ? [id] : []);
+
+  if (targetIds.length === 0) {
+    return NextResponse.json({ error: "No ID or IDs provided" }, { status: 400 });
+  }
+
+  // Update the transactions in a single query
+  // Note: Bulk updates here only change metadata (status, notes, reviewed_at).
+  // The actual point values were already applied during the POST request.
   const { data, error } = await supabase
     .from("individual_debate_point_transactions")
     .update(updates)
-    .eq("id", id)
-    .select()
-    .single();
+    .in("id", targetIds)
+    .select();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -88,8 +96,8 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
   const { id } = await request.json();
-
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
   const { error } = await supabase
     .from("individual_debate_point_transactions")
     .delete()
