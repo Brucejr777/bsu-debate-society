@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
+// Using Inter and Roboto Mono as fallbacks for Geist, which is Next.js 15+ only
+const geistSans = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = Roboto_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -32,7 +33,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {/* Pure black background */}
         <div className="fixed inset-0 bg-black z-[-2]" />
-        
         <Navbar />
         <main className="flex-1 lg:pl-64">{children}</main>
         <Footer />
