@@ -365,22 +365,22 @@ export default async function StandingsPage() {
                   </div>
                   <p className="text-sm text-neutral-400 mb-3">Each House earns points by leading initiatives that demonstrate its core embodied value:</p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8b0000" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #FF8C00" }}>
                       <p className="text-sm font-semibold text-white">House of Bathala</p>
                       <p className="text-xs text-neutral-400">Leadership initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #280137" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #C0C0C0" }}>
                       <p className="text-sm font-semibold text-white">House of Kabunian</p>
                       <p className="text-xs text-neutral-400">Journalism initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #000b90" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #228B22" }}>
                       <p className="text-sm font-semibold text-white">House of Laon</p>
                       <p className="text-xs text-neutral-400">Academic initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #006400" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8B008B" }}>
                       <p className="text-sm font-semibold text-white">House of Manama</p>
                       <p className="text-xs text-neutral-400">Arts initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
