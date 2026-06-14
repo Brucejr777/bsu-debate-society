@@ -4,10 +4,10 @@ import PointTrendChart, { TrendDataPoint } from "@/components/PointTrendChart";
 export const dynamic = "force-dynamic";
 
 const HOUSE_COLORS: Record<string, string> = {
-  Bathala: "#8b0000",
-  Kabunian: "#280137",
-  Laon: "#000b90",
-  Manama: "#006400",
+  Bathala: "#FF8C00",
+  Kabunian: "#C0C0C0",
+  Laon: "#228B22",
+  Manama: "#8B008B",
 };
 
 const HOUSE_LABELS: Record<string, string> = {
@@ -67,7 +67,9 @@ export default async function StandingsPage() {
 
   const sortedMonths = Object.keys(monthlyData).sort();
   const trendResult: TrendDataPoint[] = [];
-  let currentTotals: Record<string, number> = { 
+  
+  // Let TypeScript infer the exact shape of this object
+  let currentTotals = { 
     Bathala: 0, 
     Kabunian: 0, 
     Laon: 0, 
@@ -78,7 +80,8 @@ export default async function StandingsPage() {
     for (const house of houses) {
       const val = monthlyData[month][house];
       if (val !== null && val !== undefined) {
-        currentTotals[house] = val;
+        // Assert that 'house' is a valid key of currentTotals
+        currentTotals[house as keyof typeof currentTotals] = val;
       }
     }
     
@@ -362,22 +365,22 @@ export default async function StandingsPage() {
                   </div>
                   <p className="text-sm text-neutral-400 mb-3">Each House earns points by leading initiatives that demonstrate its core embodied value:</p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #FF8C00" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8b0000" }}>
                       <p className="text-sm font-semibold text-white">House of Bathala</p>
                       <p className="text-xs text-neutral-400">Leadership initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #C0C0C0" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #280137" }}>
                       <p className="text-sm font-semibold text-white">House of Kabunian</p>
                       <p className="text-xs text-neutral-400">Journalism initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #228B22" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #000b90" }}>
                       <p className="text-sm font-semibold text-white">House of Laon</p>
                       <p className="text-xs text-neutral-400">Academic initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8B008B" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #006400" }}>
                       <p className="text-sm font-semibold text-white">House of Manama</p>
                       <p className="text-xs text-neutral-400">Arts initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
