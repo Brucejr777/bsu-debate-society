@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, type FormEvent } from "react";
+import { Tooltip } from "@/components/Tooltip";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
 const HOUSE_LABELS: Record<string, string> = {
@@ -15,7 +16,6 @@ const HOUSE_COLORS: Record<string, string> = {
   Laon: "#000b90",
   Manama: "#006400",
 };
-
 const STATUS_BADGE: Record<string, string> = {
   provisional: "bg-amber-900/60 text-amber-300",
   final: "bg-emerald-900/60 text-emerald-300",
@@ -137,9 +137,8 @@ export default function AdminIndividualPointsPage() {
 
   async function bulkUpdateStatus(status: "final" | "disputed") {
     if (selectedIds.size === 0) return;
-    
     const ids = Array.from(selectedIds);
-    const promises = ids.map(id => 
+    const promises = ids.map(id =>
       fetch("/api/admin/individual-points", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -151,15 +150,13 @@ export default function AdminIndividualPointsPage() {
         }),
       })
     );
-    
     const results = await Promise.all(promises);
     const allOk = results.every(r => r.ok);
-    
     if (!allOk) {
       setActionMsg("Some transactions failed to update.");
     } else {
       setTransactions((prev) =>
-        prev.map((t) => 
+        prev.map((t) =>
           selectedIds.has(t.id) ? { ...t, status, notes: notes[t.id] ?? null } : t
         )
       );
@@ -197,11 +194,9 @@ export default function AdminIndividualPointsPage() {
       t.status,
       t.running_total ?? ""
     ]);
-    
-    const csvContent = "data:text/csv;charset=utf-8," 
-      + headers.join(",") + "\n" 
+    const csvContent = "data:text/csv;charset=utf-8,"
+      + headers.join(",") + "\n"
       + rows.map(r => r.join(",")).join("\n");
-    
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -213,7 +208,7 @@ export default function AdminIndividualPointsPage() {
 
   const filteredTransactions = useMemo(() => {
     return transactions.filter((t) => {
-      const matchesSearch = 
+      const matchesSearch =
         t.member_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         t.reason.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus = statusFilter === "all" || t.status === statusFilter;
@@ -518,8 +513,8 @@ export default function AdminIndividualPointsPage() {
       {/* Transactions List */}
       {fetched && filteredTransactions.length === 0 && (
         <div className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 text-center text-neutral-400">
-          {transactions.length === 0 
-            ? "No transactions recorded yet." 
+          {transactions.length === 0
+            ? "No transactions recorded yet."
             : "No transactions match your filters."}
         </div>
       )}
@@ -537,8 +532,8 @@ export default function AdminIndividualPointsPage() {
                 key={tx.id}
                 className={`rounded-3xl border bg-neutral-950/95 p-6 shadow-lg transition-all ${
                   isProvisional
-                    ? isSelected 
-                      ? "border-emerald-800/60 ring-1 ring-emerald-800/30" 
+                    ? isSelected
+                      ? "border-emerald-800/60 ring-1 ring-emerald-800/30"
                       : "border-amber-800/60 ring-1 ring-amber-800/30"
                     : "border-neutral-800"
                 }`}
@@ -553,7 +548,6 @@ export default function AdminIndividualPointsPage() {
                       className="mt-1 size-4 shrink-0 rounded border-neutral-600 bg-neutral-800 accent-emerald-500"
                     />
                   )}
-                  
                   <div
                     className="flex size-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white"
                     style={{ backgroundColor: color }}
@@ -586,13 +580,23 @@ export default function AdminIndividualPointsPage() {
                       → {tx.running_total?.toLocaleString() ?? "—"}
                     </p>
                   </div>
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${STATUS_BADGE[tx.status] ?? "bg-neutral-800 text-neutral-300"}`}
-                  >
-                    {tx.status}
-                  </span>
+                  
+                  {/* Status Badge with Tooltip */}
+                  {tx.status === "provisional" ? (
+                    <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
+                      <span className="cursor-help rounded-full bg-amber-900/60 px-2.5 py-1 text-xs font-semibold text-amber-300 capitalize">
+                        {tx.status}
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    <span
+                      className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${STATUS_BADGE[tx.status] ?? "bg-neutral-800 text-neutral-300"}`}
+                    >
+                      {tx.status}
+                    </span>
+                  )}
                 </div>
-                
+
                 <div className="mt-3">
                   <p className="text-sm text-neutral-300">{tx.reason}</p>
                   {tx.evidence && (

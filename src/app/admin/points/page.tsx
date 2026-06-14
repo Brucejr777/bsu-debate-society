@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Tooltip } from "@/components/Tooltip";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
 const CATEGORIES = [
@@ -9,14 +10,12 @@ const CATEGORIES = [
   "Governance & Compliance",
   "Conduct & Ethics",
 ];
-
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
   Kabunian: "#280137",
   Laon: "#000b90",
   Manama: "#006400",
 };
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
@@ -36,14 +35,26 @@ interface HousePoint {
   semester: string;
 }
 
+interface HousePointTransaction {
+  id: number;
+  created_at: string;
+  house_name: string;
+  category: string;
+  points: number;
+  reason: string;
+  status: string;
+  running_total: number | null;
+}
+
 export default function AdminPointsPage() {
   const [points, setPoints] = useState<HousePoint[]>([]);
+  const [transactions, setTransactions] = useState<HousePointTransaction[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+  
   // Add points form
   const [houseName, setHouseName] = useState("Bathala");
   const [category, setCategory] = useState(CATEGORIES[0]);
@@ -52,19 +63,32 @@ export default function AdminPointsPage() {
   const [evidence, setEvidence] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  async function fetchPoints() {
+  async function fetchData() {
     setLoading(true);
     setError(null);
-    const res = await fetch("/api/admin/points");
-    if (!res.ok) {
-      setError("Failed to fetch house points.");
+    try {
+      const [pointsRes, txRes] = await Promise.all([
+        fetch("/api/admin/points"),
+        fetch("/api/transactions"),
+      ]);
+      
+      if (!pointsRes.ok || !txRes.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const pointsData = await pointsRes.json();
+      const txData = await txRes.json();
+      
+      setPoints(pointsData);
+      // Show only the 10 most recent transactions in this summary view
+      setTransactions(txData.slice(0, 10)); 
+      setFetched(true);
+    } catch (err) {
+      setError("Failed to fetch data.");
+    } finally {
       setLoading(false);
-      return;
     }
-    const data = await res.json();
-    setPoints(data);
-    setFetched(true);
-    setLoading(false);
+    return () => {};
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -88,8 +112,7 @@ export default function AdminPointsPage() {
       setSubmitting(false);
       return;
     }
-    // Refetch to get updated standings
-    await fetchPoints();
+    await fetchData();
     setActionMsg(
       `${amount > 0 ? "Added" : "Deducted"} ${Math.abs(amount)} points ${
         amount > 0 ? "to" : "from"
@@ -123,13 +146,11 @@ export default function AdminPointsPage() {
       p.conduct_ethics,
       new Date(p.created_at).toLocaleDateString(),
     ]);
-
     const csvContent =
       "data:text/csv;charset=utf-8," +
       headers.join(",") +
       "\n" +
       rows.map((r) => r.join(",")).join("\n");
-
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -160,7 +181,7 @@ export default function AdminPointsPage() {
           href="/standings/transactions"
           className="shrink-0 text-sm font-medium text-neutral-400 transition hover:text-white"
         >
-          View Transaction History →
+          View Full Transaction History →
         </a>
       </div>
 
@@ -179,7 +200,7 @@ export default function AdminPointsPage() {
       {/* Load Button */}
       {!fetched && (
         <button
-          onClick={fetchPoints}
+          onClick={fetchData}
           disabled={loading}
           className="rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:opacity-50"
         >
@@ -211,7 +232,6 @@ export default function AdminPointsPage() {
               className="w-full rounded-xl border border-neutral-700 bg-neutral-900 py-2 pl-10 pr-4 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
             />
           </div>
-
           <div className="flex gap-2">
             <button
               onClick={exportToCSV}
@@ -283,10 +303,75 @@ export default function AdminPointsPage() {
           </div>
         </div>
       )}
-
       {fetched && filteredPoints.length === 0 && (
         <div className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 text-center text-neutral-400">
           {points.length === 0 ? "No house points recorded yet." : "No houses match your search."}
+        </div>
+      )}
+
+      {/* Recent Transactions */}
+      {fetched && transactions.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Recent Transactions</h2>
+          <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-neutral-800 text-neutral-500">
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Date</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">House</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Category</th>
+                  <th className="px-5 py-3 text-right font-medium uppercase tracking-wider">Points</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Reason</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((tx) => {
+                  const color = HOUSE_COLORS[tx.house_name] ?? "#666";
+                  return (
+                    <tr key={tx.id} className="border-b border-neutral-800/50 transition hover:bg-neutral-800/50">
+                      <td className="px-5 py-3 text-neutral-400">
+                        {new Date(tx.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="px-5 py-3">
+                        <div className="flex items-center gap-2">
+                          <div
+                            className="flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-bold text-white"
+                            style={{ backgroundColor: color }}
+                          >
+                            {tx.house_name[0]}
+                          </div>
+                          <span className="text-white">
+                            {HOUSE_LABELS[tx.house_name]?.replace("House of ", "") ?? tx.house_name}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 text-neutral-300">{tx.category}</td>
+                      <td className={`px-5 py-3 text-right font-semibold tabular-nums ${tx.points > 0 ? "text-emerald-400" : "text-red-400"}`}>
+                        {tx.points > 0 ? "+" : ""}{tx.points}
+                      </td>
+                      <td className="px-5 py-3 text-neutral-400 max-w-xs truncate" title={tx.reason}>
+                        {tx.reason}
+                      </td>
+                      <td className="px-5 py-3">
+                        {tx.status === "provisional" ? (
+                          <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
+                            <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
+                              provisional
+                            </span>
+                          </Tooltip>
+                        ) : (
+                          <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
+                            final
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 

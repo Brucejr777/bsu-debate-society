@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { HOUSES, HOUSE_COLORS, HOUSE_LABELS } from "@/lib/houses";
+import { Tooltip } from "@/components/Tooltip";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +39,7 @@ export default async function TransactionsPage() {
     .order("created_at", { ascending: false });
 
   const transactions: Transaction[] = data ?? [];
-
+  
   // Get unique semesters for filter info
   const semesters = [...new Set(transactions.map((t) => t.semester))];
   const currentSemester = semesters[0] ?? "";
@@ -173,11 +174,20 @@ export default async function TransactionsPage() {
                               </div>
                             </td>
                             <td className="px-4 py-3">
-                              <span
-                                className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}
-                              >
-                                {CATEGORY_LABELS[tx.category] ?? tx.category}
-                              </span>
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}
+                                >
+                                  {CATEGORY_LABELS[tx.category] ?? tx.category}
+                                </span>
+                                {tx.status === "provisional" && (
+                                  <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
+                                    <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
+                                      provisional
+                                    </span>
+                                  </Tooltip>
+                                )}
+                              </div>
                             </td>
                             <td className="px-4 py-3 text-right">
                               <span
@@ -185,8 +195,8 @@ export default async function TransactionsPage() {
                                   tx.points > 0
                                     ? "text-emerald-400"
                                     : tx.points < 0
-                                      ? "text-red-400"
-                                      : "text-neutral-400"
+                                    ? "text-red-400"
+                                    : "text-neutral-400"
                                 }`}
                               >
                                 {tx.points > 0 ? "+" : ""}
@@ -251,8 +261,8 @@ export default async function TransactionsPage() {
                               tx.points > 0
                                 ? "text-emerald-400"
                                 : tx.points < 0
-                                  ? "text-red-400"
-                                  : "text-neutral-400"
+                                ? "text-red-400"
+                                : "text-neutral-400"
                             }`}
                           >
                             {tx.points > 0 ? "+" : ""}
@@ -270,9 +280,11 @@ export default async function TransactionsPage() {
                           {CATEGORY_LABELS[tx.category] ?? tx.category}
                         </span>
                         {tx.status === "provisional" && (
-                          <span className="rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
-                            provisional
-                          </span>
+                          <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
+                            <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
+                              provisional
+                            </span>
+                          </Tooltip>
                         )}
                       </div>
                       <p className="mt-2 text-xs text-neutral-400">

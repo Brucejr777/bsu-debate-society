@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import PointTrendChart, { TrendDataPoint } from "@/components/PointTrendChart";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +38,59 @@ export default async function StandingsPage() {
   const rows: HouseRow[] = data ?? [];
   const semester = rows[0]?.semester ?? "";
   const lastUpdated = rows[0]?.created_at ?? null;
+
+  // Fetch trend data for the chart
+  const { data: transactions } = await supabase
+    .from("house_point_transactions")
+    .select("created_at, house_name, running_total")
+    .order("created_at", { ascending: true });
+
+  const houses = ["Bathala", "Kabunian", "Laon", "Manama"];
+  const monthlyData: Record<string, Record<string, number | null>> = {};
+
+  if (transactions) {
+    for (const tx of transactions) {
+      if (!tx.created_at || !tx.house_name || !houses.includes(tx.house_name)) continue;
+      
+      const date = new Date(tx.created_at);
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      
+      if (!monthlyData[monthKey]) {
+        monthlyData[monthKey] = { Bathala: null, Kabunian: null, Laon: null, Manama: null };
+      }
+      
+      if (tx.running_total !== null) {
+        monthlyData[monthKey][tx.house_name] = tx.running_total;
+      }
+    }
+  }
+
+  const sortedMonths = Object.keys(monthlyData).sort();
+  const trendResult: TrendDataPoint[] = [];
+  let currentTotals: Record<string, number> = { 
+    Bathala: 0, 
+    Kabunian: 0, 
+    Laon: 0, 
+    Manama: 0 
+  };
+
+  for (const month of sortedMonths) {
+    for (const house of houses) {
+      const val = monthlyData[month][house];
+      if (val !== null && val !== undefined) {
+        currentTotals[house] = val;
+      }
+    }
+    
+    const [year, monthNum] = month.split("-");
+    const dateObj = new Date(parseInt(year), parseInt(monthNum) - 1, 1);
+    const displayDate = dateObj.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+
+    trendResult.push({
+      date: displayDate,
+      ...currentTotals,
+    });
+  }
 
   const rankSuffix = (n: number) => {
     if (n === 1) return "st";
@@ -162,12 +216,10 @@ export default async function StandingsPage() {
                 <h2 className="text-2xl font-semibold text-white">
                   Full Rankings
                 </h2>
-
                 <div className="space-y-4">
                   {rows.map((row, idx) => {
                     const rank = idx + 1;
                     const color = HOUSE_COLORS[row.house_name] ?? "#666";
-
                     return (
                       <article
                         key={row.id}
@@ -192,7 +244,6 @@ export default async function StandingsPage() {
                               </p>
                             </div>
                           </div>
-
                           {/* Total Points */}
                           <div className="text-right">
                             <p className="text-3xl font-bold tabular-nums text-white">
@@ -203,7 +254,6 @@ export default async function StandingsPage() {
                             </p>
                           </div>
                         </div>
-
                         {/* Category Breakdown */}
                         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                           <div className="rounded-2xl bg-neutral-900 p-3">
@@ -247,6 +297,9 @@ export default async function StandingsPage() {
             </div>
           )}
 
+          {/* ── Point Trend Chart ── */}
+          <PointTrendChart data={trendResult} />
+
           {/* ── How the Point System Works ── */}
           <div className="space-y-6">
             <div className="space-y-4 text-center">
@@ -257,14 +310,14 @@ export default async function StandingsPage() {
                 — Rules and Procedures, Article I, Sections 3–7 & 10–11
               </p>
             </div>
-
+            
             {/* Point Categories Explanation */}
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-4xl space-y-6">
                 <h3 className="text-2xl font-semibold text-white text-center">
                   Four Point Categories
                 </h3>
-
+                
                 {/* 1. Competitive Excellence */}
                 <div className="rounded-2xl border border-emerald-900/40 bg-neutral-950/95 p-6 shadow-lg">
                   <div className="flex items-center gap-3 mb-4">
@@ -309,22 +362,22 @@ export default async function StandingsPage() {
                   </div>
                   <p className="text-sm text-neutral-400 mb-3">Each House earns points by leading initiatives that demonstrate its core embodied value:</p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8b0000" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #FF8C00" }}>
                       <p className="text-sm font-semibold text-white">House of Bathala</p>
                       <p className="text-xs text-neutral-400">Leadership initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #280137" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #C0C0C0" }}>
                       <p className="text-sm font-semibold text-white">House of Kabunian</p>
                       <p className="text-xs text-neutral-400">Journalism initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #000b90" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #228B22" }}>
                       <p className="text-sm font-semibold text-white">House of Laon</p>
                       <p className="text-xs text-neutral-400">Academic initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
                     </div>
-                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #006400" }}>
+                    <div className="rounded-xl bg-neutral-900 p-3" style={{ borderLeft: "4px solid #8B008B" }}>
                       <p className="text-sm font-semibold text-white">House of Manama</p>
                       <p className="text-xs text-neutral-400">Arts initiative</p>
                       <p className="text-lg font-semibold text-emerald-400">+100</p>
@@ -544,43 +597,45 @@ export default async function StandingsPage() {
                 point transaction. Point postings are marked as Provisional for seven
                 (7) calendar days before becoming final and executory.
               </p>
-              <a
-                href="/standings/transactions"
-                className="inline-flex items-center text-sm font-medium text-neutral-400 transition hover:text-white"
-              >
-                View Full Transaction History
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="ml-1.5 size-4"
+              <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
+                <a
+                  href="/standings/transactions"
+                  className="inline-flex items-center font-medium text-neutral-400 transition hover:text-white"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
-              <span className="text-neutral-700">&middot;</span>
-              <a
-                href="/house-cup"
-                className="inline-flex items-center text-sm font-medium text-neutral-400 transition hover:text-white"
-              >
-                View House Cup
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="ml-1.5 size-4"
+                  View Full Transaction History
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="ml-1.5 size-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </a>
+                <span className="text-neutral-700">&middot;</span>
+                <a
+                  href="/house-cup"
+                  className="inline-flex items-center font-medium text-neutral-400 transition hover:text-white"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
+                  View House Cup
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="ml-1.5 size-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </a>
+              </div>
               <p className="text-xs italic text-neutral-500">
                 — Rules and Procedures, Article I, Section 7
               </p>

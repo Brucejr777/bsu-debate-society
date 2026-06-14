@@ -267,6 +267,56 @@ export default function DocumentsPage() {
             </div>
           </article>
 
+          {/* Society Policies */}
+          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+            <div className="mx-auto max-w-3xl space-y-6 text-center">
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-neutral-300">
+                    <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM10.5 7.5a.75.75 0 0 1 1.5 0v6a.75.75 0 0 1-1.5 0v-6Zm0 9a.75.75 0 0 1 1.5 0v.75a.75.75 0 0 1-1.5 0v-.75Z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-white">Society Policies</h2>
+              </div>
+              <p className="text-base leading-7 text-neutral-300">
+                The Society is committed to responsible innovation and environmental stewardship. 
+                Explore our official policies outlining our approach to emerging technologies and sustainable operations.
+              </p>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <a 
+                  href="/policies/ai-usage" 
+                  className="group flex flex-col items-start rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800"
+                >
+                  <h3 className="text-sm font-semibold text-white">AI Usage Policy</h3>
+                  <p className="mt-2 text-xs leading-5 text-neutral-400">
+                    Guidelines for the responsible and ethical integration of artificial intelligence into debate preparation, research, and administrative operations (Constitution Art. 3, Sec. 11).
+                  </p>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    Read Policy
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </a>
+                <a 
+                  href="/policies/sustainability" 
+                  className="group flex flex-col items-start rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800"
+                >
+                  <h3 className="text-sm font-semibold text-white">Environmental Sustainability Policy</h3>
+                  <p className="mt-2 text-xs leading-5 text-neutral-400">
+                    Our commitment to eco-conscious procurement, waste minimization, and sustainable engagement with our physical and digital environments (Constitution Art. 3, Sec. 12).
+                  </p>
+                  <span className="mt-3 inline-flex items-center text-xs font-medium text-neutral-400 transition group-hover:text-white">
+                    Read Policy
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1 size-3">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </article>
+
           {/* Additional Resources */}
           <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8">
             <div className="mx-auto max-w-3xl space-y-6 text-center">
@@ -291,8 +341,6 @@ export default function DocumentsPage() {
                     </svg>
                   </span>
                 </a>
-                
-                {/* Task 3: Updated Point Transaction Forms Placeholder */}
                 <a href="/documents/templates" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
                   <h3 className="text-sm font-semibold text-white">Point Transaction Forms</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">
@@ -305,7 +353,6 @@ export default function DocumentsPage() {
                     </svg>
                   </span>
                 </a>
-
                 <a href="/appeals" className="group rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800">
                   <h3 className="text-sm font-semibold text-white">Appeal Forms</h3>
                   <p className="mt-2 text-xs leading-5 text-neutral-400">
@@ -322,7 +369,7 @@ export default function DocumentsPage() {
             </div>
           </article>
 
-          {/* Task 4: Annex B: Operational Compliance Templates Section */}
+          {/* Annex B: Operational Compliance Templates Section */}
           <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
             <div className="mx-auto max-w-3xl space-y-6 text-center">
               <div className="flex items-center justify-center gap-3">
@@ -352,7 +399,6 @@ export default function DocumentsPage() {
               </div>
             </div>
           </article>
-
         </div>
       </section>
     </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 const navLinks = [
@@ -21,6 +22,8 @@ const navLinks = [
   { label: "Electoral Protest", href: "/electoral-protest" },
   { label: "Appeals", href: "/appeals" },
   { label: "Documents", href: "/documents" },
+  { label: "AI Policy", href: "/policies/ai-usage" },
+  { label: "Sustainability", href: "/policies/sustainability" },
   { label: "Records Access", href: "/records-access" },
   { label: "SOSA", href: "/sosa" },
   { label: "Nominate", href: "/nominate" },

@@ -30,12 +30,23 @@ export default async function AdminDashboardPage() {
     redirect("/admin/login");
   }
 
-  // Fetch summary counts in parallel
+  // Calculate dates for retention check (5 days ago and 7 days ago)
+  const fiveDaysAgo = new Date();
+  fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
+  const fiveDaysAgoStr = fiveDaysAgo.toISOString();
+
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const sevenDaysAgoStr = sevenDaysAgo.toISOString();
+
+  // Fetch summary counts and retention data in parallel
   const [
     { count: pendingApps },
     { count: unreadMessages },
     { data: housePoints },
     { data: leagueMembers },
+    { data: houseTx },
+    { data: individualTx },
   ] = await Promise.all([
     supabase
       .from("membership_applications")
@@ -55,7 +66,37 @@ export default async function AdminDashboardPage() {
       .select("*")
       .order("rank", { ascending: true })
       .limit(5),
+    // House point transactions approaching/exceeding 7 days
+    supabase
+      .from("house_point_transactions")
+      .select("id, house_name, points, reason, created_at, status")
+      .eq("status", "provisional")
+      .lte("created_at", fiveDaysAgoStr),
+    // Individual point transactions approaching/exceeding 7 days
+    supabase
+      .from("individual_debate_point_transactions")
+      .select("id, member_name, house, points, reason, created_at, status")
+      .eq("status", "provisional")
+      .lte("created_at", fiveDaysAgoStr),
   ]);
+
+  // Format and flag overdue records
+  const formattedHouseTx = (houseTx || []).map((tx: any) => ({
+    ...tx,
+    type: "house",
+    isOverdue: new Date(tx.created_at) <= new Date(sevenDaysAgoStr),
+  }));
+
+  const formattedIndividualTx = (individualTx || []).map((tx: any) => ({
+    ...tx,
+    type: "individual",
+    isOverdue: new Date(tx.created_at) <= new Date(sevenDaysAgoStr),
+  }));
+
+  const totalApproaching = formattedHouseTx.length + formattedIndividualTx.length;
+  const totalOverdue =
+    formattedHouseTx.filter((t: any) => t.isOverdue).length +
+    formattedIndividualTx.filter((t: any) => t.isOverdue).length;
 
   return (
     <div className="space-y-8">
@@ -101,14 +142,35 @@ export default async function AdminDashboardPage() {
           </p>
         </a>
 
+        {/* Data Retention & Compliance (NEW) */}
+        <a
+          href="/admin/points"
+          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-amber-700"
+        >
+          <p className="text-sm font-medium text-neutral-500">
+            Data Retention &amp; Compliance
+          </p>
+          <div className="mt-2 flex items-baseline gap-2">
+            <p className="text-4xl font-bold text-white">
+              {totalApproaching ?? 0}
+            </p>
+            {totalOverdue > 0 && (
+              <span className="rounded-full bg-red-900/60 px-2 py-0.5 text-xs font-semibold text-red-300">
+                {totalOverdue} overdue
+              </span>
+            )}
+          </div>
+          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
+            Provisional records nearing 7-day finalization →
+          </p>
+        </a>
+
         {/* House Points Link */}
         <a
           href="/admin/points"
           className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
-          <p className="text-sm font-medium text-neutral-500">
-            House Points
-          </p>
+          <p className="text-sm font-medium text-neutral-500">House Points</p>
           <p className="mt-2 text-lg font-semibold text-white">
             Manage Ledger
           </p>
@@ -123,18 +185,19 @@ export default async function AdminDashboardPage() {
           className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
           <p className="text-sm font-medium text-neutral-500">
-            League & Awards
+            League &amp; Awards
           </p>
-          <p className="mt-2 text-lg font-semibold text-white">
-            Manage
-          </p>
+          <p className="mt-2 text-lg font-semibold text-white">Manage</p>
           <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
-            Members & recognition →
+            Members &amp; recognition →
           </p>
         </a>
 
         {/* Sign Out */}
-        <form action={adminLogout} className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30">
+        <form
+          action={adminLogout}
+          className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30"
+        >
           <p className="text-sm font-medium text-neutral-500">Account</p>
           <button
             type="submit"
@@ -216,7 +279,10 @@ export default async function AdminDashboardPage() {
                 {leagueMembers.map((m) => {
                   const color = HOUSE_COLORS[m.house] ?? "#666";
                   return (
-                    <tr key={m.id} className="border-b border-neutral-800/50">
+                    <tr
+                      key={m.id}
+                      className="border-b border-neutral-800/50"
+                    >
                       <td className="px-5 py-3">
                         <span
                           className="inline-flex size-7 items-center justify-center rounded-md text-xs font-bold text-white"
