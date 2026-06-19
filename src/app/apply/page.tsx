@@ -19,11 +19,11 @@ export default function ApplyPage() {
       full_name: formData.get("full_name") as string,
       student_id: formData.get("student_id") as string,
       college: formData.get("college") as string,
-      house_choice: formData.get("house_choice") as string,
+      house_choice: formData.get("house_choice") as string, // Now correctly sends "Bathala", "Kabunian", etc.
       email: formData.get("email") as string,
       phone: (formData.get("phone") as string) || null,
       comments: (formData.get("comments") as string) || null,
-      motivation: (formData.get("motivation") as string) || null, // 👈 Captures the new field
+      motivation: (formData.get("motivation") as string) || null,
     };
 
     try {
@@ -159,8 +159,11 @@ export default function ApplyPage() {
                     Select your preferred House
                   </option>
                   {HOUSES.map((house) => (
-                    <option key={house.value} value={house.value}>
-                      {house.name} — {house.value_desc}
+                    // FIX 1: Changed value to the short house name (e.g., "Bathala") 
+                    // so the database stores the correct identifier instead of "Leadership".
+                    // FIX 2: Changed house.value_desc to house.value to fix the TypeScript error.
+                    <option key={house.slug} value={house.name.replace("House of ", "")}>
+                      {house.name} — {house.value}
                     </option>
                   ))}
                 </select>
@@ -174,7 +177,7 @@ export default function ApplyPage() {
             <div className="space-y-4">
               <h2 className="text-lg font-semibold text-white">Application Details</h2>
               
-              {/* 👇 NEW: Why do you want to join? 👇 */}
+              {/* Why do you want to join? */}
               <div>
                 <label htmlFor="motivation" className={labelCls}>
                   Why do you want to join? <span className="text-neutral-500">(Optional)</span>
