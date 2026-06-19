@@ -1,11 +1,29 @@
+// src/app/api/admin/awards/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/awards
+ * Fetches all individual awards.
+ * JURISDICTION: High Council and House Chancellors (Selection Committee).
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Check if the officer is part of the High Council or a House Chancellor
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/awards")) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Selection Committee (High Council and House Chancellors) can manage awards." },
+      { status: 403 }
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("individual_awards")
     .select("*")
@@ -18,10 +36,27 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * POST /api/admin/awards
+ * Creates a new individual award record.
+ * JURISDICTION: Selection Committee (High Council and House Chancellors).
+ */
 export async function POST(request: Request) {
-  const body = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/awards")) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Selection Committee can confer individual awards." },
+      { status: 403 }
+    );
+  }
+
+  const body = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("individual_awards")
     .insert({
@@ -41,10 +76,27 @@ export async function POST(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * PUT /api/admin/awards
+ * Updates an existing individual award record.
+ * JURISDICTION: Selection Committee.
+ */
 export async function PUT(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/awards")) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Selection Committee can modify individual awards." },
+      { status: 403 }
+    );
+  }
+
+  const { id, ...updates } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("individual_awards")
     .update(updates)
@@ -59,10 +111,27 @@ export async function PUT(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/awards
+ * Removes an individual award record.
+ * JURISDICTION: Selection Committee.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/awards")) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Selection Committee can revoke individual awards." },
+      { status: 403 }
+    );
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
     .from("individual_awards")
     .delete()

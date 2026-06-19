@@ -1,16 +1,18 @@
+// src/app/admin/house-cup/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import RBACGuard, { type Officer } from "@/components/RBACGuard";
+import { RBAC, Role } from "@/lib/rbac";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
   Laon: "House of Laon",
   Manama: "House of Manama",
 };
-
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
   Kabunian: "#280137",
@@ -43,39 +45,49 @@ const emptyForm = {
 };
 
 export default function AdminHouseCupPage() {
+  const [officer, setOfficer] = useState<Officer | null>(null);
   const [winners, setWinners] = useState<CupWinner[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
 
+  // 1. Fetch current officer profile for RBAC
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setOfficer(data?.officer || null))
+      .catch(() => setOfficer(null));
+  }, []);
+
+  // 2. Determine if user can manage House Cup records
+  const canManage = officer
+    ? RBAC.canAccessAdminRoute(officer.role as Role, "/admin/house-cup")
+    : false;
+
   async function fetchWinners() {
     setLoading(true);
-    setError(null);
-    const res = await fetch("/api/admin/house-cup");
-    if (!res.ok) {
-      setError("Failed to fetch winners.");
+    try {
+      const res = await fetch("/api/admin/house-cup");
+      if (!res.ok) {
+        throw new Error("Failed to fetch winners.");
+      }
+      const data = await res.json();
+      setWinners(data);
+      setFetched(true);
+    } catch (err) {
+      toast.error("Failed to load House Cup winners.");
+    } finally {
       setLoading(false);
-      return;
     }
-    const data = await res.json();
-    setWinners(data);
-    setFetched(true);
-    setLoading(false);
   }
 
   async function submitWinner(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
-
     const points = parseInt(form.final_points, 10) || 0;
-    const runnerPts = form.runner_up_points
-      ? parseInt(form.runner_up_points, 10)
-      : null;
-
+    const runnerPts = form.runner_up_points ? parseInt(form.runner_up_points, 10) : null;
+    
     const body = {
       academic_year: form.academic_year,
       winning_house: form.winning_house,
@@ -87,59 +99,100 @@ export default function AdminHouseCupPage() {
       published: form.published,
     };
 
-    const res = editingId
-      ? await fetch("/api/admin/house-cup", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editingId, ...body }),
-        })
-      : await fetch("/api/admin/house-cup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
+    // Optimistic update
+    const tempId = Date.now();
+    const newWinner: CupWinner = {
+      id: tempId,
+      created_at: new Date().toISOString(),
+      ...body,
+    };
 
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error ?? "Failed to save.");
-      return;
+    if (editingId) {
+      setWinners((prev) => prev.map((w) => (w.id === editingId ? { ...w, ...body } : w)));
+    } else {
+      setWinners((prev) => [newWinner, ...prev]);
     }
 
-    setActionMsg(editingId ? "Winner updated." : "Winner recorded.");
-    setForm(emptyForm);
-    setShowForm(false);
-    setEditingId(null);
-    await fetchWinners();
-    setTimeout(() => setActionMsg(null), 3000);
+    try {
+      const res = editingId
+        ? await fetch("/api/admin/house-cup", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: editingId, ...body }),
+          })
+        : await fetch("/api/admin/house-cup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "Failed to save.");
+      }
+      const data = await res.json();
+      
+      // Confirm with actual server response
+      if (editingId) {
+        setWinners((prev) => prev.map((w) => (w.id === editingId ? data : w)));
+        toast.success("Winner updated.");
+      } else {
+        setWinners((prev) => prev.map((w) => (w.id === tempId ? data : w)));
+        toast.success("Winner recorded.");
+      }
+      setForm(emptyForm);
+      setShowForm(false);
+      setEditingId(null);
+    } catch (err: any) {
+      // Revert on failure by refetching
+      await fetchWinners();
+      toast.error(err.message || "Failed to save winner.");
+    }
   }
 
   async function deleteWinner(id: number) {
-    const res = await fetch("/api/admin/house-cup", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    if (!res.ok) {
-      setError("Failed to delete.");
-      return;
-    }
+    if (!confirm("Are you sure you want to delete this House Cup record?")) return;
+
+    // Optimistic update
+    const previousWinners = [...winners];
     setWinners((prev) => prev.filter((w) => w.id !== id));
-    setActionMsg("Record deleted.");
-    setTimeout(() => setActionMsg(null), 3000);
+
+    try {
+      const res = await fetch("/api/admin/house-cup", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) throw new Error("Failed to delete.");
+      toast.success("Record deleted.");
+    } catch (err) {
+      // Revert on failure
+      setWinners(previousWinners);
+      toast.error("Failed to delete winner.");
+    }
   }
 
   async function togglePublished(id: number, current: boolean) {
-    const res = await fetch("/api/admin/house-cup", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, published: !current }),
-    });
-    if (!res.ok) {
-      setError("Failed to update.");
-      return;
+    // Optimistic update
+    const previousWinners = [...winners];
+    setWinners((prev) => prev.map((w) => (w.id === id ? { ...w, published: !current } : w)));
+
+    try {
+      const res = await fetch("/api/admin/house-cup", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, published: !current }),
+      });
+      if (!res.ok) throw new Error("Failed to update.");
+      const data = await res.json();
+      // Confirm with actual server response
+      setWinners((prev) => prev.map((w) => (w.id === id ? data : w)));
+      toast.success(`Winner ${!current ? "published" : "unpublished"}.`);
+    } catch (err) {
+      // Revert on failure
+      setWinners(previousWinners);
+      toast.error("Failed to update winner.");
     }
-    const data = await res.json();
-    setWinners((prev) => prev.map((w) => (w.id === id ? data : w)));
   }
 
   function startEdit(w: CupWinner) {
@@ -183,28 +236,25 @@ export default function AdminHouseCupPage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-white">
-          House Cup Champions
-        </h1>
+        <h1 className="text-2xl font-semibold text-white">House Cup Champions</h1>
         <p className="text-sm text-neutral-400">
-          Record and manage annual House Cup winners. Published winners appear
-          on the public House Cup page.
+          Record and manage annual House Cup winners per Article I, Section 9. 
+          Published winners appear on the public Hall of Champions page.
         </p>
       </div>
 
-      {/* Feedback */}
-      {error && (
-        <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-          {error}
-        </div>
-      )}
-      {actionMsg && (
-        <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-400">
-          {actionMsg}
+      {/* View Only Notice for Unauthorized Roles */}
+      {!canManage && officer && (
+        <div className="rounded-2xl border border-amber-900/40 bg-amber-950/20 p-5">
+          <p className="text-sm leading-6 text-amber-300/80">
+            <strong className="text-amber-200">View Only:</strong> Per the Society Constitution and Rules, 
+            only the <strong className="text-white">High Council and House Chancellors</strong> can manage 
+            House Cup records. You may view the records for transparency purposes.
+          </p>
         </div>
       )}
 
-      {/* Load / Add buttons */}
+      {/* Load / Add Buttons */}
       <div className="flex gap-2">
         {!fetched && (
           <button
@@ -215,15 +265,15 @@ export default function AdminHouseCupPage() {
             {loading ? "Loading…" : "Load Winners"}
           </button>
         )}
-        {fetched && !showForm && (
+        {fetched && !showForm && canManage && (
           <button onClick={startNew} className={btnPrimary}>
             + Record Winner
           </button>
         )}
       </div>
 
-      {/* Form */}
-      {showForm && (
+      {/* Form (Protected) */}
+      {showForm && canManage && (
         <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-lg">
           <h2 className="mb-6 text-lg font-semibold text-white">
             {editingId ? "Edit Winner" : "Record New Winner"}
@@ -331,7 +381,7 @@ export default function AdminHouseCupPage() {
                 Publish to public Hall of Champions
               </label>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <button type="submit" className={btnPrimary}>
                 {editingId ? "Update" : "Record"}
               </button>
@@ -355,7 +405,6 @@ export default function AdminHouseCupPage() {
       {fetched && winners.length === 0 && (
         <p className="text-sm text-neutral-500">No House Cup winners recorded yet.</p>
       )}
-
       {fetched && winners.length > 0 && (
         <div className="space-y-4">
           {winners.map((w) => {
@@ -391,31 +440,35 @@ export default function AdminHouseCupPage() {
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {w.published && (
-                      <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
-                        published
-                      </span>
-                    )}
-                    <button
-                      onClick={() => startEdit(w)}
-                      className={btnEdit}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => togglePublished(w.id, w.published)}
-                      className={btnEdit}
-                    >
-                      {w.published ? "Unpublish" : "Publish"}
-                    </button>
-                    <button
-                      onClick={() => deleteWinner(w.id)}
-                      className={btnDanger}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  
+                  {/* Actions (Protected) */}
+                  {canManage && (
+                    <div className="flex items-center gap-2">
+                      {w.published && (
+                        <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
+                          published
+                        </span>
+                      )}
+                      <button
+                        onClick={() => startEdit(w)}
+                        className={btnEdit}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => togglePublished(w.id, w.published)}
+                        className={btnEdit}
+                      >
+                        {w.published ? "Unpublish" : "Publish"}
+                      </button>
+                      <button
+                        onClick={() => deleteWinner(w.id)}
+                        className={btnDanger}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
                 {w.tiebreaker_used && (
                   <p className="mt-2 text-xs text-amber-500">

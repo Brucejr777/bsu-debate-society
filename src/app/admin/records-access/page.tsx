@@ -1,6 +1,9 @@
+// src/app/admin/records-access/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { RBAC, Role, House, getHouseFromRole, isHouseChancellor } from "@/lib/rbac";
 
 interface AccessRequest {
   id: number;
@@ -19,6 +22,14 @@ interface AccessRequest {
   processing_notes: string | null;
   processed_at: string | null;
   fulfilled_at: string | null;
+}
+
+interface Officer {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  house_affiliation: string;
 }
 
 const HOUSE_COLORS: Record<string, string> = {
@@ -44,81 +55,124 @@ const getClassificationBadge = (classification: string) => {
 };
 
 export default function AdminRecordsAccessPage() {
+  const [officer, setOfficer] = useState<Officer | null>(null);
   const [requests, setRequests] = useState<AccessRequest[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [notes, setNotes] = useState<Record<number, string>>({});
   const [processedBy, setProcessedBy] = useState<Record<number, string>>({});
 
+  // 1. Fetch current officer profile for RBAC context
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setOfficer(data?.officer || null))
+      .catch(() => setOfficer(null));
+  }, []);
+
   async function fetchRequests() {
     setLoading(true);
-    setError(null);
-    const res = await fetch("/api/admin/records-access");
-    if (!res.ok) {
-      setError("Failed to fetch requests.");
+    try {
+      const res = await fetch("/api/admin/records-access");
+      if (!res.ok) throw new Error("Failed to fetch requests.");
+      const data = await res.json();
+      setRequests(data);
+      setFetched(true);
+    } catch (err) {
+      toast.error("Failed to fetch requests.");
+    } finally {
       setLoading(false);
-      return;
     }
-    const data = await res.json();
-    setRequests(data);
-    setFetched(true);
-    setLoading(false);
   }
 
   async function updateStatus(id: number, status: string) {
     const note = notes[id] ?? null;
     const by = processedBy[id] ?? null;
-    const res = await fetch("/api/admin/records-access", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id,
-        status,
-        processing_notes: note,
-        processed_by: by,
-        processed_at: new Date().toISOString(),
-        fulfilled_at: status === "fulfilled" ? new Date().toISOString() : undefined,
-      }),
-    });
-    if (!res.ok) {
-      setActionMsg("Failed to update.");
-      return;
+    
+    const previousRequests = [...requests];
+    const updatedRequest = {
+      ...previousRequests.find((r) => r.id === id)!,
+      status,
+      processing_notes: note,
+      processed_by: by,
+      processed_at: new Date().toISOString(),
+      fulfilled_at: status === "fulfilled" ? new Date().toISOString() : null,
+    };
+    
+    setRequests((prev) =>
+      prev.map((r) => (r.id === id ? updatedRequest : r))
+    );
+
+    try {
+      const res = await fetch("/api/admin/records-access", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,
+          status,
+          processing_notes: note,
+          processed_by: by,
+          processed_at: new Date().toISOString(),
+          fulfilled_at: status === "fulfilled" ? new Date().toISOString() : undefined,
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to update.");
+      const data = await res.json();
+      setRequests((prev) => prev.map((r) => (r.id === id ? data : r)));
+      toast.success(`Status updated to ${status}.`);
+    } catch (err) {
+      setRequests(previousRequests);
+      toast.error("Failed to update request status.");
     }
-    const data = await res.json();
-    setRequests((prev) => prev.map((r) => (r.id === id ? data : r)));
-    setActionMsg(`Status updated to ${status}.`);
-    setTimeout(() => setActionMsg(null), 3000);
   }
 
   async function deleteRequest(id: number) {
-    const res = await fetch("/api/admin/records-access", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    if (!res.ok) {
-      setActionMsg("Failed to delete.");
-      return;
-    }
+    const previousRequests = [...requests];
     setRequests((prev) => prev.filter((r) => r.id !== id));
-    setActionMsg("Request deleted.");
-    setTimeout(() => setActionMsg(null), 3000);
+
+    try {
+      const res = await fetch("/api/admin/records-access", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) throw new Error("Failed to delete.");
+      toast.success("Request deleted.");
+    } catch (err) {
+      setRequests(previousRequests);
+      toast.error("Failed to delete request.");
+    }
   }
+
+  const userHouse = officer ? getHouseFromRole(officer.role as Role) : null;
 
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-white">
-          Records Access Requests
-        </h1>
+        <h1 className="text-2xl font-semibold text-white">Records Access Requests</h1>
         <p className="text-sm text-neutral-400">
-          Process member requests for access to Public or Restricted Records per
-          Article VIII, Section 4. Respond within 10 working days.
+          Process member requests for access to Public or Restricted Records per Article VIII, Section 4.
         </p>
       </div>
+
+      {/* Jurisdiction Banner for House Chancellors */}
+      {officer && isHouseChancellor(officer.role as Role) && userHouse && (
+        <article className="rounded-2xl border border-amber-900/40 bg-amber-950/20 p-5">
+          <div className="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 size-5 shrink-0 text-amber-400">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.75.75 0 01.714.544l.126.5a.75.75 0 01-.714.956H9a.75.75 0 000 1.5h.253a.75.75 0 01.714.544l.126.5a.75.75 0 01-.714.956H9a.75.75 0 000 1.5h.253a.75.75 0 01.714.544l.126.5a.75.75 0 01-.714.956H9a.75.75 0 000 1.5" clipRule="evenodd" />
+            </svg>
+            <div>
+              <h3 className="text-sm font-semibold text-amber-200">House-Level Jurisdiction Active</h3>
+              <p className="mt-1 text-xs leading-5 text-amber-300/80">
+                As the Chancellor of the <strong className="text-white">House of {userHouse}</strong>, you are viewing and processing 
+                only the House-level records access requests for your House. Society-wide requests are managed by the Executive Secretary.
+              </p>
+            </div>
+          </div>
+        </article>
+      )}
 
       {!fetched && (
         <button
@@ -130,20 +184,8 @@ export default function AdminRecordsAccessPage() {
         </button>
       )}
 
-      {error && (
-        <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-          {error}
-        </div>
-      )}
-
-      {actionMsg && (
-        <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-400">
-          {actionMsg}
-        </div>
-      )}
-
       {fetched && requests.length === 0 && (
-        <p className="text-sm text-neutral-500">No access requests found.</p>
+        <p className="text-sm text-neutral-500">No access requests found for your jurisdiction.</p>
       )}
 
       {fetched && requests.length > 0 && (
@@ -151,6 +193,21 @@ export default function AdminRecordsAccessPage() {
           {requests.map((req) => {
             const color = HOUSE_COLORS[req.requester_house] ?? "#666";
             const isExpanded = expandedId === req.id;
+            
+            // Check if the current officer has permission to manage this specific request
+            const canManage = officer 
+              ? RBAC.canManageRecordsAccess(
+                  officer.role as Role, 
+                  userHouse, 
+                  req.scope, 
+                  req.requester_house as House
+                )
+              : false;
+
+            // Delete is strictly for Exec Sec and President
+            const canDelete = officer 
+              ? (officer.role === Role.EXECUTIVE_SECRETARY || officer.role === Role.PRESIDENT)
+              : false;
 
             return (
               <article
@@ -212,6 +269,7 @@ export default function AdminRecordsAccessPage() {
                     </span>
                   </p>
                 </div>
+
                 <div className="mt-2">
                   <p className="text-xs text-neutral-400 line-clamp-2">
                     {req.specific_records_sought}
@@ -266,6 +324,7 @@ export default function AdminRecordsAccessPage() {
                       <p className="text-xs text-neutral-500">
                         Processed:{" "}
                         {new Date(req.processed_at).toLocaleDateString()}
+                        {req.processed_by && ` by ${req.processed_by}`}
                       </p>
                     )}
                     {req.fulfilled_at && (
@@ -275,60 +334,78 @@ export default function AdminRecordsAccessPage() {
                       </p>
                     )}
 
+                    {/* Actions */}
                     {req.status !== "fulfilled" && req.status !== "denied" && (
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-                        <div className="flex-1 space-y-2">
-                          <input
-                            type="text"
-                            placeholder="Processed by…"
-                            value={processedBy[req.id] ?? ""}
-                            onChange={(e) =>
-                              setProcessedBy((p) => ({
-                                ...p,
-                                [req.id]: e.target.value,
-                              }))
-                            }
-                            className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500"
-                          />
-                          <textarea
-                            placeholder="Processing notes…"
-                            value={notes[req.id] ?? ""}
-                            onChange={(e) =>
-                              setNotes((p) => ({
-                                ...p,
-                                [req.id]: e.target.value,
-                              }))
-                            }
-                            rows={2}
-                            className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500"
-                          />
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            onClick={() => updateStatus(req.id, "processing")}
-                            className="rounded-full bg-blue-800 px-4 py-2 text-xs font-semibold text-blue-200 transition hover:bg-blue-700"
-                          >
-                            Processing
-                          </button>
-                          <button
-                            onClick={() => updateStatus(req.id, "fulfilled")}
-                            className="rounded-full bg-emerald-800 px-4 py-2 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-700"
-                          >
-                            Fulfilled
-                          </button>
-                          <button
-                            onClick={() => updateStatus(req.id, "denied")}
-                            className="rounded-full bg-red-800 px-4 py-2 text-xs font-semibold text-red-200 transition hover:bg-red-700"
-                          >
-                            Denied
-                          </button>
+                        {canManage ? (
+                          <>
+                            <div className="flex-1 space-y-2">
+                              <input
+                                type="text"
+                                placeholder="Processed by…"
+                                value={processedBy[req.id] ?? ""}
+                                onChange={(e) =>
+                                  setProcessedBy((p) => ({
+                                    ...p,
+                                    [req.id]: e.target.value,
+                                  }))
+                                }
+                                className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500"
+                              />
+                              <textarea
+                                placeholder="Processing notes…"
+                                value={notes[req.id] ?? ""}
+                                onChange={(e) =>
+                                  setNotes((p) => ({
+                                    ...p,
+                                    [req.id]: e.target.value,
+                                  }))
+                                }
+                                rows={2}
+                                className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500"
+                              />
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                onClick={() => updateStatus(req.id, "processing")}
+                                className="rounded-full bg-blue-800 px-4 py-2 text-xs font-semibold text-blue-200 transition hover:bg-blue-700"
+                              >
+                                Processing
+                              </button>
+                              <button
+                                onClick={() => updateStatus(req.id, "fulfilled")}
+                                className="rounded-full bg-emerald-800 px-4 py-2 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-700"
+                              >
+                                Fulfilled
+                              </button>
+                              <button
+                                onClick={() => updateStatus(req.id, "denied")}
+                                className="rounded-full bg-red-800 px-4 py-2 text-xs font-semibold text-red-200 transition hover:bg-red-700"
+                              >
+                                Denied
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="rounded-xl border border-amber-900/40 bg-amber-950/20 p-4 w-full">
+                            <p className="text-xs text-amber-300/80">
+                              You do not have jurisdiction to process this request. 
+                              {req.scope === "Society-wide" 
+                                ? " Society-wide requests are managed by the Executive Secretary." 
+                                : ` House-level requests for ${req.requester_house} are managed by their respective Chancellor.`}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Delete Button - Strictly Exec Sec / President */}
+                        {canDelete && (
                           <button
                             onClick={() => deleteRequest(req.id)}
-                            className="rounded-full bg-neutral-800 px-4 py-2 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700"
+                            className="rounded-full bg-neutral-800 px-4 py-2 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700 sm:ml-auto"
                           >
                             Delete
                           </button>
-                        </div>
+                        )}
                       </div>
                     )}
                   </div>

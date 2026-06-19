@@ -1,7 +1,11 @@
+// src/app/admin/points/page.tsx
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
+import { toast } from "sonner";
 import { Tooltip } from "@/components/Tooltip";
+import RBACGuard, { type Officer } from "@/components/RBACGuard";
+import { RBAC, Role } from "@/lib/rbac";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
 const CATEGORIES = [
@@ -10,17 +14,26 @@ const CATEGORIES = [
   "Governance & Compliance",
   "Conduct & Ethics",
 ];
+
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
   Kabunian: "#280137",
   Laon: "#000b90",
   Manama: "#006400",
 };
+
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
   Laon: "House of Laon",
   Manama: "House of Manama",
+};
+
+const CATEGORY_KEYS: Record<string, keyof HousePoint> = {
+  "Competitive Excellence": "competitive_excellence",
+  "Organizational Contribution": "organizational_contribution",
+  "Governance & Compliance": "governance_compliance",
+  "Conduct & Ethics": "conduct_ethics",
 };
 
 interface HousePoint {
@@ -47,14 +60,18 @@ interface HousePointTransaction {
 }
 
 export default function AdminPointsPage() {
+  const [officer, setOfficer] = useState<Officer | null>(null);
+  
   const [points, setPoints] = useState<HousePoint[]>([]);
   const [transactions, setTransactions] = useState<HousePointTransaction[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionMsg, setActionMsg] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  
+
+  // Pagination for transactions
+  const [txPage, setTxPage] = useState(1);
+  const [txHasMore, setTxHasMore] = useState(false);
+  const [txLoading, setTxLoading] = useState(false);
+
   // Add points form
   const [houseName, setHouseName] = useState("Bathala");
   const [category, setCategory] = useState(CATEGORIES[0]);
@@ -62,95 +79,137 @@ export default function AdminPointsPage() {
   const [reason, setReason] = useState("");
   const [evidence, setEvidence] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // 1. Fetch current officer profile for RBAC
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setOfficer(data?.officer || null))
+      .catch(() => setOfficer(null));
+  }, []);
 
   async function fetchData() {
     setLoading(true);
-    setError(null);
     try {
       const [pointsRes, txRes] = await Promise.all([
         fetch("/api/admin/points"),
-        fetch("/api/transactions"),
+        fetch("/api/transactions?page=1&limit=10"),
       ]);
+      if (!pointsRes.ok || !txRes.ok) throw new Error("Failed to fetch data");
       
-      if (!pointsRes.ok || !txRes.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
       const pointsData = await pointsRes.json();
-      const txData = await txRes.json();
+      const { data: txData, count: txCount } = await txRes.json();
       
       setPoints(pointsData);
-      // Show only the 10 most recent transactions in this summary view
-      setTransactions(txData.slice(0, 10)); 
+      setTransactions(txData || []);
+      setTxPage(1);
+      setTxHasMore((txData || []).length < (txCount || 0));
       setFetched(true);
     } catch (err) {
-      setError("Failed to fetch data.");
+      toast.error("Failed to fetch ledger data.");
     } finally {
       setLoading(false);
     }
-    return () => {};
   }
 
+  async function loadMoreTransactions() {
+    setTxLoading(true);
+    const nextPage = txPage + 1;
+    try {
+      const res = await fetch(`/api/transactions?page=${nextPage}&limit=10`);
+      if (!res.ok) throw new Error("Failed to fetch");
+      const { data, count } = await res.json();
+      setTransactions((prev) => [...prev, ...(data || [])]);
+      setTxPage(nextPage);
+      setTxHasMore(transactions.length + (data || []).length < (count || 0));
+    } catch (err) {
+      toast.error("Failed to load more transactions.");
+    } finally {
+      setTxLoading(false);
+    }
+  }
+
+  // 2. Handle Point Modification (Strictly guarded by RBACGuard in UI, and API)
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitting(true);
-    setActionMsg(null);
+    
     const amount = parseInt(pointAmount, 10);
     if (isNaN(amount) || amount === 0) {
-      setActionMsg("Point amount must be a non-zero number.");
+      toast.error("Point amount must be a non-zero number.");
       setSubmitting(false);
       return;
     }
-    const res = await fetch("/api/admin/points", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ house_name: houseName, category, amount, reason, evidence }),
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      setActionMsg(`Failed: ${err.error ?? "update points."}`);
-      setSubmitting(false);
-      return;
-    }
-    await fetchData();
-    setActionMsg(
-      `${amount > 0 ? "Added" : "Deducted"} ${Math.abs(amount)} points ${
-        amount > 0 ? "to" : "from"
-      } ${HOUSE_LABELS[houseName]}.`
+
+    // Optimistic update for points
+    const previousPoints = [...points];
+    const categoryKey = CATEGORY_KEYS[category];
+    setPoints((prev) =>
+      prev.map((p) =>
+        p.house_name === houseName
+          ? {
+              ...p,
+              total_points: p.total_points + amount,
+              [categoryKey]: (p[categoryKey] as number) + amount,
+            }
+          : p
+      )
     );
-    setPointAmount("");
-    setReason("");
-    setEvidence("");
-    setSubmitting(false);
-    setTimeout(() => setActionMsg(null), 4000);
+
+    try {
+      const res = await fetch("/api/admin/points", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ house_name: houseName, category, amount, reason, evidence }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "Failed to update points.");
+      }
+      const data = await res.json();
+      
+      // Confirm points update with server response
+      setPoints((prev) => prev.map((p) => (p.house_name === houseName ? data : p)));
+      
+      // Refresh the first page of transactions to show the new transaction
+      const txRes = await fetch("/api/transactions?page=1&limit=10");
+      if (txRes.ok) {
+        const { data: txData, count: txCount } = await txRes.json();
+        setTransactions(txData || []);
+        setTxPage(1);
+        setTxHasMore((txData || []).length < (txCount || 0));
+      }
+      
+      toast.success(
+        `${amount > 0 ? "Added" : "Deducted"} ${Math.abs(amount)} points ${
+          amount > 0 ? "to" : "from"
+        } ${HOUSE_LABELS[houseName]}. (Status: Provisional)`
+      );
+      setPointAmount("");
+      setReason("");
+      setEvidence("");
+    } catch (err: any) {
+      // Revert on failure
+      setPoints(previousPoints);
+      toast.error(err.message || "Failed to update points.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   const exportToCSV = () => {
     const headers = [
-      "House Name",
-      "Semester",
-      "Total Points",
-      "Competitive Excellence",
-      "Organizational Contribution",
-      "Governance & Compliance",
-      "Conduct & Ethics",
-      "Last Updated",
+      "House Name", "Semester", "Total Points", "Competitive Excellence",
+      "Organizational Contribution", "Governance & Compliance", "Conduct & Ethics", "Last Updated",
     ];
     const rows = filteredPoints.map((p) => [
-      `"${HOUSE_LABELS[p.house_name] ?? p.house_name}"`,
-      p.semester,
-      p.total_points,
-      p.competitive_excellence,
-      p.organizational_contribution,
-      p.governance_compliance,
-      p.conduct_ethics,
-      new Date(p.created_at).toLocaleDateString(),
+      `"${HOUSE_LABELS[p.house_name] ?? p.house_name}"`, p.semester, p.total_points,
+      p.competitive_excellence, p.organizational_contribution, p.governance_compliance,
+      p.conduct_ethics, new Date(p.created_at).toLocaleDateString(),
     ]);
-    const csvContent =
-      "data:text/csv;charset=utf-8," +
-      headers.join(",") +
-      "\n" +
-      rows.map((r) => r.join(",")).join("\n");
+    const csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n" + rows.map((r) => r.join(",")).join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -169,9 +228,7 @@ export default function AdminPointsPage() {
       {/* Header */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
-          <h1 className="text-2xl font-semibold text-white">
-            House Points Ledger
-          </h1>
+          <h1 className="text-2xl font-semibold text-white">House Points Ledger</h1>
           <p className="text-sm text-neutral-400">
             Manage house point standings per Rules &amp; Procedures Article I. The
             Secretary of Internal Affairs is the designated Point Keeper (Section 11).
@@ -184,18 +241,6 @@ export default function AdminPointsPage() {
           View Full Transaction History →
         </a>
       </div>
-
-      {/* Feedback */}
-      {error && (
-        <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-          {error}
-        </div>
-      )}
-      {actionMsg && (
-        <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-400">
-          {actionMsg}
-        </div>
-      )}
 
       {/* Load Button */}
       {!fetched && (
@@ -212,17 +257,8 @@ export default function AdminPointsPage() {
       {fetched && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1 max-w-md">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-neutral-500"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-                clipRule="evenodd"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-neutral-500">
+              <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clipRule="evenodd" />
             </svg>
             <input
               type="text"
@@ -303,6 +339,7 @@ export default function AdminPointsPage() {
           </div>
         </div>
       )}
+
       {fetched && filteredPoints.length === 0 && (
         <div className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 text-center text-neutral-400">
           {points.length === 0 ? "No house points recorded yet." : "No houses match your search."}
@@ -372,105 +409,132 @@ export default function AdminPointsPage() {
               </tbody>
             </table>
           </div>
+          {/* Load More Transactions */}
+          {txHasMore && (
+            <div className="flex justify-center pt-4">
+              <button
+                onClick={loadMoreTransactions}
+                disabled={txLoading}
+                className="rounded-full border border-neutral-700 bg-neutral-900 px-6 py-2.5 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+              >
+                {txLoading ? "Loading more..." : "Load More Transactions"}
+              </button>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Add / Deduct Points Form */}
-      <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
-        <div className="space-y-2 text-center">
-          <h2 className="text-xl font-semibold text-white">
-            Add or Deduct Points
-          </h2>
-          <p className="text-sm text-neutral-500">
-            Provide reason and evidence for transparency. Negative values deduct points.
-          </p>
-        </div>
-        <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-lg space-y-4">
-          {/* House */}
-          <div className="space-y-2">
-            <label htmlFor="house" className="block text-sm font-medium text-neutral-300">
-              House
-            </label>
-            <select
-              id="house"
-              value={houseName}
-              onChange={(e) => setHouseName(e.target.value)}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* Add / Deduct Points Form (STRICTLY PROTECTED BY RBAC)        */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <RBACGuard
+        officer={officer}
+        checkPermission={(o) => RBAC.canManageHousePoints(o.role as Role)}
+        fallback={
+          <article className="rounded-3xl border border-amber-900/40 bg-amber-950/20 p-8 text-center shadow-lg">
+            <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-amber-900/30">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-7 text-amber-400">
+                <path fillRule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8.5V5.5a3 3 0 0 0-6 0V9.5h6Z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-amber-200">Ledger Modification Restricted</h2>
+            <p className="mt-3 text-sm leading-6 text-amber-300/80">
+              Per <strong className="text-white">Article I, Section 11</strong> of the Rules & Procedures, 
+              only the <strong className="text-white">Secretary of Internal Affairs (Point Keeper)</strong> or the 
+              <strong className="text-white"> President</strong> possesses the constitutional authority to post, 
+              modify, or deduct points on the Master House Point Ledger.
+            </p>
+            <p className="mt-2 text-xs italic text-amber-500/60">
+              Houses must submit an Accomplishment Report to the SIA to claim points.
+            </p>
+          </article>
+        }
+      >
+        <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
+          <div className="space-y-2 text-center">
+            <h2 className="text-xl font-semibold text-white">Add or Deduct Points</h2>
+            <p className="text-sm text-neutral-500">
+              Provide reason and evidence for transparency. Negative values deduct points. 
+              <span className="text-amber-400 font-medium"> All postings start as Provisional.</span>
+            </p>
+          </div>
+          <form onSubmit={handleSubmit} className="mx-auto mt-6 max-w-lg space-y-4">
+            {/* House */}
+            <div className="space-y-2">
+              <label htmlFor="house" className="block text-sm font-medium text-neutral-300">House</label>
+              <select
+                id="house"
+                value={houseName}
+                onChange={(e) => setHouseName(e.target.value)}
+                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              >
+                {HOUSES.map((h) => (
+                  <option key={h} value={h}>{HOUSE_LABELS[h]}</option>
+                ))}
+              </select>
+            </div>
+            {/* Category */}
+            <div className="space-y-2">
+              <label htmlFor="category" className="block text-sm font-medium text-neutral-300">Category</label>
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              >
+                {CATEGORIES.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+            {/* Points */}
+            <div className="space-y-2">
+              <label htmlFor="amount" className="block text-sm font-medium text-neutral-300">Points (+/-)</label>
+              <input
+                type="number"
+                id="amount"
+                value={pointAmount}
+                onChange={(e) => setPointAmount(e.target.value)}
+                placeholder="e.g. 100 or -15"
+                required
+                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              />
+            </div>
+            {/* Reason */}
+            <div className="space-y-2">
+              <label htmlFor="reason" className="block text-sm font-medium text-neutral-300">Reason</label>
+              <input
+                type="text"
+                id="reason"
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="e.g. Won inter-house debate tournament"
+                required
+                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              />
+            </div>
+            {/* Evidence */}
+            <div className="space-y-2">
+              <label htmlFor="evidence" className="block text-sm font-medium text-neutral-300">Evidence / Reference</label>
+              <input
+                type="text"
+                id="evidence"
+                value={evidence}
+                onChange={(e) => setEvidence(e.target.value)}
+                placeholder="e.g. Accomplishment Report #12"
+                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {HOUSES.map((h) => (
-                <option key={h} value={h}>{HOUSE_LABELS[h]}</option>
-              ))}
-            </select>
-          </div>
-          {/* Category */}
-          <div className="space-y-2">
-            <label htmlFor="category" className="block text-sm font-medium text-neutral-300">
-              Category
-            </label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
-            >
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-          {/* Points */}
-          <div className="space-y-2">
-            <label htmlFor="amount" className="block text-sm font-medium text-neutral-300">
-              Points (+/-)
-            </label>
-            <input
-              type="number"
-              id="amount"
-              value={pointAmount}
-              onChange={(e) => setPointAmount(e.target.value)}
-              placeholder="e.g. 100 or -15"
-              required
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
-            />
-          </div>
-          {/* Reason */}
-          <div className="space-y-2">
-            <label htmlFor="reason" className="block text-sm font-medium text-neutral-300">
-              Reason
-            </label>
-            <input
-              type="text"
-              id="reason"
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder="e.g. Won inter-house debate tournament"
-              required
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
-            />
-          </div>
-          {/* Evidence */}
-          <div className="space-y-2">
-            <label htmlFor="evidence" className="block text-sm font-medium text-neutral-300">
-              Evidence / Reference
-            </label>
-            <input
-              type="text"
-              id="evidence"
-              value={evidence}
-              onChange={(e) => setEvidence(e.target.value)}
-              placeholder="e.g. Accomplishment Report #12"
-              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {submitting ? "Processing…" : "Submit Point Transaction"}
-          </button>
-        </form>
-      </article>
+              {submitting ? "Processing…" : "Submit Point Transaction"}
+            </button>
+          </form>
+        </article>
+      </RBACGuard>
     </div>
   );
 }

@@ -1,23 +1,19 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
-// Using Inter and Roboto Mono as fallbacks for Geist, which is Next.js 15+ only
-const geistSans = Inter({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Roboto_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: "BSU Debate Society",
-  description: "Fostering critical thinking, effective communication, and intellectual curiosity at Benguet State University.",
+  title: "BSU Debate Society | Official Portal",
+  description:
+    "The official digital governance, membership, and transparency platform of the BSU Debate Society.",
 };
 
 export default function RootLayout({
@@ -26,16 +22,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        {/* Pure black background */}
-        <div className="fixed inset-0 bg-black z-[-2]" />
-        <Navbar />
-        <main className="flex-1 lg:pl-64">{children}</main>
-        <Footer />
+    <html lang="en" className="dark">
+      <body
+        className={`${inter.variable} font-sans antialiased bg-neutral-950 text-neutral-100 selection:bg-amber-500/30 selection:text-amber-100`}
+      >
+        <div className="flex min-h-screen">
+          {/* Global Navigation */}
+          <Navbar />
+          
+          {/* Main Content Wrapper */}
+          <main className="flex-1 w-full lg:ml-64">
+            {children}
+          </main>
+        </div>
+
+        {/* Global Toast Notifications */}
+        <Toaster
+          theme="dark"
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "#171717", // neutral-900
+              border: "1px solid #262626", // neutral-800
+              color: "#fff",
+              borderRadius: "12px",
+            },
+            classNames: {
+              toast: "shadow-xl shadow-black/40",
+              title: "text-sm font-semibold",
+              description: "text-xs text-neutral-400",
+            },
+          }}
+        />
       </body>
     </html>
   );

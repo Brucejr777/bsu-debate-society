@@ -1,5 +1,6 @@
 "use client";
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 import { HOUSES } from "@/lib/houses";
 
 const VALID_HOUSES = HOUSES.map((h) => h.value);
@@ -11,13 +12,11 @@ const PROTEST_GROUNDS = [
 ];
 
 export default function ElectoralProtestPage() {
-  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const fd = new FormData(form);
@@ -33,13 +32,13 @@ export default function ElectoralProtestPage() {
     const proclamationDate = fd.get("proclamation_date") as string;
 
     if (!protestantName || !protestantHouse || !protestGround || !specificViolations || !evidenceSummary || !requestedRelief || !proclamationDate) {
-      setStatus({ type: "error", message: "All required fields must be filled." });
+      toast.error("All required fields must be filled.");
       setPending(false);
       return;
     }
 
     if (!VALID_HOUSES.includes(protestantHouse)) {
-      setStatus({ type: "error", message: "Please select a valid House." });
+      toast.error("Please select a valid House.");
       setPending(false);
       return;
     }
@@ -62,16 +61,15 @@ export default function ElectoralProtestPage() {
     });
 
     if (!res.ok) {
-      setStatus({ type: "error", message: "Failed to file protest. Please try again." });
+      toast.error("Failed to file protest. Please try again.");
       setPending(false);
       return;
     }
 
-    setStatus({
-      type: "success",
-      message:
-        "Electoral protest filed successfully. The protest will be adjudicated by the High Tribunal, presided over by the Society Chief Adviser. The decision of the Tribunal shall be final and executory.",
-    });
+    toast.success(
+      "Electoral protest filed successfully. The protest will be adjudicated by the High Tribunal, presided over by the Society Chief Adviser. The decision of the Tribunal shall be final and executory."
+    );
+    
     form.reset();
     setPending(false);
   }
@@ -173,7 +171,6 @@ export default function ElectoralProtestPage() {
                 — Article VII, Section 6
               </p>
             </div>
-
             <div className="mt-6 space-y-6">
               {/* Grounds for Substitution */}
               <div className="rounded-2xl border border-amber-900/40 bg-amber-950/20 p-5">
@@ -261,7 +258,6 @@ export default function ElectoralProtestPage() {
                   </label>
                   <input type="text" id="protestant_name" name="protestant_name" placeholder="Juan dela Cruz" required className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* House */}
                 <div className="space-y-2">
                   <label htmlFor="protestant_house" className="block text-sm font-medium text-neutral-300">
@@ -274,7 +270,6 @@ export default function ElectoralProtestPage() {
                     ))}
                   </select>
                 </div>
-
                 {/* Email */}
                 <div className="space-y-2">
                   <label htmlFor="protestant_email" className="block text-sm font-medium text-neutral-300">
@@ -282,7 +277,6 @@ export default function ElectoralProtestPage() {
                   </label>
                   <input type="email" id="protestant_email" name="protestant_email" placeholder="chancellor@bsu.edu.ph" className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* Protest Ground */}
                 <div className="space-y-2">
                   <label htmlFor="protest_ground" className="block text-sm font-medium text-neutral-300">
@@ -295,7 +289,6 @@ export default function ElectoralProtestPage() {
                     ))}
                   </select>
                 </div>
-
                 {/* Proclamation Date */}
                 <div className="space-y-2">
                   <label htmlFor="proclamation_date" className="block text-sm font-medium text-neutral-300">
@@ -303,7 +296,6 @@ export default function ElectoralProtestPage() {
                   </label>
                   <input type="date" id="proclamation_date" name="proclamation_date" required className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* Specific Violations */}
                 <div className="space-y-2">
                   <label htmlFor="specific_violations" className="block text-sm font-medium text-neutral-300">
@@ -311,7 +303,6 @@ export default function ElectoralProtestPage() {
                   </label>
                   <textarea id="specific_violations" name="specific_violations" rows={5} required placeholder="Describe in detail the specific procedural violations, vote tampering incidents, or eligibility issues that are the basis of this protest. Reference the relevant sections of Article VII (Presidential Conclave)..." className="w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* Evidence Summary */}
                 <div className="space-y-2">
                   <label htmlFor="evidence_summary" className="block text-sm font-medium text-neutral-300">
@@ -319,7 +310,6 @@ export default function ElectoralProtestPage() {
                   </label>
                   <textarea id="evidence_summary" name="evidence_summary" rows={4} required placeholder="List and describe the evidence supporting this protest: documents, testimonies, records, communications, or other materials..." className="w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* Requested Relief */}
                 <div className="space-y-2">
                   <label htmlFor="requested_relief" className="block text-sm font-medium text-neutral-300">
@@ -327,7 +317,6 @@ export default function ElectoralProtestPage() {
                   </label>
                   <textarea id="requested_relief" name="requested_relief" rows={3} required placeholder="Specify the relief sought from the High Tribunal: nullification of election results, recount, disqualification of candidate, new Conclave, or other remedies..." className="w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* Witnesses */}
                 <div className="space-y-2">
                   <label htmlFor="witnesses" className="block text-sm font-medium text-neutral-300">
@@ -335,18 +324,10 @@ export default function ElectoralProtestPage() {
                   </label>
                   <textarea id="witnesses" name="witnesses" rows={2} placeholder="Names and contact information of any witnesses to the alleged violations..." className="w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500" />
                 </div>
-
                 {/* Submit */}
                 <button type="submit" disabled={pending} className="w-full rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50">
                   {pending ? "Filing…" : "File Electoral Protest"}
                 </button>
-
-                {/* Feedback */}
-                {status && (
-                  <div className={`rounded-xl border px-4 py-3 text-sm ${status.type === "success" ? "border-emerald-800 bg-emerald-950/50 text-emerald-400" : "border-red-800 bg-red-950/50 text-red-400"}`}>
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

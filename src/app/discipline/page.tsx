@@ -1,5 +1,6 @@
 "use client";
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
 const VIOLATION_TYPES = ["Minor Violation", "Major Violation"];
@@ -11,16 +12,11 @@ const HOUSE_LABELS: Record<string, string> = {
 };
 
 export default function DisciplinePage() {
-  const [status, setStatus] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const fd = new FormData(form);
@@ -41,7 +37,7 @@ export default function DisciplinePage() {
     };
 
     if (!body.complainant_name || !body.respondent_name || !body.description) {
-      setStatus({ type: "error", message: "Required fields must be filled out." });
+      toast.error("Required fields must be filled out.");
       setPending(false);
       return;
     }
@@ -53,15 +49,14 @@ export default function DisciplinePage() {
     });
 
     if (!res.ok) {
-      setStatus({ type: "error", message: "Failed to file complaint. Please try again." });
+      toast.error("Failed to file complaint. Please try again.");
       setPending(false);
       return;
     }
 
-    setStatus({
-      type: "success",
-      message: "Complaint filed successfully. The Office of Internal Affairs will review within 3 business days.",
-    });
+    toast.success(
+      "Complaint filed successfully. The Office of Internal Affairs will review within 3 business days."
+    );
     form.reset();
     setPending(false);
   }
@@ -132,7 +127,7 @@ export default function DisciplinePage() {
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold text-amber-200">Confidential or Anonymous Reporting</h3>
                 <p className="text-sm leading-6 text-amber-300/80">
-                  This form is for standard disciplinary complaints, which require your name and are processed with full due process (including the respondent's right to confront accusers). 
+                  This form is for standard disciplinary complaints, which require your name and are processed with full due process (including the respondent's right to confront accusers).
                   If you wish to report misconduct, ethical violations, or administrative malfeasance <strong className="text-white">anonymously or confidentially</strong>, please use our secure{" "}
                   <a href="/whistleblower" className="font-semibold text-amber-200 underline underline-offset-4 transition hover:text-white">
                     Whistleblower Reporting Portal
@@ -165,19 +160,6 @@ export default function DisciplinePage() {
               </p>
             </div>
           </article>
-
-          {/* Feedback */}
-          {status && (
-            <div
-              className={`rounded-xl border px-4 py-3 text-sm ${
-                status.type === "success"
-                  ? "border-emerald-800 bg-emerald-950/50 text-emerald-400"
-                  : "border-red-800 bg-red-950/50 text-red-400"
-              }`}
-            >
-              {status.message}
-            </div>
-          )}
 
           {/* Complaint Form */}
           <form onSubmit={handleSubmit} className="space-y-6">

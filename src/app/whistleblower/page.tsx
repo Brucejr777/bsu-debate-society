@@ -1,5 +1,6 @@
 "use client";
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 
 const MISCONDUCT_TYPES = [
   { value: "constitutional_violation", label: "Constitutional violation" },
@@ -11,7 +12,6 @@ const MISCONDUCT_TYPES = [
 ];
 
 export default function WhistleblowerPage() {
-  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [pending, setPending] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -25,7 +25,6 @@ export default function WhistleblowerPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -40,13 +39,13 @@ export default function WhistleblowerPage() {
     };
 
     if (selectedTypes.length === 0) {
-      setStatus({ type: "error", message: "Please select at least one type of alleged misconduct." });
+      toast.error("Please select at least one type of alleged misconduct.");
       setPending(false);
       return;
     }
 
     if (!body.factual_summary) {
-      setStatus({ type: "error", message: "Factual summary is required." });
+      toast.error("Factual summary is required.");
       setPending(false);
       return;
     }
@@ -60,20 +59,20 @@ export default function WhistleblowerPage() {
 
       if (!res.ok) {
         const err = await res.json();
-        setStatus({ type: "error", message: err.error || "Failed to submit report. Please try again." });
+        toast.error(err.error || "Failed to submit report. Please try again.");
         setPending(false);
         return;
       }
 
-      setStatus({
-        type: "success",
-        message: "Report submitted securely. The Office of Internal Affairs or Chief Adviser will review your disclosure. If you provided contact info, you will receive a confidential case reference number.",
-      });
+      toast.success(
+        "Report submitted securely. The Office of Internal Affairs or Chief Adviser will review your disclosure. If you provided contact info, you will receive a confidential case reference number."
+      );
+      
       form.reset();
       setSelectedTypes([]);
       setIsAnonymous(true);
     } catch (error) {
-      setStatus({ type: "error", message: "Failed to connect to the server. Please try again." });
+      toast.error("Failed to connect to the server. Please try again.");
     } finally {
       setPending(false);
     }
@@ -155,6 +154,7 @@ export default function WhistleblowerPage() {
                       </p>
                     </div>
                   </div>
+
                   {!isAnonymous && (
                     <div className="mt-4 space-y-2">
                       <label htmlFor="contact_method" className="block text-sm font-medium text-neutral-300">
@@ -262,19 +262,6 @@ export default function WhistleblowerPage() {
                 >
                   {pending ? "Submitting Securely…" : "Submit Confidential Report"}
                 </button>
-
-                {/* Feedback Message */}
-                {status && (
-                  <div
-                    className={`rounded-xl border px-4 py-3 text-sm ${
-                      status.type === "success"
-                        ? "border-emerald-800 bg-emerald-950/50 text-emerald-400"
-                        : "border-red-800 bg-red-950/50 text-red-400"
-                    }`}
-                  >
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

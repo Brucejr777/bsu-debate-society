@@ -1,7 +1,30 @@
+import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import PointTrendChart, { TrendDataPoint } from "@/components/PointTrendChart";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "House Point Standings — BSU Debate Society",
+    description:
+      "View the real-time House Point Standings for the BSU Debate Society. Track the competitive, organizational, governance, and conduct metrics of the Four Houses as they compete for the annual House Cup.",
+    openGraph: {
+      title: "House Point Standings — BSU Debate Society",
+      description:
+        "View the real-time House Point Standings for the BSU Debate Society. Track the competitive, organizational, governance, and conduct metrics of the Four Houses as they compete for the annual House Cup.",
+      type: "website",
+      siteName: "BSU Debate Society",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "House Point Standings — BSU Debate Society",
+      description:
+        "View the real-time House Point Standings for the BSU Debate Society. Track the competitive, organizational, governance, and conduct metrics of the Four Houses as they compete for the annual House Cup.",
+    },
+  };
+}
 
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#FF8C00",
@@ -9,7 +32,6 @@ const HOUSE_COLORS: Record<string, string> = {
   Laon: "#228B22",
   Manama: "#8B008B",
 };
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
@@ -51,14 +73,11 @@ export default async function StandingsPage() {
   if (transactions) {
     for (const tx of transactions) {
       if (!tx.created_at || !tx.house_name || !houses.includes(tx.house_name)) continue;
-      
       const date = new Date(tx.created_at);
       const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-      
       if (!monthlyData[monthKey]) {
         monthlyData[monthKey] = { Bathala: null, Kabunian: null, Laon: null, Manama: null };
       }
-      
       if (tx.running_total !== null) {
         monthlyData[monthKey][tx.house_name] = tx.running_total;
       }
@@ -68,27 +87,23 @@ export default async function StandingsPage() {
   const sortedMonths = Object.keys(monthlyData).sort();
   const trendResult: TrendDataPoint[] = [];
   
-  // Let TypeScript infer the exact shape of this object
-  let currentTotals = { 
-    Bathala: 0, 
-    Kabunian: 0, 
-    Laon: 0, 
-    Manama: 0 
+  let currentTotals = {
+    Bathala: 0,
+    Kabunian: 0,
+    Laon: 0,
+    Manama: 0
   };
 
   for (const month of sortedMonths) {
     for (const house of houses) {
       const val = monthlyData[month][house];
       if (val !== null && val !== undefined) {
-        // Assert that 'house' is a valid key of currentTotals
         currentTotals[house as keyof typeof currentTotals] = val;
       }
     }
-    
     const [year, monthNum] = month.split("-");
     const dateObj = new Date(parseInt(year), parseInt(monthNum) - 1, 1);
     const displayDate = dateObj.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-
     trendResult.push({
       date: displayDate,
       ...currentTotals,
@@ -247,6 +262,7 @@ export default async function StandingsPage() {
                               </p>
                             </div>
                           </div>
+
                           {/* Total Points */}
                           <div className="text-right">
                             <p className="text-3xl font-bold tabular-nums text-white">
@@ -257,6 +273,7 @@ export default async function StandingsPage() {
                             </p>
                           </div>
                         </div>
+
                         {/* Category Breakdown */}
                         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                           <div className="rounded-2xl bg-neutral-900 p-3">
@@ -313,14 +330,14 @@ export default async function StandingsPage() {
                 — Rules and Procedures, Article I, Sections 3–7 & 10–11
               </p>
             </div>
-            
+
             {/* Point Categories Explanation */}
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-4xl space-y-6">
                 <h3 className="text-2xl font-semibold text-white text-center">
                   Four Point Categories
                 </h3>
-                
+
                 {/* 1. Competitive Excellence */}
                 <div className="rounded-2xl border border-emerald-900/40 bg-neutral-950/95 p-6 shadow-lg">
                   <div className="flex items-center gap-3 mb-4">

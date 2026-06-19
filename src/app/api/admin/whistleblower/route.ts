@@ -1,11 +1,30 @@
+// src/app/api/admin/whistleblower/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC, Role } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/whistleblower
+ * Fetches confidential whistleblower reports.
+ * STRICTLY RESTRICTED to OIA, Chief Adviser, and President per 
+ * Constitution Art. 3, Sec. 14 & Rules Art. VI, Sec. 4(6).
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 1. Enforce Strict Confidentiality RBAC
+  if (!RBAC.canViewWhistleblower(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have the constitutional clearance to access confidential whistleblower reports." },
+      { status: 403 }
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("whistleblower_reports")
     .select("*")
@@ -14,12 +33,30 @@ export async function GET() {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
   return NextResponse.json(data);
 }
 
+/**
+ * PATCH /api/admin/whistleblower
+ * Updates the status of a whistleblower report (e.g., under_review, resolved).
+ */
 export async function PATCH(request: Request) {
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 1. Enforce Strict Confidentiality RBAC
+  if (!RBAC.canViewWhistleblower(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have the constitutional clearance to manage whistleblower reports." },
+      { status: 403 }
+    );
+  }
+
   const { id, ...updates } = await request.json();
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const supabase = createServerSupabaseClient();
 
   const { data, error } = await supabase
     .from("whistleblower_reports")
@@ -31,12 +68,31 @@ export async function PATCH(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/whistleblower
+ * Permanently removes a whistleblower report from the database.
+ * RESTRICTED to the President only, per RLS policies and institutional oversight.
+ */
 export async function DELETE(request: Request) {
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 2. Only the President can delete whistleblower reports
+  if (officer.role !== Role.PRESIDENT) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the President can permanently delete whistleblower reports." },
+      { status: 403 }
+    );
+  }
+
   const { id } = await request.json();
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const supabase = createServerSupabaseClient();
 
   const { error } = await supabase
     .from("whistleblower_reports")
@@ -46,5 +102,6 @@ export async function DELETE(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
   return NextResponse.json({ ok: true });
 }

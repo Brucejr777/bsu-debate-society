@@ -1,6 +1,10 @@
+// src/app/admin/discipline/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import RBACGuard, { type Officer } from "@/components/RBACGuard";
+import { RBAC, Role, House, getHouseFromRole, isHouseChancellor } from "@/lib/rbac";
 
 const STATUS_OPTIONS = ["filed", "under_review", "hearing_scheduled", "resolved_minor", "resolved_major", "dismissed", "appealed"];
 const STATUS_LABELS: Record<string, string> = {
@@ -43,55 +47,99 @@ interface Complaint {
 }
 
 export default function AdminDisciplinePage() {
+  const [officer, setOfficer] = useState<Officer | null>(null);
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [selected, setSelected] = useState<Complaint | null>(null);
+  
   const [editingStatus, setEditingStatus] = useState("");
   const [editNotes, setEditNotes] = useState("");
   const [editSanction, setEditSanction] = useState("");
 
-  async function fetchComplaints() {
-    setLoading(true);
-    setError(null);
-    const res = await fetch("/api/admin/discipline");
-    if (!res.ok) {
-      setError("Failed to fetch complaints.");
-      setLoading(false);
-      return;
-    }
-    setComplaints(await res.json());
-    setLoaded(true);
-    setLoading(false);
-  }
+  // Pagination state
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const limit = 20;
 
-  function flash(msg: string) {
-    setActionMsg(msg);
-    setTimeout(() => setActionMsg(null), 3000);
+  // 1. Fetch current officer profile for RBAC context
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setOfficer(data?.officer || null))
+      .catch(() => setOfficer(null));
+  }, []);
+
+  async function fetchComplaints(reset = false) {
+    setLoading(true);
+    const currentPage = reset ? 1 : page;
+    try {
+      const res = await fetch(`/api/admin/discipline?page=${currentPage}&limit=${limit}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch complaints.");
+      }
+      const { data, count } = await res.json();
+      
+      if (reset) {
+        setComplaints(data);
+      } else {
+        setComplaints((prev) => [...prev, ...data]);
+      }
+      setHasMore((currentPage * limit) < (count || 0));
+      setPage(currentPage);
+      setLoaded(true);
+    } catch (err) {
+      toast.error("Failed to fetch complaints.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function updateStatus() {
     if (!selected) return;
-    const res = await fetch("/api/admin/discipline", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: selected.id,
-        status: editingStatus,
-        notes: editNotes || selected.notes,
-        sanction: editSanction || selected.sanction,
-      }),
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error ?? "Failed to update.");
-      return;
+    
+    // Optimistic update
+    const previousComplaints = [...complaints];
+    const updatedComplaint = {
+      ...selected,
+      status: editingStatus,
+      notes: editNotes || selected.notes,
+      sanction: editSanction || selected.sanction,
+    };
+    
+    setComplaints((prev) =>
+      prev.map((c) => (c.id === selected.id ? updatedComplaint : c))
+    );
+    setSelected(updatedComplaint);
+
+    try {
+      const res = await fetch("/api/admin/discipline", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: selected.id,
+          status: editingStatus,
+          notes: editNotes || selected.notes,
+          sanction: editSanction || selected.sanction,
+        }),
+      });
+      
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "Failed to update.");
+      }
+      
+      const data = await res.json();
+      setComplaints((prev) =>
+        prev.map((c) => (c.id === selected.id ? data : c))
+      );
+      setSelected(data);
+      toast.success("Complaint updated successfully.");
+    } catch (err: any) {
+      setComplaints(previousComplaints);
+      setSelected(selected);
+      toast.error(err.message || "Failed to update complaint.");
     }
-    flash("Complaint updated.");
-    await fetchComplaints();
-    setSelected(null);
   }
 
   const statusBadge = (status: string) => {
@@ -111,10 +159,13 @@ export default function AdminDisciplinePage() {
     );
   };
 
-  const inputCls =
-    "w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500";
+  const inputCls = "w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500";
   const labelCls = "block text-sm font-medium text-neutral-300";
   const selectCls = inputCls;
+
+  // Determine jurisdiction context for the UI banner
+  const userHouse = officer ? getHouseFromRole(officer.role as Role) : null;
+  const isChancellor = officer ? isHouseChancellor(officer.role as Role) : false;
 
   return (
     <div className="space-y-6">
@@ -129,22 +180,29 @@ export default function AdminDisciplinePage() {
         </p>
       </div>
 
-      {/* Feedback */}
-      {error && (
-        <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-          {error}
-        </div>
-      )}
-      {actionMsg && (
-        <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-400">
-          {actionMsg}
-        </div>
+      {/* Jurisdiction Context Banner */}
+      {isChancellor && userHouse && (
+        <article className="rounded-2xl border border-amber-900/40 bg-amber-950/20 p-5">
+          <div className="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 size-5 shrink-0 text-amber-400">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.75.75 0 01.714.544l.126.5a.75.75 0 01-.714.956H9a.75.75 0 000 1.5h.253a.75.75 0 01.714.544l.126.5a.75.75 0 01-.714.956H9a.75.75 0 000 1.5h.253a.75.75 0 01.714.544l.126.5a.75.75 0 01-.714.956H9a.75.75 0 000 1.5" clipRule="evenodd" />
+            </svg>
+            <div>
+              <h3 className="text-sm font-semibold text-amber-200">House-Level Jurisdiction Active</h3>
+              <p className="mt-1 text-xs leading-5 text-amber-300/80">
+                As the Chancellor of the <strong className="text-white">{HOUSE_LABELS[userHouse]}</strong>, you are viewing and managing 
+                only the disciplinary complaints involving your House. Major Violations and Society-wide 
+                disciplinary matters are reserved for the Office of Internal Affairs and the High Tribunal.
+              </p>
+            </div>
+          </div>
+        </article>
       )}
 
       {/* Load Button */}
       {!loaded && (
         <button
-          onClick={fetchComplaints}
+          onClick={() => fetchComplaints(true)}
           disabled={loading}
           className="rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:opacity-50"
         >
@@ -154,7 +212,7 @@ export default function AdminDisciplinePage() {
 
       {/* Cases List */}
       {loaded && complaints.length === 0 && (
-        <p className="text-sm text-neutral-500">No complaints filed.</p>
+        <p className="text-sm text-neutral-500">No complaints filed or accessible under your jurisdiction.</p>
       )}
 
       {loaded && complaints.length > 0 && (
@@ -162,7 +220,11 @@ export default function AdminDisciplinePage() {
           {complaints.map((c) => (
             <article
               key={c.id}
-              className="cursor-pointer rounded-2xl border border-neutral-800 bg-neutral-900 p-5 transition hover:border-neutral-700"
+              className={`cursor-pointer rounded-2xl border p-5 transition ${
+                selected?.id === c.id 
+                  ? "border-neutral-600 bg-neutral-800/80" 
+                  : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
+              }`}
               onClick={() => {
                 setSelected(c);
                 setEditingStatus(c.status);
@@ -190,6 +252,19 @@ export default function AdminDisciplinePage() {
               </div>
             </article>
           ))}
+
+          {/* Load More Button */}
+          {hasMore && (
+            <div className="flex justify-center pt-4">
+              <button
+                onClick={() => fetchComplaints(false)}
+                disabled={loading}
+                className="rounded-full border border-neutral-700 bg-neutral-900 px-6 py-2.5 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+              >
+                {loading ? "Loading more..." : "Load More Cases"}
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -212,19 +287,28 @@ export default function AdminDisciplinePage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <p className="text-xs text-neutral-500">Respondent</p>
-              <p className="text-sm font-medium text-white">{selected.respondent_name} ({HOUSE_LABELS[selected.respondent_house]})</p>
+              <p className="text-sm font-medium text-white">
+                {selected.respondent_name} ({HOUSE_LABELS[selected.respondent_house]})
+              </p>
             </div>
             <div>
               <p className="text-xs text-neutral-500">Complainant</p>
-              <p className="text-sm font-medium text-white">{selected.complainant_name} ({HOUSE_LABELS[selected.complainant_house]})</p>
+              <p className="text-sm font-medium text-white">
+                {selected.complainant_name} ({HOUSE_LABELS[selected.complainant_house]})
+              </p>
             </div>
             <div>
               <p className="text-xs text-neutral-500">Incident</p>
-              <p className="text-sm text-neutral-300">{selected.incident_date} {selected.incident_time ? `at ${selected.incident_time}` : ""} — {selected.incident_location}</p>
+              <p className="text-sm text-neutral-300">
+                {selected.incident_date} {selected.incident_time ? `at ${selected.incident_time}` : ""} — {selected.incident_location}
+              </p>
             </div>
             <div>
               <p className="text-xs text-neutral-500">Violation</p>
-              <p className="text-sm text-neutral-300">{selected.violation_type}{selected.provisions_violated ? ` — ${selected.provisions_violated}` : ""}</p>
+              <p className="text-sm text-neutral-300">
+                {selected.violation_type}
+                {selected.provisions_violated ? ` — ${selected.provisions_violated}` : ""}
+              </p>
             </div>
           </div>
 
@@ -248,29 +332,68 @@ export default function AdminDisciplinePage() {
             </div>
           )}
 
-          {/* Update Status */}
-          <div className="space-y-3 border-t border-neutral-800 pt-6">
-            <h3 className="text-lg font-medium text-white">Update Case Status</h3>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label className={labelCls}>Status</label>
-                <select value={editingStatus} onChange={(e) => setEditingStatus(e.target.value)} className={selectCls}>
-                  {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
-                </select>
+          {/* Update Status (RBAC Protected) */}
+          <RBACGuard
+            officer={officer}
+            checkPermission={(o) => 
+              RBAC.canManageDiscipline(
+                o.role as Role, 
+                getHouseFromRole(o.role as Role), 
+                selected.respondent_house as House
+              )
+            }
+            fallback={
+              <div className="rounded-xl border border-amber-900/40 bg-amber-950/20 p-5 text-center">
+                <p className="text-sm text-amber-300/80">
+                  You do not have the constitutional jurisdiction to update this specific case. 
+                  Major Violations or cases involving other Houses are managed by the OIA or the High Tribunal.
+                </p>
               </div>
-              <div>
-                <label className={labelCls}>Sanction / Outcome</label>
-                <input value={editSanction} onChange={(e) => setEditSanction(e.target.value)} placeholder="e.g. Written warning, 10 hrs community service" className={inputCls} />
+            }
+          >
+            <div className="space-y-3 border-t border-neutral-800 pt-6">
+              <h3 className="text-lg font-medium text-white">Update Case Status</h3>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className={labelCls}>Status</label>
+                  <select 
+                    value={editingStatus} 
+                    onChange={(e) => setEditingStatus(e.target.value)} 
+                    className={selectCls}
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s} value={s}>{STATUS_LABELS[s]}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className={labelCls}>Sanction / Outcome</label>
+                  <input 
+                    value={editSanction} 
+                    onChange={(e) => setEditSanction(e.target.value)} 
+                    placeholder="e.g. Written warning, 10 hrs community service" 
+                    className={inputCls} 
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className={labelCls}>Internal Notes</label>
+                  <textarea 
+                    value={editNotes} 
+                    onChange={(e) => setEditNotes(e.target.value)} 
+                    rows={3} 
+                    placeholder="Case notes…" 
+                    className={inputCls + " resize-none"} 
+                  />
+                </div>
               </div>
-              <div className="sm:col-span-2">
-                <label className={labelCls}>Internal Notes</label>
-                <textarea value={editNotes} onChange={(e) => setEditNotes(e.target.value)} rows={3} placeholder="Case notes…" className={inputCls + " resize-none"} />
-              </div>
+              <button 
+                onClick={updateStatus} 
+                className="rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+              >
+                Update Record
+              </button>
             </div>
-            <button onClick={updateStatus} className="rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200">
-              Update
-            </button>
-          </div>
+          </RBACGuard>
         </div>
       )}
     </div>

@@ -1,16 +1,25 @@
+// src/app/admin/house-of-semester/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { RBAC, Role } from "@/lib/rbac";
+
+interface Officer {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  house_affiliation: string;
+}
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
   Laon: "House of Laon",
   Manama: "House of Manama",
 };
-
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
   Kabunian: "#280137",
@@ -43,34 +52,46 @@ const emptyForm = {
 };
 
 export default function AdminHouseOfSemesterPage() {
+  const [officer, setOfficer] = useState<Officer | null>(null);
   const [winners, setWinners] = useState<SemWinner[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
 
+  // 1. Fetch current officer profile for RBAC
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setOfficer(data?.officer || null))
+      .catch(() => setOfficer(null));
+  }, []);
+
+  // 2. Determine if user can manage House of the Semester records
+  const canManage = officer
+    ? RBAC.canAccessAdminRoute(officer.role as Role, "/admin/house-of-semester")
+    : false;
+
   async function fetchWinners() {
     setLoading(true);
-    setError(null);
-    const res = await fetch("/api/admin/house-of-semester");
-    if (!res.ok) {
-      setError("Failed to fetch records.");
+    try {
+      const res = await fetch("/api/admin/house-of-semester");
+      if (!res.ok) {
+        throw new Error("Failed to fetch records.");
+      }
+      const data = await res.json();
+      setWinners(data);
+      setFetched(true);
+    } catch (err) {
+      toast.error("Failed to load House of the Semester records.");
+    } finally {
       setLoading(false);
-      return;
     }
-    const data = await res.json();
-    setWinners(data);
-    setFetched(true);
-    setLoading(false);
   }
 
   async function submitWinner(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
-
     const points = parseInt(form.final_points, 10) || 0;
     const bonus = parseInt(form.bonus_points_awarded, 10) || 10;
 
@@ -85,59 +106,92 @@ export default function AdminHouseOfSemesterPage() {
       published: form.published,
     };
 
-    const res = editingId
-      ? await fetch("/api/admin/house-of-semester", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editingId, ...body }),
-        })
-      : await fetch("/api/admin/house-of-semester", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
+    // Optimistic update
+    const previousWinners = [...winners];
+    const tempId = editingId ?? Date.now();
+    setWinners((prev) =>
+      editingId
+        ? prev.map((w) => (w.id === editingId ? { ...w, ...body } : w))
+        : [{ id: tempId, created_at: new Date().toISOString(), ...body }, ...prev]
+    );
 
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error ?? "Failed to save.");
-      return;
+    try {
+      const res = editingId
+        ? await fetch("/api/admin/house-of-semester", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: editingId, ...body }),
+          })
+        : await fetch("/api/admin/house-of-semester", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "Failed to save.");
+      }
+      const data = await res.json();
+      
+      // Confirm with actual server response
+      setWinners((prev) =>
+        editingId
+          ? prev.map((w) => (w.id === editingId ? data : w))
+          : prev.map((w) => (w.id === tempId ? data : w))
+      );
+      toast.success(editingId ? "Record updated." : "Record created.");
+      setForm(emptyForm);
+      setShowForm(false);
+      setEditingId(null);
+    } catch (err: any) {
+      // Revert on failure
+      setWinners(previousWinners);
+      toast.error(err.message || "Failed to save record.");
     }
-
-    setActionMsg(editingId ? "Record updated." : "Record created.");
-    setForm(emptyForm);
-    setShowForm(false);
-    setEditingId(null);
-    await fetchWinners();
-    setTimeout(() => setActionMsg(null), 3000);
   }
 
   async function deleteWinner(id: number) {
-    const res = await fetch("/api/admin/house-of-semester", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    if (!res.ok) {
-      setError("Failed to delete.");
-      return;
-    }
+    // Optimistic update
+    const previousWinners = [...winners];
     setWinners((prev) => prev.filter((w) => w.id !== id));
-    setActionMsg("Record deleted.");
-    setTimeout(() => setActionMsg(null), 3000);
+
+    try {
+      const res = await fetch("/api/admin/house-of-semester", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) throw new Error("Failed to delete.");
+      toast.success("Record deleted.");
+    } catch (err) {
+      // Revert on failure
+      setWinners(previousWinners);
+      toast.error("Failed to delete record.");
+    }
   }
 
   async function togglePublished(id: number, current: boolean) {
-    const res = await fetch("/api/admin/house-of-semester", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, published: !current }),
-    });
-    if (!res.ok) {
-      setError("Failed to update.");
-      return;
+    // Optimistic update
+    const previousWinners = [...winners];
+    setWinners((prev) => prev.map((w) => (w.id === id ? { ...w, published: !current } : w)));
+
+    try {
+      const res = await fetch("/api/admin/house-of-semester", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, published: !current }),
+      });
+      if (!res.ok) throw new Error("Failed to update.");
+      const data = await res.json();
+      // Confirm with actual server response
+      setWinners((prev) => prev.map((w) => (w.id === id ? data : w)));
+      toast.success(`Record ${!current ? "published" : "unpublished"}.`);
+    } catch (err) {
+      // Revert on failure
+      setWinners(previousWinners);
+      toast.error("Failed to update record.");
     }
-    const data = await res.json();
-    setWinners((prev) => prev.map((w) => (w.id === id ? data : w)));
   }
 
   function startEdit(w: SemWinner) {
@@ -181,25 +235,20 @@ export default function AdminHouseOfSemesterPage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-white">
-          House of the Semester
-        </h1>
+        <h1 className="text-2xl font-semibold text-white">House of the Semester</h1>
         <p className="text-sm text-neutral-400">
-          Manage semester recognition records. The winning House receives a
-          certificate, public recognition, and +10 bonus points carried to the
-          next semester per Article I, Section 9(4).
+          Manage semester recognition records. The winning House receives a certificate, public recognition, and +10 bonus points carried to the next semester per Article I, Section 9(4).
         </p>
       </div>
 
-      {/* Feedback */}
-      {error && (
-        <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-          {error}
-        </div>
-      )}
-      {actionMsg && (
-        <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-400">
-          {actionMsg}
+      {/* View Only Notice for Unauthorized Roles */}
+      {!canManage && officer && (
+        <div className="rounded-2xl border border-amber-900/40 bg-amber-950/20 p-5">
+          <p className="text-sm leading-6 text-amber-300/80">
+            <strong className="text-amber-200">View Only:</strong> Per the Society Constitution and Rules, 
+            only the <strong className="text-white">High Council and House Chancellors</strong> can manage 
+            House of the Semester records. You may view the records for transparency purposes.
+          </p>
         </div>
       )}
 
@@ -214,7 +263,7 @@ export default function AdminHouseOfSemesterPage() {
             {loading ? "Loading…" : "Load Records"}
           </button>
         )}
-        {fetched && !showForm && (
+        {fetched && !showForm && canManage && (
           <button onClick={startNew} className={btnPrimary}>
             + Record Recognition
           </button>
@@ -222,7 +271,7 @@ export default function AdminHouseOfSemesterPage() {
       </div>
 
       {/* Form */}
-      {showForm && (
+      {showForm && canManage && (
         <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-lg">
           <h2 className="mb-6 text-lg font-semibold text-white">
             {editingId ? "Edit Record" : "New Recognition Record"}
@@ -359,7 +408,6 @@ export default function AdminHouseOfSemesterPage() {
       {fetched && winners.length === 0 && (
         <p className="text-sm text-neutral-500">No records yet.</p>
       )}
-
       {fetched && winners.length > 0 && (
         <div className="space-y-3">
           {winners.map((w) => {
@@ -413,24 +461,30 @@ export default function AdminHouseOfSemesterPage() {
                         />
                       </svg>
                     )}
-                    <button
-                      onClick={() => startEdit(w)}
-                      className={btnEdit}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => togglePublished(w.id, w.published)}
-                      className={btnEdit}
-                    >
-                      {w.published ? "Unpublish" : "Publish"}
-                    </button>
-                    <button
-                      onClick={() => deleteWinner(w.id)}
-                      className={btnDanger}
-                    >
-                      Delete
-                    </button>
+                    
+                    {/* Action Buttons (RBAC Protected) */}
+                    {canManage && (
+                      <>
+                        <button
+                          onClick={() => startEdit(w)}
+                          className={btnEdit}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => togglePublished(w.id, w.published)}
+                          className={btnEdit}
+                        >
+                          {w.published ? "Unpublish" : "Publish"}
+                        </button>
+                        <button
+                          onClick={() => deleteWinner(w.id)}
+                          className={btnDanger}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
                 {w.notes && (

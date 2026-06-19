@@ -1,29 +1,23 @@
 "use client";
-
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
 
     if (!name || !email || !subject || !message) {
-      setStatus({ type: "error", message: "All fields are required." });
+      toast.error("All fields are required.");
       setPending(false);
       return;
     }
@@ -35,15 +29,12 @@ export default function ContactPage() {
     });
 
     if (!res.ok) {
-      setStatus({ type: "error", message: "Failed to send. Please try again." });
+      toast.error("Failed to send. Please try again.");
       setPending(false);
       return;
     }
 
-    setStatus({
-      type: "success",
-      message: "Message sent to the Office of Public Affairs.",
-    });
+    toast.success("Message sent to the Office of Public Affairs.");
     form.reset();
     setPending(false);
   }
@@ -113,7 +104,6 @@ export default function ContactPage() {
                 </p>
               </div>
             </a>
-
             <a
               href="tel:+639001234567"
               className="group flex items-center gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg transition hover:border-neutral-700"
@@ -130,7 +120,6 @@ export default function ContactPage() {
                 </p>
               </div>
             </a>
-
             <div className="flex items-center gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg">
               <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-900/40">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-amber-300">
@@ -208,7 +197,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-
             <article className="mx-auto max-w-3xl space-y-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <p className="text-base leading-7 text-neutral-300">
                 Membership in the Debate Society is open to{" "}
@@ -278,7 +266,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-
             <article className="mx-auto max-w-3xl space-y-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <p className="text-base leading-7 text-neutral-300">
                 The{" "}
@@ -325,7 +312,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-
             <article className="mx-auto max-w-3xl space-y-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <p className="text-base leading-7 text-neutral-300">
                 The{" "}
@@ -357,7 +343,6 @@ export default function ContactPage() {
                   Submissions are delivered directly to the Office of Public Affairs.
                 </p>
               </div>
-
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Name */}
                 <div className="space-y-2">
@@ -376,7 +361,6 @@ export default function ContactPage() {
                     className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
                   />
                 </div>
-
                 {/* Email */}
                 <div className="space-y-2">
                   <label
@@ -394,7 +378,6 @@ export default function ContactPage() {
                     className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
                   />
                 </div>
-
                 {/* Subject */}
                 <div className="space-y-2">
                   <label
@@ -421,7 +404,6 @@ export default function ContactPage() {
                     <option value="other">Other</option>
                   </select>
                 </div>
-
                 {/* Message */}
                 <div className="space-y-2">
                   <label
@@ -439,7 +421,6 @@ export default function ContactPage() {
                     className="w-full resize-none rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
                   />
                 </div>
-
                 {/* Submit */}
                 <button
                   type="submit"
@@ -448,19 +429,6 @@ export default function ContactPage() {
                 >
                   {pending ? "Sending…" : "Send Message"}
                 </button>
-
-                {/* Feedback Messages */}
-                {status && (
-                  <div
-                    className={`rounded-xl border px-4 py-3 text-sm ${
-                      status.type === "success"
-                        ? "border-emerald-800 bg-emerald-950/50 text-emerald-400"
-                        : "border-red-800 bg-red-950/50 text-red-400"
-                    }`}
-                  >
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

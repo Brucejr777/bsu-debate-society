@@ -1,6 +1,6 @@
 "use client";
-
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 import { HOUSES } from "@/lib/houses";
 
 const VALID_HOUSES = HOUSES.map((h) => h.value);
@@ -11,17 +11,14 @@ const CLASSIFICATIONS = [
 ];
 
 const FORMATS = ["Digital copy", "In-person review", "Summary"];
-
 const SCOPES = ["Society-wide", "House-level"];
 
 export default function RecordsAccessPage() {
-  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const fd = new FormData(form);
@@ -37,46 +34,46 @@ export default function RecordsAccessPage() {
     const notes = (fd.get("additional_notes") as string) || null;
 
     if (!requesterName || !requesterHouse || !requesterEmail || !classification || !recordsSought || !purpose || !format || !scope) {
-      setStatus({ type: "error", message: "All required fields must be filled." });
+      toast.error("All required fields must be filled.");
       setPending(false);
       return;
     }
 
     if (!VALID_HOUSES.includes(requesterHouse)) {
-      setStatus({ type: "error", message: "Please select a valid House." });
+      toast.error("Please select a valid House.");
       setPending(false);
       return;
     }
 
-    const res = await fetch("/api/records-access", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        requester_name: requesterName,
-        requester_house: requesterHouse,
-        requester_email: requesterEmail,
-        records_classification: classification,
-        specific_records_sought: recordsSought,
-        purpose,
-        preferred_format: format,
-        scope,
-        additional_notes: notes,
-      }),
-    });
+    try {
+      const res = await fetch("/api/records-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          requester_name: requesterName,
+          requester_house: requesterHouse,
+          requester_email: requesterEmail,
+          records_classification: classification,
+          specific_records_sought: recordsSought,
+          purpose,
+          preferred_format: format,
+          scope,
+          additional_notes: notes,
+        }),
+      });
 
-    if (!res.ok) {
-      setStatus({ type: "error", message: "Failed to submit request. Please try again." });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to submit request.");
+      }
+
+      toast.success("Access request submitted successfully. The Executive Secretary or relevant House Secretariat Director will process your request within ten (10) working days.");
+      form.reset();
+    } catch (err: any) {
+      toast.error(err.message || "Failed to connect to the server. Please try again.");
+    } finally {
       setPending(false);
-      return;
     }
-
-    setStatus({
-      type: "success",
-      message:
-        "Access request submitted successfully. The Executive Secretary (for Society-wide records) or relevant House Secretariat Director will process your request within ten (10) working days.",
-    });
-    form.reset();
-    setPending(false);
   }
 
   return (
@@ -175,7 +172,6 @@ export default function RecordsAccessPage() {
                   All fields marked with <span className="text-red-400">*</span> are required.
                 </p>
               </div>
-
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Name */}
                 <div className="space-y-2">
@@ -265,13 +261,6 @@ export default function RecordsAccessPage() {
                 <button type="submit" disabled={pending} className="w-full rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50">
                   {pending ? "Submitting…" : "Submit Access Request"}
                 </button>
-
-                {/* Feedback */}
-                {status && (
-                  <div className={`rounded-xl border px-4 py-3 text-sm ${status.type === "success" ? "border-emerald-800 bg-emerald-950/50 text-emerald-400" : "border-red-800 bg-red-950/50 text-red-400"}`}>
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

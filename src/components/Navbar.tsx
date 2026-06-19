@@ -1,6 +1,9 @@
+// src/components/Navbar.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { RBAC, Role } from "@/lib/rbac";
+import { adminLogout } from "@/actions/admin";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -31,27 +34,39 @@ const navLinks = [
   { label: "Apply", href: "/apply" },
 ];
 
-const adminLinks = [
+// Master list of all possible admin routes. 
+// The visible list will be filtered dynamically based on the user's RBAC role.
+const ALL_ADMIN_LINKS = [
   { label: "Dashboard", href: "/admin/dashboard" },
+  { label: "Officer Mgmt", href: "/admin/users" },
   { label: "Memberships", href: "/admin/memberships" },
   { label: "House Points", href: "/admin/points" },
+  { label: "Indiv. Points", href: "/admin/individual-points" },
+  { label: "Point Claims", href: "/admin/point-claims" },
   { label: "House Cup", href: "/admin/house-cup" },
   { label: "House of Sem.", href: "/admin/house-of-semester" },
-  { label: "Indiv. Points", href: "/admin/individual-points" },
-  { label: "Messages", href: "/admin/messages" },
-  { label: "League & Awards", href: "/admin/league" },
   { label: "Debate Cup", href: "/admin/debate-cup" },
+  { label: "League & Awards", href: "/admin/league" },
   { label: "Nominations", href: "/admin/nominations" },
   { label: "Support Requests", href: "/admin/support-requests" },
+  { label: "Meetings", href: "/admin/meetings" },
+  { label: "Finance", href: "/admin/finance" },
   { label: "Records Access", href: "/admin/records-access" },
-  { label: "Electoral Protests", href: "/admin/electoral-protests" },
-  { label: "Appeals", href: "/admin/appeals" },
   { label: "SOSA", href: "/admin/sosa" },
   { label: "Discipline", href: "/admin/discipline" },
-  { label: "Finance", href: "/admin/finance" },
-  { label: "Meetings", href: "/admin/meetings" },
-  { label: "Admin Login", href: "/admin/login" },
+  { label: "Whistleblower", href: "/admin/whistleblower" },
+  { label: "Electoral Protests", href: "/admin/electoral-protests" },
+  { label: "Appeals", href: "/admin/appeals" },
+  { label: "Messages", href: "/admin/messages" },
 ];
+
+interface Officer {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  house_affiliation: string;
+}
 
 function NavLinks({ onClick }: { onClick?: () => void }) {
   return (
@@ -72,8 +87,44 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function AdminSection({ onClick }: { onClick?: () => void }) {
+function AdminSection({
+  officer,
+  loadingAuth,
+  onClick,
+}: {
+  officer: Officer | null;
+  loadingAuth: boolean;
+  onClick?: () => void;
+}) {
   const [adminOpen, setAdminOpen] = useState(false);
+
+  // Dynamically filter admin links based on the logged-in user's role
+  const visibleLinks = useMemo(() => {
+    if (loadingAuth) return [];
+    
+    // If not logged in or role is pending, only show the login link
+    if (!officer || officer.role === "pending") {
+      return [{ label: "Admin Login", href: "/admin/login" }];
+    }
+    
+    // Filter the master list using the RBAC matrix
+    return ALL_ADMIN_LINKS.filter((link) =>
+      RBAC.canAccessAdminRoute(officer.role as Role, link.href)
+    );
+  }, [officer, loadingAuth]);
+
+  if (loadingAuth) {
+    return (
+      <div className="mt-2 pt-2 border-t border-[#daa520]/20">
+        <div className="flex items-center gap-2 px-3 py-2 text-xs text-neutral-500">
+          <div className="size-3 animate-spin rounded-full border border-neutral-600 border-t-neutral-400" />
+          Loading session...
+        </div>
+      </div>
+    );
+  }
+
+  const isLoggedIn = officer && officer.role !== "pending";
 
   return (
     <div className="mt-2 pt-2 border-t border-[#daa520]/20">
@@ -82,9 +133,16 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
         onClick={() => setAdminOpen((prev) => !prev)}
         className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#daa520]/8"
       >
-        <span className="transition-colors group-hover:text-[#ffd700]">
-          Admin
-        </span>
+        <div className="flex flex-col items-start overflow-hidden">
+          <span className="transition-colors group-hover:text-[#ffd700]">
+            {isLoggedIn ? "Admin Panel" : "Admin"}
+          </span>
+          {isLoggedIn && (
+            <span className="text-[10px] font-normal text-neutral-500 truncate max-w-[180px]">
+              {officer.full_name} • {officer.role.replace(/_/g, " ")}
+            </span>
+          )}
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -100,9 +158,10 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
           />
         </svg>
       </button>
+      
       {adminOpen && (
         <div className="mt-1 space-y-0.5 pl-2">
-          {adminLinks.map((link) => (
+          {visibleLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -114,6 +173,21 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
               </span>
             </a>
           ))}
+          
+          {/* Logout Button (Only visible if logged in) */}
+          {isLoggedIn && (
+            <div className="mt-2 pt-2 border-t border-neutral-800">
+              <button
+                type="button"
+                onClick={async () => {
+                  await adminLogout();
+                }}
+                className="w-full text-left group block rounded-lg px-3 py-2 text-xs font-medium text-red-400 transition-all hover:bg-red-900/20"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -122,6 +196,19 @@ function AdminSection({ onClick }: { onClick?: () => void }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [officer, setOfficer] = useState<Officer | null>(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+  // Fetch the current user's session and profile on mount
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        setOfficer(data?.officer || null);
+        setLoadingAuth(false);
+      })
+      .catch(() => setLoadingAuth(false));
+  }, []);
 
   return (
     <>
@@ -142,7 +229,7 @@ export default function Navbar() {
         {/* Nav Links */}
         <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
           <NavLinks />
-          <AdminSection />
+          <AdminSection officer={officer} loadingAuth={loadingAuth} />
         </nav>
       </aside>
 
@@ -199,7 +286,11 @@ export default function Navbar() {
           <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-neutral-800/80 bg-neutral-950/98 backdrop-blur-xl">
             <div className="space-y-0.5 px-6 py-4">
               <NavLinks onClick={() => setOpen(false)} />
-              <AdminSection onClick={() => setOpen(false)} />
+              <AdminSection
+                officer={officer}
+                loadingAuth={loadingAuth}
+                onClick={() => setOpen(false)}
+              />
             </div>
           </div>
         )}

@@ -1,30 +1,66 @@
+// src/app/api/admin/nominations/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+/**
+ * GET /api/admin/nominations
+ * Fetches paginated individual recognition nominations.
+ * JURISDICTION: Selection Committee (High Council and House Chancellors).
+ */
+export async function GET(request: Request) {
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
-  const { data, error } = await supabase
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/nominations")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage nominations." }, { status: 403 });
+  }
+
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const limit = parseInt(searchParams.get("limit") || "20", 10);
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
+  const supabase = createServerSupabaseClient();
+  
+  const { data, error, count } = await supabase
     .from("individual_nominations")
-    .select("*")
-    .order("created_at", { ascending: false });
+    .select("*", { count: "exact" })
+    .order("created_at", { ascending: false })
+    .range(from, to);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json(data);
+
+  return NextResponse.json({ data, count });
 }
 
+/**
+ * PATCH /api/admin/nominations
+ * Updates the status of nominations (e.g., to 'approved' or 'rejected').
+ * If approved, automatically inserts the recipient into the individual_awards table.
+ * JURISDICTION: Selection Committee.
+ */
 export async function PATCH(request: Request) {
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/nominations")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage nominations." }, { status: 403 });
+  }
+
   const body = await request.json();
   const { id, ids, ...updates } = body;
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const supabase = createServerSupabaseClient();
 
   // Support both single 'id' and array of 'ids' for bulk operations
   const targetIds = ids ? ids : (id ? [id] : []);
-
   if (targetIds.length === 0) {
     return NextResponse.json({ error: "No ID or IDs provided" }, { status: 400 });
   }
@@ -89,9 +125,23 @@ export async function PATCH(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/nominations
+ * Removes a nomination from the inbox.
+ * JURISDICTION: Selection Committee.
+ */
 export async function DELETE(request: Request) {
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/nominations")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage nominations." }, { status: 403 });
+  }
+
   const { id } = await request.json();
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const supabase = createServerSupabaseClient();
 
   const { error } = await supabase
     .from("individual_nominations")

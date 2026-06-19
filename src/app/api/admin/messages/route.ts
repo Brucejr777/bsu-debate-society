@@ -1,11 +1,30 @@
+// src/app/api/admin/messages/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/messages
+ * Fetches all contact messages submitted via the public contact form.
+ * JURISDICTION: Office of Public Affairs, High Council, and House Chancellors
+ * (Constitution Art. 8, Sec. 11 - Office of Public Affairs manages public inquiries).
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Enforce RBAC: Only High Council and House Chancellors can view messages
+  if (!RBAC.canAccessAdminRoute(officer.role as any, "/admin/messages")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to view contact messages." },
+      { status: 403 }
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("contact_messages")
     .select("*")
@@ -18,10 +37,27 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * PATCH /api/admin/messages
+ * Updates the read status of a contact message.
+ * JURISDICTION: Office of Public Affairs, High Council, and House Chancellors.
+ */
 export async function PATCH(request: Request) {
-  const { id, is_read } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role as any, "/admin/messages")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to manage contact messages." },
+      { status: 403 }
+    );
+  }
+
+  const { id, is_read } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("contact_messages")
     .update({ is_read })
@@ -36,10 +72,27 @@ export async function PATCH(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/messages
+ * Permanently removes a contact message from the database.
+ * JURISDICTION: Office of Public Affairs, High Council, and House Chancellors.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role as any, "/admin/messages")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to delete contact messages." },
+      { status: 403 }
+    );
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
     .from("contact_messages")
     .delete()

@@ -1,16 +1,25 @@
+// src/app/admin/debate-cup/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { RBAC, Role } from "@/lib/rbac";
+
+interface Officer {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  house_affiliation: string;
+}
 
 const HOUSES = ["Bathala", "Kabunian", "Laon", "Manama"];
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
   Laon: "House of Laon",
   Manama: "House of Manama",
 };
-
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
   Kabunian: "#280137",
@@ -18,15 +27,16 @@ const HOUSE_COLORS: Record<string, string> = {
   Manama: "#006400",
 };
 
+const STATUS_OPTIONS = ["scheduled", "in_progress", "completed", "cancelled", "postponed"];
 const STATUS_BADGE: Record<string, string> = {
-  scheduled: "bg-neutral-800 text-neutral-300",
-  in_progress: "bg-blue-900/60 text-blue-300",
+  scheduled: "bg-blue-900/60 text-blue-300",
+  in_progress: "bg-amber-900/60 text-amber-300",
   completed: "bg-emerald-900/60 text-emerald-300",
-  postponed: "bg-amber-900/60 text-amber-300",
   cancelled: "bg-red-900/60 text-red-300",
+  postponed: "bg-neutral-800 text-neutral-400",
 };
 
-interface CupMatch {
+interface Match {
   id: number;
   created_at: string;
   semester: string;
@@ -39,19 +49,12 @@ interface CupMatch {
   house_b: string;
   motion: string | null;
   status: string;
-  winner: string | null;
-  is_draw: boolean;
-  best_team: string | null;
-  house_a_score: number | null;
-  house_b_score: number | null;
-  adjudicators: string | null;
-  notes: string | null;
   published: boolean;
 }
 
 const emptyForm = {
-  semester: "2026-2027 Second Semester",
-  round_number: 1,
+  semester: "",
+  round_number: "1",
   match_date: "",
   match_time: "",
   venue: "",
@@ -60,54 +63,51 @@ const emptyForm = {
   house_b: HOUSES[1],
   motion: "",
   status: "scheduled",
-  winner: "",
-  is_draw: false,
-  best_team: "",
-  house_a_score: "",
-  house_b_score: "",
-  adjudicators: "",
-  notes: "",
   published: false,
 };
 
 export default function AdminDebateCupPage() {
-  const [matches, setMatches] = useState<CupMatch[]>([]);
+  const [officer, setOfficer] = useState<Officer | null>(null);
+  const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+
+  // 1. Fetch current officer profile for RBAC
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => setOfficer(data?.officer || null))
+      .catch(() => setOfficer(null));
+  }, []);
+
+  // 2. Determine if user can manage Debate Cup records
+  const canManage = officer
+    ? RBAC.canAccessAdminRoute(officer.role as Role, "/admin/debate-cup")
+    : false;
 
   async function fetchMatches() {
     setLoading(true);
-    setError(null);
-    const res = await fetch("/api/admin/debate-cup");
-    if (!res.ok) {
-      setError("Failed to fetch matches.");
+    try {
+      const res = await fetch("/api/admin/debate-cup");
+      if (!res.ok) throw new Error("Failed to fetch matches.");
+      const data = await res.json();
+      setMatches(data);
+      setFetched(true);
+    } catch (err) {
+      toast.error("Failed to load Debate Cup matches.");
+    } finally {
       setLoading(false);
-      return;
     }
-    const data = await res.json();
-    setMatches(data);
-    setFetched(true);
-    setLoading(false);
   }
 
   async function submitMatch(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
-
-    if (form.house_a === form.house_b) {
-      setError("House A and House B cannot be the same.");
-      return;
-    }
-
     const body = {
       semester: form.semester,
-      round_number: form.round_number,
+      round_number: parseInt(form.round_number, 10) || 1,
       match_date: form.match_date || null,
       match_time: form.match_time || null,
       venue: form.venue || null,
@@ -116,77 +116,97 @@ export default function AdminDebateCupPage() {
       house_b: form.house_b,
       motion: form.motion || null,
       status: form.status,
-      winner: form.winner || null,
-      is_draw: form.is_draw,
-      best_team: form.best_team || null,
-      house_a_score: form.house_a_score ? parseInt(form.house_a_score, 10) : null,
-      house_b_score: form.house_b_score ? parseInt(form.house_b_score, 10) : null,
-      adjudicators: form.adjudicators || null,
-      notes: form.notes || null,
       published: form.published,
     };
 
-    const res = editingId
-      ? await fetch("/api/admin/debate-cup", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: editingId, ...body }),
-        })
-      : await fetch("/api/admin/debate-cup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
+    const previousMatches = [...matches];
+    const tempId = editingId ?? Date.now();
+    
+    setMatches((prev) =>
+      editingId
+        ? prev.map((m) => (m.id === editingId ? { ...m, ...body } : m))
+        : [{ id: tempId, created_at: new Date().toISOString(), ...body }, ...prev]
+    );
 
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error ?? "Failed to save.");
-      return;
+    try {
+      const res = editingId
+        ? await fetch("/api/admin/debate-cup", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: editingId, ...body }),
+          })
+        : await fetch("/api/admin/debate-cup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? "Failed to save.");
+      }
+      const data = await res.json();
+      
+      setMatches((prev) =>
+        editingId
+          ? prev.map((m) => (m.id === editingId ? data : m))
+          : prev.map((m) => (m.id === tempId ? data : m))
+      );
+      toast.success(editingId ? "Match updated." : "Match scheduled.");
+      setForm(emptyForm);
+      setShowForm(false);
+      setEditingId(null);
+    } catch (err: any) {
+      setMatches(previousMatches);
+      toast.error(err.message || "Failed to save match.");
     }
-
-    setActionMsg(editingId ? "Match updated." : "Match created.");
-    setForm(emptyForm);
-    setShowForm(false);
-    setEditingId(null);
-    await fetchMatches();
-    setTimeout(() => setActionMsg(null), 3000);
   }
 
   async function deleteMatch(id: number) {
-    const res = await fetch("/api/admin/debate-cup", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    if (!res.ok) {
-      setError("Failed to delete.");
-      return;
-    }
+    if (!confirm("Are you sure you want to delete this match?")) return;
+    const previousMatches = [...matches];
     setMatches((prev) => prev.filter((m) => m.id !== id));
-    setActionMsg("Match deleted.");
-    setTimeout(() => setActionMsg(null), 3000);
-  }
 
-  async function updateField(id: number, updates: Partial<CupMatch>) {
-    const res = await fetch("/api/admin/debate-cup", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, ...updates }),
-    });
-    if (!res.ok) {
-      setError("Failed to update.");
-      return;
+    try {
+      const res = await fetch("/api/admin/debate-cup", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) throw new Error("Failed to delete.");
+      toast.success("Match deleted.");
+    } catch (err) {
+      setMatches(previousMatches);
+      toast.error("Failed to delete match.");
     }
-    const data = await res.json();
-    setMatches((prev) => prev.map((m) => (m.id === id ? data : m)));
   }
 
-  function startEdit(m: CupMatch) {
+  async function togglePublished(id: number, current: boolean) {
+    const previousMatches = [...matches];
+    setMatches((prev) => prev.map((m) => (m.id === id ? { ...m, published: !current } : m)));
+
+    try {
+      const res = await fetch("/api/admin/debate-cup", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, published: !current }),
+      });
+      if (!res.ok) throw new Error("Failed to update.");
+      const data = await res.json();
+      setMatches((prev) => prev.map((m) => (m.id === id ? data : m)));
+      toast.success(`Match ${!current ? "published" : "unpublished"}.`);
+    } catch (err) {
+      setMatches(previousMatches);
+      toast.error("Failed to update match.");
+    }
+  }
+
+  function startEdit(m: Match) {
     setEditingId(m.id);
     setForm({
       semester: m.semester,
-      round_number: m.round_number,
-      match_date: m.match_date || "",
+      round_number: m.round_number.toString(),
+      match_date: m.match_date ? m.match_date.split("T")[0] : "",
       match_time: m.match_time || "",
       venue: m.venue || "",
       virtual_link: m.virtual_link || "",
@@ -194,13 +214,6 @@ export default function AdminDebateCupPage() {
       house_b: m.house_b,
       motion: m.motion || "",
       status: m.status,
-      winner: m.winner || "",
-      is_draw: m.is_draw,
-      best_team: m.best_team || "",
-      house_a_score: m.house_a_score?.toString() ?? "",
-      house_b_score: m.house_b_score?.toString() ?? "",
-      adjudicators: m.adjudicators || "",
-      notes: m.notes || "",
       published: m.published,
     });
     setShowForm(true);
@@ -212,103 +225,93 @@ export default function AdminDebateCupPage() {
     setShowForm(true);
   }
 
-  const updateForm = (field: string, value: string | boolean | number) => {
+  const updateForm = (field: string, value: string | boolean) => {
     setForm((p) => ({ ...p, [field]: value }));
   };
 
-  // Group by round
-  const byRound: Record<number, CupMatch[]> = {};
-  for (const m of matches) {
-    if (!byRound[m.round_number]) byRound[m.round_number] = [];
-    byRound[m.round_number].push(m);
-  }
-  const rounds = Object.entries(byRound).sort(
-    (a, b) => parseInt(a[0]) - parseInt(b[0])
-  );
-
-  const inputCls =
-    "w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500";
+  const inputCls = "w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500";
   const labelCls = "block text-sm font-medium text-neutral-300";
-  const btnPrimary =
-    "rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200";
-  const btnSecondary =
-    "rounded-full border border-neutral-700 px-5 py-2.5 text-sm font-medium text-neutral-400 transition hover:text-white";
-  const btnDanger =
-    "rounded-full bg-red-900/60 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-900";
-  const btnEdit =
-    "rounded-full bg-neutral-800 px-3 py-1.5 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700";
+  const btnPrimary = "rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200";
+  const btnSecondary = "rounded-full border border-neutral-700 px-5 py-2.5 text-sm font-medium text-neutral-400 transition hover:text-white";
+  const btnDanger = "rounded-full bg-red-900/60 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-900";
+  const btnEdit = "rounded-full bg-neutral-800 px-3 py-1.5 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700";
+
+  // Group matches by round for better UI
+  const groupedMatches = matches.reduce((acc, m) => {
+    const key = `Round ${m.round_number}`;
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(m);
+    return acc;
+  }, {} as Record<string, Match[]>);
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold text-white">
-          Inter-House Debate Cup
-        </h1>
+        <h1 className="text-2xl font-semibold text-white">Inter-House Debate Cup</h1>
         <p className="text-sm text-neutral-400">
-          Manage round-robin matches, results, and standings per Article I,
-          Section 10(1). Each House debates every other House once per semester.
+          Schedule and manage Debate Cup matches per Article I, Section 10. 
+          Published matches are visible on the public Debate Cup page.
         </p>
       </div>
 
-      {/* Feedback */}
-      {error && (
-        <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-          {error}
-        </div>
-      )}
-      {actionMsg && (
-        <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-400">
-          {actionMsg}
+      {/* View Only Notice for Unauthorized Roles */}
+      {!canManage && officer && (
+        <div className="rounded-2xl border border-amber-900/40 bg-amber-950/20 p-5">
+          <p className="text-sm leading-6 text-amber-300/80">
+            <strong className="text-amber-200">View Only:</strong> Per the Society Constitution and Rules, 
+            only the <strong className="text-white">High Council and House Chancellors</strong> can manage 
+            Debate Cup schedules. You may view the matches for transparency purposes.
+          </p>
         </div>
       )}
 
-      {/* Load / Add buttons */}
+      {/* Load / Add Buttons */}
       <div className="flex gap-2">
         {!fetched && (
-          <button
-            onClick={fetchMatches}
-            disabled={loading}
-            className={btnPrimary}
-          >
+          <button onClick={fetchMatches} disabled={loading} className={btnPrimary}>
             {loading ? "Loading…" : "Load Matches"}
           </button>
         )}
-        {fetched && !showForm && (
+        {fetched && !showForm && canManage && (
           <button onClick={startNew} className={btnPrimary}>
-            + New Match
+            + Schedule Match
           </button>
         )}
       </div>
 
-      {/* Form */}
-      {showForm && (
+      {/* Form (Protected) */}
+      {showForm && canManage && (
         <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-lg">
           <h2 className="mb-6 text-lg font-semibold text-white">
-            {editingId ? "Edit Match" : "New Match"}
+            {editingId ? "Edit Match" : "Schedule New Match"}
           </h2>
-          <form onSubmit={submitMatch} className="space-y-5">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <form onSubmit={submitMatch} className="mx-auto max-w-xl space-y-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>Semester</label>
-                <input value={form.semester} onChange={(e) => updateForm("semester", e.target.value)} required className={inputCls} />
+                <input value={form.semester} onChange={(e) => updateForm("semester", e.target.value)} required placeholder="2026-2027 Second Semester" className={inputCls} />
               </div>
               <div>
-                <label className={labelCls}>Round</label>
-                <input type="number" min="1" value={form.round_number} onChange={(e) => updateForm("round_number", parseInt(e.target.value, 10) || 1)} required className={inputCls} />
+                <label className={labelCls}>Round Number</label>
+                <input type="number" min="1" value={form.round_number} onChange={(e) => updateForm("round_number", e.target.value)} required className={inputCls} />
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>House A</label>
                 <select value={form.house_a} onChange={(e) => updateForm("house_a", e.target.value)} className={inputCls}>
-                  {HOUSES.map((h) => (<option key={h} value={h}>{HOUSE_LABELS[h]}</option>))}
+                  {HOUSES.map((h) => <option key={h} value={h}>{HOUSE_LABELS[h]}</option>)}
                 </select>
               </div>
               <div>
                 <label className={labelCls}>House B</label>
                 <select value={form.house_b} onChange={(e) => updateForm("house_b", e.target.value)} className={inputCls}>
-                  {HOUSES.map((h) => (<option key={h} value={h}>{HOUSE_LABELS[h]}</option>))}
+                  {HOUSES.filter(h => h !== form.house_a).map((h) => <option key={h} value={h}>{HOUSE_LABELS[h]}</option>)}
                 </select>
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>Date</label>
                 <input type="date" value={form.match_date} onChange={(e) => updateForm("match_date", e.target.value)} className={inputCls} />
@@ -317,252 +320,109 @@ export default function AdminDebateCupPage() {
                 <label className={labelCls}>Time</label>
                 <input type="time" value={form.match_time} onChange={(e) => updateForm("match_time", e.target.value)} className={inputCls} />
               </div>
-              <div>
-                <label className={labelCls}>Venue</label>
-                <input value={form.venue} onChange={(e) => updateForm("venue", e.target.value)} className={inputCls} />
-              </div>
-              <div>
-                <label className={labelCls}>Virtual Link</label>
-                <input value={form.virtual_link} onChange={(e) => updateForm("virtual_link", e.target.value)} className={inputCls} />
-              </div>
             </div>
             <div>
               <label className={labelCls}>Motion</label>
-              <input value={form.motion} onChange={(e) => updateForm("motion", e.target.value)} placeholder='e.g. "This House would..." ' className={inputCls} />
+              <input value={form.motion} onChange={(e) => updateForm("motion", e.target.value)} placeholder="e.g. This House believes that..." className={inputCls} />
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className={labelCls}>Venue</label>
+                <input value={form.venue} onChange={(e) => updateForm("venue", e.target.value)} placeholder="e.g. BSU Main Auditorium" className={inputCls} />
+              </div>
+              <div>
+                <label className={labelCls}>Virtual Link</label>
+                <input value={form.virtual_link} onChange={(e) => updateForm("virtual_link", e.target.value)} placeholder="https://zoom.us/..." className={inputCls} />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>Status</label>
                 <select value={form.status} onChange={(e) => updateForm("status", e.target.value)} className={inputCls}>
-                  <option value="scheduled">Scheduled</option>
-                  <option value="in_progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                  <option value="postponed">Postponed</option>
-                  <option value="cancelled">Cancelled</option>
+                  {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s.replace(/_/g, " ")}</option>)}
                 </select>
               </div>
-              <div>
-                <label className={labelCls}>Adjudicators</label>
-                <input value={form.adjudicators} onChange={(e) => updateForm("adjudicators", e.target.value)} className={inputCls} />
-              </div>
-            </div>
-            {form.status === "completed" && (
-              <div className="space-y-4 rounded-2xl border border-neutral-800 bg-neutral-900 p-5">
-                <h3 className="text-sm font-semibold text-white">Result</h3>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className={labelCls}>{HOUSE_LABELS[form.house_a]} Score</label>
-                    <input type="number" value={form.house_a_score} onChange={(e) => updateForm("house_a_score", e.target.value)} className={inputCls} />
-                  </div>
-                  <div>
-                    <label className={labelCls}>{HOUSE_LABELS[form.house_b]} Score</label>
-                    <input type="number" value={form.house_b_score} onChange={(e) => updateForm("house_b_score", e.target.value)} className={inputCls} />
-                  </div>
-                  <div>
-                    <label className={labelCls}>Winner</label>
-                    <select value={form.is_draw ? "" : form.winner} onChange={(e) => { updateForm("is_draw", false); updateForm("winner", e.target.value); }} className={inputCls}>
-                      <option value="">— select —</option>
-                      <option value={form.house_a}>{HOUSE_LABELS[form.house_a]}</option>
-                      <option value={form.house_b}>{HOUSE_LABELS[form.house_b]}</option>
-                    </select>
-                  </div>
-                  <div className="flex items-end">
-                    <label className="flex items-center gap-2 text-sm text-neutral-300">
-                      <input type="checkbox" checked={form.is_draw} onChange={(e) => { updateForm("is_draw", e.target.checked); if (e.target.checked) updateForm("winner", ""); }} className="size-4 rounded border-neutral-600 bg-neutral-800 accent-neutral-500" />
-                      Match was a draw
-                    </label>
-                  </div>
-                  <div>
-                    <label className={labelCls}>Best Team</label>
-                    <select value={form.best_team} onChange={(e) => updateForm("best_team", e.target.value)} className={inputCls}>
-                      <option value="">— none —</option>
-                      <option value={form.house_a}>{HOUSE_LABELS[form.house_a]}</option>
-                      <option value={form.house_b}>{HOUSE_LABELS[form.house_b]}</option>
-                    </select>
-                  </div>
+              <div className="flex items-end pb-3">
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" id="form_pub" checked={form.published} onChange={(e) => updateForm("published", e.target.checked)} className="size-4 rounded border-neutral-600 bg-neutral-800 accent-neutral-500" />
+                  <label htmlFor="form_pub" className="text-sm text-neutral-300">Publish to public</label>
                 </div>
               </div>
-            )}
-            <div>
-              <label className={labelCls}>Notes</label>
-              <textarea value={form.notes} onChange={(e) => updateForm("notes", e.target.value)} rows={2} className={inputCls} />
             </div>
-            <div className="flex items-center gap-2">
-              <input type="checkbox" id="form_published" checked={form.published} onChange={(e) => updateForm("published", e.target.checked)} className="size-4 rounded border-neutral-600 bg-neutral-800 accent-neutral-500" />
-              <label htmlFor="form_published" className="text-sm text-neutral-300">Publish to public page</label>
-            </div>
-            <div className="flex gap-3">
-              <button type="submit" className={btnPrimary}>{editingId ? "Update" : "Create"}</button>
+            <div className="flex gap-3 pt-2">
+              <button type="submit" className={btnPrimary}>{editingId ? "Update" : "Schedule"}</button>
               <button type="button" onClick={() => { setShowForm(false); setEditingId(null); setForm(emptyForm); }} className={btnSecondary}>Cancel</button>
             </div>
           </form>
         </article>
       )}
 
-      {/* Matches grouped by round */}
+      {/* Empty State */}
       {fetched && matches.length === 0 && (
-        <p className="text-sm text-neutral-500">No matches recorded yet.</p>
+        <p className="text-sm text-neutral-500">No matches scheduled yet.</p>
       )}
 
-      {fetched && rounds.length > 0 && (
+      {/* Matches List (Grouped by Round) */}
+      {fetched && matches.length > 0 && (
         <div className="space-y-8">
-          {rounds.map(([roundNum, roundMatches]) => (
-            <div key={roundNum} className="space-y-3">
-              <h2 className="text-lg font-semibold text-white">
-                Round {roundNum}
-              </h2>
+          {Object.entries(groupedMatches).map(([round, roundMatches]) => (
+            <div key={round} className="space-y-3">
+              <h2 className="text-lg font-semibold text-neutral-200 border-b border-neutral-800 pb-2">{round}</h2>
               {roundMatches.map((m) => {
-                const isExpanded = expandedId === m.id;
                 const colorA = HOUSE_COLORS[m.house_a] ?? "#666";
                 const colorB = HOUSE_COLORS[m.house_b] ?? "#666";
                 return (
-                  <article
-                    key={m.id}
-                    className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg"
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className="flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white"
-                            style={{ backgroundColor: colorA }}
-                          >
-                            {m.house_a[0]}
-                          </div>
-                          <span className="text-sm font-medium text-neutral-300">
-                            {m.house_a}
-                          </span>
+                  <article key={m.id} className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-5 shadow-lg">
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style={{ backgroundColor: colorA }}>
+                          {m.house_a[0]}
                         </div>
-                        <span className="text-xs text-neutral-600">vs</span>
-                        <div className="flex items-center gap-2">
-                          <div
-                            className="flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white"
-                            style={{ backgroundColor: colorB }}
-                          >
-                            {m.house_b[0]}
-                          </div>
-                          <span className="text-sm font-medium text-neutral-300">
-                            {m.house_b}
-                          </span>
+                        <span className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">VS</span>
+                        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white" style={{ backgroundColor: colorB }}>
+                          {m.house_b[0]}
                         </div>
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${STATUS_BADGE[m.status] ?? "bg-neutral-800 text-neutral-300"}`}
-                        >
-                          {m.status.replace("_", " ")}
+                        <div className="ml-2">
+                          <p className="text-sm font-semibold text-white">
+                            {HOUSE_LABELS[m.house_a]?.replace("House of ", "")} vs {HOUSE_LABELS[m.house_b]?.replace("House of ", "")}
+                          </p>
+                          <p className="text-xs text-neutral-400">
+                            {m.match_date ? new Date(m.match_date).toLocaleDateString() : "TBD"}
+                            {m.match_time && ` at ${m.match_time}`}
+                            {m.venue && ` • ${m.venue}`}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold capitalize ${STATUS_BADGE[m.status] ?? "bg-neutral-800 text-neutral-300"}`}>
+                          {m.status.replace(/_/g, " ")}
                         </span>
                         {m.published && (
-                          <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
-                            published
-                          </span>
+                          <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">published</span>
+                        )}
+                        
+                        {/* Action Buttons (RBAC Protected) */}
+                        {canManage && (
+                          <>
+                            <button onClick={() => startEdit(m)} className={btnEdit}>Edit</button>
+                            <button onClick={() => togglePublished(m.id, m.published)} className={btnEdit}>
+                              {m.published ? "Unpublish" : "Publish"}
+                            </button>
+                            <button onClick={() => deleteMatch(m.id)} className={btnDanger}>Delete</button>
+                          </>
                         )}
                       </div>
-
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => startEdit(m)}
-                          className={btnEdit}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() =>
-                            updateField(m.id, {
-                              published: !m.published,
-                            })
-                          }
-                          className={btnEdit}
-                        >
-                          {m.published ? "Unpublish" : "Publish"}
-                        </button>
-                        <button
-                          onClick={() => deleteMatch(m.id)}
-                          className={btnDanger}
-                        >
-                          Delete
-                        </button>
-                      </div>
                     </div>
-
-                    {/* Quick info */}
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-500">
-                      {m.match_date && (
-                        <span>
-                          {new Date(m.match_date).toLocaleDateString()}
-                        </span>
-                      )}
-                      {m.venue && <span>{m.venue}</span>}
-                      {m.motion && <span>Motion: {m.motion}</span>}
-                    </div>
-
-                    {/* Expand for details */}
-                    {m.status === "completed" && (
-                      <button
-                        onClick={() =>
-                          setExpandedId(isExpanded ? null : m.id)
-                        }
-                        className="mt-2 text-sm font-medium text-neutral-400 transition hover:text-white"
-                      >
-                        {isExpanded ? "Hide details" : "View result"}
-                      </button>
+                    {m.motion && (
+                      <p className="mt-3 text-sm italic text-neutral-400 border-t border-neutral-800 pt-3">
+                        Motion: {m.motion}
+                      </p>
                     )}
-
-                    {isExpanded && (
-                      <div className="mt-3 space-y-2 border-t border-neutral-800 pt-3">
-                        <div className="grid grid-cols-2 gap-3 text-sm">
-                          <div>
-                            <span className="text-neutral-500">
-                              {m.house_a} score:
-                            </span>{" "}
-                            <span className="text-white font-semibold">
-                              {m.house_a_score ?? "—"}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-neutral-500">
-                              {m.house_b} score:
-                            </span>{" "}
-                            <span className="text-white font-semibold">
-                              {m.house_b_score ?? "—"}
-                            </span>
-                          </div>
-                          {!m.is_draw && m.winner && (
-                            <div>
-                              <span className="text-neutral-500">Winner:</span>{" "}
-                              <span className="text-emerald-400 font-semibold">
-                                {m.winner}
-                              </span>
-                            </div>
-                          )}
-                          {m.is_draw && (
-                            <div>
-                              <span className="text-neutral-500">Result:</span>{" "}
-                              <span className="text-neutral-300 font-semibold">
-                                Draw
-                              </span>
-                            </div>
-                          )}
-                          {m.best_team && (
-                            <div>
-                              <span className="text-neutral-500">
-                                Best Team:
-                              </span>{" "}
-                              <span className="text-amber-400 font-semibold">
-                                {m.best_team}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        {m.adjudicators && (
-                          <p className="text-xs text-neutral-500">
-                            Adjudicators: {m.adjudicators}
-                          </p>
-                        )}
-                        {m.notes && (
-                          <p className="text-xs text-neutral-500">
-                            Notes: {m.notes}
-                          </p>
-                        )}
-                      </div>
+                    {m.virtual_link && (
+                      <a href={m.virtual_link} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs text-blue-400 hover:text-blue-300 underline">
+                        Join Virtual Meeting →
+                      </a>
                     )}
                   </article>
                 );

@@ -1,12 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
-import { cookies } from "next/headers";
+// src/app/admin/dashboard/page.tsx
 import { redirect } from "next/navigation";
-import { isValidSession } from "@/lib/auth";
+import { getCurrentOfficer, createServerSupabaseClient } from "@/lib/auth";
+import { RBAC, isHouseChancellor, getHouseFromRole, type Role } from "@/lib/rbac";
 import { adminLogout } from "@/actions/admin";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
@@ -23,14 +19,17 @@ const HOUSE_COLORS: Record<string, string> = {
 };
 
 export default async function AdminDashboardPage() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("admin_session")?.value;
-
-  if (!isValidSession(session)) {
+  // 1. Auth & RBAC Check
+  const officer = await getCurrentOfficer();
+  if (!officer) {
     redirect("/admin/login");
   }
 
-  // Calculate dates for retention check (5 days ago and 7 days ago)
+  const role = officer.role as Role;
+  const userHouse = isHouseChancellor(role) ? getHouseFromRole(role) : null;
+  const supabase = createServerSupabaseClient();
+
+  // 2. Date calculations for Data Retention (Provisional window)
   const fiveDaysAgo = new Date();
   fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
   const fiveDaysAgoStr = fiveDaysAgo.toISOString();
@@ -39,55 +38,72 @@ export default async function AdminDashboardPage() {
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
   const sevenDaysAgoStr = sevenDaysAgo.toISOString();
 
-  // Fetch summary counts and retention data in parallel
+  // 3. Parallel Data Fetching (Respecting RBAC)
   const [
-    { count: pendingApps },
-    { count: unreadMessages },
-    { data: housePoints },
-    { data: leagueMembers },
-    { data: houseTx },
-    { data: individualTx },
+    appsResult,
+    messagesResult,
+    housePointsResult,
+    leagueResult,
+    claimsResult,
+    houseTxResult,
+    individualTxResult,
   ] = await Promise.all([
-    supabase
-      .from("membership_applications")
-      .select("*", { count: "exact", head: true })
-      .eq("status", "pending"),
-    supabase
-      .from("contact_messages")
-      .select("*", { count: "exact", head: true })
-      .eq("is_read", false),
-    supabase
-      .from("house_points")
-      .select("*")
-      .order("total_points", { ascending: false })
-      .limit(4),
-    supabase
-      .from("debate_league_members")
-      .select("*")
-      .order("rank", { ascending: true })
-      .limit(5),
-    // House point transactions approaching/exceeding 7 days
-    supabase
-      .from("house_point_transactions")
-      .select("id, house_name, points, reason, created_at, status")
-      .eq("status", "provisional")
-      .lte("created_at", fiveDaysAgoStr),
-    // Individual point transactions approaching/exceeding 7 days
-    supabase
-      .from("individual_debate_point_transactions")
-      .select("id, member_name, house, points, reason, created_at, status")
-      .eq("status", "provisional")
-      .lte("created_at", fiveDaysAgoStr),
+    // PENDING APPLICATIONS (House Autonomy enforced)
+    (() => {
+      let query = supabase
+        .from("membership_applications")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "pending");
+      if (userHouse) {
+        query = query.eq("house_choice", userHouse);
+      }
+      return query;
+    })(),
+    // UNREAD MESSAGES
+    RBAC.canAccessAdminRoute(role, "/admin/messages")
+      ? supabase.from("contact_messages").select("*", { count: "exact", head: true }).eq("is_read", false)
+      : Promise.resolve({ count: 0 }),
+    // HOUSE POINTS
+    supabase.from("house_points").select("*").order("total_points", { ascending: false }).limit(4),
+    // DEBATE LEAGUE
+    supabase.from("debate_league_members").select("*").order("rank", { ascending: true }).limit(5),
+    // PENDING POINT CLAIMS
+    RBAC.canManageIndividualPoints(role)
+      ? supabase.from("point_claims").select("*", { count: "exact", head: true }).eq("status", "pending")
+      : Promise.resolve({ count: 0 }),
+    // HOUSE POINT RETENTION
+    RBAC.canManageHousePoints(role)
+      ? supabase
+          .from("house_point_transactions")
+          .select("id, house_name, points, reason, created_at, status")
+          .eq("status", "provisional")
+          .lte("created_at", fiveDaysAgoStr)
+      : Promise.resolve({ data: [] }),
+    // INDIVIDUAL POINT RETENTION
+    RBAC.canManageIndividualPoints(role)
+      ? supabase
+          .from("individual_debate_point_transactions")
+          .select("id, member_name, house, points, reason, created_at, status")
+          .eq("status", "provisional")
+          .lte("created_at", fiveDaysAgoStr)
+      : Promise.resolve({ data: [] }),
   ]);
 
-  // Format and flag overdue records
-  const formattedHouseTx = (houseTx || []).map((tx: any) => ({
+  const pendingApps = appsResult.count ?? 0;
+  const unreadMessages = messagesResult.count ?? 0;
+  const housePoints = housePointsResult.data ?? [];
+  const leagueMembers = leagueResult.data ?? [];
+  const pendingClaims = claimsResult.count ?? 0;
+  const houseTx = houseTxResult.data ?? [];
+  const individualTx = individualTxResult.data ?? [];
+
+  // Format and flag overdue records for the Point Keeper
+  const formattedHouseTx = houseTx.map((tx: any) => ({
     ...tx,
     type: "house",
     isOverdue: new Date(tx.created_at) <= new Date(sevenDaysAgoStr),
   }));
-
-  const formattedIndividualTx = (individualTx || []).map((tx: any) => ({
+  const formattedIndividualTx = individualTx.map((tx: any) => ({
     ...tx,
     type: "individual",
     isOverdue: new Date(tx.created_at) <= new Date(sevenDaysAgoStr),
@@ -98,14 +114,28 @@ export default async function AdminDashboardPage() {
     formattedHouseTx.filter((t: any) => t.isOverdue).length +
     formattedIndividualTx.filter((t: any) => t.isOverdue).length;
 
+  const isPointKeeper = RBAC.canManageHousePoints(role) || RBAC.canManageIndividualPoints(role);
+
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold text-white">Dashboard</h1>
-        <p className="text-sm text-neutral-400">
-          Welcome. Here is your Society overview.
-        </p>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-semibold text-white">Dashboard</h1>
+          <p className="text-sm text-neutral-400">
+            Welcome, <span className="font-medium text-neutral-200">{officer.full_name}</span>
+            <span className="text-neutral-500"> • {role.replace(/_/g, " ")}</span>
+          </p>
+        </div>
+        {/* Sign Out */}
+        <form action={adminLogout}>
+          <button
+            type="submit"
+            className="rounded-full border border-neutral-700 bg-neutral-900 px-5 py-2 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white"
+          >
+            Sign Out
+          </button>
+        </form>
       </div>
 
       {/* Summary Widgets */}
@@ -116,54 +146,56 @@ export default async function AdminDashboardPage() {
           className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
           <p className="text-sm font-medium text-neutral-500">
-            Pending Applications
+            Pending Applications {userHouse && <span className="text-neutral-600">({userHouse})</span>}
           </p>
-          <p className="mt-2 text-4xl font-bold text-white">
-            {pendingApps ?? 0}
-          </p>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
-            View &amp; manage →
-          </p>
+          <p className="mt-2 text-4xl font-bold text-white">{pendingApps}</p>
+          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">Review &amp; process →</p>
         </a>
 
         {/* Unread Messages */}
-        <a
-          href="/admin/messages"
-          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
-        >
-          <p className="text-sm font-medium text-neutral-500">
-            Unread Messages
-          </p>
-          <p className="mt-2 text-4xl font-bold text-white">
-            {unreadMessages ?? 0}
-          </p>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
-            View &amp; manage →
-          </p>
-        </a>
+        {RBAC.canAccessAdminRoute(role, "/admin/messages") && (
+          <a
+            href="/admin/messages"
+            className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
+          >
+            <p className="text-sm font-medium text-neutral-500">Unread Messages</p>
+            <p className="mt-2 text-4xl font-bold text-white">{unreadMessages}</p>
+            <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">View inbox →</p>
+          </a>
+        )}
 
-        {/* Data Retention & Compliance (NEW) */}
-        <a
-          href="/admin/points"
-          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-amber-700"
-        >
-          <p className="text-sm font-medium text-neutral-500">
-            Data Retention &amp; Compliance
-          </p>
-          <div className="mt-2 flex items-baseline gap-2">
-            <p className="text-4xl font-bold text-white">
-              {totalApproaching ?? 0}
+        {/* Pending Point Claims */}
+        {isPointKeeper && (
+          <a
+            href="/admin/point-claims"
+            className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-emerald-700"
+          >
+            <p className="text-sm font-medium text-neutral-500">Pending Point Claims</p>
+            <p className="mt-2 text-4xl font-bold text-white">{pendingClaims}</p>
+            <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">Verify &amp; approve →</p>
+          </a>
+        )}
+
+        {/* Data Retention & Compliance */}
+        {isPointKeeper && (
+          <a
+            href="/admin/points"
+            className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-amber-700"
+          >
+            <p className="text-sm font-medium text-neutral-500">Data Retention &amp; Compliance</p>
+            <div className="mt-2 flex items-baseline gap-2">
+              <p className="text-4xl font-bold text-white">{totalApproaching}</p>
+              {totalOverdue > 0 && (
+                <span className="rounded-full bg-red-900/60 px-2 py-0.5 text-xs font-semibold text-red-300">
+                  {totalOverdue} overdue
+                </span>
+              )}
+            </div>
+            <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
+              Provisional records nearing 7-day finalization →
             </p>
-            {totalOverdue > 0 && (
-              <span className="rounded-full bg-red-900/60 px-2 py-0.5 text-xs font-semibold text-red-300">
-                {totalOverdue} overdue
-              </span>
-            )}
-          </div>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
-            Provisional records nearing 7-day finalization →
-          </p>
-        </a>
+          </a>
+        )}
 
         {/* House Points Link */}
         <a
@@ -171,11 +203,9 @@ export default async function AdminDashboardPage() {
           className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
           <p className="text-sm font-medium text-neutral-500">House Points</p>
-          <p className="mt-2 text-lg font-semibold text-white">
-            Manage Ledger
-          </p>
+          <p className="mt-2 text-lg font-semibold text-white">Manage Ledger</p>
           <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
-            Add or deduct points →
+            {isPointKeeper ? "Add or deduct points →" : "View standings →"}
           </p>
         </a>
 
@@ -184,39 +214,17 @@ export default async function AdminDashboardPage() {
           href="/admin/league"
           className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
-          <p className="text-sm font-medium text-neutral-500">
-            League &amp; Awards
-          </p>
+          <p className="text-sm font-medium text-neutral-500">League &amp; Awards</p>
           <p className="mt-2 text-lg font-semibold text-white">Manage</p>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
-            Members &amp; recognition →
-          </p>
+          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">Members &amp; recognition →</p>
         </a>
-
-        {/* Sign Out */}
-        <form
-          action={adminLogout}
-          className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30"
-        >
-          <p className="text-sm font-medium text-neutral-500">Account</p>
-          <button
-            type="submit"
-            className="mt-2 w-full rounded-full border border-neutral-700 bg-transparent px-4 py-2 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white"
-          >
-            Sign Out
-          </button>
-        </form>
       </div>
 
       {/* House Points Quick View */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-white">
-          House Point Standings
-        </h2>
+        <h2 className="text-xl font-semibold text-white">House Point Standings</h2>
         {!housePoints || housePoints.length === 0 ? (
-          <p className="text-sm text-neutral-500">
-            No house point data available yet.
-          </p>
+          <p className="text-sm text-neutral-500">No house point data available yet.</p>
         ) : (
           <div className="space-y-3">
             {housePoints.map((hp, idx) => {
@@ -237,9 +245,7 @@ export default async function AdminDashboardPage() {
                       {HOUSE_LABELS[hp.house_name] ?? hp.house_name}
                     </span>
                   </div>
-                  <span className="text-lg font-bold tabular-nums text-white">
-                    {hp.total_points} pts
-                  </span>
+                  <span className="text-lg font-bold tabular-nums text-white">{hp.total_points} pts</span>
                 </article>
               );
             })}
@@ -249,40 +255,25 @@ export default async function AdminDashboardPage() {
 
       {/* Debate League Quick View */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-white">
-          Top Debate League Members
-        </h2>
+        <h2 className="text-xl font-semibold text-white">Top Debate League Members</h2>
         {!leagueMembers || leagueMembers.length === 0 ? (
-          <p className="text-sm text-neutral-500">
-            No league data available yet.
-          </p>
+          <p className="text-sm text-neutral-500">No league data available yet.</p>
         ) : (
           <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-neutral-800 text-neutral-500">
-                  <th className="px-5 py-3 font-medium uppercase tracking-wider">
-                    Rank
-                  </th>
-                  <th className="px-5 py-3 font-medium uppercase tracking-wider">
-                    Member
-                  </th>
-                  <th className="px-5 py-3 font-medium uppercase tracking-wider">
-                    House
-                  </th>
-                  <th className="px-5 py-3 text-right font-medium uppercase tracking-wider">
-                    Points
-                  </th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Rank</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">Member</th>
+                  <th className="px-5 py-3 font-medium uppercase tracking-wider">House</th>
+                  <th className="px-5 py-3 text-right font-medium uppercase tracking-wider">Points</th>
                 </tr>
               </thead>
               <tbody>
                 {leagueMembers.map((m) => {
                   const color = HOUSE_COLORS[m.house] ?? "#666";
                   return (
-                    <tr
-                      key={m.id}
-                      className="border-b border-neutral-800/50"
-                    >
+                    <tr key={m.id} className="border-b border-neutral-800/50">
                       <td className="px-5 py-3">
                         <span
                           className="inline-flex size-7 items-center justify-center rounded-md text-xs font-bold text-white"
@@ -291,15 +282,9 @@ export default async function AdminDashboardPage() {
                           {m.rank}
                         </span>
                       </td>
-                      <td className="px-5 py-3 font-medium text-white">
-                        {m.member_name}
-                      </td>
-                      <td className="px-5 py-3 text-neutral-400">
-                        {HOUSE_LABELS[m.house] ?? m.house}
-                      </td>
-                      <td className="px-5 py-3 text-right font-semibold tabular-nums text-white">
-                        {m.individual_points}
-                      </td>
+                      <td className="px-5 py-3 font-medium text-white">{m.member_name}</td>
+                      <td className="px-5 py-3 text-neutral-400">{HOUSE_LABELS[m.house] ?? m.house}</td>
+                      <td className="px-5 py-3 text-right font-semibold tabular-nums text-white">{m.individual_points}</td>
                     </tr>
                   );
                 })}

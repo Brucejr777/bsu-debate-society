@@ -1,11 +1,25 @@
+// src/app/api/admin/support-requests/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/support-requests
+ * Fetches all league support requests.
+ * JURISDICTION: High Council and House Chancellors (Rules Art. III, Sec. 4).
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/support-requests")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("league_support_requests")
     .select("*")
@@ -14,14 +28,27 @@ export async function GET() {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json(data);
 }
 
+/**
+ * PATCH /api/admin/support-requests
+ * Updates the status, approval notes, or post-tournament report of a request.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function PATCH(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/support-requests")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const { id, ...updates } = await request.json();
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("league_support_requests")
     .update(updates)
@@ -32,14 +59,27 @@ export async function PATCH(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/support-requests
+ * Removes a support request record.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/support-requests")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+  
   const { error } = await supabase
     .from("league_support_requests")
     .delete()
@@ -48,6 +88,5 @@ export async function DELETE(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json({ ok: true });
 }

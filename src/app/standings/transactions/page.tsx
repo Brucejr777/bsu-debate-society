@@ -1,8 +1,7 @@
-import { supabase } from "@/lib/supabase";
-import { HOUSES, HOUSE_COLORS, HOUSE_LABELS } from "@/lib/houses";
+"use client";
+import { useState, useEffect } from "react";
+import { HOUSE_COLORS, HOUSE_LABELS } from "@/lib/houses";
 import { Tooltip } from "@/components/Tooltip";
-
-export const dynamic = "force-dynamic";
 
 interface Transaction {
   id: number;
@@ -32,15 +31,43 @@ const CATEGORY_BADGE: Record<string, string> = {
   "Conduct & Ethics": "bg-red-900/60 text-red-300",
 };
 
-export default async function TransactionsPage() {
-  const { data, error } = await supabase
-    .from("house_point_transactions")
-    .select("*")
-    .order("created_at", { ascending: false });
+export default function TransactionsPage() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const limit = 20;
 
-  const transactions: Transaction[] = data ?? [];
-  
-  // Get unique semesters for filter info
+  async function fetchTransactions(reset = false) {
+    setLoading(true);
+    const currentPage = reset ? 1 : page;
+    
+    try {
+      const res = await fetch(`/api/transactions?page=${currentPage}&limit=${limit}`);
+      if (!res.ok) throw new Error("Failed to fetch");
+      
+      const { data, count } = await res.json();
+      
+      if (reset) {
+        setTransactions(data || []);
+      } else {
+        setTransactions((prev) => [...prev, ...(data || [])]);
+      }
+      
+      setHasMore((currentPage * limit) < (count || 0));
+      setPage(currentPage);
+    } catch (err) {
+      console.error("Failed to load transactions:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchTransactions(true);
+  }, []);
+
+  // Get unique semesters for filter info (based on loaded data)
   const semesters = [...new Set(transactions.map((t) => t.semester))];
   const currentSemester = semesters[0] ?? "";
 
@@ -102,20 +129,22 @@ export default async function TransactionsPage() {
             </div>
           )}
 
-          {/* Transactions */}
-          {error && (
-            <article className="rounded-3xl border border-red-800 bg-red-950/50 p-8 text-center text-red-400">
-              Failed to load transaction history. Please try again later.
-            </article>
+          {/* Initial Loading State */}
+          {loading && transactions.length === 0 && (
+            <div className="py-12 text-center text-neutral-500">
+              Loading transaction history...
+            </div>
           )}
 
-          {!error && transactions.length === 0 && (
+          {/* Empty State */}
+          {!loading && transactions.length === 0 && (
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 text-center text-neutral-400">
               No point transactions recorded yet for this semester.
             </article>
           )}
 
-          {!error && transactions.length > 0 && (
+          {/* Transactions List */}
+          {transactions.length > 0 && (
             <div className="space-y-4">
               {/* Desktop Table */}
               <div className="hidden sm:block">
@@ -123,96 +152,50 @@ export default async function TransactionsPage() {
                   <table className="w-full text-left text-sm">
                     <thead>
                       <tr className="border-b border-neutral-800 text-neutral-500">
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">
-                          Date
-                        </th>
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">
-                          House
-                        </th>
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">
-                          Category
-                        </th>
-                        <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">
-                          Points
-                        </th>
-                        <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">
-                          Running Total
-                        </th>
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">
-                          Reason
-                        </th>
+                        <th className="px-4 py-3 font-medium uppercase tracking-wider">Date</th>
+                        <th className="px-4 py-3 font-medium uppercase tracking-wider">House</th>
+                        <th className="px-4 py-3 font-medium uppercase tracking-wider">Category</th>
+                        <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">Points</th>
+                        <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">Running Total</th>
+                        <th className="px-4 py-3 font-medium uppercase tracking-wider">Reason</th>
                       </tr>
                     </thead>
                     <tbody>
                       {transactions.map((tx) => {
                         const color = HOUSE_COLORS[tx.house_name] ?? "#666";
-                        const badgeStyle =
-                          CATEGORY_BADGE[tx.category] ??
-                          "bg-neutral-800 text-neutral-300";
+                        const badgeStyle = CATEGORY_BADGE[tx.category] ?? "bg-neutral-800 text-neutral-300";
                         return (
-                          <tr
-                            key={tx.id}
-                            className="border-b border-neutral-800/50 transition hover:bg-neutral-900/50"
-                          >
-                            <td className="px-4 py-3 text-neutral-400">
-                              {new Date(tx.created_at).toLocaleDateString()}
-                            </td>
+                          <tr key={tx.id} className="border-b border-neutral-800/50 transition hover:bg-neutral-900/50">
+                            <td className="px-4 py-3 text-neutral-400">{new Date(tx.created_at).toLocaleDateString()}</td>
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-2">
-                                <div
-                                  className="flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-bold text-white"
-                                  style={{ backgroundColor: color }}
-                                >
+                                <div className="flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-bold text-white" style={{ backgroundColor: color }}>
                                   {tx.house_name[0]}
                                 </div>
-                                <span className="text-white">
-                                  {HOUSE_LABELS[tx.house_name]?.replace(
-                                    "House of ",
-                                    ""
-                                  ) ?? tx.house_name}
-                                </span>
+                                <span className="text-white">{HOUSE_LABELS[tx.house_name]?.replace("House of ", "") ?? tx.house_name}</span>
                               </div>
                             </td>
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-2">
-                                <span
-                                  className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}
-                                >
+                                <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}>
                                   {CATEGORY_LABELS[tx.category] ?? tx.category}
                                 </span>
                                 {tx.status === "provisional" && (
                                   <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
-                                    <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
-                                      provisional
-                                    </span>
+                                    <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">provisional</span>
                                   </Tooltip>
                                 )}
                               </div>
                             </td>
-                            <td className="px-4 py-3 text-right">
-                              <span
-                                className={`font-semibold tabular-nums ${
-                                  tx.points > 0
-                                    ? "text-emerald-400"
-                                    : tx.points < 0
-                                    ? "text-red-400"
-                                    : "text-neutral-400"
-                                }`}
-                              >
-                                {tx.points > 0 ? "+" : ""}
-                                {tx.points}
-                              </span>
+                            <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.points > 0 ? "text-emerald-400" : tx.points < 0 ? "text-red-400" : "text-neutral-400"}`}>
+                              {tx.points > 0 ? "+" : ""}{tx.points}
                             </td>
                             <td className="px-4 py-3 text-right">
-                              <span className="font-semibold tabular-nums text-white">
-                                {tx.running_total?.toLocaleString() ?? "—"}
-                              </span>
+                              <span className="font-semibold tabular-nums text-white">{tx.running_total?.toLocaleString() ?? "—"}</span>
                             </td>
                             <td className="max-w-xs px-4 py-3">
                               <span className="text-neutral-400" title={tx.reason}>
-                                {tx.reason.length > 50
-                                  ? `${tx.reason.slice(0, 50)}…`
-                                  : tx.reason}
+                                {tx.reason.length > 50 ? `${tx.reason.slice(0, 50)}…` : tx.reason}
                               </span>
                             </td>
                           </tr>
@@ -227,110 +210,69 @@ export default async function TransactionsPage() {
               <div className="space-y-3 sm:hidden">
                 {transactions.map((tx) => {
                   const color = HOUSE_COLORS[tx.house_name] ?? "#666";
-                  const badgeStyle =
-                    CATEGORY_BADGE[tx.category] ??
-                    "bg-neutral-800 text-neutral-300";
+                  const badgeStyle = CATEGORY_BADGE[tx.category] ?? "bg-neutral-800 text-neutral-300";
                   return (
-                    <article
-                      key={tx.id}
-                      className="rounded-2xl border border-neutral-800 bg-neutral-900 p-4"
-                    >
+                    <article key={tx.id} className="rounded-2xl border border-neutral-800 bg-neutral-900 p-4">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-2">
-                          <div
-                            className="flex size-7 shrink-0 items-center justify-center rounded-md text-xs font-bold text-white"
-                            style={{ backgroundColor: color }}
-                          >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-md text-xs font-bold text-white" style={{ backgroundColor: color }}>
                             {tx.house_name[0]}
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-white">
-                              {HOUSE_LABELS[tx.house_name]?.replace(
-                                "House of ",
-                                ""
-                              ) ?? tx.house_name}
-                            </p>
-                            <p className="text-xs text-neutral-500">
-                              {new Date(tx.created_at).toLocaleDateString()}
-                            </p>
+                            <p className="text-sm font-medium text-white">{HOUSE_LABELS[tx.house_name]?.replace("House of ", "") ?? tx.house_name}</p>
+                            <p className="text-xs text-neutral-500">{new Date(tx.created_at).toLocaleDateString()}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p
-                            className={`text-lg font-bold tabular-nums ${
-                              tx.points > 0
-                                ? "text-emerald-400"
-                                : tx.points < 0
-                                ? "text-red-400"
-                                : "text-neutral-400"
-                            }`}
-                          >
-                            {tx.points > 0 ? "+" : ""}
-                            {tx.points}
+                          <p className={`text-lg font-bold tabular-nums ${tx.points > 0 ? "text-emerald-400" : tx.points < 0 ? "text-red-400" : "text-neutral-400"}`}>
+                            {tx.points > 0 ? "+" : ""}{tx.points}
                           </p>
-                          <p className="text-xs text-neutral-500">
-                            → {tx.running_total?.toLocaleString() ?? "—"}
-                          </p>
+                          <p className="text-xs text-neutral-500">→ {tx.running_total?.toLocaleString() ?? "—"}</p>
                         </div>
                       </div>
                       <div className="mt-2 flex items-center gap-2">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}
-                        >
+                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}>
                           {CATEGORY_LABELS[tx.category] ?? tx.category}
                         </span>
                         {tx.status === "provisional" && (
                           <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
-                            <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
-                              provisional
-                            </span>
+                            <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">provisional</span>
                           </Tooltip>
                         )}
                       </div>
-                      <p className="mt-2 text-xs text-neutral-400">
-                        {tx.reason}
-                      </p>
-                      {tx.evidence && (
-                        <p className="mt-1 text-[11px] text-neutral-500">
-                          Evidence: {tx.evidence}
-                        </p>
-                      )}
-                      {tx.proposing_house && (
-                        <p className="mt-1 text-[11px] text-neutral-500">
-                          Proposed by:{" "}
-                          {HOUSE_LABELS[tx.proposing_house] ??
-                            tx.proposing_house}
-                        </p>
-                      )}
+                      <p className="mt-2 text-xs text-neutral-400">{tx.reason}</p>
+                      {tx.evidence && <p className="mt-1 text-[11px] text-neutral-500">Evidence: {tx.evidence}</p>}
+                      {tx.proposing_house && <p className="mt-1 text-[11px] text-neutral-500">Proposed by: {HOUSE_LABELS[tx.proposing_house] ?? tx.proposing_house}</p>}
                     </article>
                   );
                 })}
               </div>
+
+              {/* Load More Button */}
+              {hasMore && (
+                <div className="flex justify-center pt-6">
+                  <button
+                    onClick={() => fetchTransactions(false)}
+                    disabled={loading}
+                    className="rounded-full border border-neutral-700 bg-neutral-900 px-8 py-3 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+                  >
+                    {loading ? "Loading more..." : "Load More Transactions"}
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
           {/* Provisional Period Notice */}
-          {!error && transactions.length > 0 && (
+          {!loading && transactions.length > 0 && (
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8 shadow-xl shadow-black/30">
               <div className="mx-auto max-w-3xl space-y-4 text-center">
-                <h2 className="text-xl font-semibold text-white">
-                  Provisional Period &amp; Disputes
-                </h2>
+                <h2 className="text-xl font-semibold text-white">Provisional Period &amp; Disputes</h2>
                 <p className="text-base leading-7 text-neutral-300">
-                  All point postings are marked as Provisional for seven (7)
-                  calendar days from the date of posting. During this period,
-                  any House Chancellor may file a petition to dispute the
-                  points awarded. After the Provisional Period expires without
-                  dispute, the posting becomes Final and is incorporated into
-                  the official standings.
+                  All point postings are marked as Provisional for seven (7) calendar days from the date of posting. During this period, any House Chancellor may file a petition to dispute the points awarded. After the Provisional Period expires without dispute, the posting becomes Final and is incorporated into the official standings.
                 </p>
-                <p className="text-sm italic text-neutral-500">
-                  — Article I, Section 5 &amp; Section 7
-                </p>
-                <a
-                  href="/appeals"
-                  className="inline-flex items-center text-sm font-medium text-neutral-400 transition hover:text-white"
-                >
+                <p className="text-sm italic text-neutral-500">— Article I, Section 5 &amp; Section 7</p>
+                <a href="/appeals" className="inline-flex items-center text-sm font-medium text-neutral-400 transition hover:text-white">
                   File a Point Dispute Appeal
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="ml-1.5 size-4">
                     <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
@@ -341,37 +283,26 @@ export default async function TransactionsPage() {
           )}
 
           {/* Point Categories Legend */}
-          <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8">
-            <div className="mx-auto max-w-3xl space-y-4 text-center">
-              <h2 className="text-xl font-semibold text-white">
-                Point Categories
-              </h2>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
-                  <div
-                    key={key}
-                    className="rounded-2xl bg-neutral-900 p-4"
-                  >
-                    <span
-                      className={`rounded-full px-2.5 py-1 text-xs font-semibold ${CATEGORY_BADGE[key] ?? "bg-neutral-800 text-neutral-300"}`}
-                    >
-                      {label}
-                    </span>
-                    <p className="mt-2 text-xs text-neutral-500">
-                      {key === "Competitive Excellence" &&
-                        "Debate tournament results, Best Speaker awards, external competition placements"}
-                      {key === "Organizational Contribution" &&
-                        "House-led initiatives, recruitment, co-hosted events"}
-                      {key === "Governance & Compliance" &&
-                        "Timely reports, Council attendance, financial compliance"}
-                      {key === "Conduct & Ethics" &&
-                        "Code of Conduct adherence; deductions for violations"}
-                    </p>
-                  </div>
-                ))}
+          {!loading && transactions.length > 0 && (
+            <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-8">
+              <div className="mx-auto max-w-3xl space-y-4 text-center">
+                <h2 className="text-xl font-semibold text-white">Point Categories</h2>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+                    <div key={key} className="rounded-2xl bg-neutral-900 p-4">
+                      <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${CATEGORY_BADGE[key] ?? "bg-neutral-800 text-neutral-300"}`}>{label}</span>
+                      <p className="mt-2 text-xs text-neutral-500">
+                        {key === "Competitive Excellence" && "Debate tournament results, Best Speaker awards, external competition placements"}
+                        {key === "Organizational Contribution" && "House-led initiatives, recruitment, co-hosted events"}
+                        {key === "Governance & Compliance" && "Timely reports, Council attendance, financial compliance"}
+                        {key === "Conduct & Ethics" && "Code of Conduct adherence; deductions for violations"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          )}
         </div>
       </section>
     </div>

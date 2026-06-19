@@ -1,6 +1,6 @@
 "use client";
-
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 import { HOUSES } from "@/lib/houses";
 
 const TOURNAMENT_LEVELS = [
@@ -20,16 +20,11 @@ const SUPPORT_TYPES = [
 ];
 
 export default function SupportRequestPage() {
-  const [status, setStatus] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -56,19 +51,13 @@ export default function SupportRequestPage() {
       !tournamentLevel ||
       !requestedSupport
     ) {
-      setStatus({
-        type: "error",
-        message: "All required fields must be filled.",
-      });
+      toast.error("All required fields must be filled.");
       setPending(false);
       return;
     }
 
     if (new Date(tournamentDate) < new Date()) {
-      setStatus({
-        type: "error",
-        message: "Tournament date must be in the future.",
-      });
+      toast.error("Tournament date must be in the future.");
       setPending(false);
       return;
     }
@@ -92,19 +81,15 @@ export default function SupportRequestPage() {
     });
 
     if (!res.ok) {
-      setStatus({
-        type: "error",
-        message: "Failed to submit request. Please try again.",
-      });
+      toast.error("Failed to submit request. Please try again.");
       setPending(false);
       return;
     }
 
-    setStatus({
-      type: "success",
-      message:
-        "Support request submitted successfully. The High Council will review your request and respond with a decision.",
-    });
+    toast.success(
+      "Support request submitted successfully. The High Council will review your request and respond with a decision."
+    );
+    
     form.reset();
     setPending(false);
   }
@@ -202,7 +187,6 @@ export default function SupportRequestPage() {
                 </li>
               </ul>
             </article>
-
             <article className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20">
               <h3 className="text-lg font-semibold text-white">
                 Prioritization
@@ -240,7 +224,6 @@ export default function SupportRequestPage() {
                   request will be reviewed by the High Council.
                 </p>
               </div>
-
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Member Name */}
                 <div className="space-y-2">
@@ -465,19 +448,6 @@ export default function SupportRequestPage() {
                 >
                   {pending ? "Submitting…" : "Submit Support Request"}
                 </button>
-
-                {/* Feedback */}
-                {status && (
-                  <div
-                    className={`rounded-xl border px-4 py-3 text-sm ${
-                      status.type === "success"
-                        ? "border-emerald-800 bg-emerald-950/50 text-emerald-400"
-                        : "border-red-800 bg-red-950/50 text-red-400"
-                    }`}
-                  >
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

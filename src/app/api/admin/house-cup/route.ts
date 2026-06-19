@@ -1,11 +1,24 @@
+// src/app/api/admin/house-cup/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/house-cup
+ * Fetches all House Cup winners.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/house-cup")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const supabase = createServerSupabaseClient();
   const { data, error } = await supabase
     .from("house_cup_winners")
     .select("*")
@@ -14,14 +27,27 @@ export async function GET() {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json(data);
 }
 
+/**
+ * POST /api/admin/house-cup
+ * Records a new House Cup winner.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function POST(request: Request) {
-  const body = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/house-cup")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const body = await request.json();
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("house_cup_winners")
     .insert({
@@ -40,14 +66,27 @@ export async function POST(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json(data);
 }
 
+/**
+ * PUT /api/admin/house-cup
+ * Updates a House Cup winner record.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function PUT(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/house-cup")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const { id, ...updates } = await request.json();
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("house_cup_winners")
     .update(updates)
@@ -58,14 +97,27 @@ export async function PUT(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/house-cup
+ * Removes a House Cup winner record.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/house-cup")) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+  
   const { error } = await supabase
     .from("house_cup_winners")
     .delete()
@@ -74,6 +126,5 @@ export async function DELETE(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
   return NextResponse.json({ ok: true });
 }

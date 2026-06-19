@@ -1,11 +1,25 @@
+// src/app/api/admin/debate-cup/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/debate-cup
+ * Fetches all Inter-House Debate Cup matches.
+ * JURISDICTION: High Council and House Chancellors (Rules Art. I, Sec. 10).
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/debate-cup")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage the Debate Cup." }, { status: 403 });
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("debate_cup_matches")
     .select("*")
@@ -19,10 +33,24 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * POST /api/admin/debate-cup
+ * Schedules a new Debate Cup match.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function POST(request: Request) {
-  const body = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/debate-cup")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage the Debate Cup." }, { status: 403 });
+  }
+
+  const body = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("debate_cup_matches")
     .insert({
@@ -48,10 +76,24 @@ export async function POST(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * PUT /api/admin/debate-cup
+ * Updates match details, results, or publication status.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function PUT(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/debate-cup")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage the Debate Cup." }, { status: 403 });
+  }
+
+  const { id, ...updates } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("debate_cup_matches")
     .update(updates)
@@ -66,10 +108,24 @@ export async function PUT(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/debate-cup
+ * Removes a match from the schedule.
+ * JURISDICTION: High Council and House Chancellors.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/debate-cup")) {
+    return NextResponse.json({ error: "Forbidden: You do not have permission to manage the Debate Cup." }, { status: 403 });
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
     .from("debate_cup_matches")
     .delete()

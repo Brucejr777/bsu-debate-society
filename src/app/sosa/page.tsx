@@ -1,7 +1,30 @@
+import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import SosaFilteredList, { type SosaReport } from "@/components/SosaFilteredList";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "State of the Society Address Archive — BSU Debate Society",
+    description:
+      "Read the official State of the Society Address (SOSA) reports delivered by the President of the BSU Debate Society, detailing financial health, departmental progress, and the presidential vision.",
+    openGraph: {
+      title: "State of the Society Address Archive — BSU Debate Society",
+      description:
+        "Read the official State of the Society Address (SOSA) reports delivered by the President of the BSU Debate Society, detailing financial health, departmental progress, and the presidential vision.",
+      type: "website",
+      siteName: "BSU Debate Society",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "State of the Society Address Archive — BSU Debate Society",
+      description:
+        "Read the official State of the Society Address (SOSA) reports delivered by the President of the BSU Debate Society, detailing financial health, departmental progress, and the presidential vision.",
+    },
+  };
+}
 
 export default async function SosaArchivePage() {
   const { data, error } = await supabase

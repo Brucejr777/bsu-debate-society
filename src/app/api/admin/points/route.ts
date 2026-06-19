@@ -1,8 +1,7 @@
+// src/app/api/admin/points/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
 const CATEGORY_COL: Record<string, string> = {
   "Competitive Excellence": "competitive_excellence",
@@ -11,8 +10,17 @@ const CATEGORY_COL: Record<string, string> = {
   "Conduct & Ethics": "conduct_ethics",
 };
 
+/**
+ * GET /api/admin/points
+ * Fetches the current House Point standings.
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const supabase = createServerSupabaseClient();
   
   // Fetch all house points, ordered by total points descending for the leaderboard
   const { data, error } = await supabase
@@ -27,18 +35,37 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * PATCH /api/admin/points
+ * Adds or deducts points from a House and records the transaction.
+ * STRICTLY RESTRICTED to the Secretary of Internal Affairs (Point Keeper) 
+ * and the President per Rules & Procedures Art. I, Sec. 4, 7(2), and 11.
+ */
 export async function PATCH(request: Request) {
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 1. Enforce Point Keeper Authority
+  if (!RBAC.canManageHousePoints(officer.role as any)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Secretary of Internal Affairs (Point Keeper) or the President can modify the House Point Ledger." },
+      { status: 403 }
+    );
+  }
+
   const body = await request.json();
   const { house_name, category, amount, reason, evidence, proposing_house } = body;
-  
+
   if (!house_name || !category || amount === undefined) {
     return NextResponse.json({ error: "Missing required fields: house_name, category, amount" }, { status: 400 });
   }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const supabase = createServerSupabaseClient();
   const categoryKey = CATEGORY_COL[category] ?? "competitive_excellence";
 
-  // 1. Look up existing row by house_name
+  // 2. Look up existing row by house_name
   const { data: existing, error: fetchError } = await supabase
     .from("house_points")
     .select("*")
@@ -52,13 +79,12 @@ export async function PATCH(request: Request) {
 
   const currentCategoryVal = existing?.[categoryKey] ?? 0;
   const currentTotal = existing?.total_points ?? 0;
-  
   const newVal = currentCategoryVal + amount;
   const newTotal = currentTotal + amount;
   const semester = existing?.semester ?? "2026-2027 Second Semester";
 
   if (existing) {
-    // 2a. Update existing house points
+    // 3a. Update existing house points
     const { data, error } = await supabase
       .from("house_points")
       .update({
@@ -73,7 +99,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // 3a. Record the transaction in the ledger
+    // 4a. Record the transaction in the ledger
     await supabase.from("house_point_transactions").insert({
       house_name,
       category,
@@ -89,7 +115,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json(data);
   }
 
-  // 2b. House row doesn't exist yet — create it
+  // 3b. House row doesn't exist yet — create it
   const { data, error } = await supabase
     .from("house_points")
     .insert({
@@ -108,7 +134,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // 3b. Record the initial transaction in the ledger
+  // 4b. Record the initial transaction in the ledger
   await supabase.from("house_point_transactions").insert({
     house_name,
     category,

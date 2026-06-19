@@ -1,6 +1,6 @@
 "use client";
-
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 import { HOUSES } from "@/lib/houses";
 
 const AWARD_CATEGORIES = [
@@ -9,22 +9,15 @@ const AWARD_CATEGORIES = [
   "Academic Excellence",
   "Creative Excellence",
 ];
-
 const TIERS = ["Emerging Contributor", "Distinguished Member", "Society Fellow"];
-
 const VALID_HOUSES = HOUSES.map((h) => h.value);
 
 export default function NominatePage() {
-  const [status, setStatus] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -49,16 +42,13 @@ export default function NominatePage() {
       !justification ||
       !semester
     ) {
-      setStatus({
-        type: "error",
-        message: "All required fields must be filled.",
-      });
+      toast.error("All required fields must be filled.");
       setPending(false);
       return;
     }
 
     if (!VALID_HOUSES.includes(nominatorHouse) || !VALID_HOUSES.includes(nomineeHouse)) {
-      setStatus({ type: "error", message: "Please select a valid House." });
+      toast.error("Please select a valid House.");
       setPending(false);
       return;
     }
@@ -81,19 +71,15 @@ export default function NominatePage() {
     });
 
     if (!res.ok) {
-      setStatus({
-        type: "error",
-        message: "Failed to submit nomination. Please try again.",
-      });
+      toast.error("Failed to submit nomination. Please try again.");
       setPending(false);
       return;
     }
 
-    setStatus({
-      type: "success",
-      message:
-        "Nomination submitted successfully. The Selection Committee will review your nomination and notify you of the outcome.",
-    });
+    toast.success(
+      "Nomination submitted successfully. The Selection Committee will review your nomination and notify you of the outcome."
+    );
+    
     form.reset();
     setPending(false);
   }
@@ -213,7 +199,6 @@ export default function NominatePage() {
                   nomination will be reviewed by the Selection Committee.
                 </p>
               </div>
-
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Nominator Name */}
                 <div className="space-y-2">
@@ -431,19 +416,6 @@ export default function NominatePage() {
                 >
                   {pending ? "Submitting…" : "Submit Nomination"}
                 </button>
-
-                {/* Feedback */}
-                {status && (
-                  <div
-                    className={`rounded-xl border px-4 py-3 text-sm ${
-                      status.type === "success"
-                        ? "border-emerald-800 bg-emerald-950/50 text-emerald-400"
-                        : "border-red-800 bg-red-950/50 text-red-400"
-                    }`}
-                  >
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

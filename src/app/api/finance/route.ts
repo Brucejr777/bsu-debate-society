@@ -1,14 +1,21 @@
+// src/app/api/finance/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC, Role } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/finance
+ * Fetches financial records.
+ * - Public/Anon users can only view PUBLISHED records (enforced by RLS).
+ * - Authenticated officers can view ALL records (including drafts).
+ */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type") || "snapshot";
+  
+  // Use the server client which respects the user's session (or anon if logged out)
+  const supabase = createServerSupabaseClient();
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
   const { data, error } = await supabase
     .from("financial_records")
     .select("*")
@@ -27,10 +34,28 @@ export async function GET(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * POST /api/finance
+ * Creates a new financial record (Snapshot or Report).
+ * STRICTLY RESTRICTED to OFRA and the President per Constitution Art. 8, Sec. 8.
+ */
 export async function POST(request: Request) {
-  const body = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Financial Authority
+  if (!RBAC.canManageFinance(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Office of Financial and Resource Affairs (OFRA) or the President can manage financial records." },
+      { status: 403 }
+    );
+  }
+
+  const body = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("financial_records")
     .insert({
@@ -57,10 +82,28 @@ export async function POST(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * PUT /api/finance
+ * Updates an existing financial record.
+ * STRICTLY RESTRICTED to OFRA and the President.
+ */
 export async function PUT(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Financial Authority
+  if (!RBAC.canManageFinance(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Office of Financial and Resource Affairs (OFRA) or the President can manage financial records." },
+      { status: 403 }
+    );
+  }
+
+  const { id, ...updates } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("financial_records")
     .update(updates)
@@ -75,10 +118,28 @@ export async function PUT(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/finance
+ * Permanently removes a financial record.
+ * STRICTLY RESTRICTED to OFRA and the President.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Financial Authority
+  if (!RBAC.canManageFinance(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Office of Financial and Resource Affairs (OFRA) or the President can manage financial records." },
+      { status: 403 }
+    );
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
     .from("financial_records")
     .delete()

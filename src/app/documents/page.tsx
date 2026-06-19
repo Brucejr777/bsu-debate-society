@@ -1,3 +1,27 @@
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Governing Documents — BSU Debate Society",
+    description:
+      "Explore the foundational governing documents of the BSU Debate Society, including the Constitution (The Red Book) and the Rules and Procedures (The Blue Book).",
+    openGraph: {
+      title: "Governing Documents — BSU Debate Society",
+      description:
+        "Explore the foundational governing documents of the BSU Debate Society, including the Constitution (The Red Book) and the Rules and Procedures (The Blue Book).",
+      type: "website",
+      siteName: "BSU Debate Society",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Governing Documents — BSU Debate Society",
+      description:
+        "Explore the foundational governing documents of the BSU Debate Society, including the Constitution (The Red Book) and the Rules and Procedures (The Blue Book).",
+    },
+  };
+}
+
 export default function DocumentsPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
@@ -279,12 +303,12 @@ export default function DocumentsPage() {
                 <h2 className="text-2xl font-semibold text-white">Society Policies</h2>
               </div>
               <p className="text-base leading-7 text-neutral-300">
-                The Society is committed to responsible innovation and environmental stewardship. 
+                The Society is committed to responsible innovation and environmental stewardship.
                 Explore our official policies outlining our approach to emerging technologies and sustainable operations.
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <a 
-                  href="/policies/ai-usage" 
+                <a
+                  href="/policies/ai-usage"
                   className="group flex flex-col items-start rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800"
                 >
                   <h3 className="text-sm font-semibold text-white">AI Usage Policy</h3>
@@ -298,8 +322,8 @@ export default function DocumentsPage() {
                     </svg>
                   </span>
                 </a>
-                <a 
-                  href="/policies/sustainability" 
+                <a
+                  href="/policies/sustainability"
                   className="group flex flex-col items-start rounded-2xl bg-neutral-900 p-5 shadow-sm shadow-black/20 transition hover:bg-neutral-800"
                 >
                   <h3 className="text-sm font-semibold text-white">Environmental Sustainability Policy</h3>

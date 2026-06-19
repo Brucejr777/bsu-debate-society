@@ -1,11 +1,21 @@
+// src/app/api/admin/sosa/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC, Role } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/sosa
+ * Fetches all SOSA reports (including drafts).
+ * Per RLS policies, any authenticated officer can view all reports for review/archiving.
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("sosa_reports")
     .select("*")
@@ -18,14 +28,32 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * POST /api/admin/sosa
+ * Creates a new SOSA report.
+ * STRICTLY RESTRICTED to the President per Constitution Art. 8, Sec. 3(i).
+ */
 export async function POST(request: Request) {
-  const body = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Presidential Authority
+  if (!RBAC.canManageSosa(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Society President can draft or publish the State of the Society Address." },
+      { status: 403 }
+    );
+  }
+
+  const body = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("sosa_reports")
     .insert({
-      president_name: body.president_name,
+      president_name: body.president_name || officer.full_name,
       semester: body.semester,
       academic_year: body.academic_year,
       delivered_date: body.delivered_date || null,
@@ -47,10 +75,32 @@ export async function POST(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * PATCH /api/admin/sosa
+ * Updates an existing SOSA report (e.g., changing status to 'final' or 'delivered', or publishing it).
+ * STRICTLY RESTRICTED to the President.
+ */
 export async function PATCH(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Presidential Authority
+  if (!RBAC.canManageSosa(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Society President can modify the State of the Society Address." },
+      { status: 403 }
+    );
+  }
+
+  const { id, ...updates } = await request.json();
+  if (!id) {
+    return NextResponse.json({ error: "Report ID is required" }, { status: 400 });
+  }
+
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("sosa_reports")
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -65,10 +115,32 @@ export async function PATCH(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/sosa
+ * Permanently removes a SOSA report.
+ * STRICTLY RESTRICTED to the President.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Presidential Authority
+  if (!RBAC.canManageSosa(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Society President can delete SOSA reports." },
+      { status: 403 }
+    );
+  }
+
+  const { id } = await request.json();
+  if (!id) {
+    return NextResponse.json({ error: "Report ID is required" }, { status: 400 });
+  }
+
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
     .from("sosa_reports")
     .delete()

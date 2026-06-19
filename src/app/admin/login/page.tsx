@@ -1,42 +1,13 @@
+// src/app/admin/login/page.tsx
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useFormState } from "react-dom";
+import { adminLogin } from "@/actions/admin";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    setPending(true);
-    setError(null);
-
-    const formData = new FormData();
-    formData.set("password", password);
-
-    try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        body: JSON.stringify({ password }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.error ?? "Incorrect password.");
-        setPending(false);
-        return;
-      }
-
-      router.push("/admin/dashboard");
-      router.refresh();
-    } catch {
-      setError("Failed to connect. Please try again.");
-      setPending(false);
-    }
-  }
+  // Connect the form to the Server Action
+  // Note: useFormState is used instead of useActionState for React 18 / Next.js 14 compatibility
+  const [state, formAction] = useFormState(adminLogin, null);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center px-6">
@@ -48,10 +19,10 @@ export default function AdminLoginPage() {
               Restricted Access
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-white">
-              Admin Login
+              Officer Portal
             </h1>
             <p className="text-sm text-neutral-400">
-              Enter the admin password to access the Society dashboard.
+              Enter your credentials to access the Society dashboard.
             </p>
           </div>
 
@@ -78,42 +49,65 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form action={formAction} className="space-y-5">
+            {/* Email */}
+            <div className="space-y-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-neutral-300"
+              >
+                Officer Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="officer@bsu.edu.ph"
+                required
+                autoComplete="email"
+                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              />
+            </div>
+
             {/* Password */}
             <div className="space-y-2">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-neutral-300"
               >
-                Admin Password
+                Password
               </label>
               <input
                 type="password"
                 id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
                 placeholder="••••••••"
                 required
+                autoComplete="current-password"
                 className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white placeholder-neutral-500 outline-none transition focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
               />
             </div>
 
-            {/* Error */}
-            {error && (
+            {/* Error Message */}
+            {state?.error && (
               <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-400">
-                {error}
+                {state.error}
               </div>
             )}
 
             {/* Submit */}
             <button
               type="submit"
-              disabled={pending}
               className="w-full rounded-full bg-neutral-100 px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {pending ? "Signing in…" : "Sign In"}
+              Sign In
             </button>
           </form>
+
+          {/* Info Note */}
+          <p className="text-center text-xs text-neutral-600">
+            If you do not have an account or your role is pending, please contact the Executive Secretary.
+          </p>
         </div>
       </div>
     </div>

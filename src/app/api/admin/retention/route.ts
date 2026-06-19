@@ -1,11 +1,32 @@
+// src/app/api/admin/retention/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC, Role } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/retention
+ * Fetches point transactions (House and Individual) that are approaching 
+ * or have exceeded the 7-day provisional petition window.
+ * 
+ * JURISDICTION: Secretary of Internal Affairs (Point Keeper) & President.
+ * (Rules & Procedures Art. I, Sec. 5 & Sec. 11)
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 1. Enforce Point Keeper Authority & Presidential Oversight
+  // Only the SIA (Point Keeper) and the President can monitor ledger compliance.
+  if (!RBAC.canManageHousePoints(officer.role as Role) && !RBAC.canManageIndividualPoints(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: Only the Point Keeper (SIA) or the President can access retention and compliance data." },
+      { status: 403 }
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
 
   // Calculate the date 5 days ago (approaching the 7-day provisional window)
   const fiveDaysAgo = new Date();
@@ -17,7 +38,7 @@ export async function GET() {
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
   const sevenDaysAgoStr = sevenDaysAgo.toISOString();
 
-  // Fetch house point transactions that are 5+ days old and still provisional
+  // 2. Fetch house point transactions that are 5+ days old and still provisional
   const { data: houseTx, error: houseError } = await supabase
     .from("house_point_transactions")
     .select("id, house_name, points, reason, created_at, status")
@@ -25,7 +46,7 @@ export async function GET() {
     .lte("created_at", fiveDaysAgoStr)
     .order("created_at", { ascending: true });
 
-  // Fetch individual point transactions that are 5+ days old and still provisional
+  // 3. Fetch individual point transactions that are 5+ days old and still provisional
   const { data: individualTx, error: individualError } = await supabase
     .from("individual_debate_point_transactions")
     .select("id, member_name, house, points, reason, created_at, status")
@@ -40,7 +61,7 @@ export async function GET() {
     );
   }
 
-  // Map and flag if they are overdue (older than 7 days)
+  // 4. Map and flag if they are overdue (older than 7 days)
   const formattedHouseTx = (houseTx || []).map((tx: any) => ({
     ...tx,
     type: "house",
@@ -58,8 +79,8 @@ export async function GET() {
     individualTransactions: formattedIndividualTx,
     summary: {
       totalApproaching: formattedHouseTx.length + formattedIndividualTx.length,
-      totalOverdue: 
-        formattedHouseTx.filter((t: any) => t.isOverdue).length + 
+      totalOverdue:
+        formattedHouseTx.filter((t: any) => t.isOverdue).length +
         formattedIndividualTx.filter((t: any) => t.isOverdue).length,
     },
   });

@@ -1,11 +1,28 @@
+// src/app/api/admin/league/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/league
+ * Fetches the current Debate League roster.
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Enforce RBAC: High Council and House Chancellors can manage the league
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/league")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to manage the Debate League." },
+      { status: 403 }
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
     .from("debate_league_members")
     .select("*")
@@ -18,10 +35,26 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * POST /api/admin/league
+ * Adds a new member to the Debate League roster.
+ */
 export async function POST(request: Request) {
-  const body = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/league")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to manage the Debate League." },
+      { status: 403 }
+    );
+  }
+
+  const body = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("debate_league_members")
     .insert({
@@ -41,10 +74,26 @@ export async function POST(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * PUT /api/admin/league
+ * Updates an existing Debate League member's details or rank.
+ */
 export async function PUT(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/league")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to manage the Debate League." },
+      { status: 403 }
+    );
+  }
+
+  const { id, ...updates } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { data, error } = await supabase
     .from("debate_league_members")
     .update(updates)
@@ -59,10 +108,26 @@ export async function PUT(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/league
+ * Removes a member from the Debate League roster.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!RBAC.canAccessAdminRoute(officer.role, "/admin/league")) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have permission to manage the Debate League." },
+      { status: 403 }
+    );
+  }
+
+  const { id } = await request.json();
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
     .from("debate_league_members")
     .delete()

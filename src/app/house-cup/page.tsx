@@ -1,7 +1,30 @@
+import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import { HOUSES, HOUSE_COLORS, HOUSE_LABELS } from "@/lib/houses";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "House Cup Champions — BSU Debate Society",
+    description:
+      "View the historical winners of the BSU Debate Society House Cup, including annual champions, runner-ups, tiebreakers, and the material benefits awarded to the winning House.",
+    openGraph: {
+      title: "House Cup Champions — BSU Debate Society",
+      description:
+        "View the historical winners of the BSU Debate Society House Cup, including annual champions, runner-ups, tiebreakers, and the material benefits awarded to the winning House.",
+      type: "website",
+      siteName: "BSU Debate Society",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "House Cup Champions — BSU Debate Society",
+      description:
+        "View the historical winners of the BSU Debate Society House Cup, including annual champions, runner-ups, tiebreakers, and the material benefits awarded to the winning House.",
+    },
+  };
+}
 
 interface CupWinner {
   id: number;
@@ -70,7 +93,7 @@ export default async function HouseCupPage() {
               >
                 <path
                   fillRule="evenodd"
-                  d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z"
+                  d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
                   clipRule="evenodd"
                 />
               </svg>
@@ -132,7 +155,7 @@ export default async function HouseCupPage() {
                         </div>
                         <p className="text-sm font-medium text-white">
                           {HOUSE_LABELS[s.house_name]?.replace("House of ", "") ??
-                            s.house_name}
+                          s.house_name}
                         </p>
                         <p className="mt-1 text-2xl font-bold tabular-nums text-white">
                           {s.total_points}

@@ -1,6 +1,29 @@
+import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Debate League & Individual Recognition — BSU Debate Society",
+    description:
+      "View the current Debate League roster, top-ranked members, and individual recognition award recipients of the BSU Debate Society.",
+    openGraph: {
+      title: "Debate League & Individual Recognition — BSU Debate Society",
+      description:
+        "View the current Debate League roster, top-ranked members, and individual recognition award recipients of the BSU Debate Society.",
+      type: "website",
+      siteName: "BSU Debate Society",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Debate League & Individual Recognition — BSU Debate Society",
+      description:
+        "View the current Debate League roster, top-ranked members, and individual recognition award recipients of the BSU Debate Society.",
+    },
+  };
+}
 
 const HOUSE_COLORS: Record<string, string> = {
   Bathala: "#8b0000",
@@ -8,7 +31,6 @@ const HOUSE_COLORS: Record<string, string> = {
   Laon: "#000b90",
   Manama: "#006400",
 };
-
 const HOUSE_LABELS: Record<string, string> = {
   Bathala: "House of Bathala",
   Kabunian: "House of Kabunian",
@@ -182,7 +204,8 @@ export default async function LeaguePage() {
                             className="border-b border-neutral-800/50 transition hover:bg-neutral-900/50"
                           >
                             <td className="px-6 py-4">
-                              <span className="inline-flex size-8 items-center justify-center rounded-lg font-bold tabular-nums text-white"
+                              <span
+                                className="inline-flex size-8 items-center justify-center rounded-lg font-bold tabular-nums text-white"
                                 style={{ backgroundColor: color }}
                               >
                                 {m.rank}
@@ -263,7 +286,6 @@ export default async function LeaguePage() {
                       </h3>
                     </div>
                   </div>
-                  
                   <p className="text-base leading-7 text-neutral-300">
                     Members ranked in the top 8 receive institutional support for
                     external competition participation, including travel fund
@@ -274,7 +296,6 @@ export default async function LeaguePage() {
                   <p className="text-sm italic text-neutral-500">
                     — Article III, Section 4
                   </p>
-
                   <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                     <a
                       href="/league/support"

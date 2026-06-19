@@ -1,5 +1,6 @@
 "use client";
 import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
 
 const HOUSES = [
   { value: "Bathala", label: "House of Bathala", value_desc: "Leadership" },
@@ -22,13 +23,11 @@ const MEMBERSHIP_STATUSES = [
 ];
 
 export default function ClaimPointsPage() {
-  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setPending(true);
-    setStatus(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -58,13 +57,13 @@ export default function ClaimPointsPage() {
       body.points_claimed === 0 ||
       !body.evidence_link
     ) {
-      setStatus({ type: "error", message: "All required fields must be filled out correctly." });
+      toast.error("All required fields must be filled out correctly.");
       setPending(false);
       return;
     }
 
     if (!VALID_HOUSES.includes(body.house)) {
-      setStatus({ type: "error", message: "Please select a valid House." });
+      toast.error("Please select a valid House.");
       setPending(false);
       return;
     }
@@ -78,18 +77,17 @@ export default function ClaimPointsPage() {
 
       if (!res.ok) {
         const err = await res.json();
-        setStatus({ type: "error", message: err.error || "Failed to submit claim. Please try again." });
+        toast.error(err.error || "Failed to submit claim. Please try again.");
         setPending(false);
         return;
       }
 
-      setStatus({
-        type: "success",
-        message: "Point claim submitted successfully! The Secretary of Internal Affairs will review your claim within 5 business days.",
-      });
+      toast.success(
+        "Point claim submitted successfully! The Secretary of Internal Affairs will review your claim within 5 business days."
+      );
       form.reset();
     } catch (error) {
-      setStatus({ type: "error", message: "Failed to connect to the server. Please try again." });
+      toast.error("Failed to connect to the server. Please try again.");
     } finally {
       setPending(false);
     }
@@ -336,19 +334,6 @@ export default function ClaimPointsPage() {
                 >
                   {pending ? "Submitting Claim…" : "Submit Point Claim"}
                 </button>
-
-                {/* Feedback Message */}
-                {status && (
-                  <div
-                    className={`rounded-xl border px-4 py-3 text-sm ${
-                      status.type === "success"
-                        ? "border-emerald-800 bg-emerald-950/50 text-emerald-400"
-                        : "border-red-800 bg-red-950/50 text-red-400"
-                    }`}
-                  >
-                    {status.message}
-                  </div>
-                )}
               </form>
             </div>
           </article>

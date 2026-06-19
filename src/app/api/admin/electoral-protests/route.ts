@@ -1,13 +1,32 @@
+// src/app/api/admin/appeals/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createServerSupabaseClient, getCurrentOfficer } from "@/lib/auth";
+import { RBAC, Role } from "@/lib/rbac";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
+/**
+ * GET /api/admin/appeals
+ * Fetches all appeals (Point Disputes, Records Access Denials, Tribunal Appeals).
+ * JURISDICTION: High Council, Council of House Chancellors, and Chief Adviser.
+ * (Rules Art. I, Sec. 8 | Rules Art. VIII, Sec. 6 | Const. Art. 10, Sec. 5)
+ */
 export async function GET() {
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 1. Enforce Appellate Jurisdiction RBAC
+  if (!RBAC.canManageAppeals(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have the constitutional jurisdiction to manage appeals." },
+      { status: 403 }
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
+  
   const { data, error } = await supabase
-    .from("electoral_protests")
+    .from("appeals")
     .select("*")
     .order("created_at", { ascending: false });
 
@@ -18,12 +37,39 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+/**
+ * PATCH /api/admin/appeals
+ * Updates the status, council notes, decision, or presiding authority of an appeal.
+ * JURISDICTION: High Council, Council of House Chancellors, and Chief Adviser.
+ */
 export async function PATCH(request: Request) {
-  const { id, ...updates } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Appellate Jurisdiction RBAC
+  if (!RBAC.canManageAppeals(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have the constitutional jurisdiction to adjudicate appeals." },
+      { status: 403 }
+    );
+  }
+
+  const { id, ...updates } = await request.json();
+  if (!id) {
+    return NextResponse.json({ error: "Appeal ID is required" }, { status: 400 });
+  }
+
+  const supabase = createServerSupabaseClient();
+
+  // If a final decision is being rendered, automatically set the decision date
+  if (updates.decision_outcome && !updates.decision_date) {
+    updates.decision_date = new Date().toISOString();
+  }
+
   const { data, error } = await supabase
-    .from("electoral_protests")
+    .from("appeals")
     .update(updates)
     .eq("id", id)
     .select()
@@ -36,12 +82,34 @@ export async function PATCH(request: Request) {
   return NextResponse.json(data);
 }
 
+/**
+ * DELETE /api/admin/appeals
+ * Permanently removes an appeal record.
+ * JURISDICTION: High Council, Council of House Chancellors, and Chief Adviser.
+ */
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
+  const officer = await getCurrentOfficer();
+  if (!officer) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 1. Enforce Appellate Jurisdiction RBAC
+  if (!RBAC.canManageAppeals(officer.role as Role)) {
+    return NextResponse.json(
+      { error: "Forbidden: You do not have the constitutional jurisdiction to manage appeals." },
+      { status: 403 }
+    );
+  }
+
+  const { id } = await request.json();
+  if (!id) {
+    return NextResponse.json({ error: "Appeal ID is required" }, { status: 400 });
+  }
+
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase
-    .from("electoral_protests")
+    .from("appeals")
     .delete()
     .eq("id", id);
 
