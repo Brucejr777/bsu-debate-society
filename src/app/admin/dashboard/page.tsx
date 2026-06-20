@@ -19,26 +19,21 @@ const HOUSE_COLORS: Record<string, string> = {
 };
 
 export default async function AdminDashboardPage() {
-  // 1. Auth & RBAC Check
   const officer = await getCurrentOfficer();
   if (!officer) {
     redirect("/admin/login");
   }
-
   const role = officer.role as Role;
   const userHouse = isHouseChancellor(role) ? getHouseFromRole(role) : null;
   const supabase = createServerSupabaseClient();
 
-  // 2. Date calculations for Data Retention (Provisional window)
   const fiveDaysAgo = new Date();
   fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
   const fiveDaysAgoStr = fiveDaysAgo.toISOString();
-
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
   const sevenDaysAgoStr = sevenDaysAgo.toISOString();
 
-  // 3. Parallel Data Fetching (Respecting RBAC)
   const [
     appsResult,
     messagesResult,
@@ -48,7 +43,6 @@ export default async function AdminDashboardPage() {
     houseTxResult,
     individualTxResult,
   ] = await Promise.all([
-    // PENDING APPLICATIONS (House Autonomy enforced)
     (() => {
       let query = supabase
         .from("membership_applications")
@@ -59,19 +53,14 @@ export default async function AdminDashboardPage() {
       }
       return query;
     })(),
-    // UNREAD MESSAGES
     RBAC.canAccessAdminRoute(role, "/admin/messages")
       ? supabase.from("contact_messages").select("*", { count: "exact", head: true }).eq("is_read", false)
       : Promise.resolve({ count: 0 }),
-    // HOUSE POINTS
     supabase.from("house_points").select("*").order("total_points", { ascending: false }).limit(4),
-    // DEBATE LEAGUE
     supabase.from("debate_league_members").select("*").order("rank", { ascending: true }).limit(5),
-    // PENDING POINT CLAIMS
     RBAC.canManageIndividualPoints(role)
       ? supabase.from("point_claims").select("*", { count: "exact", head: true }).eq("status", "pending")
       : Promise.resolve({ count: 0 }),
-    // HOUSE POINT RETENTION
     RBAC.canManageHousePoints(role)
       ? supabase
           .from("house_point_transactions")
@@ -79,7 +68,6 @@ export default async function AdminDashboardPage() {
           .eq("status", "provisional")
           .lte("created_at", fiveDaysAgoStr)
       : Promise.resolve({ data: [] }),
-    // INDIVIDUAL POINT RETENTION
     RBAC.canManageIndividualPoints(role)
       ? supabase
           .from("individual_debate_point_transactions")
@@ -97,7 +85,6 @@ export default async function AdminDashboardPage() {
   const houseTx = houseTxResult.data ?? [];
   const individualTx = individualTxResult.data ?? [];
 
-  // Format and flag overdue records for the Point Keeper
   const formattedHouseTx = houseTx.map((tx: any) => ({
     ...tx,
     type: "house",
@@ -108,26 +95,23 @@ export default async function AdminDashboardPage() {
     type: "individual",
     isOverdue: new Date(tx.created_at) <= new Date(sevenDaysAgoStr),
   }));
-
   const totalApproaching = formattedHouseTx.length + formattedIndividualTx.length;
   const totalOverdue =
     formattedHouseTx.filter((t: any) => t.isOverdue).length +
     formattedIndividualTx.filter((t: any) => t.isOverdue).length;
-
   const isPointKeeper = RBAC.canManageHousePoints(role) || RBAC.canManageIndividualPoints(role);
 
   return (
-    <div className="space-y-8">
+    <div className="flex flex-col gap-8">
       {/* Welcome Header */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1">
           <h1 className="text-3xl font-semibold text-white">Dashboard</h1>
           <p className="text-sm text-neutral-400">
             Welcome, <span className="font-medium text-neutral-200">{officer.full_name}</span>
             <span className="text-neutral-500"> • {role.replace(/_/g, " ")}</span>
           </p>
         </div>
-        {/* Sign Out */}
         <form action={adminLogout}>
           <button
             type="submit"
@@ -143,24 +127,24 @@ export default async function AdminDashboardPage() {
         {/* Pending Applications */}
         <a
           href="/admin/memberships"
-          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
+          className="group flex flex-col gap-3 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
           <p className="text-sm font-medium text-neutral-500">
             Pending Applications {userHouse && <span className="text-neutral-600">({userHouse})</span>}
           </p>
-          <p className="mt-2 text-4xl font-bold text-white">{pendingApps}</p>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">Review &amp; process →</p>
+          <p className="text-4xl font-bold text-white">{pendingApps}</p>
+          <p className="text-xs text-neutral-500 group-hover:text-neutral-400">Review &amp; process →</p>
         </a>
 
         {/* Unread Messages */}
         {RBAC.canAccessAdminRoute(role, "/admin/messages") && (
           <a
             href="/admin/messages"
-            className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
+            className="group flex flex-col gap-3 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
           >
             <p className="text-sm font-medium text-neutral-500">Unread Messages</p>
-            <p className="mt-2 text-4xl font-bold text-white">{unreadMessages}</p>
-            <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">View inbox →</p>
+            <p className="text-4xl font-bold text-white">{unreadMessages}</p>
+            <p className="text-xs text-neutral-500 group-hover:text-neutral-400">View inbox →</p>
           </a>
         )}
 
@@ -168,11 +152,11 @@ export default async function AdminDashboardPage() {
         {isPointKeeper && (
           <a
             href="/admin/point-claims"
-            className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-emerald-700"
+            className="group flex flex-col gap-3 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-emerald-700"
           >
             <p className="text-sm font-medium text-neutral-500">Pending Point Claims</p>
-            <p className="mt-2 text-4xl font-bold text-white">{pendingClaims}</p>
-            <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">Verify &amp; approve →</p>
+            <p className="text-4xl font-bold text-white">{pendingClaims}</p>
+            <p className="text-xs text-neutral-500 group-hover:text-neutral-400">Verify &amp; approve →</p>
           </a>
         )}
 
@@ -180,10 +164,10 @@ export default async function AdminDashboardPage() {
         {isPointKeeper && (
           <a
             href="/admin/points"
-            className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-amber-700"
+            className="group flex flex-col gap-3 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-amber-700"
           >
             <p className="text-sm font-medium text-neutral-500">Data Retention &amp; Compliance</p>
-            <div className="mt-2 flex items-baseline gap-2">
+            <div className="flex items-baseline gap-2">
               <p className="text-4xl font-bold text-white">{totalApproaching}</p>
               {totalOverdue > 0 && (
                 <span className="rounded-full bg-red-900/60 px-2 py-0.5 text-xs font-semibold text-red-300">
@@ -191,7 +175,7 @@ export default async function AdminDashboardPage() {
                 </span>
               )}
             </div>
-            <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
+            <p className="text-xs text-neutral-500 group-hover:text-neutral-400">
               Provisional records nearing 7-day finalization →
             </p>
           </a>
@@ -200,11 +184,11 @@ export default async function AdminDashboardPage() {
         {/* House Points Link */}
         <a
           href="/admin/points"
-          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
+          className="group flex flex-col gap-3 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
           <p className="text-sm font-medium text-neutral-500">House Points</p>
-          <p className="mt-2 text-lg font-semibold text-white">Manage Ledger</p>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">
+          <p className="text-lg font-semibold text-white">Manage Ledger</p>
+          <p className="text-xs text-neutral-500 group-hover:text-neutral-400">
             {isPointKeeper ? "Add or deduct points →" : "View standings →"}
           </p>
         </a>
@@ -212,21 +196,21 @@ export default async function AdminDashboardPage() {
         {/* League & Awards Link */}
         <a
           href="/admin/league"
-          className="group rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
+          className="group flex flex-col gap-3 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30 transition hover:border-neutral-700"
         >
           <p className="text-sm font-medium text-neutral-500">League &amp; Awards</p>
-          <p className="mt-2 text-lg font-semibold text-white">Manage</p>
-          <p className="mt-1 text-xs text-neutral-500 group-hover:text-neutral-400">Members &amp; recognition →</p>
+          <p className="text-lg font-semibold text-white">Manage</p>
+          <p className="text-xs text-neutral-500 group-hover:text-neutral-400">Members &amp; recognition →</p>
         </a>
       </div>
 
       {/* House Points Quick View */}
-      <div className="space-y-4">
+      <div className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold text-white">House Point Standings</h2>
         {!housePoints || housePoints.length === 0 ? (
           <p className="text-sm text-neutral-500">No house point data available yet.</p>
         ) : (
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             {housePoints.map((hp, idx) => {
               const color = HOUSE_COLORS[hp.house_name] ?? "#666";
               return (
@@ -254,7 +238,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Debate League Quick View */}
-      <div className="space-y-4">
+      <div className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold text-white">Top Debate League Members</h2>
         {!leagueMembers || leagueMembers.length === 0 ? (
           <p className="text-sm text-neutral-500">No league data available yet.</p>

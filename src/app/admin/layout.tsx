@@ -7,19 +7,16 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   const supabase = createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // 1. If NOT authenticated, just render the children (allows /admin/login to render).
   if (!user) {
     return <>{children}</>;
   }
 
-  // 2. User is authenticated. Fetch their officer profile.
   const { data: officer } = await supabase
     .from("officers")
     .select("id, email, full_name, role, house_affiliation")
     .eq("id", user.id)
     .single();
 
-  // If authenticated but no officer profile exists
   if (!officer) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-neutral-950 p-6 text-white">
@@ -34,7 +31,6 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     );
   }
 
-  // 3. If the user's role is still pending, block access
   if (officer.role === Role.PENDING) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-neutral-950 p-6 text-white">
@@ -44,21 +40,11 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             Your officer account is active, but your constitutional role has not
             yet been assigned by the President or Executive Secretary.
           </p>
-          <div className="mt-6 rounded-xl border border-amber-800/50 bg-neutral-950/50 p-4 text-left">
-            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">Account Details</p>
-            <p className="mt-1 text-sm text-neutral-300"><span className="text-neutral-500">Name:</span> {officer.full_name}</p>
-            <p className="text-sm text-neutral-300"><span className="text-neutral-500">Email:</span> {officer.email}</p>
-            <p className="text-sm text-neutral-300">
-              <span className="text-neutral-500">Status:</span>{" "}
-              <span className="font-semibold text-amber-400">Pending</span>
-            </p>
-          </div>
         </div>
       </div>
     );
   }
 
-  // 4. Render the admin layout for authorized officers
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <main className="mx-auto max-w-7xl px-6 py-10 sm:px-10">

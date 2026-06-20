@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "sonner";
-import { ToastProvider } from "@/components/ToastProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,7 +54,6 @@ export default function RootLayout({
             },
           }}
         />
-        <ToastProvider />
       </body>
     </html>
   );
