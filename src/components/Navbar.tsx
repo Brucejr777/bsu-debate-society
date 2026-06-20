@@ -1,6 +1,5 @@
 // src/components/Navbar.tsx
 "use client";
-
 import { useState, useEffect, useMemo } from "react";
 import { RBAC, Role } from "@/lib/rbac";
 import { adminLogout } from "@/actions/admin";
@@ -34,8 +33,6 @@ const navLinks = [
   { label: "Apply", href: "/apply" },
 ];
 
-// Master list of all possible admin routes. 
-// The visible list will be filtered dynamically based on the user's RBAC role.
 const ALL_ADMIN_LINKS = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Officer Mgmt", href: "/admin/users" },
@@ -68,14 +65,14 @@ interface Officer {
   house_affiliation: string;
 }
 
-function NavLinks({ onClick }: { onClick?: () => void }) {
+function NavLinks({ onNavigate }: { onNavigate: () => void }) {
   return (
     <>
       {navLinks.map((link) => (
         <a
           key={link.href}
           href={link.href}
-          onClick={onClick}
+          onClick={onNavigate}
           className="group block rounded-lg px-3 py-2 text-sm font-medium text-neutral-400 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#daa520]/8"
         >
           <span className="transition-colors group-hover:text-[#ffd700]">
@@ -90,24 +87,19 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
 function AdminSection({
   officer,
   loadingAuth,
-  onClick,
+  onNavigate,
 }: {
   officer: Officer | null;
   loadingAuth: boolean;
-  onClick?: () => void;
+  onNavigate: () => void;
 }) {
   const [adminOpen, setAdminOpen] = useState(false);
 
-  // Dynamically filter admin links based on the logged-in user's role
   const visibleLinks = useMemo(() => {
     if (loadingAuth) return [];
-    
-    // If not logged in or role is pending, only show the login link
     if (!officer || officer.role === "pending") {
       return [{ label: "Admin Login", href: "/admin/login" }];
     }
-    
-    // Filter the master list using the RBAC matrix
     return ALL_ADMIN_LINKS.filter((link) =>
       RBAC.canAccessAdminRoute(officer.role as Role, link.href)
     );
@@ -158,14 +150,13 @@ function AdminSection({
           />
         </svg>
       </button>
-      
       {adminOpen && (
         <div className="mt-1 space-y-0.5 pl-2">
           {visibleLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              onClick={onClick}
+              onClick={onNavigate}
               className="group block rounded-lg px-3 py-2 text-xs font-medium text-neutral-500 transition-all hover:bg-gradient-to-r hover:from-[#ffd700]/15 hover:to-[#daa520]/8"
             >
               <span className="transition-colors group-hover:text-[#ffd700]">
@@ -173,14 +164,13 @@ function AdminSection({
               </span>
             </a>
           ))}
-          
-          {/* Logout Button (Only visible if logged in) */}
           {isLoggedIn && (
             <div className="mt-2 pt-2 border-t border-neutral-800">
               <button
                 type="button"
                 onClick={async () => {
                   await adminLogout();
+                  onNavigate();
                 }}
                 className="w-full text-left group block rounded-lg px-3 py-2 text-xs font-medium text-red-400 transition-all hover:bg-red-900/20"
               >
@@ -199,7 +189,6 @@ export default function Navbar() {
   const [officer, setOfficer] = useState<Officer | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
 
-  // Fetch the current user's session and profile on mount
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => (res.ok ? res.json() : null))
@@ -210,11 +199,12 @@ export default function Navbar() {
       .catch(() => setLoadingAuth(false));
   }, []);
 
+  const closeMenu = () => setOpen(false);
+
   return (
     <>
       {/* ── Desktop Sidebar (lg+) ── */}
       <aside className="fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-neutral-800/80 bg-gradient-to-b from-neutral-950 via-neutral-950/98 to-neutral-950 backdrop-blur-xl lg:flex">
-        {/* Brand */}
         <a href="/" className="group flex items-center gap-3 px-6 py-6">
           <img
             src="/logos/society-logo.png"
@@ -225,18 +215,19 @@ export default function Navbar() {
             Debate Society
           </span>
         </a>
-
-        {/* Nav Links */}
         <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
-          <NavLinks />
-          <AdminSection officer={officer} loadingAuth={loadingAuth} />
+          <NavLinks onNavigate={closeMenu} />
+          <AdminSection
+            officer={officer}
+            loadingAuth={loadingAuth}
+            onNavigate={closeMenu}
+          />
         </nav>
       </aside>
 
       {/* ── Mobile Top Bar (< lg) ── */}
       <header className="sticky top-0 z-50 border-b border-neutral-800/80 bg-gradient-to-r from-neutral-950/95 via-neutral-900/95 to-neutral-950/95 backdrop-blur-xl lg:hidden">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
-          {/* Logo */}
           <a href="/" className="flex items-center gap-3 text-sm font-semibold">
             <img
               src="/logos/society-logo.png"
@@ -247,11 +238,11 @@ export default function Navbar() {
               Debate Society
             </span>
           </a>
-
-          {/* Hamburger */}
           <button
             type="button"
             aria-label="Toggle menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
             className="rounded-lg p-2 text-neutral-400 transition hover:text-white"
             onClick={() => setOpen((prev) => !prev)}
           >
@@ -280,16 +271,14 @@ export default function Navbar() {
             )}
           </button>
         </nav>
-
-        {/* Mobile Dropdown */}
         {open && (
-          <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-neutral-800/80 bg-neutral-950/98 backdrop-blur-xl">
+          <div id="mobile-menu" className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-neutral-800/80 bg-neutral-950/98 backdrop-blur-xl">
             <div className="space-y-0.5 px-6 py-4">
-              <NavLinks onClick={() => setOpen(false)} />
+              <NavLinks onNavigate={closeMenu} />
               <AdminSection
                 officer={officer}
                 loadingAuth={loadingAuth}
-                onClick={() => setOpen(false)}
+                onNavigate={closeMenu}
               />
             </div>
           </div>

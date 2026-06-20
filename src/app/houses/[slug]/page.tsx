@@ -277,11 +277,11 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
               Article 6 — The Society Houses
             </p>
             
-            {/* House Emblem Image */}
+            {/* House Emblem Image – Responsive sizing */}
             <img
               src={`/logos/${slug}.png`}
               alt={`${house.name} Emblem`}
-              className="mx-auto w-44 h-44 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+              className="mx-auto w-32 h-32 sm:w-44 sm:h-44 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
             />
 
             <div className="flex items-center justify-center gap-3">
@@ -565,8 +565,8 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
               </div>
               <div className="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 shadow-xl shadow-black/30">
                 {/* Desktop Table */}
-                <div className="hidden sm:block">
-                  <table className="w-full text-left text-sm">
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="w-full min-w-[480px] text-left text-sm">
                     <thead>
                       <tr className="border-b border-neutral-800 text-neutral-500">
                         <th className="px-6 py-4 font-medium uppercase tracking-wider">

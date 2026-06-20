@@ -42,16 +42,17 @@ export default function PointTrendChart({ data }: PointTrendChartProps) {
 
   return (
     <div className="rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-xl shadow-black/30">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-lg font-semibold text-white">
           Point Accumulation Trend
         </h3>
         <p className="text-xs text-neutral-500">
           Tracking cumulative points over time
         </p>
-        </div>
+      </div>
         
-      <div className="h-80 w-full">
+      {/* Responsive height: smaller on mobile, taller on larger screens */}
+      <div className="h-64 sm:h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
@@ -66,6 +67,7 @@ export default function PointTrendChart({ data }: PointTrendChartProps) {
               tickLine={false}
               axisLine={{ stroke: "#404040" }}
               tickMargin={10}
+              // Reduce label rotation on small screens? Recharts handles it, but we can adjust angle if needed.
             />
             
             <YAxis
@@ -83,6 +85,7 @@ export default function PointTrendChart({ data }: PointTrendChartProps) {
                 border: "1px solid #262626", // neutral-800
                 borderRadius: "0.75rem", // rounded-xl
                 boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
+                fontSize: "12px",
               }}
               itemStyle={{ color: "#ffffff", fontWeight: 600 }}
               labelStyle={{ color: "#a3a3a3", marginBottom: "0.25rem", fontSize: "0.875rem" }}
@@ -92,6 +95,9 @@ export default function PointTrendChart({ data }: PointTrendChartProps) {
             <Legend
               wrapperStyle={{ color: "#d4d4d8", paddingTop: "1rem", fontSize: "0.875rem" }}
               iconType="circle"
+              // On small screens, stack legend vertically to avoid wrapping issues
+              verticalAlign="top"
+              height={36}
             />
             
             <Line

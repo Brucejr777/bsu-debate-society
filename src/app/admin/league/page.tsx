@@ -180,8 +180,8 @@ export default function AdminLeaguePage() {
   const labelCls = "block text-sm font-medium text-neutral-300";
   const btnPrimary = "rounded-full bg-neutral-100 px-6 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200";
   const btnSecondary = "rounded-full border border-neutral-700 px-5 py-2.5 text-sm font-medium text-neutral-400 transition hover:text-white";
-  const btnDanger = "rounded-full bg-red-900/60 px-3 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-900";
-  const btnEdit = "rounded-full bg-neutral-800 px-3 py-1.5 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700";
+  const btnDanger = "rounded-full bg-red-900/60 px-4 py-2 text-xs font-semibold text-red-300 transition hover:bg-red-900";
+  const btnEdit = "rounded-full bg-neutral-800 px-4 py-2 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700";
 
   return (
     <div className="space-y-8">
@@ -265,10 +265,10 @@ export default function AdminLeaguePage() {
         <p className="text-sm text-neutral-500">No members in the League roster yet.</p>
       )}
 
-      {/* Members Table */}
+      {/* Members Table – with overflow-x-auto for mobile */}
       {fetched && members.length > 0 && (
-        <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
-          <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto rounded-2xl border border-neutral-800 bg-neutral-900">
+          <table className="w-full min-w-[640px] text-left text-sm">
             <thead>
               <tr className="border-b border-neutral-800 text-neutral-500">
                 <th className="px-5 py-3 font-medium uppercase tracking-wider">Rank</th>

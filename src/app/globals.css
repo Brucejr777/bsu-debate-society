@@ -19,6 +19,9 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal overflow on mobile – many components use overflow-x-auto, 
+     but this catches any stray overflow. Fixed/absolute children may need override. */
+  overflow-x: hidden;
 }
 
 /* ── Gold Shine Shimmer ── */
@@ -118,4 +121,73 @@ html {
   outline: 2px solid rgba(255, 222, 0, 0.5);
   outline-offset: 2px;
   border-radius: 0.5rem;
+}
+
+/* ────────────────────────────────────────────── */
+/* MOBILE RESPONSIVENESS ENHANCEMENTS            */
+/* ────────────────────────────────────────────── */
+
+/* 1. Touch targets – ensure clickable elements are at least 44x44px on mobile.
+   This improves accessibility and user experience on touch devices.
+   We apply inline-flex to keep elements from becoming block-level, and center content. */
+button,
+a,
+[role="button"],
+input[type="submit"],
+input[type="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2. Remove default tap highlight on mobile (WebKit) – cleaner interaction. */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 3. Responsive input padding helper – can be applied to form inputs
+   to reduce padding on very small screens while keeping it comfortable on larger. */
+.input-responsive {
+  padding-top: 0.625rem;   /* 10px */
+  padding-bottom: 0.625rem;
+  padding-left: 0.75rem;   /* 12px */
+  padding-right: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .input-responsive {
+    padding-top: 0.75rem;   /* 12px */
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;     /* 16px */
+    padding-right: 1rem;
+  }
+}
+
+/* 4. Ensure that card-based layouts don't cause overflow on mobile */
+.card-container {
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+/* 5. Fine-tune table wrappers – already handled by overflow-x-auto in components,
+   but this ensures any table inside a container won't break layout. */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 6. For very small screens, reduce heading sizes slightly if needed. 
+   This is a safety net; component-level responsive classes are preferred. */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem; /* 28px */
+  }
+  h2 {
+    font-size: 1.5rem;  /* 24px */
+  }
+  h3 {
+    font-size: 1.25rem; /* 20px */
+  }
 }

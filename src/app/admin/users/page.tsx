@@ -186,7 +186,7 @@ export default function AdminUsersPage() {
 
       {/* RBAC Guard */}
       <RBACGuard officer={currentUser} checkPermission={canManageUsers}>
-        {/* Officers Table */}
+        {/* Officers Table – with overflow-x-auto for mobile */}
         <section className="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 shadow-xl shadow-black/30">
           {loading ? (
             <div className="flex items-center justify-center p-16">
@@ -197,155 +197,157 @@ export default function AdminUsersPage() {
               <p className="text-sm text-neutral-500">No officer profiles found.</p>
             </div>
           ) : (
-            <div className="divide-y divide-neutral-800/60">
-              {officers.map((officer) => {
-                const isEditing = editingId === officer.id;
-                const houseColor = HOUSE_COLORS[officer.house_affiliation] || "#44403c";
-                const isPending = officer.role === "pending";
+            <div className="overflow-x-auto">
+              <div className="min-w-[640px] divide-y divide-neutral-800/60">
+                {officers.map((officer) => {
+                  const isEditing = editingId === officer.id;
+                  const houseColor = HOUSE_COLORS[officer.house_affiliation] || "#44403c";
+                  const isPending = officer.role === "pending";
 
-                return (
-                  <div
-                    key={officer.id}
-                    className={`p-5 transition ${isPending ? "bg-yellow-950/10" : "bg-transparent"} hover:bg-neutral-900/50`}
-                  >
-                    {isEditing ? (
-                      /* ── Edit Mode ── */
-                      <form onSubmit={handleSave} className="space-y-4">
-                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                          {/* Full Name */}
-                          <div>
-                            <label className="mb-1.5 block text-xs font-medium text-neutral-400">
-                              Full Name
-                            </label>
-                            <input
-                              type="text"
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
-                              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 outline-none focus:border-amber-600"
-                              required
-                            />
+                  return (
+                    <div
+                      key={officer.id}
+                      className={`p-5 transition ${isPending ? "bg-yellow-950/10" : "bg-transparent"} hover:bg-neutral-900/50`}
+                    >
+                      {isEditing ? (
+                        /* ── Edit Mode ── */
+                        <form onSubmit={handleSave} className="space-y-4">
+                          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            {/* Full Name */}
+                            <div>
+                              <label className="mb-1.5 block text-xs font-medium text-neutral-400">
+                                Full Name
+                              </label>
+                              <input
+                                type="text"
+                                value={editName}
+                                onChange={(e) => setEditName(e.target.value)}
+                                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white placeholder-neutral-500 outline-none focus:border-amber-600"
+                                required
+                              />
+                            </div>
+
+                            {/* Role */}
+                            <div>
+                              <label className="mb-1.5 block text-xs font-medium text-neutral-400">
+                                Role
+                              </label>
+                              <select
+                                value={editRole}
+                                onChange={(e) => setEditRole(e.target.value)}
+                                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white outline-none focus:border-amber-600"
+                              >
+                                {ALL_ROLES.map((r) => (
+                                  <option key={r.value} value={r.value}>
+                                    {r.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* House */}
+                            <div>
+                              <label className="mb-1.5 block text-xs font-medium text-neutral-400">
+                                House Affiliation
+                              </label>
+                              <select
+                                value={editHouse}
+                                onChange={(e) => setEditHouse(e.target.value)}
+                                className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white outline-none focus:border-amber-600"
+                              >
+                                {ALL_HOUSES.map((h) => (
+                                  <option key={h.value} value={h.value}>
+                                    {h.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex items-end gap-2">
+                              <button
+                                type="submit"
+                                disabled={saving === officer.id}
+                                className="rounded-full bg-amber-700 px-4 py-2 text-xs font-semibold text-white transition hover:bg-amber-600 disabled:opacity-50 min-h-[44px] min-w-[44px]"
+                              >
+                                {saving === officer.id ? "Saving…" : "Save"}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={cancelEdit}
+                                className="rounded-full border border-neutral-700 bg-neutral-800 px-4 py-2 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700 min-h-[44px] min-w-[44px]"
+                              >
+                                Cancel
+                              </button>
+                            </div>
                           </div>
 
-                          {/* Role */}
-                          <div>
-                            <label className="mb-1.5 block text-xs font-medium text-neutral-400">
-                              Role
-                            </label>
-                            <select
-                              value={editRole}
-                              onChange={(e) => setEditRole(e.target.value)}
-                              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white outline-none focus:border-amber-600"
-                            >
-                              {ALL_ROLES.map((r) => (
-                                <option key={r.value} value={r.value}>
-                                  {r.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* House */}
-                          <div>
-                            <label className="mb-1.5 block text-xs font-medium text-neutral-400">
-                              House Affiliation
-                            </label>
-                            <select
-                              value={editHouse}
-                              onChange={(e) => setEditHouse(e.target.value)}
-                              className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm text-white outline-none focus:border-amber-600"
-                            >
-                              {ALL_HOUSES.map((h) => (
-                                <option key={h.value} value={h.value}>
-                                  {h.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* Actions */}
-                          <div className="flex items-end gap-2">
-                            <button
-                              type="submit"
-                              disabled={saving === officer.id}
-                              className="rounded-full bg-amber-700 px-4 py-2 text-xs font-semibold text-white transition hover:bg-amber-600 disabled:opacity-50"
-                            >
-                              {saving === officer.id ? "Saving…" : "Save"}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={cancelEdit}
-                              className="rounded-full border border-neutral-700 bg-neutral-800 px-4 py-2 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Auto-set house based on chancellor role */}
-                        {editRole.startsWith("chancellor_") && (
-                          <p className="text-xs text-amber-400/80">
-                            ⓘ Chancellor roles automatically bind to their respective House.
-                          </p>
-                        )}
-                      </form>
-                    ) : (
-                      /* ── View Mode ── */
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-center gap-4">
-                          {/* Avatar */}
-                          <div
-                            className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                            style={{ backgroundColor: houseColor }}
-                          >
-                            {officer.full_name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")
-                              .toUpperCase()
-                              .slice(0, 2)}
-                          </div>
-
-                          {/* Info */}
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-white">
-                              {officer.full_name}
+                          {/* Auto-set house based on chancellor role */}
+                          {editRole.startsWith("chancellor_") && (
+                            <p className="text-xs text-amber-400/80">
+                              ⓘ Chancellor roles automatically bind to their respective House.
                             </p>
-                            <p className="truncate text-xs text-neutral-500">{officer.email}</p>
+                          )}
+                        </form>
+                      ) : (
+                        /* ── View Mode ── */
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex items-center gap-4">
+                            {/* Avatar */}
+                            <div
+                              className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                              style={{ backgroundColor: houseColor }}
+                            >
+                              {officer.full_name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .toUpperCase()
+                                .slice(0, 2)}
+                            </div>
+
+                            {/* Info */}
+                            <div className="min-w-0">
+                              <p className="truncate text-sm font-semibold text-white">
+                                {officer.full_name}
+                              </p>
+                              <p className="truncate text-xs text-neutral-500">{officer.email}</p>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap items-center gap-2">
+                            {/* Role Badge */}
+                            <span
+                              className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${getRoleBadgeClass(officer.role)}`}
+                            >
+                              {getRoleLabel(officer.role)}
+                            </span>
+
+                            {/* House Badge */}
+                            <span
+                              className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold text-white"
+                              style={{
+                                backgroundColor: `${houseColor}66`,
+                                borderColor: `${houseColor}88`,
+                              }}
+                            >
+                              {officer.house_affiliation}
+                            </span>
+
+                            {/* Edit Button – larger touch target on mobile */}
+                            <button
+                              onClick={() => startEdit(officer)}
+                              className="rounded-full border border-neutral-700 bg-neutral-800 px-4 py-2 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700 hover:text-white min-h-[44px] min-w-[44px]"
+                            >
+                              Edit
+                            </button>
                           </div>
                         </div>
-
-                        <div className="flex flex-wrap items-center gap-2">
-                          {/* Role Badge */}
-                          <span
-                            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${getRoleBadgeClass(officer.role)}`}
-                          >
-                            {getRoleLabel(officer.role)}
-                          </span>
-
-                          {/* House Badge */}
-                          <span
-                            className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold text-white"
-                            style={{
-                              backgroundColor: `${houseColor}66`,
-                              borderColor: `${houseColor}88`,
-                            }}
-                          >
-                            {officer.house_affiliation}
-                          </span>
-
-                          {/* Edit Button */}
-                          <button
-                            onClick={() => startEdit(officer)}
-                            className="rounded-full border border-neutral-700 bg-neutral-800 px-3 py-1 text-xs font-semibold text-neutral-300 transition hover:bg-neutral-700 hover:text-white"
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </section>

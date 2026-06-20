@@ -350,8 +350,8 @@ export default function AdminPointsPage() {
       {fetched && transactions.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-white">Recent Transactions</h2>
-          <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto rounded-2xl border border-neutral-800 bg-neutral-900">
+            <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
                 <tr className="border-b border-neutral-800 text-neutral-500">
                   <th className="px-5 py-3 font-medium uppercase tracking-wider">Date</th>
@@ -415,7 +415,7 @@ export default function AdminPointsPage() {
               <button
                 onClick={loadMoreTransactions}
                 disabled={txLoading}
-                className="rounded-full border border-neutral-700 bg-neutral-900 px-6 py-2.5 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+                className="rounded-full border border-neutral-700 bg-neutral-900 px-6 py-2.5 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50 min-h-[44px] min-w-[44px]"
               >
                 {txLoading ? "Loading more..." : "Load More Transactions"}
               </button>
@@ -424,9 +424,9 @@ export default function AdminPointsPage() {
         </div>
       )}
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════ */}
       {/* Add / Deduct Points Form (STRICTLY PROTECTED BY RBAC)        */}
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════ */}
       <RBACGuard
         officer={officer}
         checkPermission={(o) => RBAC.canManageHousePoints(o.role as Role)}

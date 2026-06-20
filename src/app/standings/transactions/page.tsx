@@ -38,6 +38,18 @@ export default function TransactionsPage() {
   const [hasMore, setHasMore] = useState(true);
   const limit = 20;
 
+  // Track expanded reason on mobile
+  const [expandedReasons, setExpandedReasons] = useState<Set<number>>(new Set());
+
+  const toggleReason = (id: number) => {
+    setExpandedReasons((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) newSet.delete(id);
+      else newSet.add(id);
+      return newSet;
+    });
+  };
+
   async function fetchTransactions(reset = false) {
     setLoading(true);
     const currentPage = reset ? 1 : page;
@@ -146,71 +158,70 @@ export default function TransactionsPage() {
           {/* Transactions List */}
           {transactions.length > 0 && (
             <div className="space-y-4">
-              {/* Desktop Table */}
-              <div className="hidden sm:block">
-                <div className="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-950/95 shadow-xl shadow-black/30">
-                  <table className="w-full text-left text-sm">
-                    <thead>
-                      <tr className="border-b border-neutral-800 text-neutral-500">
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">Date</th>
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">House</th>
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">Category</th>
-                        <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">Points</th>
-                        <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">Running Total</th>
-                        <th className="px-4 py-3 font-medium uppercase tracking-wider">Reason</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {transactions.map((tx) => {
-                        const color = HOUSE_COLORS[tx.house_name] ?? "#666";
-                        const badgeStyle = CATEGORY_BADGE[tx.category] ?? "bg-neutral-800 text-neutral-300";
-                        return (
-                          <tr key={tx.id} className="border-b border-neutral-800/50 transition hover:bg-neutral-900/50">
-                            <td className="px-4 py-3 text-neutral-400">{new Date(tx.created_at).toLocaleDateString()}</td>
-                            <td className="px-4 py-3">
-                              <div className="flex items-center gap-2">
-                                <div className="flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-bold text-white" style={{ backgroundColor: color }}>
-                                  {tx.house_name[0]}
-                                </div>
-                                <span className="text-white">{HOUSE_LABELS[tx.house_name]?.replace("House of ", "") ?? tx.house_name}</span>
+              {/* Desktop Table – wrapped in overflow-x-auto */}
+              <div className="hidden sm:block overflow-x-auto rounded-3xl border border-neutral-800 bg-neutral-950/95 shadow-xl shadow-black/30">
+                <table className="w-full min-w-[640px] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-neutral-800 text-neutral-500">
+                      <th className="px-4 py-3 font-medium uppercase tracking-wider">Date</th>
+                      <th className="px-4 py-3 font-medium uppercase tracking-wider">House</th>
+                      <th className="px-4 py-3 font-medium uppercase tracking-wider">Category</th>
+                      <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">Points</th>
+                      <th className="px-4 py-3 text-right font-medium uppercase tracking-wider">Running Total</th>
+                      <th className="px-4 py-3 font-medium uppercase tracking-wider">Reason</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactions.map((tx) => {
+                      const color = HOUSE_COLORS[tx.house_name] ?? "#666";
+                      const badgeStyle = CATEGORY_BADGE[tx.category] ?? "bg-neutral-800 text-neutral-300";
+                      return (
+                        <tr key={tx.id} className="border-b border-neutral-800/50 transition hover:bg-neutral-900/50">
+                          <td className="px-4 py-3 text-neutral-400">{new Date(tx.created_at).toLocaleDateString()}</td>
+                          <td className="px-4 py-3">
+                            <div className="flex items-center gap-2">
+                              <div className="flex size-6 shrink-0 items-center justify-center rounded-md text-[10px] font-bold text-white" style={{ backgroundColor: color }}>
+                                {tx.house_name[0]}
                               </div>
-                            </td>
-                            <td className="px-4 py-3">
-                              <div className="flex items-center gap-2">
-                                <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}>
-                                  {CATEGORY_LABELS[tx.category] ?? tx.category}
-                                </span>
-                                {tx.status === "provisional" && (
-                                  <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
-                                    <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">provisional</span>
-                                  </Tooltip>
-                                )}
-                              </div>
-                            </td>
-                            <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.points > 0 ? "text-emerald-400" : tx.points < 0 ? "text-red-400" : "text-neutral-400"}`}>
-                              {tx.points > 0 ? "+" : ""}{tx.points}
-                            </td>
-                            <td className="px-4 py-3 text-right">
-                              <span className="font-semibold tabular-nums text-white">{tx.running_total?.toLocaleString() ?? "—"}</span>
-                            </td>
-                            <td className="max-w-xs px-4 py-3">
-                              <span className="text-neutral-400" title={tx.reason}>
-                                {tx.reason.length > 50 ? `${tx.reason.slice(0, 50)}…` : tx.reason}
+                              <span className="text-white">{HOUSE_LABELS[tx.house_name]?.replace("House of ", "") ?? tx.house_name}</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3">
+                            <div className="flex items-center gap-2">
+                              <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeStyle}`}>
+                                {CATEGORY_LABELS[tx.category] ?? tx.category}
                               </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                              {tx.status === "provisional" && (
+                                <Tooltip content="Provisional for 7 days. Subject to petition per R&P Art. I, Sec. 5.">
+                                  <span className="cursor-help rounded-full bg-amber-900/60 px-2 py-0.5 text-[10px] font-semibold text-amber-300">provisional</span>
+                                </Tooltip>
+                              )}
+                            </div>
+                          </td>
+                          <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.points > 0 ? "text-emerald-400" : tx.points < 0 ? "text-red-400" : "text-neutral-400"}`}>
+                            {tx.points > 0 ? "+" : ""}{tx.points}
+                          </td>
+                          <td className="px-4 py-3 text-right">
+                            <span className="font-semibold tabular-nums text-white">{tx.running_total?.toLocaleString() ?? "—"}</span>
+                          </td>
+                          <td className="max-w-xs px-4 py-3">
+                            <span className="text-neutral-400" title={tx.reason}>
+                              {tx.reason.length > 50 ? `${tx.reason.slice(0, 50)}…` : tx.reason}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
 
-              {/* Mobile Cards */}
+              {/* Mobile Cards – with expandable reason */}
               <div className="space-y-3 sm:hidden">
                 {transactions.map((tx) => {
                   const color = HOUSE_COLORS[tx.house_name] ?? "#666";
                   const badgeStyle = CATEGORY_BADGE[tx.category] ?? "bg-neutral-800 text-neutral-300";
+                  const isExpanded = expandedReasons.has(tx.id);
                   return (
                     <article key={tx.id} className="rounded-2xl border border-neutral-800 bg-neutral-900 p-4">
                       <div className="flex items-start justify-between gap-3">
@@ -240,7 +251,20 @@ export default function TransactionsPage() {
                           </Tooltip>
                         )}
                       </div>
-                      <p className="mt-2 text-xs text-neutral-400">{tx.reason}</p>
+                      {/* Reason with expand/collapse */}
+                      <div className="mt-2">
+                        <p className={`text-xs text-neutral-400 ${!isExpanded ? 'line-clamp-2' : ''}`}>
+                          {tx.reason}
+                        </p>
+                        {tx.reason.length > 60 && (
+                          <button
+                            onClick={() => toggleReason(tx.id)}
+                            className="mt-1 text-xs font-medium text-neutral-500 hover:text-white transition"
+                          >
+                            {isExpanded ? 'Show less' : 'Read more'}
+                          </button>
+                        )}
+                      </div>
                       {tx.evidence && <p className="mt-1 text-[11px] text-neutral-500">Evidence: {tx.evidence}</p>}
                       {tx.proposing_house && <p className="mt-1 text-[11px] text-neutral-500">Proposed by: {HOUSE_LABELS[tx.proposing_house] ?? tx.proposing_house}</p>}
                     </article>
@@ -254,7 +278,7 @@ export default function TransactionsPage() {
                   <button
                     onClick={() => fetchTransactions(false)}
                     disabled={loading}
-                    className="rounded-full border border-neutral-700 bg-neutral-900 px-8 py-3 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50"
+                    className="rounded-full border border-neutral-700 bg-neutral-900 px-8 py-3 text-sm font-medium text-neutral-300 transition hover:bg-neutral-800 hover:text-white disabled:opacity-50 min-h-[44px] min-w-[44px]"
                   >
                     {loading ? "Loading more..." : "Load More Transactions"}
                   </button>

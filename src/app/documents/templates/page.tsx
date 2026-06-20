@@ -72,189 +72,255 @@ function TemplateCard({ title, reference, content }: TemplateCardProps) {
 export default function TemplatesPage() {
   const templates = [
     {
-      title: "House Point Transaction Form (Accomplishment Report)",
-      reference: "Rules & Procedures, Article I, Section 5",
-      content: `HOUSE POINT TRANSACTION FORM (Accomplishment Report)
-
-[ ] Submitting House: _______________________
-[ ] Activity Name: __________________________
-[ ] Date of Activity: _______________________
-[ ] Primary Purpose: ________________________
-[ ] Point Category Claimed: _________________
-[ ] Specific Point Amount: __________________
-[ ] Reference to Applicable Subsection: _____
-[ ] Supporting Documentation Attached: [ ] Yes  [ ] No
-
-House Chancellor Certification:
-I certify that the information provided is accurate and the activity complies with Society policies.
-
-Name: _______________________
-Signature: ____________________
-Date: ________________________`,
-    },
-    {
-      title: "Individual Debate Point Claim Form",
-      reference: "Rules & Procedures, Annex A, Section 5",
-      content: `INDIVIDUAL DEBATE POINT CLAIM FORM
-
-CLAIMANT INFORMATION:
-[ ] Full Name: __________________________
-[ ] House: ______________________________
-[ ] Membership Status: __________________
-
-ACTIVITY DETAILS:
-[ ] Date of Activity: ___________________
-[ ] Activity Name: ______________________
-[ ] Organizing Body: ____________________
-
-CLAIM DETAILS:
-[ ] Point Category: _____________________
-[ ] Amount Claimed: _____________________
-[ ] Annex Reference: ____________________
-
-SUPPORTING DOCUMENTATION CHECKLIST:
-[ ] Official Certificate / Results Sheet
-[ ] Signed Attendance / Participation Proof
-[ ] Other: ______________________________
-
-GOOD FAITH DECLARATION:
-I declare under penalty of disciplinary action that the information provided is true and accurate to the best of my knowledge. I understand that false claims may result in point forfeiture and disciplinary review.
-
-Signature: ____________________ 
-Date: _________`,
-    },
-    {
       title: "Annual Conflict of Interest Disclosure Form",
-      reference: "Rules & Procedures, Annex B, Section 2",
+      reference: "Rules & Procedures, Annex C, Section 2",
       content: `ANNUAL CONFLICT OF INTEREST DISCLOSURE FORM
 
-OFFICER INFORMATION:
-[ ] Name: _______________________________
-[ ] Office / Position: ____________________
-[ ] House Affiliation: ____________________
+(For High Council and House Council Officers)
 
-DISCLOSURE CHECKLIST (Check all that apply to matters currently under your purview):
-[ ] Financial Interest: I have a direct or indirect financial interest in the matter.
-[ ] Competitive Advantage: I or my House stand to gain a competitive advantage.
-[ ] Personal Relationship: I have a personal relationship that may impair objectivity.
-[ ] Prior Consultation: I have previously consulted on this matter externally.
+Legal Basis: Constitution Article 7, Section 3(1)(h)(i); Rules Article VIII, Section 7(1)(f)
 
-CERTIFICATION STATEMENT:
-If any box is checked above, I commit to formally recusing myself from deliberation, discussion, and voting on the specified matter, and will notify the High Council / House Chancellor in writing.
+A. Required Fields:
 
-Signature: ____________________ 
-Date: _________`,
+(1) Officer Information:
+Full Name and House Affiliation: _______________________
+Office/Position Held: ___________________________________
+Term of Service (Semester/Academic Year): _______________
+Date of Submission: ____________________________________
+
+(2) Disclosure Categories (Check all that apply and provide details):
+
+(a) Financial Interest: Do you, or an immediate family member, hold a financial interest in any vendor, supplier, or entity with which the Society or your House has conducted or may conduct business?
+[ ] Yes  [ ] No
+If Yes, describe nature, entity name, and estimated value:
+___________________________________________________________
+
+(b) Competitive Advantage: Are you currently involved in any external debate organization, tournament series, or competitive initiative that may create a perceived or actual advantage for your House in Society point calculations?
+[ ] Yes  [ ] No
+If Yes, describe nature and potential impact:
+___________________________________________________________
+
+(c) Personal Relationship: Do you have a close personal, familial, or professional relationship with any member, officer, or external party that may reasonably be perceived to impair your impartiality in deliberations, disciplinary proceedings, or resource allocations?
+[ ] Yes  [ ] No
+If Yes, describe relationship and relevant context:
+___________________________________________________________
+
+(d) Prior Consultation: Have you participated in unofficial consultations or negotiations regarding any matter pending before your Council that may compromise objective judgment?
+[ ] Yes  [ ] No
+If Yes, describe matter and nature of involvement:
+___________________________________________________________
+
+(3) Certification Statement:
+
+"I certify that the information provided herein is true and complete to the best of my knowledge. I acknowledge my duty to recuse myself from any matter in which I have disclosed a conflict, and to update this disclosure should circumstances change during my term."
+
+Signature: _______________________  Date: _______________
+
+B. Submission Instructions:
+• Submit annually within 14 days of assumption of office; update within 7 days of any material change.
+• High Council officers → Executive Secretary and Director of Internal Affairs.
+• House Council officers → House Secretariat Director and copy to Society OIA.
+• Submit via secure digital platform in a sealed envelope marked "CONFIDENTIAL - CONFLICT DISCLOSURE."
+
+C. Privacy Notice:
+Disclosures are Restricted Records (Art. VIII, Sec. 2(2)). Access limited to Executive Secretary, OIA Director, and adjudicating bodies. Unauthorized disclosure = Major Violation (Art. VI, Sec. 2(2)(b)).`,
     },
     {
       title: "AI-Assisted Case & Research Disclosure Template",
-      reference: "Rules & Procedures, Annex B, Section 3",
+      reference: "Rules & Procedures, Annex C, Section 3",
       content: `AI-ASSISTED CASE & RESEARCH DISCLOSURE TEMPLATE
 
-SUBMISSION METADATA:
-[ ] Case / Document Title: ________________
-[ ] Date of Submission: ___________________
-[ ] Preparing Member(s): __________________
+(For Competition Submissions)
 
-AI TOOL DISCLOSURE:
-[ ] AI Tool(s) Used: ______________________
-[ ] Purpose of Use (e.g., brainstorming, formatting, research summarization): 
-    _______________________________________
-[ ] Extent of Use (e.g., <25%, 25-50%, >50% of draft): ___________
+Legal Basis: Article 3, Section 11; Rules Article I, Section 3(1); Annex A, Section 5
 
-HUMAN VERIFICATION STATEMENT:
-I certify that all AI-generated content has been thoroughly reviewed, fact-checked, and edited by human members to ensure accuracy, originality, and compliance with academic and Society standards.
+A. Required Fields:
 
-ATTRIBUTION LOG:
-[ ] Specific prompts or sections generated with AI assistance are documented in the appendix of this submission.
+(1) Submission Metadata:
+Case/Research Title and Topic: ____________________________
+Competition/Tournament Name and Date: ____________________
+Submitting Member(s) Name(s) and House Affiliation: _______
+Role in Submission (Author, Researcher, Editor, etc.): ____
 
-Signature: ____________________ 
-Date: _________`,
+(2) AI Tool Disclosure:
+List all artificial intelligence, machine learning, or automated research tools utilized in preparation:
+___________________________________________________________
+For each tool, specify purpose of use (e.g., literature review, argument generation, citation formatting, language editing):
+___________________________________________________________
+Indicate whether tool output was used verbatim, adapted, or used solely for ideation:
+___________________________________________________________
+
+(3) Human Verification Statement:
+
+"I affirm that all substantive arguments, factual assertions, and analytical conclusions contained in this submission have been reviewed, verified, and approved by human author(s). AI-assisted content has been critically evaluated for accuracy, relevance, and ethical compliance. I accept full responsibility for the intellectual integrity of this work."
+
+Signature(s): _______________________  Date: _______________
+
+(4) Attribution Log (Optional but Recommended):
+
+Source/Tool | Content Type | Extent of Use | Verification Method
+------------------------------------------------------------
+|            |              |               |                   |
+|            |              |               |                   |
+
+B. Submission Instructions:
+• Accompany all case briefs, research packages, or position papers for Society-sanctioned competitions.
+• File with tournament director, House Chancellor, or OIA as required.
+• Failure to submit may result in provisional disqualification pending review (Art. I, Sec. 5(5)).
+
+C. Privacy Notice:
+Disclosures are Public Records (Art. VIII, Sec. 2(1)) when attached to public submissions. Proprietary methodology details may be redacted upon request.`,
     },
     {
       title: "Emergency Continuity Activation Checklist",
-      reference: "Rules & Procedures, Annex B, Section 4",
+      reference: "Rules & Procedures, Annex C, Section 4",
       content: `EMERGENCY CONTINUITY ACTIVATION CHECKLIST
 
-ACTIVATION AUTHORITY:
-[ ] Activated By (Name/Title): ____________
-[ ] Date & Time of Activation: ____________
-[ ] Reason for Activation: ________________
+(For Force Majeure Scenarios)
 
-QUORUM VERIFICATION PROTOCOL:
-[ ] Minimum required officers notified: [ ] Yes
-[ ] Alternative quorum mechanism invoked: [ ] Yes
-[ ] Verification logged by Secretariat: [ ] Yes
+Legal Basis: Constitution Article 8, Section 2(5)(b)-(c); Rules Article IV, Section 9(1)(e)
 
-ACTION DOCUMENTATION REQUIREMENTS:
-[ ] All emergency decisions recorded in writing.
-[ ] Rationale for deviation from standard procedure documented.
-[ ] Affected parties notified within 24 hours.
+A. Required Fields:
 
-RATIFICATION TIMELINE:
-[ ] Emergency actions to be presented for formal ratification at the next valid Council meeting within ____ days.
+(1) Activation Authority:
+Declaring Officer (President/Vice President/House Chancellor): ________
+Date and Time of Declaration: _____________________________________
+Basis for Declaration (check one):
+[ ] Institutional closure order
+[ ] Public health emergency directive
+[ ] Natural disaster or environmental hazard
+[ ] Security threat or civil unrest
+[ ] Other extraordinary circumstance: ___________________________
 
-Signature of Activating Authority: ___________ 
-Date: _________`,
+(2) Quorum Verification Protocol:
+Virtual Platform Selected: _______________________________________
+Authentication Method (e.g., email, two-factor verification): _____
+Roll Call Completed: [ ] Yes  [ ] No
+Verified Participants: _____ of _____ entitled members (minimum 50% + 1 required)
+
+(3) Action Documentation Requirements:
+Meeting minutes recorded via platform logging or designated scribe: [ ] Yes  [ ] No
+Vote tallies captured with timestamp and participant verification: [ ] Yes  [ ] No
+Emergency justification appended to official record: [ ] Yes  [ ] No
+
+(4) Ratification Timeline:
+Anticipated date of restored physical convening capacity: _________
+Deadline for physical quorum ratification (14 calendar days from restoration): _________
+Designated officer responsible for tracking ratification: _________
+
+B. Submission Instructions:
+• Complete contemporaneously with any emergency virtual meeting.
+• Submit to Executive Secretary within 24 hours of adjournment for archival.
+• Failure to complete documentation may render actions advisory only (Art. IV, Sec. 9(1)(e)).
+
+C. Privacy Notice:
+Checklists containing sensitive details are Restricted Records (Art. VIII, Sec. 2(2)). Summary reports published to Society Assembly with redaction of security-sensitive information.`,
     },
     {
       title: "Mentorship Pairing & Progress Ledger",
-      reference: "Rules & Procedures, Annex B, Section 5",
+      reference: "Rules & Procedures, Annex C, Section 5",
       content: `MENTORSHIP PAIRING & PROGRESS LEDGER
 
-PAIRING INFORMATION:
-[ ] Executive Intern Name: ________________
-[ ] Designated Full Member Mentor: ________
-[ ] Semester / Academic Year: _____________
+(For Tracking Executive Intern Development)
 
-COMPETENCY MODULE TRACKING:
-[ ] Module 1: Parliamentary Procedure   [ ] Completed  [ ] In Progress
-[ ] Module 2: Debate Theory             [ ] Completed  [ ] In Progress
-[ ] Module 3: Ethical Conduct           [ ] Completed  [ ] In Progress
-[ ] Module 4: Organizational Management [ ] Completed  [ ] In Progress
-[ ] Module 5: Operational Protocols     [ ] Completed  [ ] In Progress
+Legal Basis: Constitution Article 5, Section 2(b); Rules Article VI, Section 4
 
-MILESTONE EVALUATION:
-[ ] Mentor Feedback Summary: _________________________________________
-[ ] Intern Self-Assessment: __________________________________________
+A. Required Fields:
 
-PROGRESSION DETERMINATION:
-[ ] Recommend Elevation to Full Membership: [ ] Yes  [ ] No
-[ ] Recommend Extension of Provisional Status: [ ] Yes  [ ] No
+(1) Pairing Information:
+Executive Intern Name, House, and Admission Date: _______________
+Assigned Full Member Mentor Name, House, and Office Assignment: ______
+Supervising High Council Secretary: _____________________________
+Internship Period (Start Date - End Date): ______________________
 
-Mentor Signature: ___________ 
-Intern Signature: ___________ 
-Date: _________`,
+(2) Competency Module Tracking:
+
+Module Title                         | Completion Date | Verified By | Status
+-------------------------------------|-----------------|-------------|--------
+Parliamentary Procedure Fundamentals |                 |             | [ ] Complete
+Debate Theory & Case Construction    |                 |             | [ ] Complete
+Ethical Conduct and Society Values   |                 |             | [ ] Complete
+Organizational Management Protocols  |                 |             | [ ] Complete
+Operational Systems Training         |                 |             | [ ] Complete
+
+(3) Milestone Evaluation:
+Satisfactory completion of assigned operational tasks: [ ] Yes  [ ] No
+Comments: _______________________________________________________
+Mentor evaluation of professionalism, initiative, and growth:
+Rating: [ ] Exceeds Expectations  [ ] Meets Expectations  [ ] Needs Improvement
+Reflective portfolio submitted and reviewed: [ ] Yes  [ ] No
+Date of Review: _______________
+
+(4) Progression Determination:
+"Based on the above evaluations, the Executive Intern is:
+[ ] Recommended for elevation to Full Membership status
+[ ] Recommended for extension of internship with specified remediation: _________
+[ ] Not recommended for progression; reasons: ____________________"
+
+Mentor Signature: _______________________  Date: _______________
+Supervising Secretary Signature: _______________________  Date: _______________
+
+B. Submission Instructions:
+• Initiate upon assignment; update after each module and milestone.
+• Final evaluation to OIA within 7 days of internship completion for Full Membership eligibility.
+• Copies retained by intern, mentor, and supervising Secretary.
+
+C. Privacy Notice:
+Entries are member development records (Art. VIII, Sec. 2(2)(b)). Accessible only to intern, mentor, supervising officers, and OIA. Aggregate anonymized data may be used for program evaluation with High Council approval.`,
     },
     {
       title: "Whistleblower Confidential Intake Form",
-      reference: "Rules & Procedures, Annex B, Section 6",
+      reference: "Rules & Procedures, Annex C, Section 6",
       content: `WHISTLEBLOWER CONFIDENTIAL INTAKE FORM
 
-REPORTING CHANNEL SELECTION:
-[ ] Submitted to: 
-    [ ] Office of Internal Affairs  
-    [ ] High Council President  
-    [ ] External Auditor
+(For Secure Misconduct Reporting)
 
-DISCLOSER PREFERENCES:
-[ ] Desired Level of Anonymity: 
-    [ ] Fully Anonymous  
-    [ ] Confidential (Name known only to investigator)  
-    [ ] Open
+Legal Basis: Constitution Article 3, Section 14; Rules Article VI, Section 4(6)
 
-DISCLOSURE CONTENT:
-[ ] Nature of Misconduct (e.g., financial irregularity, ethical violation): 
-    _________________________________________________________________
-[ ] Parties Involved (Names/Roles, if known): ________________________
-[ ] Factual Summary (Dates, locations, specific incidents): 
-    _________________________________________________________________
-    _________________________________________________________________
+A. Required Fields:
 
-GOOD FAITH CERTIFICATION:
-I certify that this disclosure is made in good faith, based on reasonable belief of misconduct, and not for malicious or retaliatory purposes. I understand the Society's non-retaliation policy protects me from adverse action.
+(1) Reporting Channel Selection:
+Submission Method (check one):
+[ ] Secure digital portal (Society OIA Platform)
+[ ] Encrypted email to OIA Director
+[ ] Sealed physical delivery to Chief Adviser
+[ ] In-person confidential interview (by appointment)
 
-Signature (Optional if Anonymous): ___________ 
-Date: _________`,
+(2) Discloser Preferences:
+Do you wish to remain anonymous? [ ] Yes  [ ] No
+If No, provide contact information for follow-up: ________________
+Preferred method for status updates (if anonymous, updates via secure portal with case reference): _______________
+
+(3) Disclosure Content:
+Nature of Alleged Misconduct (check all that apply):
+[ ] Constitutional violation
+[ ] Financial irregularity or misappropriation
+[ ] Ethical breach or code of conduct violation
+[ ] Retaliation or intimidation
+[ ] Threat to member safety or institutional integrity
+[ ] Other: ___________________
+
+Parties Involved (names, positions, Houses - provide only what is known):
+___________________________________________________________
+Factual Summary (include dates, locations, witnesses, and supporting evidence references):
+___________________________________________________________
+Supporting Documentation (attach or reference; do not submit original documents):
+___________________________________________________________
+
+(4) Good Faith Certification:
+
+"I declare that this disclosure is made in good faith based on information reasonably believed to be true. I understand that knowingly false or malicious reports may constitute a Major Violation under Article VI, Section 2(2)(b), and that anonymity protections do not extend to disclosures made with intent to harm or deceive."
+
+Anonymous Identifier (if applicable): _______________________
+Date of Submission: _______________
+
+B. Submission Instructions:
+• Submit directly to Society OIA or Chief Adviser via secure channels above. Do not submit to House Councils unless they are the subject.
+• Acknowledgment within 48 hours with confidential case reference number.
+• Investigations commence within 7 business days; periodic status updates per discloser's preferences.
+
+C. Privacy Notice:
+All submissions are Confidential Records (Art. VIII, Sec. 2(3)). Identity of anonymous disclosers protected through redaction and limited access. Retaliation against good-faith disclosers strictly prohibited and constitutes a Major Violation (Art. VI, Sec. 4(6)(d)-(e)).`,
     },
   ];
 
@@ -287,21 +353,24 @@ Date: _________`,
           {/* Header */}
           <div className="space-y-4 text-center">
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-500">
-              Operational Templates &amp; Forms
+              Annex C — Standardized Administrative Templates
             </p>
             <h1 className="inline-block rounded-full bg-gradient-to-r from-[#ffde00] via-[#eecf02] to-[#efa706] px-5 py-2 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
-              Standardized Templates
+              Operational Compliance Templates
             </h1>
           </div>
 
           {/* Introduction */}
           <article className="mx-auto max-w-3xl space-y-4 text-center">
             <p className="text-base leading-7 text-neutral-300">
-              The Office of the Executive Secretary maintains these mandatory
-              standardized administrative templates required by the Rules &amp;
-              Procedures. Officers and members may use the "Copy to Clipboard"
-              button to easily extract, print, or adapt these forms for official
-              Society business.
+              This annex establishes the standardized administrative templates required by
+              the Rules and Procedures of the BSU Debate Society. Use of these templates is
+              mandatory where expressly required by governing provisions. Templates shall
+              be maintained in digital format by the Office of the Executive Secretary,
+              with updates subject to the amendment procedures under Article IX.
+            </p>
+            <p className="text-sm italic text-neutral-500">
+              — Rules and Procedures, Annex C, Section 1
             </p>
           </article>
 
@@ -320,10 +389,10 @@ Date: _________`,
           {/* Footer Note */}
           <article className="rounded-3xl border border-amber-900/40 bg-amber-950/20 p-6 text-center">
             <p className="text-sm leading-6 text-amber-300/80">
-              <strong>Note:</strong> These templates are subject to periodic
-              review and updates by the Council of House Chancellors. Always
-              ensure you are using the most current version available on this
-              page.
+              <strong>Note:</strong> These templates are maintained by the Office of the
+              Executive Secretary and are subject to periodic review and updates by the
+              Council of House Chancellors. Always ensure you are using the most current
+              version available on this page.
             </p>
           </article>
         </div>

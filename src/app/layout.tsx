@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "sonner";
+import { ToastProvider } from "@/components/ToastProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,15 +27,15 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased bg-neutral-950 text-neutral-100 selection:bg-amber-500/30 selection:text-amber-100`}
       >
-        <div className="flex min-h-screen">
-          {/* Global Navigation */}
-          <Navbar />
-          
-          {/* Main Content Wrapper */}
-          <main className="flex-1 w-full lg:ml-64">
+        {/* Global Navigation */}
+        <Navbar />
+
+        {/* Main Content Wrapper */}
+        <main className="w-full lg:pl-64">
+          <div className="min-h-screen">
             {children}
-          </main>
-        </div>
+          </div>
+        </main>
 
         {/* Global Toast Notifications */}
         <Toaster
@@ -42,8 +43,8 @@ export default function RootLayout({
           position="top-right"
           toastOptions={{
             style: {
-              background: "#171717", // neutral-900
-              border: "1px solid #262626", // neutral-800
+              background: "#171717",
+              border: "1px solid #262626",
               color: "#fff",
               borderRadius: "12px",
             },
@@ -54,6 +55,7 @@ export default function RootLayout({
             },
           }}
         />
+        <ToastProvider />
       </body>
     </html>
   );
