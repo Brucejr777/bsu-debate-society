@@ -239,7 +239,7 @@ export default function DocumentsPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-neutral-600" />
-                      Annexes: Debate Performance Criteria &amp; Templates
+                      Annexes: Debate Performance Criteria, Standard Debate Formats and Procedures &amp; Templates
                     </li>
                   </ul>
                 </div>

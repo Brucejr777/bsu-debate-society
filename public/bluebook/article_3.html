@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article III (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article III – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article III</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">The Debate League</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–8 only -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1: Purpose and Scope -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        The Debate League is established as a merit-based framework to identify, select, and support the Society's designated representatives in external competitions. This Article operates alongside the House Point System (Article I) and the Individual Recognition Framework (Article II). Membership in the Debate League signifies that a member has earned the Society's commitment to provide for their competitive needs when representing Benguet State University in external tournaments. This framework is founded on the principle that excellence in Society and House debate activities shall be rewarded with institutional support for external representation.
+                    </p>
+                </section>
+
+                <!-- Section 2: Individual Debate Point System -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Individual Debate Point System.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> Every active member of the Society shall have an Individual Debate Point tally tracked separately from House Points and Individual Recognition Awards. Individual Debate Points shall be accumulated based on competitive performance in Society-wide debates and House-wide debates approved by the High Council for point eligibility.</p>
+                        <p><span class="font-semibold text-amber-300">(2)</span> Specific criteria for earning Individual Debate Points, including point values for participation, match wins, speaker awards, tournament placements, and other performance metrics, shall be detailed in Annex A: Debate Performance Criteria.</p>
+                        <p><span class="font-semibold text-amber-300">(3)</span> Individual Debate Points are cumulative within an academic year. Points shall reset to zero (0) at the start of each new academic year to ensure fair semesterly selection for the Debate League.</p>
+                        <p><span class="font-semibold text-amber-300">(4)</span> Individual Debate Points under this Article are distinct from points awarded under Article I (House Point System) and Article II (Individual Recognition Framework). Points awarded under this Section are solely for determining Debate League eligibility and do not constitute honorary awards or House bonuses under other Articles.</p>
+                    </div>
+                </section>
+
+                <!-- Section 3: Composition and Selection -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Composition and Selection of the Debate League.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <p><span class="font-semibold text-amber-300">(1)</span> The Debate League shall be composed of the eight (8) members with the highest cumulative Individual Debate Point totals at the end of each semester.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2)</span> Selection shall occur on the last day of the semester. The Secretary of Internal Affairs (Point Keeper) shall:</p>
+                        <div class="sub-list space-y-1 text-white/70">
+                            <p>(a) Publish provisional standings two (2) weeks prior to the end of the semester;</p>
+                            <p>(b) Verify all point claims and finalize standings on the last day;</p>
+                            <p>(c) Certify the final roster of the top eight (8) members;</p>
+                            <p>(d) Submit the certified roster to the High Council for approval;</p>
+                            <p>(e) Publish the final Debate League roster within three (3) business days of selection.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Tie-Breaking Sequence.</span> In the event of a tie for the eighth (8th) position, the following criteria shall apply in order:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Highest number of Best Speaker awards received in Society-wide or House-wide debates during the semester;</p>
+                                <p>(b) Highest placement in Society-wide debate tournaments;</p>
+                                <p>(c) Highest participation rate in eligible debate activities;</p>
+                                <p>(d) If still tied, the winner shall be determined by drawing of lots conducted by the Society President.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(4)</span> Debate League membership shall be valid for the subsequent semester only. A member who becomes inactive, resigns from the Society, or receives a major disciplinary sanction during their term shall be removed from the Debate League. The next highest-ranking eligible member from the semester's final standings shall be promoted to fill the vacancy for the remainder of the term.</p>
+                    </div>
+                </section>
+
+                <!-- Section 4: Society Support -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Society Support for Debate League Members.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <p><span class="font-semibold text-amber-300">(1)</span> When a Debate League member is registered to compete in an external tournament representing Benguet State University, the Society shall provide for the following needs, subject to the availability of resources and prior coordination with the High Council:</p>
+                        <div class="sub-list space-y-1 text-white/70">
+                            <p>(a) Official endorsement in the form of a certification letter bearing the Society seal and the member's name, tournament details, and capacity as Society representative;</p>
+                            <p>(b) Access to the Society's case library, research materials, argument databases, and preparatory resources;</p>
+                            <p>(c) Coordination assistance for tournament registration, credential submission, and logistical arrangements;</p>
+                            <p>(d) Priority access to Society-organized pre-tournament workshops, practice debates, and strategy sessions;</p>
+                            <p>(e) Mentorship support from senior members or alumni, when available;</p>
+                            <p>(f) Reimbursement or advance for tournament registration fees, transportation, or accommodation, subject to submission of official receipts and prior approval by the Director of Finance and Resource Management in accordance with Society financial policies.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> Support under this Section is contingent upon:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The tournament being recognized by the High Council as a legitimate external competition;</p>
+                                <p>(b) The member submitting a Request for Support Form at least seven (7) days prior to the tournament, detailing anticipated needs and estimated costs;</p>
+                                <p>(c) The member agreeing to submit a post-tournament report documenting their performance and outcomes, to be filed with the Secretary of Internal Affairs within seven (7) days of the tournament's conclusion.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(3)</span> The Society's obligation to provide support is not a guarantee of funding for all expenses. When resources are limited, the High Council shall prioritize support based on: (a) the tournament's prestige and relevance to the Society's mission; (b) the member's standing within the Debate League; and (c) the reasonableness and necessity of the requested support. Decisions regarding resource allocation shall be made transparently and communicated in writing to affected members.</p>
+
+                        <p><span class="font-semibold text-amber-300">(4)</span> Nothing in this Article shall prohibit any Society member or university student from independently participating in external tournaments using personal resources. However, participation without Debate League membership shall not entitle a member to the support mechanisms outlined in this Section.</p>
+                    </div>
+                </section>
+
+                <!-- Section 5: Rights and Responsibilities -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Rights and Responsibilities of Debate League Members.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> Debate League members shall have priority nomination when the Society is allocated a limited number of slots for an external tournament.</p>
+                        <p><span class="font-semibold text-amber-300">(2)</span> Debate League members shall serve as mentors to novice members and may be assigned to lead training sessions or case-building workshops for their respective Houses.</p>
+                        <p><span class="font-semibold text-amber-300">(3)</span> Debate League members are expected to maintain a standard of conduct befitting the Society's representatives. Repeated minor disciplinary sanctions (two or more in a semester) or any major disciplinary sanction shall result in immediate review and potential removal from the Debate League by the High Council.</p>
+                        <p><span class="font-semibold text-amber-300">(4)</span> Debate League members shall maintain an active participation rate. Failure to participate in any Society-wide or House-wide debate activity for a continuous period of two (2) months during their term, without valid reason approved by the High Council, may result in removal from the League.</p>
+                    </div>
+                </section>
+
+                <!-- Section 6: Tracking and Transparency -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Tracking and Transparency.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> The Individual Debate Point Ledger shall be maintained in digital format by the Secretary of Internal Affairs. The Ledger shall record the date, member name, House, points added, running total, and specific activity or reason for each transaction.</p>
+                        <p><span class="font-semibold text-amber-300">(2)</span> All Society members shall have view access to the Individual Debate Point Ledger through the Society's official online platform. Edit access shall be restricted to the Secretary of Internal Affairs only.</p>
+                        <p><span class="font-semibold text-amber-300">(3)</span> Standings shall be updated within three (3) business days following each processed point transaction. A summary of the top ten (10) individual performers shall be presented monthly at the Society Assembly Meeting.</p>
+                        <p><span class="font-semibold text-amber-300">(4)</span> The High Council shall publish a semesterly report detailing: (a) the final Debate League roster; (b) a summary of Society support provided to League members for external tournaments; and (c) the competitive outcomes achieved by League members. This report shall be presented at the first Society Assembly Meeting of the following semester.</p>
+                    </div>
+                </section>
+
+                <!-- Section 7: Amendment and Review -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Amendment and Review.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> This Debate League framework may be amended through the process outlined in Article IX. The framework shall be reviewed annually alongside the House Point System and Individual Recognition Framework.</p>
+                        <p><span class="font-semibold text-amber-300">(2)</span> Amendments concerning procedural or administrative matters shall take effect immediately. Amendments concerning point values, Debate League selection criteria, member rights, or Society support obligations shall take effect at the start of the next semester.</p>
+                        <p><span class="font-semibold text-amber-300">(3)</span> Annex A: Debate Performance Criteria may be updated by majority vote of the High Council with notice to members, provided that such updates do not retroactively alter point values for activities already completed.</p>
+                    </div>
+                </section>
+
+                <!-- Section 8: Transitory Provision -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Transitory Provision.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        Upon adoption of this Article, the first selection for the Debate League shall occur at the end of the current semester. Individual Debate Points accumulated prior to adoption may be counted toward the inaugural selection if they derive from activities that would qualify under Annex A. The High Council shall ratify Annex A within thirty (30) days of this Article's adoption.
+                    </p>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article III · The Debate League</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

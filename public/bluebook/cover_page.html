@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blue Book - Cover Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,500;0,700;1,300&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles to augment Tailwind for premium typography */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+        /* Sovereign Gold Metallic Text Gradient */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* Sovereign Gold Metallic Border Gradient */
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+        /* Logo container hover effect */
+        .logo-container {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+
+    <div class="relative w-full max-w-4xl min-h-[1100px] bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white p-12 md:p-16 flex flex-col justify-between shadow-2xl border border-white/5 overflow-hidden">
+        
+        <!-- Background decorative elements -->
+        <div class="absolute inset-0 pointer-events-none opacity-5 flex items-center justify-center">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <header class="relative z-10 text-center space-y-2">
+            <h2 class="text-xs md:text-sm tracking-[0.4em] font-medium text-white/80 uppercase">
+                Benguet State University
+            </h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">
+                Debate Society
+            </h1>
+            <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-4"></div>
+        </header>
+
+        <main class="relative z-10 text-center my-auto py-8 space-y-8">
+            
+            <div class="space-y-3">
+                <p class="text-xs md:text-sm tracking-[0.3em] text-amber-400/80 font-medium uppercase">
+                    Rules and Procedures
+                </p>
+                
+                <h1 class="serif-title text-5xl md:text-7xl font-extrabold tracking-wide drop-shadow-lg py-2">
+                    <span class="gold-gradient-text">“The Blue Book”</span>
+                </h1>
+                
+                <p class="text-xs md:text-sm tracking-widest font-light text-white/60 italic uppercase pt-2">
+                    Operational Guidelines &amp; Governance Framework
+                </p>
+            </div>
+
+            <!-- Logo Container with Circle Border -->
+            <div class="relative flex items-center justify-center py-6">
+                <div class="logo-container w-40 h-40 border-2 border-[#D4AF37]/40 rounded-full flex items-center justify-center p-3 bg-gradient-to-br from-[#071126]/80 to-[#0B1B3D]/80 backdrop-blur-xs shadow-xl shadow-[#D4AF37]/10">
+                    
+                    <!-- Logo Image - Replace the src with your actual logo path -->
+                    <img 
+                        src="society-logo.png" 
+                        alt="BSU Debate Society Logo" 
+                        class="w-full h-full object-contain rounded-full p-1"
+                    />
+                    
+                </div>
+                
+                <!-- Decorative Lines -->
+                <div class="absolute left-[15%] md:left-[20%] w-12 md:w-16 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]/40"></div>
+                <div class="absolute right-[15%] md:right-[20%] w-12 md:w-16 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37]/40"></div>
+            </div>
+
+            <div class="space-y-2 pt-4">
+                <p class="text-xs tracking-[0.2em] uppercase font-bold text-amber-500/80">
+                    First Edition
+                </p>
+                <div class="pt-4 text-[11px] tracking-wider text-white/40 space-y-1">
+                    <p>Ratified by Majority Vote of the Society Assembly</p>
+                    <p class="italic text-white/30">In accordance with Article 9, Section 2 of the Constitution</p>
+                    <p class="font-medium text-white/50 mt-1">Date of Ratification: July __, 2026</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="relative z-10 mt-auto">
+            <div class="gold-gradient-border border p-4 bg-black/30 backdrop-blur-xs max-w-2xl mx-auto">
+                <div class="flex items-start space-x-3 text-left">
+                    <span class="text-amber-400 text-sm mt-0.5">⚖️</span>
+                    <div class="space-y-1">
+                        <h4 class="text-[10px] tracking-wider font-bold text-amber-400 uppercase">
+                            Constitutional Supremacy Note
+                        </h4>
+                        <p class="text-[10px] leading-relaxed text-white/60 font-light">
+                            In accordance with Article IX, Section 7(3) of these Rules and Procedures:
+                            <span class="italic text-white/80">"In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

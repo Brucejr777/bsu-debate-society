@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Annex C (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Table styling */
+        .point-table-wrap {
+            overflow-x: auto;
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .point-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .point-table th {
+            background: rgba(212, 175, 55, 0.12);
+            color: #fcd34d;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .point-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d1d5db;
+            vertical-align: top;
+        }
+        .point-table tr:last-child td {
+            border-bottom: none;
+        }
+        .point-table tr:hover td {
+            background: rgba(212, 175, 55, 0.04);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2,
+        .justify-text .point-table-wrap {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2 {
+                border-left-color: #D4AF37 !important;
+            }
+            .point-table th {
+                background: rgba(212, 175, 55, 0.2) !important;
+                color: #fcd34d !important;
+            }
+            .point-table td {
+                color: #d1d5db !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2,
+            .justify-text .point-table-wrap {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Annex C – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Annex Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Annex C</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Operational Compliance Templates</h3>
+                <p class="text-xs text-white/50 italic mt-1">Standardized Forms and Checklists</p>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–6 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This annex establishes standardized administrative templates to facilitate compliance with operational requirements under the Constitution and Rules and Procedures of the BSU Debate Society. Use of these templates is mandatory where expressly required by governing provisions. Templates shall be maintained in digital format by the Office of the Executive Secretary, with updates subject to the amendment procedures under Article IX. All submissions shall be processed in accordance with the data privacy principles under Article VIII, Section 7 of these Rules.
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Annual Conflict of Interest Disclosure Form.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30 italic text-sm text-amber-300/70">(For High Council and House Council Officers)</p>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80 mt-2">
+
+                        <p><span class="font-semibold text-amber-300">Legal Basis:</span> Constitution Article 7, Section 3(1)(h)(i); Rules Article VIII, Section 7(1)(f)</p>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">A. Required Fields:</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(1) Officer Information:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Full Name and House Affiliation</p>
+                                    <p>(b) Office/Position Held (High Council or House Council)</p>
+                                    <p>(c) Term of Service (Semester/Academic Year)</p>
+                                    <p>(d) Date of Submission</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(2) Disclosure Categories (Check all that apply and provide details):</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Financial Interest: Do you, or an immediate family member, hold a financial interest in any vendor, supplier, or entity with which the Society or your House has conducted or may conduct business? [ ] Yes [ ] No <br> If Yes, describe nature, entity name, and estimated value:</p>
+                                    <p>(b) Competitive Advantage: Are you currently involved in any external debate organization, tournament series, or competitive initiative that may create a perceived or actual advantage for your House in Society point calculations? [ ] Yes [ ] No <br> If Yes, describe nature and potential impact:</p>
+                                    <p>(c) Personal Relationship: Do you have a close personal, familial, or professional relationship with any member, officer, or external party that may reasonably be perceived to impair your impartiality in deliberations, disciplinary proceedings, or resource allocations? [ ] Yes [ ] No <br> If Yes, describe relationship and relevant context:</p>
+                                    <p>(d) Prior Consultation: Have you participated in unofficial consultations negotiations regarding any matter pending before your Council that may compromise objective judgment? [ ] Yes [ ] No <br> If Yes, describe matter and nature of involvement:</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(3) Certification Statement:</span></p>
+                                <p class="italic pl-4">"I certify that the information provided herein is true and complete to the best of my knowledge. I acknowledge my duty to recuse myself from any matter in which I have disclosed a conflict, and to update this disclosure should circumstances change during my term."</p>
+                                <p>Signature: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Date: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">B. Submissions Instructions:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(1) This Form shall be submitted annually within fourteen (14) calendar days of assumption of office, and updated within seven (7) days of any material change in disclosed circumstances.</p>
+                                <p>(2) High Council officers shall submit to the Executive Secretary and the Director of Internal Affairs. House Council officers shall submit to their House Secretariat Director and furnish a copy to the Society Office of Internal Affairs.</p>
+                                <p>(3) Submissions shall be made via the Society's secure digital platform in a sealed envelope marked "CONFIDENTIAL - CONFLICT DISCLOSURE."</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">C. Privacy Notice:</p>
+                            <p class="text-white/70">Disclosures shall be treated as Restricted Records under Article VIII, Section 2(2) of these Rules. Access shall be limited to the Executive Secretary, Director of Internal Affairs, and adjudicating bodies where recusal or conflict determination is required. Unauthorized disclosure of submitted information shall constitute a Major Violation under Article VI, Section 2(2)(b).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">AI-Assisted Case & Research Disclosure Template.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30 italic text-sm text-amber-300/70">(For Competition Submissions)</p>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80 mt-2">
+
+                        <p><span class="font-semibold text-amber-300">Legal Basis:</span> Article 3, Section 11; Rules Article I, Section 3(1); Annex A, Section 5</p>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">A. Required Fields:</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(1) Submission Metadata:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Case/Research Title and Topic</p>
+                                    <p>(b) Competition/Tournament Name and Date</p>
+                                    <p>(c) Submitting Member(s) Name(s) and House Affiliation</p>
+                                    <p>(d) Role in Submission (Author, Researcher, Editor, etc.)</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(2) AI Tool Disclosure:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) List all artificial intelligence, machine learning, or automated research tools utilized in preparation:</p>
+                                    <p>(b) For each tool, specify purpose of use (e.g., literature review, argument generation, citation formatting, language editing):</p>
+                                    <p>(c) Indicate whether tool output was used verbatim, adapted, or used solely for ideation:</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(3) Human Verification Statement:</span></p>
+                                <p class="italic pl-4">"I affirm that all substantive arguments, factual assertions, and analytical conclusions contained in this submission have been reviewed, verified, and approved by human author(s). AI-assisted content has been critically evaluated for accuracy, relevance, and ethical compliance. I accept full responsibility for the intellectual integrity of this work."</p>
+                                <p>Signature(s): &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Date: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                                <p><span class="font-semibold text-amber-200">(4) Attribution Log (Optional but Recommended):</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Source/Tool</th><th>Content Type</th><th>Extent of Use</th><th>Verification Method</th></tr></thead>
+                                        <tbody>
+                                            <tr><td colspan="4" class="text-white/50 italic text-center">[Provide details as applicable]</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">B. Submission Instructions:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(1) This Template shall accompany all case briefs, research packages, or position papers submitted for Society-sanctioned competitions, inter-House tournaments, or external representation under Article III.</p>
+                                <p>(2) Submissions shall be filed with the tournament director, House Chancellor, or Office of Internal Affairs as required by event protocols.</p>
+                                <p>(3) Failure to submit a completed disclosure may result in provisional disqualification pending review by the High Tribunal under Article I, Section 5(5).</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">C. Privacy Notice:</p>
+                            <p class="text-white/70">Disclosures shall be treated as Public Records under Article VIII, Section 2(1) to the extent they accompany publicly submitted materials. Proprietary methodology details may be redacted upon request. Adjudicators and tournament officials shall have access for integrity verification purposes only.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Emergency Continuity Activation Checklist.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30 italic text-sm text-amber-300/70">(For Force Majeure Scenarios)</p>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80 mt-2">
+
+                        <p><span class="font-semibold text-amber-300">Legal Basis:</span> Constitution Article 8, Section 2(5)(b)-(c); Rules Article IV, Section 9(1)(e)</p>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">A. Required Fields:</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(1) Activation Authority:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Declaring Officer (President/Vice President/House Chancellor):</p>
+                                    <p>(b) Date and Time of Declaration:</p>
+                                    <p>(c) Basis for Declaration (check one):</p>
+                                    <div class="sub-list-2 space-y-1">
+                                        <p>[ ] Institutional closure order</p>
+                                        <p>[ ] Public health emergency directive</p>
+                                        <p>[ ] Natural disaster or environmental hazard</p>
+                                        <p>[ ] Security threat or civil unrest</p>
+                                        <p>[ ] Other extraordinary circumstance:</p>
+                                    </div>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(2) Quorum Verification Protocol:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Virtual Platform Selected:</p>
+                                    <p>(b) Authentication Method (e.g., email, two-factor verification):</p>
+                                    <p>(c) Roll Call Completed: [ ] Yes [ ] No</p>
+                                    <p>(d) Verified Participants: of entitled members (minimum 50% + 1 required)</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(3) Action Documentation Requirements:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Meeting minutes recorded via platform logging or designated scribe: [ ] Yes [ ] No</p>
+                                    <p>(b) Vote tallies captured with timestamp and participant verification: [ ] Yes [ ] No</p>
+                                    <p>(c) Emergency justification appended to official record: [ ] Yes [ ] No</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(4) Ratification Timeline:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Anticipated date of restored physical convening capacity:</p>
+                                    <p>(b) Deadline for physical quorum ratification (14 calendar days from restoration):</p>
+                                    <p>(c) Designated officer responsible for tracking ratification:</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">B. Submission Instructions:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(1) This Checklist shall be completed contemporaneously with any meeting convened under Emergency Quorum procedures.</p>
+                                <p>(2) The completed Checklist shall be submitted to the Executive Secretary within twenty-four (24) hours of adjournment for archival in the Society Disciplinary Ledger under Article VIII, Section 3.</p>
+                                <p>(3) Failure to complete required documentation may render actions taken under Emergency Quorum advisory only, subject to re-deliberation under Article IV, Section 9(1)(e).</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">C. Privacy Notice:</p>
+                            <p class="text-white/70">Checklists containing sensitive operational details shall be classified as Restricted Records under Article VIII, Section 2(2). Summary reports of emergency actions shall be published to the Society Assembly Meeting per Article IV, Section 9(1)(e), with redaction of security-sensitive information.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Mentorship Pairing & Progress Ledger.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30 italic text-sm text-amber-300/70">(For Tracking Executive Intern Development)</p>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80 mt-2">
+
+                        <p><span class="font-semibold text-amber-300">Legal Basis:</span> Constitution Article 5, Section 2(b); Rules Article VI, Section 4</p>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">A. Required Fields:</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(1) Pairing Information:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Executive Intern Name, House, and Admission Date:</p>
+                                    <p>(b) Assigned Full Member Mentor Name, House, and Office Assignment:</p>
+                                    <p>(c) Supervising High Council Secretary:</p>
+                                    <p>(d) Internship Period (Start Date - End Date):</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(2) Competency Module Tracking:</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Module Title</th><th>Completion Date</th><th>Verified By</th><th>Status</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Parliamentary Procedure Fundamentals</td><td></td><td></td><td>[ ] Complete</td></tr>
+                                            <tr><td>Debate Theory &amp; Case Construction</td><td></td><td></td><td>[ ] Complete</td></tr>
+                                            <tr><td>Ethical Conduct and Society Values</td><td></td><td></td><td>[ ] Complete</td></tr>
+                                            <tr><td>Organizational Management Protocols</td><td></td><td></td><td>[ ] Complete</td></tr>
+                                            <tr><td>Operational Systems Training</td><td></td><td></td><td>[ ] Complete</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(3) Milestone Evaluation:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Satisfactory completion of assigned operational tasks: [ ] Yes [ ] No Comments:</p>
+                                    <p>(b) Mentor evaluation of professionalism, initiative, and growth: Rating: [ ] Exceeds Expectations [ ] Meets Expectations [ ] Needs Improvement</p>
+                                    <p>(c) Reflective portfolio submitted and reviewed: [ ] Yes [ ] No Date of Review:</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(4) Progression Determination:</span></p>
+                                <p class="italic pl-4">"Based on the above evaluations, the Executive Intern is: [ ] Recommended for elevation to Full Membership status [ ] Recommended for extension of internship with specified remediation: [ ] Not recommended for progression; reasons:</p>
+                                <p>Mentor Signature: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Date: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                                <p>Supervising Secretary Signature: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Date: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">B. Submission Instructions:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(1) This Ledger shall be initiated upon assignment of an Executive Intern and updated upon completion of each competency module and milestone.</p>
+                                <p>(2) Final evaluation shall be submitted to the Office of Internal Affairs within seven (7) calendar days of internship completion for verification of Full Membership eligibility under Article 5, Section 2(c).</p>
+                                <p>(3) Copies shall be retained by the mentor, intern, and supervising Secretary for reference during the progression review process.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">C. Privacy Notice:</p>
+                            <p class="text-white/70">Ledger entries constitute member development records under Article VIII, Section 2(2)(b) and shall be accessible only to the intern, mentor, supervising officers, and the Office of Internal Affairs. Aggregate, anonymized data may be used for program evaluation purposes with High Council approval.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Whistleblower Confidential Intake Form.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30 italic text-sm text-amber-300/70">(For Secure Misconduct Reporting)</p>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80 mt-2">
+
+                        <p><span class="font-semibold text-amber-300">Legal Basis:</span> Constitution Article 3, Section 14; Rules Article VI, Section 4(6)</p>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">A. Required Fields:</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(1) Reporting Channel Selection:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Submission Method (check one):</p>
+                                    <div class="sub-list-2 space-y-1">
+                                        <p>[ ] Secure digital portal (Society OIA Platform)</p>
+                                        <p>[ ] Encrypted email to OIA Director</p>
+                                        <p>[ ] Sealed physical delivery to Chief Adviser</p>
+                                        <p>[ ] In-person confidential interview (by appointment)</p>
+                                    </div>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(2) Discloser Preferences:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Do you wish to remain anonymous? [ ] Yes [ ] No If No, provide contact information for follow-up:</p>
+                                    <p>(b) Preferred method for status updates (if anonymous, updates will be posted to secure portal with case reference):</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(3) Disclosure Content:</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(a) Nature of Alleged Misconduct (check all that apply):</p>
+                                    <div class="sub-list-2 space-y-1">
+                                        <p>[ ] Constitutional violation</p>
+                                        <p>[ ] Financial irregularity or misappropriation</p>
+                                        <p>[ ] Ethical breach or code of conduct violation</p>
+                                        <p>[ ] Retaliation or intimidation</p>
+                                        <p>[ ] Threat to member safety or institutional integrity</p>
+                                        <p>[ ] Other:</p>
+                                    </div>
+                                    <p>(b) Parties Involved (names, positions, Houses - provide only what is known):</p>
+                                    <p>(c) Factual Summary (include dates, locations, witnesses, and supporting evidence references):</p>
+                                    <p>(d) Supporting Documentation (attach or reference; do not submit original documents):</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(4) Good Faith Certification:</span></p>
+                                <p class="italic pl-4">"I declare that this disclosure is made in good faith based on information reasonably believed to be true. I understand that knowingly false or malicious reports may constitute a Major Violation under Article VI, Section 2(2)(b), and that anonymity protections do not extend to disclosures made with intent to harm or deceive."</p>
+                                <p>Anonymous Identifier (if applicable): &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Date of Submission: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">B. Submission Instructions:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(1) This Form shall be submitted directly to the Society Office of Internal Affairs or the Chief Adviser through the secure channels specified above. Do not submit to House Councils or other officers unless they are the subject of the disclosure.</p>
+                                <p>(2) Upon receipt, the OIA Director or Chief Adviser shall acknowledge submission within forty-eight (48) hours via the discloser's preferred method, assigning a confidential case reference number.</p>
+                                <p>(3) Investigations shall commence within seven (7) business days unless extraordinary circumstances warrant delay, with periodic status updates provided per the discloser's preferences.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">C. Privacy Notice:</p>
+                            <p class="text-white/70">All submissions shall be treated as Confidential Records under Article VIII, Section 2(3) of these Rules. Identity of anonymous disclosers shall be protected through technical and procedural safeguards, including redaction of identifying information and limitation of access to authorized adjudicating personnel. Retaliation against any discloser acting in good faith is strictly prohibited and shall constitute a Major Violation subject to sanctions under Article VI, Section 4(6)(d)-(e).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Annex C · Operational Compliance Templates</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

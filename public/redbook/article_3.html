@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Red Book · Article III</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – Red Book Constitution with Gold Accents */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a0505;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Gold Metallic Gradient Text (from Blue Book) */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gold Gradient Border */
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+            border-image-slice: 1;
+        }
+
+        /* Gold Dividers */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #1a0505;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement – Gold Accents */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+            /* amber-300 */
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2 {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #1a0505 !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-red-400\/80,
+            .text-red-400\/90 {
+                color: #CC0000 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-red-900\/30 {
+                border-color: #8B0000 !important;
+            }
+            .border-amber-400\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #1a0505 !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a1a1a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2 {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#1a0505] via-[#0d0303] to-[#080101] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings (gold) -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article III – VERBATIM -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-red-900/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-red-400/80 font-medium">Constitution</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article III</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Declaration of Principles</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Article III, Sections 1–15 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">The Society shall uphold the transformative power of reasoned dialogue.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It recognizes that civil and intellectual debate is not merely an exercise in rhetoric, but a lifelong discipline essential to the pursuit of truth, critical thought, and personal development.
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">The Society shall promote and protect the principles of diversity and inclusion.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It affirms the importance of integrating the contributions, presence, and perspectives of individuals from various backgrounds into the community, and shall actively advocate for awareness of these values among its members and the broader local community.
+                    </p>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">The Society shall adhere to the principles of democratic leadership, discipline, cooperation, industry, brotherhood, and harmony among its constituents, and shall provide appropriate avenues for the development and application of such competencies.</span>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">The Society shall recognize and uphold the vital ties among students, faculty, administration, and other sectors of the academic community within Benguet State University.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It shall serve as a platform for the peaceful and intellectual discussion of issues, concerns, and institutional initiatives.
+                    </p>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">The Society and its members shall uphold the highest standards of honesty, fairness, and ethical conduct.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        All actions undertaken in the name of the Society shall be guided by a shared sense of responsibility: to truth, to one another, and to the duties entrusted to each member.
+                    </p>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">The Society shall promote an enduring appreciation of Filipino culture, heritage, and values.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It shall advocate for a form of patriotism grounded in critical love, compassion, civic engagement, and social responsibility, and shall reject all expressions of exclusion, hostility, or prejudice.
+                    </p>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">The Society shall cultivate a spirit of constructive and healthy competition among its members and constituent Houses.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        All competitions and contests shall be designed to inspire excellence, deepen commitment, and strengthen both individual character and collective bonds.
+                    </p>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">The Society shall preserve its meaningful traditions while remaining open to innovation and reform.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It affirms that institutional relevance requires adaptability, and that traditions must evolve in response to the changing needs of its members and the broader society.
+                    </p>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">The Society shall regard membership not merely as a temporary affiliation, but as a continuous process of growth: intellectually, socially, and morally.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It shall strive to form individuals who are articulate, principled, and prepared to lead both within and beyond the organization.
+                    </p>
+                </section>
+
+                <!-- Section 10 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 10.</span>
+                        <span class="section-title-text">The Society shall affirm that education is not solely the acquisition of knowledge, but also the cultivation of awareness, empathy, and agency.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        It shall serve as a platform for empowerment through discourse, recognizing that learning is a means to liberation, personally, socially, and morally.
+                    </p>
+                </section>
+
+                <!-- Section 11 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 11.</span>
+                        <span class="section-title-text">The Society shall uphold the responsible and ethical integration of emerging technologies, including artificial intelligence, into debate preparation, research, and administrative operations.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        The Society recognizes that technological advancement must serve the pursuit of truth and intellectual integrity, not circumvent them. All members and officers shall ensure that technological tools are employed transparently, with proper attribution, and in strict compliance with academic standards, thereby safeguarding the authenticity of discourse and honoring the Pillar of Kabunian through responsible stewardship of knowledge. These technological practices shall be interpreted consistently with this Constitution and shall not infringe upon the intellectual property rights or academic freedoms guaranteed to members under Article 4.
+                    </p>
+                </section>
+
+                <!-- Section 12 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 12.</span>
+                        <span class="section-title-text">The Society shall integrate environmental sustainability into its procurement practices, event planning, and daily operations.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Recognizing that intellectual discourse thrives within a healthy and resilient community, the Society shall prioritize eco-conscious resource allocation, minimize waste, and promote sustainable engagement with its physical and digital environments. This commitment to ecological responsibility shall be guided by the Pillar of Laon's emphasis on long-term stewardship and shall be harmonized with the Society's operational mandates without compromising its core mission or the rights of its members under Article 4.
+                    </p>
+                </section>
+
+                <!-- Section 13 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 13.</span>
+                        <span class="section-title-text">The Society shall prioritize the holistic well-being and mental health of its members in the design, scheduling, and execution of all activities and competitive engagements.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Acknowledging that rigorous intellectual pursuit must be balanced with psychological resilience, the Society shall foster a supportive environment that normalizes rest, provides accessible wellness resources, and rejects cultures of burnout or excessive strain. This principle shall be applied in a manner that upholds the Pillar of Manama's dedication to human dignity and shall be construed in full alignment with the fundamental rights and protections afforded to members under Article 4.
+                    </p>
+                </section>
+
+                <!-- Section 14 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 14.</span>
+                        <span class="section-title-text">The Society shall establish and maintain a confidential, non-retaliatory mechanism for the reporting of misconduct, ethical violations, or administrative malfeasance.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Any member who discloses information in good faith regarding breaches of the Constitution, financial irregularities, or threats to institutional integrity shall be protected from retaliation, intimidation, or adverse action. This safeguard shall ensure accountability while preserving the presumption of innocence and due process rights enshrined in Article 4, and shall be interpreted consistently with the Society's commitment to the Pillar of Bathala's foundational values of truth, transparency, and principled leadership.
+                    </p>
+                </section>
+
+                <!-- Section 15 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 15.</span>
+                        <span class="section-title-text">The Society shall cultivate a structured and meaningful relationship with its alumni, recognizing their enduring contributions to the organization's legacy and intellectual tradition.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Formal alumni engagement shall be facilitated through advisory roles, mentorship programs, and institutional partnerships, provided that such involvement remains strictly consultative and does not supersede the autonomous decision-making authority of current student officers, the High Council, or the House Councils. Alumni participation shall be governed by clear operational boundaries that preserve student-led governance while honoring the Pillar of Kabunian's legacy of continuous knowledge transmission, and shall be interpreted in full conformity with the constitutional framework established herein.
+                    </p>
+                </section>
+
+                <!-- Constitutional Note – with Gold Border -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Authority</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                The Constitution of the BSU Debate Society, known as The Red Book, is the supreme governing document of the organization. All policies, rules, and procedures must conform to its provisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article III · Declaration of Principles</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

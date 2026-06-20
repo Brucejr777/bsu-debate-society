@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article V (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article V – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article V</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Financial and Resource Management Protocols</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–9 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This Article establishes operational procedures for the management of Society-wide and House-level financial resources, assets, and logistical support. It implements the fiscal authority provisions under Article 7 and Article 8, Sections 9-11 of the Constitution, and provides detailed workflows to ensure transparency, accountability, and sustainability. This Article does not alter constitutional thresholds for fee-setting, budget approval, or audit requirements, but specifies administrative processes to facilitate their exercise. All financial and resource management shall align with the Society's principles under Article 3, particularly Sections 5 (honesty and ethical conduct) and 10 (education as empowerment).
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Classification of Resources.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Society-Wide Resources.</span> Resources managed by the High Council for the benefit of the entire Society, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The General Fund: Membership dues, tournament revenues, external grants, and donations collected at the Society level;</p>
+                                <p>(b) Society Assets: Equipment, materials, digital platforms, or intellectual property owned by the Society as a whole;</p>
+                                <p>(c) Central Logistics: Venue bookings, transportation, or services procured for Society-wide events.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) House Resources.</span> Resources managed by a House Council for the benefit of its members, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) House Treasury: Funds raised through House-specific initiatives, allocated Society bonuses, or House-level membership contributions;</p>
+                                <p>(b) House Assets: Equipment, materials, or creative works owned or maintained by a specific House;</p>
+                                <p>(c) House Logistics: Resources procured for House Assemblies, House-led initiatives, or House-specific representation.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(3) Distinction and Autonomy.</span> House Resources shall remain under the exclusive management of the respective House Council, subject to the reporting requirements under Section 7. Society-Wide Resources shall be managed by the Office of Financial and Resource Affairs (OFRA) under the oversight of the High Council. No House shall commingle Society-Wide and House Resources without prior written approval from the President and the Council of House Chancellors.</p>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Budget Preparation and Approval.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Society-Wide Budget.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Timeline: The OFRA shall draft the Annual Society Budget at least thirty (30) days prior to the start of each academic year.</p>
+                                <p>(b) Consultation: The draft budget shall be circulated to all House Councils and High Council offices for input at least twenty-one (21) days prior to submission.</p>
+                                <p>(c) Approval Process: The final budget shall be presented to the Council of House Chancellors for deliberation. Adoption requires: (a) a majority vote of the Council of House Chancellors; and (b) the concurrence of the President.</p>
+                                <p>(d) Publication: The approved budget shall be posted to the Society's official digital platform within five (5) business days of adoption.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) House Budget.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Timeline: Each House Council shall draft its Semester House Budget at least fourteen (14) days prior to the start of each semester.</p>
+                                <p>(b) Approval Process: The budget shall be adopted by majority vote of the House Council and approved by the House Chancellor.</p>
+                                <p>(c) Reporting: A copy of the approved House Budget shall be submitted to the OFRA within three (3) business days of adoption for consolidation into the Society-wide financial overview.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Emergency or Supplemental Budgets.</span> Requests for funds outside the approved budget may be submitted via a Supplemental Budget Request Form. Approval requires: (a) justification of urgency or unforeseen need; (b) endorsement by the relevant House Chancellor or High Council Secretary; and (c) approval by the President for Society-wide requests or the House Chancellor for House-level requests.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Mandatory House Resource Consolidation.</span> In accordance with Constitution Article 7, Section 2(10), each House Council shall submit a Financial Reconciliation Report to the Office of Financial and Resource Affairs (OFRA) within fourteen (14) calendar days following the end of each semester. The House shall remit twenty percent (20%) of its unrestricted semester-end surplus to a centralized Society Sustainability Fund. Remittance shall be completed within seven (7) business days of OFRA's verification of the House Financial Report. The remaining eighty percent (80%) shall be retained under the exclusive management of the House Council. OFRA shall maintain a public ledger of all consolidated funds, and the High Council shall issue a semi-annual utilization report to the Society Assembly.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Disbursement and Reimbursement Procedures.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Authorization Thresholds.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Minor Disbursements (up to ₱500): May be authorized by the relevant House Chancellor or High Council Secretary with prior budget allocation.</p>
+                                <p>(b) Standard Disbursements (₱501–2,000): Require written approval from the President (for Society-wide) or House Chancellor (for House-level), with supporting documentation.</p>
+                                <p>(c) Major Disbursements (above ₱2,000): Require approval by majority vote of the Council of House Chancellors (for Society-wide) or House Council (for House-level), with prior budget allocation and detailed justification.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Reimbursement Process.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Submission: Members seeking reimbursement shall submit a Reimbursement Request Form within seven (7) calendar days of incurring the expense. The form must include: official receipts, purpose of expense, budget line reference, and signature of the authorizing officer.</p>
+                                <p>(b) Verification: The OFRA (for Society-wide) or House Financial Director (for House-level) shall verify receipts and budget alignment within three (3) business days.</p>
+                                <p>(c) Processing: Approved reimbursements shall be processed within five (5) business days of verification. Payments shall be made via cash, bank transfer, or other documented method.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(3) Debate League Support.</span> Reimbursement or advance requests under Article III, Section 4(1)(f) shall follow the Standard or Major Disbursement process based on amount, with the additional requirement of a post-tournament report under Article III, Section 4(2)(c).</p>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Procurement and Asset Management.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Procurement Guidelines.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Quotation Requirement: Purchases above ₱1,000 shall require at least two (2) price quotations from different suppliers, documented and attached to the purchase request.</p>
+                                <p>(b) Preference for Local and Sustainable: When feasible, priority shall be given to local suppliers, environmentally sustainable materials, and vendors aligned with the Society's values.</p>
+                                <p>(c) Approval Chain: All procurement requests shall follow the authorization thresholds in Section 4(1).</p>
+                            </div>
+                            <div class="sub-list space-y-1 text-white/70 mt-1">
+                                <p><span class="font-semibold text-amber-300">(d) Sustainable Procurement Priorities.</span> In furtherance of the Society's commitment to environmental stewardship under Article 3, Section 12 of the Constitution, all procurement requests shall incorporate sustainability considerations as follows:</p>
+                                <div class="sub-list space-y-1">
+                                    <p><span class="font-semibold text-amber-200">(i) Threshold for Review.</span> Purchases exceeding Two Thousand Pesos (₱2,000) shall require a brief Sustainability Impact Statement attached to the procurement request, documenting consideration of: (A) availability of local or regional suppliers; (B) environmental impact of materials or services, including waste generation and carbon footprint; (C) potential for reusability, repairability, or end-of-life disposal; and (D) alignment with the Society's operational sustainability goals.</p>
+                                    <p><span class="font-semibold text-amber-200">(ii) Priority Criteria.</span> When evaluating suppliers or products of comparable cost and quality, preference shall be given to options that: (A) source materials or labor from local Benguet communities or Philippine-based enterprises; (B) utilize recycled, recyclable, biodegradable, or low-impact materials; (C) demonstrate durability and potential for extended use or repurposing; or (D) offer take-back, refurbishment, or responsible disposal programs.</p>
+                                    <p><span class="font-semibold text-amber-200">(iii) Exemption Provisions.</span> The Sustainability Impact Statement requirement shall not apply to:</p>
+                                    <div class="sub-list space-y-1">
+                                        <p>(A) emergency procurements necessary to ensure member safety or continuity of essential operations;</p>
+                                        <p>(B) purchases where no sustainable alternative is reasonably available within the required timeframe or budget;</p>
+                                        <p>(C) items procured through University-mandated vendors or centralized procurement systems; or</p>
+                                        <p>(D) expenditures below the Minor Disbursement threshold under Section 4(1)(a).</p>
+                                    </div>
+                                    <p>A brief written justification citing the applicable exemption shall be included in the procurement record.</p>
+                                    <p><span class="font-semibold text-amber-200">(iv) Implementation Guidance.</span> The Office of Financial and Resource Affairs shall maintain a non-exhaustive list of preferred sustainable suppliers and materials for reference by requesting officers. Sustainability considerations shall be weighed alongside cost, quality, and timeliness; no procurement shall be delayed or denied solely on sustainability grounds unless expressly required by Society policy or University regulation.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Asset Inventory and Maintenance.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Inventory Ledger: The OFRA (for Society assets) and each House Financial Director (for House assets) shall maintain a digital Asset Inventory Ledger recording: item description, serial/identification number, date of acquisition, cost, custodian, condition, and location.</p>
+                                <p>(b) Check-Out System: Members borrowing Society or House assets shall sign a Check-Out Form acknowledging responsibility for care and return. Damaged or lost items shall be reported immediately; replacement costs may be assessed based on negligence.</p>
+                                <p>(c) Annual Audit: A physical inventory audit shall be conducted at the end of every semester. Discrepancies shall be reported to the High Council and relevant House Council for resolution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Income-Generating Projects and External Funding.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Society-Wide Projects.</span> Income-Generating Projects (IGPs) managed at the Society level shall be proposed by any High Council office or House Council. Proposals shall include: project description, target revenue, budget, timeline, and risk assessment. Approval requires: (a) majority vote of the Council of House Chancellors; and (b) concurrence of the President. Net proceeds shall be allocated to the General Fund unless otherwise specified in the approved proposal.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) House-Level Projects.</span> Houses may conduct IGPs independently. Proposals shall be approved by majority vote of the House Council and the House Chancellor. A copy of the approved proposal and post-project financial report shall be submitted to the OFRA for Society-wide transparency. Net proceeds shall remain with the House unless the project utilized Society-Wide Resources, in which case a proportional sharing agreement shall be established prior to launch.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) External Grants and Sponsorships.</span> All applications for external grants, sponsorships, or donations shall be coordinated through the Office of External Affairs. Agreements shall be reviewed by the President and, if affecting multiple Houses or Society-wide obligations, ratified by the Council of House Chancellors. Funds received shall be allocated per the agreement terms and documented in the appropriate ledger.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Financial Reporting and Transparency.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Monthly Financial Snapshot.</span> The OFRA shall publish a Monthly Financial Snapshot on the Society's official digital platform within ten (10) business days after the end of each month. The Snapshot shall include: opening balance, income received, expenses incurred, closing balance, and notable transactions (without revealing sensitive personal data). House-level summaries shall be included with House Chancellor approval.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Semester Financial Report.</span> At the end of each semester, the OFRA shall prepare a comprehensive Semester Financial Report for presentation at the Society Assembly Meeting. The Report shall include: budget vs. actual comparison, category-wise expenditure analysis, asset inventory status, and recommendations for the next semester. Each House Council shall submit a parallel House Financial Report for inclusion.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Annual Independent Review.</span> At the end of each academic year, the Council of House Chancellors shall appoint an Independent Review Committee composed of: (a) one senior member not serving in the High Council or any House Council; (b) one faculty adviser or University student affairs representative; and (c) one alumni member in good standing. The Committee shall review the Annual Financial Statements and issue a Report of Findings to the Society Assembly Meeting. The Committee shall have access to all financial records but shall maintain confidentiality of sensitive information.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Prohibited Acts and Sanctions.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Prohibited Acts.</span> The following acts are strictly prohibited:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Commingling: Using Society-Wide Resources for exclusive House benefit, or vice versa, without prior written approval;</p>
+                                <p>(b) Unauthorized Disbursement: Spending funds without proper authorization or outside approved budget lines;</p>
+                                <p>(c) Falsification: Submitting false receipts, inflating expenses, or misrepresenting financial data;</p>
+                                <p>(d) Personal Gain: Using Society or House position, resources, or information for personal financial benefit;</p>
+                                <p>(e) Negligent Custody: Failing to exercise reasonable care over Society or House assets, resulting in loss or damage.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Sanctions.</span> Violations shall be addressed through the disciplinary procedures under Article VI. In addition to disciplinary sanctions, financial violations may result in: (a) restitution of misused funds; (b) suspension of financial privileges for the responsible officer or House; (c) mandatory financial management training; or (d) referral to University authorities if criminal conduct is alleged; and (e) expulsion from the Society.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">Loan Services.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1) Authority to Lend.</span> The Society may offer loan services to Houses or active members for approved Society-related activities.</p>
+                        <p><span class="font-semibold text-amber-300">(2) Prohibition on Borrowing.</span> The Society itself is prohibited from securing external loans or indebtedness that exceeds its current assets.</p>
+                        <p><span class="font-semibold text-amber-300">(3) Repayment Terms.</span> All loans must be paid within the academic year they were incurred. Installment payments may be an option subject to approval by the Office of Financial and Resource Affairs.</p>
+                        <p><span class="font-semibold text-amber-300">(4) Default.</span> Failure to repay loans within the stipulated period shall result in the suspension of financial privileges and may be treated as a Major Violation under Article VI.</p>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article V · Financial and Resource Management Protocols</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

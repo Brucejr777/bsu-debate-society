@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Red Book · Article XI</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – Red Book Constitution with Gold Accents */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a0505;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Gold Metallic Gradient Text (from Blue Book) */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gold Gradient Border */
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+            border-image-slice: 1;
+        }
+
+        /* Gold Dividers */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #1a0505;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement – Gold Accents */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+            /* amber-300 */
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2 {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #1a0505 !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-red-400\/80,
+            .text-red-400\/90 {
+                color: #CC0000 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-red-900\/30 {
+                border-color: #8B0000 !important;
+            }
+            .border-amber-400\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #1a0505 !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a1a1a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2 {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2 {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#1a0505] via-[#0d0303] to-[#080101] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings (gold) -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article XI – VERBATIM -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-red-900/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-red-400/80 font-medium">Constitution</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article XI</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Elections and Votes</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Article XI, Sections 1–2 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Elections for all Society officers must be held at a general meeting and decided through a majority vote of active members, except for the Office of the President, which shall be elected exclusively through the Presidential Conclave as established in Article VII of the Rules and Procedures, composed solely of the four sitting House Chancellors.</span>
+                    </div>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">The electoral process may be subject to provisions determined from time to time by the Executive Committee, consistent with the constitution.</span>
+                    </div>
+                </section>
+
+                <!-- Constitutional Note – with Gold Border -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Authority</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                The Constitution of the BSU Debate Society, known as The Red Book, is the supreme governing document of the organization. All policies, rules, and procedures must conform to its provisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article XI · Elections and Votes</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Annex A (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Table styling for point tables */
+        .point-table-wrap {
+            overflow-x: auto;
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .point-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .point-table th {
+            background: rgba(212, 175, 55, 0.12);
+            color: #fcd34d;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .point-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d1d5db;
+            vertical-align: top;
+        }
+        .point-table tr:last-child td {
+            border-bottom: none;
+        }
+        .point-table tr:hover td {
+            background: rgba(212, 175, 55, 0.04);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2,
+        .justify-text .point-table-wrap {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2 {
+                border-left-color: #D4AF37 !important;
+            }
+            .point-table th {
+                background: rgba(212, 175, 55, 0.2) !important;
+                color: #fcd34d !important;
+            }
+            .point-table td {
+                color: #d1d5db !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2,
+            .justify-text .point-table-wrap {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Annex A – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Annex Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Annex A</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Debate Performance Criteria</h3>
+                <p class="text-xs text-white/50 italic mt-1">Individual Debate Point System under Article III, Section 2(2) of the Rules and Procedures</p>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–7 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This Annex establishes the specific criteria and point values for earning Individual Debate Points under Article III (The Debate League) of the Rules and Procedures. These points determine eligibility for Debate League membership and are tracked separately from House Points (Article I) and Individual Recognition Awards (Article II).
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Eligible Activities.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Society-Wide Debates.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Inter-House Debate Cup matches (Article I, Section 10(1)).</p>
+                                <p>(b) Society-organized open tournaments.</p>
+                                <p>(c) Practice debates designated as point-eligible by the High Council.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) House-Wide Debates.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) House-organized debate sessions approved in advance by the High Council.</p>
+                                <p>(b) House selection trials for external competitions.</p>
+                                <p>(c) Internal House tournaments with documented judging results.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) External Competitions.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Tournaments where members represent Benguet State University or the Debate Society.</p>
+                                <p>(b) Competitions recognized by the High Council as legitimate academic, student, or professional debating events.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Point Values by Activity Type.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <!-- A. Society-Wide and Approved House-Wide Debates -->
+                        <div>
+                            <p class="font-semibold text-amber-300">A. Society-Wide and Approved House-Wide Debates</p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Performance Metric</th>
+                                            <th>Points Awarded</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Match Win</td>
+                                            <td class="text-amber-300 font-medium">+15 points</td>
+                                            <td>Awarded to each debater on the winning team</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Match Draw</td>
+                                            <td class="text-amber-300 font-medium">+7 points</td>
+                                            <td>Awarded to each debater in a tied decision</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Match Participation</td>
+                                            <td class="text-amber-300 font-medium">+3 points</td>
+                                            <td>Awarded to each debater who completes a scheduled match</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Best Speaker (per debate)</td>
+                                            <td class="text-amber-300 font-medium">+10 points</td>
+                                            <td>Awarded to individual recognized by the judges</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Top 3 Speakers (per tournament)</td>
+                                            <td class="text-amber-300 font-medium">+5 points each</td>
+                                            <td>For 2nd and 3rd place speaker awards</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- B. External Competitions -->
+                        <div>
+                            <p class="font-semibold text-amber-300">B. External Competitions (Representing BSU/Debate Society)</p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Achievement Level</th>
+                                            <th>Points Awarded</th>
+                                            <th>Documentation Required</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>International Championship / 1st Place</td>
+                                            <td class="text-amber-300 font-medium">+50 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>International Finalist / Semi-Finalist</td>
+                                            <td class="text-amber-300 font-medium">+40 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>International Participation</td>
+                                            <td class="text-amber-300 font-medium">+15 points</td>
+                                            <td>Registration confirmation, attendance proof</td>
+                                        </tr>
+                                        <tr>
+                                            <td>National Championship / 1st Place</td>
+                                            <td class="text-amber-300 font-medium">+45 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>National Participation</td>
+                                            <td class="text-amber-300 font-medium">+12 points</td>
+                                            <td>Registration confirmation, attendance proof</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regional Championship / 1st Place</td>
+                                            <td class="text-amber-300 font-medium">+35 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regional Finalist / Semi-Finalist</td>
+                                            <td class="text-amber-300 font-medium">+25 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regional Participation</td>
+                                            <td class="text-amber-300 font-medium">+10 points</td>
+                                            <td>Registration confirmation, attendance proof</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Local / Inter-School Championship</td>
+                                            <td class="text-amber-300 font-medium">+25 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Local / Inter-School Finalist / Semi-Finalist</td>
+                                            <td class="text-amber-300 font-medium">+18 points</td>
+                                            <td>Official certificate, published results</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Local / Inter-School Participation</td>
+                                            <td class="text-amber-300 font-medium">+8 points</td>
+                                            <td>Registration confirmation, attendance proof</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- C. Speaker and Individual Performance Awards (External) -->
+                        <div>
+                            <p class="font-semibold text-amber-300">C. Speaker and Individual Performance Awards (External)</p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Award Type</th>
+                                            <th>Points Awarded</th>
+                                            <th>Documentation Required</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Best Speaker (any external tournament)</td>
+                                            <td class="text-amber-300 font-medium">+20 points</td>
+                                            <td>Official certificate, tournament results page, or letter from tournament director confirming award</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Top 3 Speaker (2nd/3rd place)</td>
+                                            <td class="text-amber-300 font-medium">+12 points each</td>
+                                            <td>Published results listing speaker rankings, or official award certificate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Best Rebuttal / Reply Speaker</td>
+                                            <td class="text-amber-300 font-medium">+10 points</td>
+                                            <td>Award certificate, official communication from organizing body, or official results indicating category win</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Best Case Construction Award</td>
+                                            <td class="text-amber-300 font-medium">+10 points</td>
+                                            <td>Certificate, published results, or official communication from organizing body</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Point Accumulation Rules.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Cumulative Tracking.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Individual Debate Points accumulate throughout the academic year.</p>
+                                <p>(b) Points reset to zero (0) at the start of each new academic year (Article III, Section 2(3)).</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Non-Stacking Provision.</span> No single performance shall earn points under multiple categories for the same event.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Team vs. Individual Attribution.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Team-based awards award points to each member of the team who participated in the competition.</p>
+                                <p>(b) Individual awards award points only to the recognized recipient.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Role-Based Eligibility.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Points are awarded only to members who actively debated or presented in the competition.</p>
+                                <p>(b) Alternate debaters who did not speak in any round shall receive 50% of participation points only, unless they contributed to case preparation documented by the team captain.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Documentation and Verification.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Submission Requirements.</span> Members claiming Individual Debate Points must submit a Point Claim Form to the Secretary of Internal Affairs within fourteen (14) calendar days of the activity's completion, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Name, House, and membership status of the claimant.</p>
+                                <p>(b) Date, name, and organizing body of the activity.</p>
+                                <p>(c) Category of points claimed with reference to this Annex.</p>
+                                <p>(d) Specific point amount claimed.</p>
+                                <p>(e) Supporting documentation:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) For Society/House debates: signed attendance sheet, judge's decision sheet, or certification from the event organizer.</p>
+                                    <p>(ii) For external competitions: Official certificate, published results, registration confirmation, or letter from tournament director.</p>
+                                    <p>(iii) For speaker awards: Copy of award certificate or official results listing.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Verification Process.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The Secretary of Internal Affairs shall verify claims within five (5) business days.</p>
+                                <p>(b) Claims may be cross-referenced with House Council reports, tournament records, or external verification.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Posting and Provisional Status.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Verified points shall be posted to the Individual Debate Point Ledger within three (3) business days.</p>
+                                <p>(b) Postings shall be marked Provisional Subject to Petition for seven (7) calendar days.</p>
+                                <p>(c) Any member may petition a posting within the petition period on grounds of inaccurate documentation, misclassification, or procedural error.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Finalization.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) If no petition is filed within the seven-day period, points become final and executory.</p>
+                                <p>(b) Finalized points shall be used for Debate League selection under Article III, Section 3.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Dispute Resolution.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Grounds for Petition.</span> A member may petition a point posting on the following grounds:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The activity does not qualify under Section 2 of this Annex;</p>
+                                <p>(b) Documentation is insufficient, inaccurate, or fabricated;</p>
+                                <p>(c) Point value claimed does not match the criteria in Section 3; or</p>
+                                <p>(d) The member was not an active participant in the claimed capacity.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Adjudication.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Petitions shall be reviewed by the High Tribunal convened for point disputes (Article I, Section 2(7)).</p>
+                                <p>(b) The President shall serve as Presiding Judge; the three uninvolved House Chancellors shall deliberate and vote.</p>
+                                <p>(c) A decision shall be rendered within fourteen (14) calendar days of petition filing.</p>
+                                <p>(d) The Tribunal's decision on point transactions is final and executory, with no further appeal unless a constitutional violation is alleged.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Penalty for False Claims.</span> If a Point Claim Form is found to contain knowingly false or materially inaccurate information:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The claim points shall be forfeited;</p>
+                                <p>(b) A penalty deduction equal to the claimed amount shall be applied to the member's Individual Debate Point tally; and</p>
+                                <p>(c) The matter may be referred to the Office of Internal Affairs for disciplinary review under Article VI.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Special Provisions.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Hybrid or Online Competitions.</span></p>
+                            <p class="text-white/70 pl-1">Points for online or hybrid-format debates shall follow the same values as in-person events, provided the competition maintains formal judging, documented results, and academic integrity standards approved by the High Council.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Multi-Day or Multi-Round Tournaments.</span> For tournaments with preliminary and elimination rounds:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Participation points are awarded once per tournament, not per round;</p>
+                                <p>(b) Placement points are awarded based on final tournament standing; and</p>
+                                <p>(c) Best Speaker awards are awarded per the tournament's official designation.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Co-Participation with Other Organizations.</span> When the Society co-hosts an event with another organization, points shall be awarded only if:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The event is pre-approved by the High Council for point eligibility;</p>
+                                <p>(b) Judging criteria and documentation standards meet Society requirements; and</p>
+                                <p>(c) Results are jointly certified and submitted per Section 5.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Retroactive Claims.</span> Points may not be claimed for activities completed prior to the ratification of this Annex, except as provided in Article III, Section 8 (Transitory Provision).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Annex A · Debate Performance Criteria</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

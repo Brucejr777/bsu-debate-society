@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article II (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+            /* amber-300 */;
+        }
+
+        /* Category Blocks for Section 2 */
+        .category-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #D4AF37;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.5rem;
+        }
+        .category-title {
+            font-weight: 600;
+            color: #fde68a;
+            /* amber-200 */
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* House Badge */
+        .house-badge {
+            display: inline-block;
+            padding: 0.1rem 0.7rem;
+            border-radius: 9999px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.1);
+            color: #D4AF37;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Tier Cards */
+        .tier-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+        }
+        .tier-name {
+            font-weight: 600;
+            color: #fde68a;
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .category-block,
+        .justify-text .tier-card {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .category-block {
+                background: rgba(255, 255, 255, 0.03) !important;
+                border-left-color: #D4AF37 !important;
+            }
+            .category-title {
+                color: #fde68a !important;
+            }
+            .house-badge {
+                border-color: #D4AF37 !important;
+                background: rgba(212, 175, 55, 0.15) !important;
+                color: #D4AF37 !important;
+            }
+            .tier-card {
+                background: rgba(255, 255, 255, 0.03) !important;
+                border-color: rgba(212, 175, 55, 0.3) !important;
+            }
+            .tier-name {
+                color: #fde68a !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .category-block,
+            .justify-text .tier-card {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article II – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article II</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Individual Recognition Framework</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – All Sections 1–6 with Enhanced Styling -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1: Purpose and Scope -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        The Individual Recognition Framework is established to acknowledge and celebrate the contributions, growth, and excellence of individual members of the Society. This Framework operates alongside the House Point System and is designed to complement, not replace, the House-focused competition structure. Recognition under this Framework shall be ceremonial and honorary; it shall not confer voting rights, office eligibility, or material benefits beyond those explicitly stated herein. All individual recognition shall align with the Society's principles under Article 3 of the Constitution, particularly Sections 7 (constructive competition), 9 (continuous growth), and 10 (education as empowerment).
+                    </p>
+                </section>
+
+                <!-- Section 2: Categories of Individual Recognition -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Categories of Individual Recognition.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <!-- (1) Leadership Excellence -->
+                        <div class="category-block">
+                            <p class="category-title flex items-center gap-3 flex-wrap">
+                                <span class="text-[#D4AF37] font-serif font-bold">(1)</span> Leadership Excellence
+                                <span class="house-badge">Bathala</span>
+                            </p>
+                            <p class="pl-1 text-white/70">Recognizes members who demonstrate exceptional leadership competencies, including but not limited to: initiating and leading successful House or Society projects; mentoring newer members with measurable impact; facilitating constructive dialogue during debates or meetings; or representing the Society with distinction in external leadership forums. Nominees must have completed at least one semester as an active member.</p>
+                        </div>
+
+                        <!-- (2) Communication and Documentation Excellence -->
+                        <div class="category-block">
+                            <p class="category-title flex items-center gap-3 flex-wrap">
+                                <span class="text-[#D4AF37] font-serif font-bold">(2)</span> Communication and Documentation Excellence
+                                <span class="house-badge">Kabunian</span>
+                            </p>
+                            <p class="pl-1 text-white/70">Recognizes members who advance the Society's communication, documentation, or media excellence, including but not limited to: producing high-quality debate chronicles, articles, or reports; creating informative or engaging content about Society activities; conducting insightful interviews or research; or maintaining accurate and accessible public records. Nominees must have contributed at least three documented outputs during the recognition period.</p>
+                        </div>
+
+                        <!-- (3) Academic and Intellectual Excellence -->
+                        <div class="category-block">
+                            <p class="category-title flex items-center gap-3 flex-wrap">
+                                <span class="text-[#D4AF37] font-serif font-bold">(3)</span> Academic and Intellectual Excellence
+                                <span class="house-badge">Laon</span>
+                            </p>
+                            <p class="pl-1 text-white/70">Recognizes members who promote intellectual growth, research, or scholarly inquiry, including but not limited to: producing well-researched case briefs or position papers; organizing or leading academic skill-building sessions; demonstrating exceptional critical analysis in debates or forums; or contributing original research or literature reviews to the Society's knowledge base. Nominees must have completed at least one semester as an active member.</p>
+                        </div>
+
+                        <!-- (4) Creative and Artistic Excellence -->
+                        <div class="category-block">
+                            <p class="category-title flex items-center gap-3 flex-wrap">
+                                <span class="text-[#D4AF37] font-serif font-bold">(4)</span> Creative and Artistic Excellence
+                                <span class="house-badge">Manama</span>
+                            </p>
+                            <p class="pl-1 text-white/70">Recognizes members who develop creativity, artistic expression, or cultural appreciation, including but not limited to: designing artistic materials for Society events; integrating performance or creative elements into debate formats; organizing cultural showcases or artistic workshops; or producing original creative works that reflect the Society's values. Nominees must have contributed at least two documented creative outputs during the recognition period.</p>
+                        </div>
+
+                        <!-- (5) Alignment Note -->
+                        <div class="bg-black/25 border border-[#D4AF37]/15 rounded-md p-4 text-xs text-white/70">
+                            <p><span class="font-semibold text-amber-300">(5)</span> Individual recognition categories are aligned with the embodied values of Society Houses for symbolic and aspirational purposes only. Eligibility for nomination and selection in any category shall be open to all active members of the Society, irrespective of their House affiliation, provided that their contributions meet the criteria for the nominated category. When a member receives individual recognition, the corresponding bonus points under Section 5 shall be awarded to the member's own House, not to the House whose embodied value aligns with the award category.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Nomination and Selection Process -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Nomination and Selection Process.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> Any active member of the Society may nominate a fellow member for individual recognition by submitting a Nomination Form directly to the Secretary of Internal Affairs for the attention of the Selection Committee. The form must include: the nominee's name and House; the category under which nomination is made; a statement of justification with specific examples of the nominee's contributions; and supporting documentation such as outputs, testimonials, or evidence of impact. Nominations must be submitted within the first four weeks of the Second Semester for annual recognition, or within two weeks of a special recognition cycle if declared by the High Council.</p>
+                        <p><span class="font-semibold text-amber-300">(2)</span> Upon receipt of a nomination, the Secretary of Internal Affairs shall verify the eligibility of the nominee within seven (7) calendar days. Verification shall confirm that the nominee is an active member in good standing and that the submission meets the documentation requirements. The Secretary of Internal Affairs shall not evaluate the merit of the nomination but shall ensure procedural compliance. If eligible, the nomination shall be forwarded to the Selection Committee. If ineligible, the nominator shall be notified in writing with reasons for disqualification.</p>
+                        <p><span class="font-semibold text-amber-300">(3)</span> A Selection Committee shall be convened for each recognition cycle, composed of: the High Council President (non-voting chair); one official from each of the four High Council offices (Internal Affairs, Public Affairs, Finance and Resource Management, External Affairs), appointed by the President; and one senior member from each House, nominated by their respective House Chancellor and approved by the Council of House Chancellors. The Selection Committee shall review all eligible nominations and select recipients by majority vote. Deliberations shall be confidential, and decisions shall be based solely on the merits of the nomination materials.</p>
+                        <p><span class="font-semibold text-amber-300">(4)</span> If a member of the Selection Committee is nominated for an individual award, they shall immediately disclose their nomination to the Committee Chair prior to deliberation. They shall recuse themselves from all deliberations and voting pertaining to their own nomination. They shall not be present during the discussion of their candidacy. Their vote shall not be counted for that specific decision. They shall retain their seat for all other nominations where no conflict exists.</p>
+                        <p><span class="font-semibold text-amber-300">(5)</span> Selected recipients shall be announced at the Society Assembly Meeting following the Selection Committee's decision. Recognition shall include: a certificate of achievement bearing the Society seal and the recipient's name, category, and cycle; public acknowledgment in the Society's official communications; and, if applicable, a ceremonial pin or token representing the category. Recipients may also be featured in the Society Chronicle or official digital platforms, subject to their consent.</p>
+                    </div>
+                </section>
+
+                <!-- Section 4: Recognition Tiers and Cumulative Honor -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Recognition Tiers and Cumulative Honor.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <!-- (1) Tiers -->
+                        <div>
+                            <p class="font-semibold text-amber-300">(1) Individual recognition may be awarded at three tiers, based on the scope and impact of the member's contributions.</p>
+                            <div class="space-y-3 mt-2">
+
+                                <div class="tier-card">
+                                    <p class="tier-name">(a) Emerging Contributor.</p>
+                                    <p class="text-white/70 pl-4 text-sm">Awarded to members in their first or second semester of active membership who demonstrate promising potential and meaningful early contributions in a recognition category. This tier is non-exclusive; multiple members may receive this recognition per cycle.</p>
+                                </div>
+
+                                <div class="tier-card">
+                                    <p class="tier-name">(b) Distinguished Member.</p>
+                                    <p class="text-white/70 pl-4 text-sm">Awarded to members who have consistently demonstrated excellence in a recognition category over at least two semesters, with documented impact on their House or the Society. This tier is limited to one recipient per category per annual cycle.</p>
+                                </div>
+
+                                <div class="tier-card">
+                                    <p class="tier-name">(c) Society Fellow.</p>
+                                    <p class="text-white/70 pl-4 text-sm">Awarded to members who have made exceptional, Society-wide contributions across multiple categories or over an extended period (minimum three semesters), and whose work has significantly advanced the Society's mission. This is the highest individual honor; it shall be awarded only when the Selection Committee unanimously agrees that a nominee's contributions merit this distinction. A Society Fellow may be recognized only once per member.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (2) Cumulative Honor -->
+                        <div>
+                            <p class="font-semibold text-amber-300">(2) Cumulative Honor.</p>
+                            <p class="text-white/70 pl-4 text-sm">A member who receives recognition at a lower tier in one cycle remains eligible for a higher tier in subsequent cycles. Recognition is cumulative in honor but not in privilege; higher tiers do not grant additional governance rights or material benefits beyond those stated in Section 1.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Individual Achievements and House Points -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Individual Achievements and House Points.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p>To maintain alignment with the House-focused competition framework, individual recognition shall not award points directly to the individual. However, when a member receives individual recognition under this Framework, their House shall earn bonus points under Section 10(3) of the House Point System as follows:</p>
+                        <div class="pl-6 space-y-2">
+                            <p><span class="font-semibold text-amber-300">Emerging Contributor:</span> <span class="text-amber-300 font-medium">+5</span> bonus points</p>
+                            <p><span class="font-semibold text-amber-300">Distinguished Member:</span> <span class="text-amber-300 font-medium">+10</span> bonus points</p>
+                            <p><span class="font-semibold text-amber-300">Society Fellow:</span> <span class="text-amber-300 font-medium">+15</span> bonus points</p>
+                        </div>
+                        <p class="text-white/60 text-xs italic">These points are cumulative with other bonus point opportunities and shall be posted to the Master House Point Ledger by the Secretary of Internal Affairs within three business days of the recognition announcement.</p>
+                    </div>
+                </section>
+
+                <!-- Section 6: Tracking, Privacy, and Transparency -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Tracking, Privacy, and Transparency.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> The Secretary of Internal Affairs shall maintain a confidential Individual Recognition Ledger recording all nominations, endorsements, selections, and recognitions. This Ledger shall include: nominee name and House; category and tier; nomination materials summary; Selection Committee decision; and date of recognition. All Society members shall have the right to view the list of recognized individuals and their categories, but shall not have access to confidential nomination materials or deliberation notes without the consent of the individuals involved. Recognized members may request a copy of their recognition record for personal or professional use.</p>
+                        <p><span class="font-semibold text-amber-300">(2)</span> When a member receives recognition in a category not aligned with their House's embodied value, the Individual Recognition Ledger shall note both the recipient's House and the award's aligned House for statistical and historical purposes. This notation shall not affect point allocation, which shall always credit the recipient's own House per Section 5.</p>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article II · Individual Recognition Framework</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

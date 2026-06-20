@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article IV (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article IV – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article IV</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Meetings and Deliberative Procedures</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–9 only -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This Article establishes operational procedures for Society meetings and decision-making processes. It implements the meeting requirements under Article 8 of the Constitution and provides a simplified parliamentary framework based on Robert's Rules of Order, Newly Revised, adapted for accessibility and efficiency. This Article does not alter constitutional quorum requirements, voting thresholds, or member rights, but specifies administrative workflows to facilitate their exercise. All proceedings shall prioritize clarity, inclusivity, and productive deliberation over procedural complexity.
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Types of Meetings.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <p><span class="font-semibold text-amber-300">(1) Society Assembly Meeting.</span> A gathering of all active Society members, convened monthly as mandated by Article 12, Section 1 of the Constitution. General Meetings shall:</p>
+                        <div class="sub-list space-y-1 text-white/70">
+                            <p>(a) Receive reports from the High Council and Council of House Chancellors;</p>
+                            <p>(b) Deliberate and vote on constitutional amendments, policy ratifications, and matters requiring member approval under Article 9, Section 2 of the Constitution;</p>
+                            <p>(c) Present updates on the House Point System, Individual Recognition Framework, and Debate League selections;</p>
+                            <p>(d) Provide an open forum for member questions, petitions, or proposals.</p>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(2) High Council Meeting.</span> A gathering of High Council officers, convened at least once monthly. High Council Meetings shall focus on executive coordination, policy implementation, and preparation of reports for Society Assemblies.</p>
+
+                        <p><span class="font-semibold text-amber-300">(3) Council of House Chancellors Meeting.</span> A gathering of the four House Chancellors and the Vice President (as Presiding Officer), convened as needed to deliberate on policy propositions, point system amendments, or inter-House matters.</p>
+
+                        <p><span class="font-semibold text-amber-300">(4) House Council Meeting.</span> A gathering of a House's internal officers, convened according to each House's internal schedule but reported to the Secretary of Internal Affairs for Society-wide coordination. House Council Meetings shall focus on internal governance, member development, and preparation of House-level reports.</p>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) House Assembly Meeting.</span> A gathering of all members of a single House (including Executive Interns and Full Members), convened at least once per semester or as needed by the House Chancellor. House Assemblies shall:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Receive reports from the House Council on activities, finances, and upcoming initiatives;</p>
+                                <p>(b) Provide a forum for House members to propose ideas, raise concerns, or nominate peers for recognition;</p>
+                                <p>(c) Deliberate and vote on House-level matters that require member input, such as amendments to the House Membership Policy or selection of House representatives for Society-wide committees;</p>
+                                <p>(d) Foster House identity, camaraderie, and alignment with the House's embodied value.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Special Meeting.</span> Any meeting convened outside the regular schedule to address urgent matters. Special Meetings require: (a) a written request signed by at least twenty-five percent (25%) of active members (for Society Assembly Meetings) or House members (for House Assemblies), or (b) a resolution by the High Council, Council of House Chancellors, or relevant House Council; and (c) at least forty-eight (48) hours' notice to all entitled participants unless waived by unanimous consent.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Notice and Agenda.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> Written notice of any Society Assembly Meeting, High Council Meeting, Council of House Chancellors Meeting, or House Assembly shall be distributed through the Society's official digital platform at least seventy-two (72) hours prior to the meeting. Notice shall include: date, time, venue or virtual link, proposed agenda, and any pre-meeting materials requiring review.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2)</span> Any member may submit an agenda item for a General Meeting or House Assembly by sending a written request to the Executive Secretary (for Society meetings) or House Secretariat Director (for House Assemblies) at least forty-eight (48) hours prior to the meeting. The request must include: a clear title, brief description (maximum 100 words), and the desired outcome (discussion, information, or vote). The relevant Secretary shall compile agenda items in consultation with the Presiding Officer and distribute the final agenda with the meeting notice.</p>
+
+                        <p><span class="font-semibold text-amber-300">(3)</span> At the start of each meeting, the Presiding Officer shall present the proposed agenda. Members may move to add, remove, or reorder items by majority vote. Once adopted, the agenda shall guide the meeting unless amended by majority vote.</p>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Presiding Officer and Meeting Conduct.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <p><span class="font-semibold text-amber-300">(1)</span> The following officers shall serve as the designated Presiding Officer for each type of meeting:</p>
+                        <div class="sub-list space-y-1 text-white/70">
+                            <p>(a) Society Assembly Meetings and High Council Meetings: The President;</p>
+                            <p>(b) Council of House Chancellors Meetings: The Vice President;</p>
+                            <p>(c) House Assemblies and House Council Meetings: The House Chancellor.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> If a designated Presiding Officer knows in advance that they will be absent from a scheduled meeting:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) They shall provide written notice of their absence to the Executive Secretary (for Society-wide meetings) or House Secretariat Director (for House meetings) at least forty-eight (48) hours prior to the meeting;</p>
+                                <p>(b) If the Vice President or the second-in-rank officer is also absent, the Presiding Officer shall designate in writing a qualified active member in good standing to serve as temporary chair for that specific meeting only;</p>
+                                <p>(c) The designation shall include the name of the temporary chair, the meeting date and type, and the scope of authority granted (which shall be limited to presiding over that meeting only);</p>
+                                <p>(d) The Executive Secretary or House Secretariat Director shall notify all entitled participants of the absence and the designated temporary chair at least twenty-four (24) hours prior to the meeting.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3)</span> If the designated Presiding Officer is absent from a scheduled meeting and has not complied with the advance designation requirement under subsection (2):</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The meeting shall not proceed with substantive business or binding votes;</p>
+                                <p>(b) Any member present may move to reschedule the meeting to a later date;</p>
+                                <p>(c) A motion to reschedule shall require a second and pass by majority vote of members present;</p>
+                                <p>(d) If a motion to reschedule is not made or fails to pass, the meeting shall stand adjourned without prejudice, and the Presiding Officer shall be required to issue a new notice for a rescheduled meeting within three (3) business days;</p>
+                                <p>(e) No provisional or temporary chair shall be elected or appointed during the meeting itself.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4)</span> A temporary chair designated under subsection (2) shall have all the powers and duties of the regular Presiding Officer for that meeting only, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Maintaining order and ensuring respectful discourse;</p>
+                                <p>(b) Recognizing speakers fairly and managing time limits;</p>
+                                <p>(c) Stating motions clearly before debate;</p>
+                                <p>(d) Ensuring votes are conducted fairly and results announced;</p>
+                                <p>(e) Ruling on points of order using the simplified procedures in Section 6.</p>
+                            </div>
+                            <p class="text-white/70 mt-1">However, a temporary chair shall NOT:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Represent the Society externally or sign official documents requiring the President's or House Chancellor's signature;</p>
+                                <p>(b) Preside over elections for permanent officers or constitutional amendments;</p>
+                                <p>(c) Exercise veto power or other executive authorities reserved to the regular Presiding Officer by the Constitution;</p>
+                                <p>(d) Serve beyond the conclusion of that specific meeting.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5)</span> All members participating in any Society meeting shall:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Address all remarks through the Presiding Officer or temporary chair;</p>
+                                <p>(b) Avoid personal attacks, discriminatory language, or disruptive behavior;</p>
+                                <p>(c) Respect time limits for speakers as established by the Presiding Officer;</p>
+                                <p>(d) Comply with rulings of the Presiding Officer unless a point of order is successfully raised or an appeal is sustained;</p>
+                                <p>(e) Refrain from using electronic devices in a manner that disrupts proceedings, unless required for participation in a virtual or hybrid meeting.</p>
+                            </div>
+                            <div class="sub-list space-y-1 text-white/70 mt-1">
+                                <p><span class="font-semibold text-amber-300">(f) Mandatory Wellness Breaks for Extended Meetings.</span> Any Society meeting, House Assembly, or Council session that exceeds two (2) consecutive hours of continuous deliberation shall include a mandatory wellness break of no less than ten (10) minutes. Such breaks shall be scheduled at the discretion of the Presiding Officer to minimize disruption to substantive agenda items, and shall be used for rest, hydration, and brief personal respite to support member well-being and sustained engagement. The Presiding Officer shall be responsible for announcing and enforcing compliance with this requirement, and may extend the break duration upon majority consent of members present if warranted by the intensity or duration of preceding deliberations. Failure to observe the mandatory break requirement shall not invalidate proceedings but may be raised as a point of order for corrective action in future sessions.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(6)</span> If a member engages in conduct that materially disrupts the meeting after being warned by the Presiding Officer, the Presiding Officer shall have the sole authority to order the member to leave the meeting for the remainder of that session. Such removal must be justified by specific grounds recorded in the minutes of the meeting and may be appealed through the disciplinary procedures under Article VI.</p>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Simplified Motion and Voting Procedures.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <p><span class="font-semibold text-amber-300">(1) Making a Motion.</span> Any member entitled to vote may propose action by stating: "I move to [clear action]." The motion must be seconded by another entitled member to be considered. The Presiding Officer shall then restate the motion clearly before debate.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2) Debate on a Motion.</span> After a motion is stated, members may debate its merits. The Presiding Officer shall alternate recognition between speakers for and against the motion. Each speaker shall be limited to two (2) minutes per turn, with one (1) opportunity to speak again if time permits. Debate ends when: (a) no member seeks recognition; (b) a member moves the previous question (see Section 5(3)); or (c) the Presiding Officer determines debate has been sufficient.</p>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Voting on a Motion.</span> After debate closes, the Presiding Officer shall call for a vote. Voting methods shall be:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Vote by Hand: The default method. The Presiding Officer asks those in favor to raise their right hand, holds for a clear count, then asks those opposed to raise their right hand, holds for a clear count, and announces the result. If the count is unclear or contested, the Presiding Officer may order a second count or proceed to a Rising Vote.</p>
+                                <p>(b) Rising Vote: Used for close hand votes, when requested by any two members, or for votes requiring a supermajority. Members stand to be counted. The Presiding Officer may appoint two (2) tellers to assist with counting if needed.</p>
+                                <p>(c) Secret Ballot: Required for elections, disciplinary matters, or when requested by at least ten percent (10%) of members present.</p>
+                            </div>
+                            <p class="text-white/70 mt-1">A motion passes by majority vote unless the Constitution specifies a higher threshold. The Presiding Officer may vote only to break a tie.</p>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold text-amber-300">The following motions are recognized for efficiency:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Main Motion: Proposes substantive action (requires second, debatable, amendable, majority vote).</p>
+                                <p>(b) Amend: Proposes a change to a pending motion (requires second, debatable only on the amendment, majority vote).</p>
+                                <p>(c) Refer to Committee: Sends a motion to a smaller group for study (requires second, debatable, majority vote).</p>
+                                <p>(d) Postpone Definitely: Delays consideration to a specific time (requires second, debatable, majority vote).</p>
+                                <p>(e) Previous Question: Ends debate and forces an immediate vote on the pending motion (requires second, not debatable, two-thirds vote to pass).</p>
+                                <p>(f) Point of Order: Raises a procedural concern (no second, not debatable, Presiding Officer rules immediately).</p>
+                                <p>(g) Appeal: Challenges a ruling of the Presiding Officer (requires second, debatable with Presiding Officer speaking first, majority vote to overturn).</p>
+                                <p>(h) Lay on the Table: Temporarily sets aside a motion to address urgent business (requires second, not debatable, majority vote).</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Reconsideration.</span> A motion that has passed or failed may be reconsidered only if: (a) a member who voted on the prevailing side moves reconsideration; (b) the motion is made on the same day or the next scheduled meeting; and (c) it is seconded and passes by majority vote. Each motion may be reconsidered only once.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Points of Order and Appeals (Simplified).</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1) Point of Order.</span> Any member may raise a point of order by stating "Point of Order" when they believe a rule has been violated. The member must briefly state the specific rule or procedure at issue. The Presiding Officer shall rule immediately, stating the basis for the decision. No debate is permitted on the point itself.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2) Appeal.</span> Any member may appeal the Presiding Officer's ruling by stating "I appeal the decision of the Chair" immediately after the ruling. The appeal must be seconded. The Presiding Officer shall briefly explain their ruling, then the member appealing may briefly state their position. Debate is limited to these two statements unless the Presiding Officer permits one additional speaker per side. The assembly shall vote by majority to uphold or overturn the ruling. If the vote is tied, the Presiding Officer's ruling stands.</p>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Minutes and Documentation.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1)</span> The Executive Secretary (for Society meetings) or House Secretariat Director (for House meetings) shall record minutes for each meeting. Minutes shall include: date, time, location, type of meeting, presiding officer, members present/absent, agenda items considered, motions made (with mover and seconder names), vote results, and key discussion points. Minutes shall not record verbatim debate or personal opinions.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2)</span> Draft minutes shall be distributed to members within three (3) business days after the meeting. At the next meeting, the Presiding Officer shall call for corrections and approval. Minutes are approved by majority vote. Once approved, minutes become the official record and may only be corrected by a subsequent motion to amend the record.</p>
+
+                        <p><span class="font-semibold text-amber-300">(3)</span> Approved minutes shall be posted to the Society's official digital platform within five (5) business days of approval. Members shall have view access to all approved minutes. Draft minutes and unapproved records shall remain confidential until formally adopted.</p>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Quorum and Participation.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1) Quorum Requirement.</span> As mandated by Article 12, Section 3 of the Constitution, a quorum for any Society meeting shall be a majority of officers and members. For purposes of this provision, 'members' shall mean active members as defined in Article I, Section 2(2) of these Rules.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2) Quorum Verification.</span> At the start of each meeting, the Presiding Officer shall verify quorum through a roll call or digital attendance check. If quorum is not present, the meeting may proceed for discussion only; no binding votes may be taken until quorum is achieved.</p>
+
+                        <p><span class="font-semibold text-amber-300">(3) Participation Rights.</span> Only active members in good standing may make motions, second motions, or vote. Executive Interns may participate in debate at House Assemblies and Society Assembly Meetings but may not vote on constitutional amendments, officer elections, or House policy changes until elevated to Full Member status per Article 5 of the Constitution.</p>
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">Virtual and Hybrid Meetings.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> Meetings may be conducted wholly or partially via virtual platform when approved by the High Council, relevant House Council, or when necessitated by extraordinary circumstances. The Presiding Officer shall ensure the platform allows for:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) clear audio/video for all participants;</p>
+                                <p>(b) real-time recognition of speakers;</p>
+                                <p>(c) secure voting mechanisms; and</p>
+                                <p>(d) recording capability for minute-taking.</p>
+                            </div>
+                            <div class="sub-list space-y-1 text-white/70 mt-1">
+                                <p><span class="font-semibold text-amber-300">(e) Emergency Virtual Quorum Protocols.</span> In circumstances of institutional closure, public health emergency, natural disaster, or other extraordinary conditions that prevent physical convening, meetings may be convened virtually under emergency quorum procedures. For such emergency virtual sessions, a valid quorum shall require the verified participation of at least fifty percent (50%) of entitled members through authenticated digital means, provided that: (i) the Presiding Officer has issued a formal declaration of emergency with written justification; (ii) all participating members are confirmed present through platform verification or roll call; and (iii) the emergency justification, quorum verification method, and participation record are documented in the official minutes of the meeting.</p>
+                                <p>Any action taken under emergency virtual quorum shall be ratified by a physical quorum within fourteen (14) calendar days of the restoration of normal convening capacity, failing which such action shall be deemed advisory only and subject to re-deliberation. These emergency protocols shall not alter the constitutional quorum requirements under Article 12, Section 3 of the Constitution, but shall provide an administrative mechanism for their application during extraordinary circumstances.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(2)</span> Members participating virtually shall have the same rights to speak, make motions, second, and vote as those present in person. The Presiding Officer shall manage recognition to ensure virtual participants are not disadvantaged.</p>
+
+                        <p><span class="font-semibold text-amber-300">(3)</span> If technical issues prevent a member from participating, they may request a brief recess to resolve the issue. If a quorum is lost due to technical disconnections, the meeting shall recess until quorum is restored or be adjourned to a later time.</p>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article IV · Meetings and Deliberative Procedures</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

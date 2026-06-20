@@ -1,16 +1,14 @@
-import DocumentViewer from "@/components/DocumentViewer";
+// src/app/documents/rules/page.tsx
+import BookViewer from "@/components/BookViewer";
+import { blueBookSections } from "@/lib/bookSections";
 
 export default function RulesPage() {
-  // NO FILE READING. Just a hardcoded string.
-  const content = `
-under construction
-  `;
-
   return (
-    <DocumentViewer
-      content={content}
+    <BookViewer
       title="The Blue Book — Rules and Procedures"
-      subtitle="Operations Manual — Art. 9, Sec. 2(a)"
+      sections={blueBookSections}
+      basePath="/bluebook"
+      defaultFile="cover_page.html"
     />
   );
 }

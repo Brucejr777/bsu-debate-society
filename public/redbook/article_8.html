@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Red Book · Article VIII</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – Red Book Constitution with Gold Accents */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a0505;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Gold Metallic Gradient Text (from Blue Book) */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gold Gradient Border */
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+            border-image-slice: 1;
+        }
+
+        /* Gold Dividers */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #1a0505;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement – Gold Accents */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+            /* amber-300 */
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .sub-list-3 {
+            margin-left: 2rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        /* Office heading */
+        .office-head {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            color: #fcd34d;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2,
+        .justify-text .sub-list-3 {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #1a0505 !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-red-400\/80,
+            .text-red-400\/90 {
+                color: #CC0000 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-red-900\/30 {
+                border-color: #8B0000 !important;
+            }
+            .border-amber-400\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #1a0505 !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a1a1a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2,
+            .sub-list-3 {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2,
+            .justify-text .sub-list-3 {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#1a0505] via-[#0d0303] to-[#080101] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings (gold) -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article VIII – VERBATIM -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-red-900/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-red-400/80 font-medium">Constitution</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article VIII</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">The High Council</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Article VIII, Sections 1–10 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Declaration of the High Council.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        The High Council shall be the highest governing body of the BSU Debate Society. It shall have jurisdiction over the Society Houses, including the House Councils, ensuring they adhere to the Society's policies.
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">General Provisions of the High Council.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The High Council shall be composed of offices elected or appointed in accordance with the Constitution. The Council shall not be limited to the following offices: Office of the President, Office of the Vice President, Office of the Executive Secretary, Office of Internal Affairs, Office of External Affairs, Office of Business Affairs, Office of Finance and Resource Management, Office of Public Affairs. Each office shall be headed by a Secretary.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The President and Vice President shall be elected by a direct vote from the Society members. The Executive Secretary and the Secretary of a respective office shall be appointed by the President.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3)</span> All members of the High Council must be a bona fide member of the Society and have at least one (1) semester of active participation in any House or committee of the Society.</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <p class="font-semibold text-amber-300">The qualifications of the President shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) At the time of filing for candidacy, the individual must have served at least one (1) full term in any of the following Principal Officer capacities: As a Secretary or Vice President within the High Council; or As a House Chancellor, House Vice Chancellor, Director within a House Council;</p>
+                                <p>(b) Must demonstrate a mastery of the Society's Four Pillars: Manama, Bathala, Laon, and Kabunian;</p>
+                                <p>(c) Must not have been found guilty of any major disciplinary violations within the University or the Society;</p>
+                                <p>(d) Must have been a member of the Society for at least two (2) academic years, which includes the mandatory year served as a Provisional Member;</p>
+                                <p>(e) Must not have served as the President of the Society.</p>
+                            </div>
+
+                            <p class="font-semibold text-amber-300 mt-3">The qualifications of the Vice President shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) At the time of filing for candidacy, the individual must have served at least one (1) full term in any of the following Principal Officer capacities: As a Secretary within the High Council; or As a House Chancellor, House Vice Chancellor, Director within a House Council;</p>
+                                <p>(b) Must demonstrate a mastery of the Society's Four Pillars: Manama, Bathala, Laon, and Kabunian;</p>
+                                <p>(c) Must not have been found guilty of any major disciplinary violations within the University or the Society;</p>
+                                <p>(d) Must have been a member of the Society for at least two (2) academic years, which includes the mandatory year served as a Provisional Member.</p>
+                            </div>
+
+                            <p class="font-semibold text-amber-300 mt-3">The qualifications of the Executive Secretary shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(e) At the time of filing for candidacy, the individual must have served at least one (1) full term in as a member of the High Council or their respective House Council, not including their service as a Provisional Member;</p>
+                                <p>(f) Must demonstrate a mastery of the Society's Four Pillars: Manama, Bathala, Laon, and Kabunian;</p>
+                                <p>(g) Must not have been found guilty of any major disciplinary violations within the University or the Society;</p>
+                                <p>(h) Must have been a member of the Society for at least two (2) academic years, which includes the mandatory year served as a Provisional Member.</p>
+                            </div>
+
+                            <p class="font-semibold text-amber-300 mt-3">The qualifications of the Secretaries shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Must have been a member of the Society for at least two (2) academic years which includes the mandatory year served as a Provisional Member;</p>
+                                <p>(b) Must demonstrate a mastery of the Society's Four Pillars: Manama, Bathala, Laon, and Kabunian;</p>
+                                <p>(c) Must not have been found guilty of any major disciplinary violations within the University or the Society;</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4)</span> If an elected or appointed member of the High Council is terminated, asked to resign, or impeached due to excessive absences or other grounds, then he or she shall not be able to be appointed or elected to the High Council for the remainder of that academic year.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5)</span> Succession, Emergency Continuity, and Acting Appointments.</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Vacancy Succession. In the event of a vacancy in any High Council office due to resignation, removal, impeachment, death, incapacity, or ineligibility, succession shall proceed as follows:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) For the Office of the President: The Vice President shall immediately assume the duties and title of President for the remainder of the term.</p>
+                                    <p>(ii) For the Office of the Vice President: The President shall appoint a successor from among the sitting House Chancellors or High Council Secretaries, subject to confirmation by majority vote of the Council of House Chancellors within seven (7) calendar days.</p>
+                                    <p>(iii) For any High Council Secretary office: The President shall appoint an Acting Secretary from among qualified Full Members, who shall serve for a period not exceeding thirty (30) calendar days pending confirmation of a permanent appointee. Confirmation shall require approval by majority vote of the Council of House Chancellors.</p>
+                                    <p>(iv) All successors and appointees must meet the constitutional qualifications for the office they assume under Section 2(3) of this Article.</p>
+                                </div>
+                                <p>(b) Emergency Quorum Procedures. In circumstances of institutional crisis, natural disaster, public health emergency, or other extraordinary conditions that prevent physical convening of the High Council, an "Emergency Quorum" may be established. An Emergency Quorum shall consist of at least fifty percent (50%) of sitting High Council officers participating via secure virtual platform, provided that:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) the President or Vice President has issued a formal declaration of emergency;</p>
+                                    <p>(ii) all participating members are verified as present through authenticated digital means;</p>
+                                    <p>(iii) deliberations and votes are recorded and archived in accordance with Article VIII of these Rules and Procedures; and</p>
+                                    <p>(iv) any action taken under Emergency Quorum shall be ratified by a physical quorum within fourteen (14) calendar days of the restoration of normal convening capacity, failing which such action shall be deemed null and void.</p>
+                                </div>
+                                <p>(c) Acting Officer Appointments. The President may designate an "Acting Officer" to temporarily discharge the duties of any vacant or incapacitated High Council office, provided that:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) the appointment is limited to a period not exceeding thirty (30) calendar days;</p>
+                                    <p>(ii) the Acting Officer meets the constitutional qualifications for the office;</p>
+                                    <p>(iii) the appointment is documented in writing and communicated to the Council of House Chancellors within twenty-four (24) hours; and</p>
+                                    <p>(iv) a permanent appointment or election to fill the vacancy is initiated within the same thirty-day period.</p>
+                                </div>
+                                <p class="mt-1">Acting Officers shall possess all authorities of the office except the power to make permanent appointments, veto resolutions, or initiate constitutional amendments. Any extension of an Acting Officer appointment beyond thirty (30) days shall require approval by majority vote of the Council of House Chancellors.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6)</span> The term of office for the President, Vice President, and all High Council Secretaries shall be one (1) academic year, commencing upon assumption of office and concluding upon the assumption of their successors. No officer shall serve consecutive terms in the same position.</p>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">The Office of the President</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The President shall serve as the Chief Executive of the Society and the ultimate presiding authority of the High Council. The powers and duties of the President shall be:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Serve as the primary head of the Society and its official representative in all external and university-level engagements;</p>
+                                <p>(b) Preside over all sessions of the High Council, with the authority to determine the official agenda and order of business;</p>
+                                <p>(c) Serve as the Chairperson of the Supreme Council, exercising presiding authority over all administrative trials, disciplinary hearings, and constitutional interpretations of the Society;</p>
+                                <p>(d) Exercise the power to veto any society-wide resolution or policy passed by the Council of House Chancellors. A presidential veto shall render the proposed measure null and void unless challenged by the Council. The Council of House Chancellors may override a presidential veto only through a unanimous vote of all four (4) House Chancellors. Upon a unanimous override, the measure shall be enacted immediately as Society policy, and the President shall have no further power to block that specific resolution;</p>
+                                <p>(e) Spearhead the strategic execution of the Society's long-term objectives and mandates;</p>
+                                <p>(f) Ensure the rigorous enforcement of the Constitution, By-Laws, and High Council Resolutions across all jurisdictions and Houses of the Society.</p>
+                                <p>(g) The President shall have the sole authority to negotiate and enter into formal treaties, Memoranda of Agreement (MOA), and long-term alliances on behalf of the Society. Such agreements shall require the ratification of the Council of House Chancellors (COC) to be fully binding. All formal treaties, MOAs, or alliances negotiated by individual Houses with external institutions must be approved by the respective House Council and subsequently submitted to the President for final review. No House-level agreement with an external entity shall be valid or enforceable without the written approval and signature of the President. Such House-level approvals do not require the ratification of the COC, provided they do not affect other Houses or the Society as a whole;</p>
+                                <p>(h) The President shall appoint the Secretaries of the High Council and may create ad hoc (temporary) committees or commissions to investigate specific issues or execute special projects;</p>
+                                <p>(i) The President shall be mandated to deliver a formal State of the Society Address to the Assembly of the Society (AS) one (1) week after the conclusion of each semester. The President shall deliver a total of two (2) SOSAs throughout their one-year term. The address shall serve as the official report on the Society's financial health, departmental progress and the vision of the President, and the performance of the Four Houses;</p>
+                                <p>(j) In times of organizational crisis or extreme deadlock between Houses, the President may issue Executive Orders to ensure the continuity of Society operations. Such orders shall be temporary and remain in effect until the High Council can convene to deliberate on a permanent solution;</p>
+                                <p>(k) The President shall exercise supreme oversight over the General Fund. While House Treasuries remain autonomous, the President must ensure that Society-wide funds are allocated in accordance with the pillars of the Society;</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">The Office of the Vice President</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Vice President shall be the second-highest executive officer of the Society and the Chief Coordinator of its internal legislative affairs. The powers and duties of the Vice President shall be:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Assume the full duties and presiding authority of the President in the event of their absence, temporary incapacity, or at the President's express request;</p>
+                                <p>(b) Serve as the official presiding officer of the COC, responsible for convening sessions, managing legislative deliberations, and ensuring the Houses act in coordination;</p>
+                                <p>(c) The Vice President shall not have a regular vote within the Council of House Chancellors except in the event of a deadlock (2-2 vote), in which case the Vice President shall cast the deciding vote;</p>
+                                <p>(d) Monitor the internal affairs of the Four Houses to ensure their activities and policies remain consistent with the Society's Constitution and High Council resolutions;</p>
+                                <p>(e) Spearhead the execution of Society-wide projects that require the joint participation of all Four Houses.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">The Office of the Executive Secretary</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Office of the Executive Secretary (OES) shall serve as the central administrative hub, archive, and secretariat of the Society. It shall be composed of the Secretary as the chief officer, the Assistant Secretary as the second-in-command of the office, Secretariat Officer(s), Secretariat Intern(s) as the President may authorize.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The powers and duties of the Office of the Executive Secretary shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Monitor the implementation of mandates and directives issued by the President across all Executive Offices, ensuring that all departmental actions are documented and aligned with Society standards;</p>
+                                <p>(b) Act as the sole guardian of the original copy of the Constitution, the Great Seal of the Society, and all historical archives, ensuring their absolute preservation and security;</p>
+                                <p>(c) Draft and maintain the formal minutes of all sessions of the High Council and the Supreme Council, providing the definitive and authenticated record of all Society actions;</p>
+                                <p>(d) Maintain the Book of Policies (BOP) to track the status of all policies passed by the Council of Chancellors, including those vetoed by the President or overridden by the Council;</p>
+                                <p>(e) Exercise the authority to certify official documents, membership statuses, and high-level communications. No act of the Society shall be considered official or enforceable without the attestation of the Office;</p>
+                                <p>(f) Spearhead the orientation and pillar education for all incoming Provisional Members, ensuring they are fully briefed on the Constitution and the Society's history before their deployment.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">The Office of Internal Affairs</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Office of Internal Affairs (OIA) shall be the primary department responsible for the welfare, ethical conduct, and internal cohesion of the Society. It shall be composed of the Secretary of Internal Affairs as the Chief Officer, the Assistant Secretary as the second-in-command, and such Internal Affairs Officers and Executive Interns as the President may authorize.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The powers and duties of the Office of Internal Affairs shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Maintain the comprehensive and secure registry of all Society members. This includes the authoritative tracking of an individual's progression from Executive Internship to Full Membership, alongside the verification of House affiliations and residency requirements;</p>
+                                <p>(b) Design, propose, and spearhead the execution of Society-wide activities, events, and programs specifically aimed at enhancing the holistic well-being and inclusion of the membership. These programs may include mental health initiatives, member-retention socials, and skill-building retreats;</p>
+                                <p>(c) Enforce the Society's Rules and Procedure. The Office shall have the mandate to investigate reports of misconduct, gather evidence, and recommend specific disciplinary actions to the Supreme Council;</p>
+                                <p>(d) Coordinate with the Executive Secretary to assign Executive Interns to their respective Executive Offices, ensuring a balanced distribution of manpower based on the Intern's skills and interests, and track their performance to ensure they meet the criteria for elevation to Full Member status;</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">The Office of External Affairs</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Office of External Affairs (OEA) shall serve as the primary diplomatic and liaison arm of the Society. It shall be composed of the Secretary of External Affairs as the Chief Officer, the Assistant Secretary as the second-in-command, and such External Affairs Officers and Executive Interns as the President may authorize.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The powers and duties of the Office of External Affairs shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Serve as the primary bridge between the Society and external entities, including other academic institutions, government bodies, and the private sector;</p>
+                                <p>(b) Spearhead the negotiation of formal partnerships, memoranda of agreement (MOA), and long-term alliances. The Office shall be responsible for vetting potential partners to ensure they align with the Society's Pillars;</p>
+                                <p>(c) Design and execute strategies for the solicitation of external grants, corporate sponsorships, and donations to support Society-wide projects and the General Fund;</p>
+                                <p>(d) Maintain and expand the Society's presence within national and international debating circuits, ensuring the Society is represented in major tournaments and summits;</p>
+                                <p>(e) Spearhead, organize, and manage all events, programs, and activities of the Society that occur outside the organization or the university campus.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">The Office of Financial and Resource Affairs</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Office of Financial and Resource Affairs (OFRA) shall be the primary department responsible for the fiscal integrity, resource management, and logistical sustainability of the Society. It shall be composed of the Secretary of Finance as the Chief Officer, the Assistant Secretary as the second-in-command, and such Finance Officers and Executive Interns as the President may authorize.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The powers and duties of the Office of Financial and Resource Affairs shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Exercise primary management over the General Fund, ensuring that all central funds are collected, recorded, and deposited in accordance with the High Council's financial standards;</p>
+                                <p>(b) Coordinate with all Executive Offices to draft the Annual General Budget. The Office shall review all funding requests before they are presented to the President, after the concurrence of the Council of Chancellors, for signature;</p>
+                                <p>(c) Maintain a comprehensive inventory of all Society-owned physical and digital assets. The Office shall be responsible for the procurement, maintenance, and storage of Society equipment;</p>
+                                <p>(d) Issue a Monthly Fiscal Report to the High Council and a comprehensive Annual Financial Statement to be included in the President's State of the Society Address (SOSA);</p>
+                                <p>(e) In coordination with the Office of Internal Affairs, the OFRA shall manage the collection of membership dues, tournament fees, and sponsorship funds, ensuring proper receipt and accounting.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">The Office of Business Affairs</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Office of Business Affairs (OBA) shall serve as the primary commercial and entrepreneurial arm of the Society. It shall be composed of the Secretary of Business Affairs as the Chief Officer, the Assistant Secretary as the second-in-command, and such Business Officers and Executive Interns as the President may authorize.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The powers and duties of the Office of Business Affairs shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Spearhead the development of income-generating projects, including the sale of Society merchandise, publication of paid journals, and the management of ticketed events or tournaments;</p>
+                                <p>(b) In coordination with the Office of Public Affairs, manage the commercial brand of the Society to ensure that all business ventures maintain the prestige of the Pillars;</p>
+                                <p>(c) In coordination with the Office of External Affairs, manage the commercial contracts with vendors, media partners, and technical service providers, ensuring the Society receives the best value for its investments;</p>
+                                <p>(d) Research and implement modern funding models, including digital subscriptions, crowdfunding, and the commercialization of the Society's intellectual property;</p>
+                                <p>(e) Provide the High Council with long-term economic forecasts and sustainability plans to ensure the Society's financial independence from university-only funding.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section 10 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 10.</span>
+                        <span class="section-title-text">Office of Public Affairs</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1)</span> The Office of Public Affairs (OPA) shall serve as the primary media, communications, and public relations arm of the Society. It shall be composed of the Secretary of Public Affairs as the Chief Officer, the Assistant Secretary as the second-in-command, and such Public Affairs Officers and Executive Interns as the President may authorize.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2)</span> The powers and duties of the Office of Public Affairs shall include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Manage the public image of the Society and serve as the primary press office. The OPA shall be responsible for drafting official press releases, managing media relations, and responding to public inquiries;</p>
+                                <p>(b) Exercise sole authority over the Society's official social media platforms, websites, and digital archives, ensuring a consistent and elite aesthetic in all postings;</p>
+                                <p>(c) Spearhead the creation of high-quality visual and audio content, including photography, graphic design, and video production;</p>
+                                <p>(d) Manage, design, and maintain the Official Website of the BSU Debate Society. Maintain a public-facing repository of the Constitution, High Council Resolutions, as provided by the OES, and the Society's history. Develop and secure portals for membership applications. Optimize the website to ensure the Society's initiatives are accessible to a national and international audience;</p>
+                                <p>(e) Maintain a visual record of all Society-wide events, ensuring that the history of the administration is documented through photography and film.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Constitutional Note – with Gold Border -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Authority</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                The Constitution of the BSU Debate Society, known as The Red Book, is the supreme governing document of the organization. All policies, rules, and procedures must conform to its provisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article VIII · The High Council</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

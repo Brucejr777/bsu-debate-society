@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article VIII (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2 {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2 {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2 {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article VIII – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article VIII</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Records Management, Transparency, and Information Access</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–8 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This Article establishes operational procedures for the creation, classification, retention, access, and publication of Society records. It implements the right to information guaranteed under Article 4, Section 5 of the Constitution and provides detailed workflows to ensure transparency, accountability, and data protection. This Article does not alter constitutional rights, document custodianship under Article 7, or privacy protections, but specifies administrative processes to facilitate their exercise. All records management shall align with the Society's principles under Article 3, particularly Sections 5 (honesty and ethical conduct) and 10 (education as empowerment).
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Classification of Records.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Public Records.</span> Records that shall be accessible to all Society members upon request, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Approved minutes of Society Assembly Meetings, House Assemblies, and Council meetings;</p>
+                                <p>(b) Finalized point standings under the House Point System (Article I), Individual Recognition Framework (Article II), and Debate League (Article III);</p>
+                                <p>(c) Approved budgets, semester financial snapshots, and annual financial statements (subject to Section 7(3));</p>
+                                <p>(d) Election results, certificates of proclamation, and post-election reports under Article VII;</p>
+                                <p>(e) Final disciplinary decisions involving suspension, removal, or expulsion (summarized without victim/witness identifiers);</p>
+                                <p>(f) The Constitution, Rules and Procedures, House Charters, and approved annexes.</p>
+                                <p>(g) Activity Designs for both Society-wide and House-wide events;</p>
+                                <p>(h) Loan transactions (subject to deliberation and privacy redactions);</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Restricted Records.</span> Records accessible only to authorized officers or upon demonstrated need, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Draft minutes, unapproved reports, or provisional point postings;</p>
+                                <p>(b) Individual member contact information, academic records, or personal data not required for public disclosure;</p>
+                                <p>(c) Internal deliberation notes, selection committee materials, or confidential nomination packages under Article II;</p>
+                                <p>(d) Disciplinary complaint forms, investigation notes, or hearing transcripts not resulting in final sanctions;</p>
+                                <p>(e) Financial records containing personal banking details, unreimbursed receipts, or sensitive vendor contracts.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Confidential Records.</span> Records accessible only to the High Council, relevant House Councils, or adjudicating bodies, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Records involving pending disciplinary proceedings, appeals, or restoration petitions;</p>
+                                <p>(b) Records containing legally privileged communications, attorney-client materials, or University-confidential submissions;</p>
+                                <p>(c) Records whose disclosure would reasonably endanger member safety, compromise ongoing investigations, or violate University data privacy policies.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Classification Authority.</span> The Executive Secretary, in consultation with the Director of Internal Affairs and relevant House Secretariat Directors, shall classify records upon creation. Misclassification may be appealed to the High Council.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Retention Schedules and Custodianship.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Retention Periods.</span> Records shall be retained according to the following minimum schedules:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Permanent: Constitution, Rules and Procedures, House Charters, ratified amendments, annual financial statements, election results, and House Cup winners.</p>
+                                <p>(b) Ten (10) Years: Approved meeting minutes, finalized point ledgers, disciplinary decisions with sanctions, and major project reports.</p>
+                                <p>(c) Five (5) Years: Draft documents, provisional reports, routine correspondence, and semester financial snapshots.</p>
+                                <p>(d) One (1) Year: Temporary records, attendance sheets, unreimbursed receipts, and draft agendas.</p>
+                                <p>(e) Immediate Expungement: Personal data collected for specific, time-bound purposes (e.g., event registration) once the purpose is fulfilled, unless consent for retention is obtained.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Custodianship.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Society-Wide Records: The Executive Secretary shall serve as the formal custodian of all Society-wide records under Article 8, Section 6 of the Constitution, with the Secretary of Internal Affairs maintaining operational ledgers under delegated authority.</p>
+                                <p>(b) House-Level Records: Each House Secretariat Director shall serve as custodian of House-specific records, with copies of required reports submitted to the Executive Secretary for Society-wide archiving.</p>
+                                <p>(c) Digital Custodianship: The Office of Public Affairs shall maintain the Society's official digital platform, with access permissions managed by the Executive Secretary.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Transfer and Disposition.</span> Upon expiration of retention periods, records shall be: (a) archived permanently if designated; (b) securely destroyed if no longer needed, with a destruction log maintained; or (c) transferred to University archives if required by institutional policy. Destruction of any record classified as Permanent or involving disciplinary sanctions requires written approval from the High Council.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Access Request Procedures.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Request Submission.</span> Any active member may request access to Public or Restricted Records by submitting a written Access Request Form to the Executive Secretary (for Society-wide records) or relevant House Secretariat Director (for House records). The form must include: the requester's name and House, specific records sought, purpose of request, and preferred format (digital copy, in-person review, or summary).</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Processing Timeline.</span> The custodian shall respond to requests within five (5) business days. If granted, access shall be provided within three (3) business days of the response. If denied, the response shall state the specific ground for denial (e.g., confidential classification, privacy protection, pending proceeding) and the appeal process under Section 6.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Access Methods.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Digital Access: Public Records shall be posted to the Society's official digital platform with view-only permissions. Restricted Records may be shared via secure, password-protected links with expiration dates.</p>
+                                <p>(b) In-Person Review: Requesters may review physical records at scheduled times in the presence of the custodian or designee. Photography or copying may be permitted at the custodian's discretion.</p>
+                                <p>(c) Summarized Access: For records containing mixed public/confidential content, the custodian may provide a redacted version or factual summary that protects sensitive information.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Fees.</span> No fee shall be charged for access to Public Records. Reasonable copying or printing costs may be charged for physical copies of Restricted Records, with prior notice to the requester.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Publication and Proactive Disclosure.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Mandatory Publications.</span> The following records shall be proactively published without request:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Monthly: House Point standings (Article I, Section 7), Debate League standings (Article III, Section 6), and financial snapshots (Article V, Section 7(1));</p>
+                                <p>(b) Semesterly: Individual Recognition recipients (Article II, Section 6), Debate League support reports (Article III, Section 6(4)), and House financial reports (Article V, Section 7(2));</p>
+                                <p>(c) Annually: House Cup results (Article I, Section 9), Annual Excellence Awards (Article I, Section 10(2)), election reports (Article VII), and the President's State of the Society Address summary.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Publication Platform.</span> All mandatory publications shall be posted to the Society's official digital platform within the timelines specified in relevant Articles. The Office of Public Affairs shall ensure consistent formatting, accessibility, and archival of published materials.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Notification.</span> Members shall be notified of new publications through the Society's official communication channels (e.g., group chat, email, announcement at General Meetings).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Appeals and Dispute Resolution.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Appeal Grounds.</span> A member may appeal a denial of access or classification decision on grounds of: (a) misclassification of a record; (b) unreasonable delay in processing; (c) over-redaction of a Public Record; or (d) violation of constitutional information rights under Article 4, Section 5.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Appeal Process.</span> Appeals shall be submitted in writing to the High Council within five (5) calendar days of the denial or classification decision. The Council shall review the appeal within seven (7) business days, with the Executive Secretary providing the record and rationale for the original decision. The Council may uphold, modify, or reverse the decision by majority vote.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Finality.</span> The High Council's decision on access appeals shall be final and executory, except where a constitutional violation is alleged, in which case the matter may be referred to the High Tribunal under Article 10 of the Constitution.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Data Privacy and Protection.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Personal Data Principles.</span> The Society shall collect, process, and store personal data in accordance with the following principles:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Lawfulness and Transparency: Data collection shall have a legitimate Society purpose, and members shall be informed of how their data will be used.</p>
+                                <p>(b) Purpose Limitation: Data shall be used only for the purpose for which it was collected, unless additional consent is obtained.</p>
+                                <p>(c) Data Minimization: Only data necessary for the stated purpose shall be collected.</p>
+                                <p>(d) Accuracy: Reasonable steps shall be taken to ensure personal data is accurate and updated.</p>
+                                <p>(e) Storage Limitation: Data shall not be retained longer than necessary for the stated purpose.</p>
+                                <p>(f) Integrity and Confidentiality: Appropriate security measures shall protect data from unauthorized access, loss, or disclosure.</p>
+                            </div>
+                            <div class="sub-list space-y-1 text-white/70 mt-1">
+                                <p><span class="font-semibold text-amber-300">(g) Digital Security Standards.</span> To operationalize the Integrity and Confidentiality principle under subsection (f), the Society shall implement the following technical and administrative safeguards:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p><span class="font-semibold text-amber-200">(i) Encryption and Approved Platforms.</span> All sensitive data, including personal contact information, disciplinary records, financial data, and confidential deliberation materials, shall be stored and transmitted using encryption standards consistent with Benguet State University data security policies. Society officers shall utilize only University-approved or High Council-vetted digital platforms for records management, communication, and file sharing.</p>
+                                    <p><span class="font-semibold text-amber-200">(ii) Access Control and Authentication.</span> Access to Restricted and Confidential Records shall be governed by role-based permissions managed by the Executive Secretary. All accounts with access to Society records shall require strong password authentication, with mandatory password rotation at least once per semester. Multi-factor authentication shall be enabled for all High Council and House Council officer accounts where supported by the platform.</p>
+                                    <p><span class="font-semibold text-amber-200">(iii) Breach Response Timelines.</span> In addition to the notification requirements under subsection (3), any suspected or confirmed breach of digital security shall be reported to the Executive Secretary and Director of Internal Affairs within twenty-four (24) hours of discovery. A preliminary assessment shall be completed within forty-eight (48) hours, and affected members shall receive written notification within seventy-two (72) hours if personal data is reasonably believed to have been compromised. All breach incidents shall be documented in a confidential Security Incident Log maintained by the Office of Internal Affairs.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Member Rights.</span> Members have the right to:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) access their own personal data held by the Society;</p>
+                                <p>(b) request correction of inaccurate data;</p>
+                                <p>(c) request deletion of data no longer necessary for Society purposes; and</p>
+                                <p>(d) withdraw consent for non-essential data processing.</p>
+                            </div>
+                            <p class="text-white/70 mt-1">Requests shall be submitted to the Secretary of Internal Affairs and processed within ten (10) business days.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Breach Response.</span> In the event of a data breach involving personal information, the High Council shall:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) contain the breach and assess its scope;</p>
+                                <p>(b) notify affected members within seventy-two (72) hours if sensitive data is compromised; and</p>
+                                <p>(c) implement corrective measures to prevent recurrence.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Moral Rights and Attribution.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Members who create original materials for Society purposes, including but not limited to debate cases, research briefs, graphic designs, written chronicles, video content, or educational resources, retain moral rights of attribution and integrity under applicable law. When the Society uses, reproduces, or archives member-created materials for official purposes, the creator shall be credited in a manner consistent with academic and professional standards, unless the creator expressly waives attribution in writing.</p>
+                                <p>(b) Educational License to the Society. By submitting original materials for Society activities, competitions, or publications, members grant the Society a non-exclusive, royalty-free, perpetual license to use, reproduce, distribute, display, and adapt such materials for educational, archival, training, and promotional purposes consistent with the Society's mission. This license shall not permit commercial exploitation or transfer to third parties without the creator's additional written consent.</p>
+                                <p>(c) Preservation of Creator Rights. Nothing in this subsection shall be construed to transfer ownership of copyright or other intellectual property rights from the creator to the Society. Members retain the right to use, publish, or license their original works independently, provided that such use does not conflict with ongoing Society obligations or confidentiality requirements. The Society shall not claim authorship of member-created works and shall respect reasonable requests to withdraw or restrict use of materials where feasible and consistent with archival integrity.</p>
+                                <p>(d) University Policy Alignment. All intellectual property practices under this Section shall be interpreted in harmony with Benguet State University policies on student work, academic output, and institutional repositories. Where University policy provides greater protection to student creators, such policy shall prevail.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Digital Platform Management.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Platform Standards.</span> The Society's official digital platform shall: (a) provide secure, role-based access controls; (b) maintain an audit log of document views, edits, and downloads; (c) support version control for collaborative documents; and (d) ensure accessibility for members with disabilities.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Content Management.</span> The Office of Public Affairs, in coordination with the Executive Secretary, shall: (a) organize records by category, date, and classification; (b) implement search functionality for Public Records; (c) archive outdated materials while preserving historical integrity; and (d) conduct quarterly reviews to ensure links, permissions, and content remain current.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Backup and Recovery.</span> Critical Society records shall be backed up at least weekly to a secure, off-platform location. A disaster recovery plan shall be maintained by the Executive Secretary and tested annually.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article VIII · Records Management, Transparency, and Information Access</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

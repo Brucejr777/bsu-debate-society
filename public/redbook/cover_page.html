@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Red Book - Cover Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,500;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Styles to augment Tailwind for premium typography */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a0505;
+        }
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+        /* Sovereign Gold Metallic Text Gradient (same as Blue Book) */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* Sovereign Gold Metallic Border Gradient (same as Blue Book) */
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+            border-image-slice: 1;
+        }
+        /* Gold Divider (same as Blue Book) */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+        /* Logo container hover effect */
+        .logo-container {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .main-card {
+                background: #1a0505 !important;
+                border: 2px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                min-height: 100vh !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-amber-400\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #1a0505 !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 2px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a1a1a !important;
+            }
+            .logo-container {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+
+    <div class="main-card relative w-full max-w-4xl min-h-[1100px] bg-gradient-to-b from-[#1a0505] via-[#0d0303] to-[#080101] text-white p-12 md:p-16 flex flex-col justify-between shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+        
+        <!-- Background decorative elements (gold rings) -->
+        <div class="absolute inset-0 pointer-events-none opacity-5 flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Corner gold accents -->
+        <div class="absolute top-0 left-0 w-32 h-32 pointer-events-none no-print">
+            <div class="absolute top-0 left-0 w-16 h-[2px] bg-gradient-to-r from-[#D4AF37] to-transparent"></div>
+            <div class="absolute top-0 left-0 w-[2px] h-16 bg-gradient-to-b from-[#D4AF37] to-transparent"></div>
+        </div>
+        <div class="absolute top-0 right-0 w-32 h-32 pointer-events-none no-print">
+            <div class="absolute top-0 right-0 w-16 h-[2px] bg-gradient-to-l from-[#D4AF37] to-transparent"></div>
+            <div class="absolute top-0 right-0 w-[2px] h-16 bg-gradient-to-b from-[#D4AF37] to-transparent"></div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 pointer-events-none no-print">
+            <div class="absolute bottom-0 left-0 w-16 h-[2px] bg-gradient-to-r from-[#D4AF37] to-transparent"></div>
+            <div class="absolute bottom-0 left-0 w-[2px] h-16 bg-gradient-to-t from-[#D4AF37] to-transparent"></div>
+        </div>
+        <div class="absolute bottom-0 right-0 w-32 h-32 pointer-events-none no-print">
+            <div class="absolute bottom-0 right-0 w-16 h-[2px] bg-gradient-to-l from-[#D4AF37] to-transparent"></div>
+            <div class="absolute bottom-0 right-0 w-[2px] h-16 bg-gradient-to-t from-[#D4AF37] to-transparent"></div>
+        </div>
+
+        <header class="relative z-10 text-center space-y-2">
+            <h2 class="text-xs md:text-sm tracking-[0.4em] font-medium text-white/80 uppercase">
+                Benguet State University
+            </h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">
+                Debate Society
+            </h1>
+            <div class="gold-divider w-24 mx-auto mt-4"></div>
+        </header>
+
+        <main class="relative z-10 text-center my-auto py-8 space-y-8">
+            
+            <div class="space-y-3">
+                <p class="text-xs md:text-sm tracking-[0.3em] text-amber-400/80 font-medium uppercase">
+                    Constitution and By-Laws
+                </p>
+                
+                <h1 class="serif-title text-5xl md:text-7xl font-extrabold tracking-wide drop-shadow-lg py-2">
+                    <span class="gold-gradient-text">“The Red Book”</span>
+                </h1>
+                
+                <p class="text-xs md:text-sm tracking-widest font-light text-white/60 italic uppercase pt-2">
+                    The Supreme Charter of the Society
+                </p>
+            </div>
+
+            <!-- Logo Container with Gold Circle Border -->
+            <div class="relative flex items-center justify-center py-6">
+                <div class="logo-container w-40 h-40 border-2 border-[#D4AF37]/40 rounded-full flex items-center justify-center p-3 bg-gradient-to-br from-[#0d0303]/80 to-[#1a0505]/80 backdrop-blur-xs shadow-xl shadow-[#D4AF37]/10">
+                    
+                    <!-- Logo Image - Replace the src with your actual logo path -->
+                    <img 
+                        src="society-logo.png" 
+                        alt="BSU Debate Society Logo" 
+                        class="w-full h-full object-contain rounded-full p-1"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-6xl text-amber-400/60 font-serif\'>&#9881;</span>'"
+                    />
+                    
+                </div>
+                
+                <!-- Decorative Gold Lines -->
+                <div class="absolute left-[15%] md:left-[20%] w-12 md:w-16 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]/40"></div>
+                <div class="absolute right-[15%] md:right-[20%] w-12 md:w-16 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37]/40"></div>
+            </div>
+
+            <div class="space-y-2 pt-4">
+                <p class="text-xs tracking-[0.2em] uppercase font-bold text-amber-500/80">
+                    First Edition
+                </p>
+                <div class="gold-divider w-24 mx-auto my-3"></div>
+                <div class="pt-4 text-[11px] tracking-wider text-white/40 space-y-1">
+                    <p>Ratified by Majority Vote of the Society Assembly</p>
+                    <p class="italic text-white/30">In accordance with Article 13, Section 2 of the Constitution</p>
+                    <p class="font-medium text-white/50 mt-1">Date of Ratification: July __, 2026</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="relative z-10 mt-auto">
+            <div class="gold-gradient-border border p-4 bg-black/30 backdrop-blur-xs max-w-2xl mx-auto rounded-md">
+                <div class="flex items-start space-x-3 text-left">
+                    <span class="text-amber-400 text-sm mt-0.5">⚖️</span>
+                    <div class="space-y-1">
+                        <h4 class="text-[10px] tracking-wider font-bold text-amber-400 uppercase">
+                            Document Overview
+                        </h4>
+                        <p class="text-[10px] leading-relaxed text-white/60 font-light">
+                            The Constitution of the BSU Debate Society, known as The Red Book, establishes the foundational principles, rights, and governance structures of the organization. It serves as the supreme charter, guiding all activities, policies, and decision-making within the Society.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Subtle footer gold line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

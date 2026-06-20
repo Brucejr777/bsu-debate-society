@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article VII (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article VII – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article VII</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">The Presidential Conclave</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–10 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 (numbered as "1." in PDF but we'll treat as Section 1) -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Declaration, Purpose, and Schedule.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <p><span class="font-semibold text-amber-300">(1) The Presidential Conclave.</span> The election of the Society President shall be conducted through a specialized deliberative body known as the "Presidential Conclave." This process is designed to ensure that the Society President possesses the confidence, respect, and collaborative support of the House leadership, and to uphold the Society's principles of reasoned dialogue, intellectual rigor, and constructive competition under Article 3 of the Constitution.</p>
+
+                        <p><span class="font-semibold text-amber-300">(2) Composition of Electors and Candidates.</span> The Conclave shall be composed exclusively of the four (4) sitting House Chancellors. Each Chancellor shall hold one (1) vote and shall simultaneously serve as a candidate for the Presidency.</p>
+
+                        <p><span class="font-semibold text-amber-300">(3) Eligibility.</span> Only sitting House Chancellors in good standing are eligible to be elected as Society President through this process. Upon filing for candidacy, a Chancellor acknowledges their willingness and availability to serve as Society President if elected by the Conclave.</p>
+
+                        <p><span class="font-semibold text-amber-300">(4) Exclusivity of Vote.</span> Pursuant to the exception provided in Article 11, Section 1 of the Constitution, the power to elect the President resides solely and strictly within the four (4) House Chancellors. No external officer, including the Vice President or President, shall possess voting rights, tie-breaking authority, or veto power over the Conclave's decision.</p>
+
+                        <p><span class="font-semibold text-amber-300">(5) Schedule of the Conclave.</span> The Presidential Conclave shall be conducted annually during the finals period of the Second Semester, as determined by the Benguet State University academic calendar. The High Council shall issue a formal Notice of Conclave at least fourteen (14) days prior to the scheduled date, specifying the venue, start time, and procedural reminders.</p>
+                    </div>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">The Presiding Officer and Oversight.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Presiding Officer.</span> The outgoing Society President shall serve as the Presiding Officer of the Conclave. Their role shall be limited to:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Overseeing the flow of proceedings and enforcing time limits;</p>
+                                <p>(b) Ensuring adherence to the interrogation and voting protocols;</p>
+                                <p>(c) Maintaining order and decorum during deliberations;</p>
+                                <p>(d) Certifying the final vote count and proclamation.</p>
+                            </div>
+                            <p class="text-white/70 mt-1">The Presiding Officer shall not vote, interrogate, participate in candidate deliberations, or intervene in deadlocks.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Secretary of the Conclave.</span> The Vice President of the Society shall serve as the Secretary of the Conclave. They shall be responsible for:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Distributing and collecting ballots;</p>
+                                <p>(b) Recording vote tallies and procedural milestones;</p>
+                                <p>(c) Serving as the official timekeeper under Section 8;</p>
+                                <p>(d) Certifying the results and issuing the formal Proclamation of Election;</p>
+                                <p>(e) Maintaining the official Conclave Record.</p>
+                            </div>
+                            <p class="text-white/70 mt-1">The Vice President shall not possess voting rights or tie-breaking authority within the Conclave.</p>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(3) Seclusion.</span> During the interrogation and voting phases, the Conclave shall be in closed session. No external communication shall be permitted until a verdict is reached and the results are certified.</p>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Platform Presentation and Interrogation Proceedings.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Platform Presentation (Pre-Round).</span> Before interrogation rounds commence, each Chancellor-candidate shall be afforded a fifteen (15) minute period to present their platform, vision, and qualifications before the Conclave. Presentations shall be delivered in an order determined by drawing of lots. No interruptions or questions shall be permitted during this period.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Interrogation Rounds.</span> Following platform presentations, the Conclave shall proceed to structured interrogation rounds:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Structure. In each round, one Chancellor-candidate shall be designated as the Respondent. One (1) of the remaining three (3) Chancellors shall be designated as the Interrogator. The Interrogator shall have two (2) minutes to question the Respondent regarding their platform, judgement, or fitness for office.</p>
+                                <p>(b) Cycle. The interrogation shall cycle through all four Chancellor-candidates as Respondents. The assignment of Interrogators shall rotate to ensure equitable questioning. The Presiding Officer shall enforce the two-minute time limit strictly.</p>
+                                <p>(c) Post-Interrogation Deliberation. After all four Chancellor-candidates have been interrogated in a round, the Conclave shall enter a brief closed deliberation period (maximum five (5) minutes) to reflect on the responses before proceeding to vote.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Voting Protocol.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) The Proceed Vote.</span> Following each complete cycle of interrogation and deliberation, the Conclave shall conduct a vote on the following question: "Shall the Conclave proceed to the Election by Secret Ballot?"</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Threshold.</span> To proceed to the Election by Secret Ballot, the motion requires an affirmative vote of at least three (3) of the four (4) House Chancellors (supermajority).</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Outcomes.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) If the motion passes (3 or 4 votes): The Conclave shall immediately proceed to Section 5 (Election by Secret Ballot).</p>
+                                <p>(b) If the motion fails (0, 1, or 2 votes): The Conclave shall commence another full round of interrogation under Section 3(2), followed by another Proceed Vote under this Section. There is no limit to the number of cycles, provided the Conclave remains in session and the time limit under Section 8 has not been reached.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Persistent Deadlock.</span> If the Conclave fails to achieve the two-vote threshold to proceed after five (5) complete cycles, the Conclave shall continue to conduct interrogation rounds and Proceed Votes until the threshold is met or the time limit under Section 8 is reached. No external officer shall intervene to break the deadlock.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Election by Secret Ballot.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Method.</span> Upon a successful Proceed Vote, the Conclave shall conduct the final election via secret ballot. The Secretary of the Conclave shall distribute blank ballots to the four (4) House Chancellors.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Voting.</span> Each Chancellor shall write the name of their preferred candidate (which may include themselves) on the ballot. Ballots shall be collected, counted, and verified by the Secretary in the presence of the Presiding Officer.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Threshold for Election.</span> To be elected Society President, a candidate must secure a simple majority of at least two (2) affirmative votes.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Contingency for Ballot Deadlock.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Inconclusive Ballot. If no candidate secures at least two (2) votes in the first secret ballot, the ballot shall be deemed inconclusive.</p>
+                                <p>(b) Return to Interrogation. Upon an inconclusive ballot, the Conclave shall return to Section 3 (Interrogation Proceedings) for another full round of interrogation.</p>
+                                <p>(c) Subsequent Voting. Following the new interrogation round, the Conclave shall proceed to Section 4 (Proceed Vote). If the Proceed Vote passes, the Conclave shall conduct another Secret Ballot under this Section.</p>
+                                <p>(d) No External Tie-Breaker. Under no circumstances shall the Vice President, President, or any external officer cast a tie-breaking vote. The decision must originate strictly from the four (4) House Chancellors through continued deliberation and voting.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Contingency: Inability, Ineligibility, or Substitution of a Chancellor-Candidate.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Grounds for Substitution.</span> If a House Chancellor-candidate is unable to continue in the Conclave, is ineligible to run, or if elected, is unable to assume the Presidency due to special circumstances. The following grounds shall apply:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Voluntary withdrawal or resignation filed in writing with the Presiding Officer;</p>
+                                <p>(b) Disqualification due to ineligibility discovered mid-process;</p>
+                                <p>(c) Incapacity due to health emergency, university sanction, or force majeure;</p>
+                                <p>(d) Death or permanent inability to serve;</p>
+                                <p>(e) Graduating Status. The Chancellor-candidate is a graduating student who will not be enrolled in the University for the subsequent academic year, unless expressly permitted by a High Council Resolution to serve a transitional term.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Procedure for Ineligibility or Substitution Before Conclave.</span> If a sitting House Chancellor is determined to be ineligible to run for President before the Conclave commences:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Notification. The Presiding Officer shall notify the affected House Council in writing of the ineligibility.</p>
+                                <p>(b) Succession Hierarchy. The House Council shall have forty-eight (48) hours to identify a substitute candidate from within its own Council officers, in the following order of priority:</p>
+                                <div class="sub-list space-y-1">
+                                    <p>(i) First: The House Vice Chancellor, provided they meet the constitutional qualifications for Society President under Article 8, Section 2(3);</p>
+                                    <p>(ii) Second: Any sitting House Council Director (e.g., Secretariat, Internal Affairs, External Affairs, Finance, Business, Public Affairs), provided they meet the constitutional qualifications for Society President under Article 8, Section 2(3).</p>
+                                </div>
+                                <p>(c) Special Nomination Assembly. If all sitting House Council officers are ineligible or unable to serve as the substitute candidate, the House Council shall convene a Special Nomination Assembly within the same forty-eight (48) hour period.</p>
+                                <div class="sub-list space-y-1">
+                                    <p>(i) The Assembly shall be open to all bona fide Full Members of that House;</p>
+                                    <p>(ii) House members may nominate eligible Full Members to serve as the House's representative-candidate in the Conclave;</p>
+                                    <p>(iii) Nominations must be seconded and approved by majority vote of House members present;</p>
+                                    <p>(iv) The nominated representative shall assume the candidacy and voting rights of the original Chancellor for the Conclave.</p>
+                                </div>
+                                <p>(d) Failure to Appoint. If the House Council fails to appoint a substitute via Succession or Nomination Assembly within the timeframe, the seat shall be deemed vacant for the purposes of the Conclave, and the Conclave shall proceed with the remaining eligible Chancellors under Subsection (5).</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Procedure During Conclave.</span> If a Chancellor-candidate becomes unable to continue during the Conclave proceedings:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The Presiding Officer shall immediately suspend the Conclave;</p>
+                                <p>(b) The respective House Council shall have twenty-four (24) hours to appoint a substitute following the Succession Hierarchy outlined in Subsection 2(b)-(c);</p>
+                                <p>(c) The substitute shall assume the candidacy and voting rights of the original Chancellor for the remainder of the Conclave;</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Procedure Post-Election.</span> If the elected Chancellor is unable to assume the Presidency after proclamation but before assumption of office:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The proclamation shall be held in abeyance;</p>
+                                <p>(b) A new Conclave shall be convened within seven (7) days, composed of the remaining eligible House Chancellors or their duly nominated substitutes under Subsection (2);</p>
+                                <p>(c) If fewer than three (3) Chancellors remain eligible, the succession protocols under Subsection (5) and (6) shall apply.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Insufficient Quorum of Eligible Electors.</span> If, after exhausting the Succession Hierarchy and Nomination Assembly procedures, the number of eligible Chancellors remaining is insufficient to constitute a valid Conclave, the following protocols shall apply:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Three (3) or Four (4) Eligible Chancellors. The Conclave shall proceed normally. The threshold for the Proceed Vote shall be reduced to two (2) affirmative votes and the threshold for election shall remain at two (2) affirmative votes.</p>
+                                <p>(b) Two (2) or Fewer Eligible Chancellors. The Conclave shall be deemed unable to convene. The election process under this Article shall be terminated immediately. The succession protocols under Subsection (6) shall be triggered.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Vice Presidential Succession.</span> If the Conclave is deemed unable to convene under Subsection (5)(b):</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Eligibility Check. The Society Vice President shall be assessed for eligibility to assume the Presidency under Article 8, Section 2(3) of the Constitution.</p>
+                                <p>(b) Condition for Assumption. The Vice President shall assume the Presidency only if the outgoing Society President is ineligible to continue. If the outgoing President is eligible to continue, they shall retain the office until the next election cycle.</p>
+                                <p>(c) Proclamation. If the Vice President assumes the Presidency, the Secretary of the Conclave shall issue a Proclamation of Succession rather than Election.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(7) Period of Discontinuation and Alumni Convention.</span> If the Conclave is unable to convene (Subsection (5)(b)) and the Vice President is ineligible to assume the Presidency (Subsection (6)):</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Declaration of Discontinuation. The Society shall enter a Period of Discontinuation. All Society operations shall be suspended except for essential asset preservation and financial custody managed by the Office of Financial and Resource Affairs under the oversight of the Society Chief Adviser.</p>
+                                <p>(b) Alumni Convention. Within thirty (30) days of the Declaration of Discontinuation, the Society Chief Adviser shall convene an Alumni Convention composed of bona fide Alumni Members in good standing.</p>
+                                <p>(c) Selection Protocol. The Alumni Convention shall elect an Interim President through the following process:</p>
+                                <div class="sub-list space-y-1">
+                                    <p>(i) Eligible Pool. Only bona fide current or former members of the Society who meet the constitutional qualifications for President under Article 8, Section 2(3) of the Constitution shall be eligible for selection.</p>
+                                    <p>(ii) Nomination. Any Alumni Member in good standing may nominate an eligible candidate. Nominations must be seconded and approved by majority vote of Alumni Members present.</p>
+                                    <p>(iii) Consent Requirement. Before any nominee may be declared selected, the Society Chief Adviser shall formally notify the nominee in writing. The nominee shall have seven (7) calendar days to provide written consent to serve. If the nominee declines or fails to respond within the period, they shall be removed from consideration, and the Convention shall proceed to select another candidate.</p>
+                                    <p>(iv) Selection Vote. Upon receipt of written consent, the Alumni Convention shall conduct a final vote by secret ballot. A candidate must secure a majority of votes cast to be selected as Interim President.</p>
+                                </div>
+                                <p>(d) Proclamation and Assumption. Upon successful selection and confirmed consent, the Society Chief Adviser shall issue a Proclamation of Interim Presidency. The Interim President shall assume office immediately or on a date specified in the proclamation.</p>
+                                <p>(e) Term and Restoration. The Interim President shall serve until a regular Presidential Conclave can be successfully conducted under this Article. Upon assumption of office by a regularly elected President, the Period of Discontinuation shall end, and Society operations shall resume under the direction of the High Council.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(8) Succession of the Vacated Chancellor Seat.</span> Upon a Chancellor assuming the Presidency (or being substituted under this Section), their position as House Chancellor shall be deemed vacated. The respective House Council shall appoint an interim Chancellor in accordance with their House Charter within seven (7) days.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Proclamation and Announcement.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) The Signal.</span> Upon the conclusion of a successful secret ballot vote, the Presiding Officer shall signal the end of the Conclave by striking the gavel three (3) times. The doors of the Conclave chamber shall then be opened to the Society Assembly.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) The Proclaimer.</span> The Vice President, acting as the Secretary of the Conclave, shall step forward to announce the result to the Society Assembly or via the Society's official digital platform.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Formal Declaration.</span> The announcement shall be made using the following formal protocol:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The Vice President shall state: "Members of the Debate Society, the Presidential Conclave has concluded."</p>
+                                <p>(b) The Vice President shall then declare: "Habemus Praesidem." (We have a President.)</p>
+                                <p>(c) The Vice President shall conclude with: "By the authority vested in the Council of House Chancellors and under the Constitution and the Rules and Procedures of the Benguet State University - Debate Society, I proclaim the election of [Name of Elected President] of the House of [House Name] as the next President of the Society."</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Certification.</span> The results shall be documented in the Official Election Report, signed by the Presiding Officer and the Vice President, and filed with the Office of the Executive Secretary.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Time Limit and Adjournment.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Maximum Duration.</span> The Presidential Conclave shall not exceed four (4) hours (240 minutes), calculated from the moment the Presiding Officer declares the Conclave in session to the moment of Proclamation or adjournment. This time limit is absolute and includes all platform presentations, interrogation rounds, deliberation periods, voting procedures, and formal announcements.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Time Allocation Breakdown.</span> To ensure efficient use of the allotted time, the following standard allocations shall apply per session:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Opening Formalities and Drawing of Lots: Ten (10) minutes;</p>
+                                <p>(b) Platform Presentations (4 candidates × 15 minutes): Sixty (60) minutes (First Session Only);</p>
+                                <p>(c) Each Complete Interrogation Cycle (4 respondents × 2 minutes interrogation + transitions + 5-minute deliberation + Proceed Vote): Twenty (20) minutes per cycle;</p>
+                                <p>(d) Secret Ballot Election: Twenty (20) minutes for distribution, voting, counting, and verification;</p>
+                                <p>(e) Proclamation and Closing Formalities: Fifteen (15) minutes.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Timekeeping.</span> The Vice President, serving as Secretary of the Conclave, shall serve as the official timekeeper. They shall provide verbal warnings at the three (3) hour mark and the three-hour-thirty (3:30) minute mark. At the four (4) hour mark, the Presiding Officer shall immediately halt all proceedings, regardless of the stage of the Conclave.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Mandatory Adjournment.</span> If the four (4) hour limit is reached before a President is elected and proclaimed:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The Presiding Officer shall immediately declare the Conclave adjourned until reconvened;</p>
+                                <p>(b) All ballots, notes, deliberation records, and vote tallies from the session shall be sealed by the Secretary and secured by the Executive Secretary of the High Council.</p>
+                                <p>(c) Continuity of Progress. All procedural progress, including completed interrogation rounds, vote tallies, and sealed ballots, shall carry over to the reconvened session. Platform Presentations under Section 3(1) shall not be repeated. The reconvened Conclave shall resume from the exact point of adjournment.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Reconvening the Conclave.</span> Within forty-eight (48) hours of adjournment, the High Council shall convene to determine the date and time for reconvening the Conclave. The reconvened Conclave shall:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Be scheduled no later than seven (7) calendar days from the date of adjournment;</p>
+                                <p>(b) Resume from the point of adjournment without repeating completed stages (Drawing of Lots, Platform Presentations);</p>
+                                <p>(c) Be subject to a new four (4) hour time limit for the reconvened session.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Emergency Succession.</span> If a reconvened Conclave fails to elect a President due to reaching the time limit a third time, or if the High Council fails to schedule a reconvened Conclave within the prescribed period, the succession protocols under Section (6)(6) and (6)(7) shall apply.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">Assumption of Office.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1) Effectivity.</span> The elected President shall assume office immediately following the Proclamation, unless a specific transition date is set by the High Council.</p>
+                        <p><span class="font-semibold text-amber-300">(2) Oath.</span> The newly elected President shall take the Oath of Office administered by the Society Chief Adviser or the outgoing President during the next Society Assembly Meeting.</p>
+                    </div>
+                </section>
+
+                <!-- Section 10 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 10.</span>
+                        <span class="section-title-text">Electoral Disputes.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1) Grounds for Protest.</span> Any House Chancellor may file an electoral protest within three (3) days of the Proclamation on grounds of procedural violation, vote tampering, or eligibility issues.</p>
+                        <p><span class="font-semibold text-amber-300">(2) Adjudication.</span> Electoral protests shall be adjudicated by the High Tribunal, presided over by the Society Chief Adviser. The decision of the Tribunal shall be final and executory.</p>
+                        <p><span class="font-semibold text-amber-300">(3) Recall.</span> In the event that the election is nullified by the High Tribunal, a new Conclave shall be convened within fourteen (14) days following the same procedures outlined in this Article.</p>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article VII · The Presidential Conclave</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

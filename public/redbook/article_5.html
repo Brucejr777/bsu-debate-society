@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Red Book · Article V</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – Red Book Constitution with Gold Accents */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a0505;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Gold Metallic Gradient Text (from Blue Book) */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gold Gradient Border */
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+            border-image-slice: 1;
+        }
+
+        /* Gold Dividers */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #1a0505;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement – Gold Accents */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+            /* amber-300 */
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2 {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #1a0505 !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-red-400\/80,
+            .text-red-400\/90 {
+                color: #CC0000 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-red-900\/30 {
+                border-color: #8B0000 !important;
+            }
+            .border-amber-400\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #1a0505 !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a1a1a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2 {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2 {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#1a0505] via-[#0d0303] to-[#080101] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings (gold) -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article V – VERBATIM -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-red-900/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-red-400/80 font-medium">Constitution</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article V</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Membership</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Article V, Sections 1–11 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">The membership for the Society shall be open to all students of Benguet State University, regardless of their college, degree program, gender, class, race, political, religious, and/or other personal affiliations.</span>
+                    </div>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Admission into a House shall constitute Provisional Membership in the Society.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        To attain Full Membership status, all provisional members must complete a mandatory one (1) academic semester of service within an Office of the High Council as an Executive Intern.
+                    </p>
+                    <div class="pl-6 border-l-2 border-amber-400/30 space-y-4 text-white/80 mt-3">
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(a)</span> Every admitted member of a House is required to be deployed to one of the Executive Offices of the High Council to assist the respective Secretaries in Society-wide operations.</p>
+                            <p><span class="font-semibold text-amber-300">(b)</span> This service shall constitute a structured training curriculum designed to ensure every member understands and embodies the pillars of Manama, Bathala, Kabunian, and Laon before being conferred permanent status. The curriculum shall include defined competency modules covering parliamentary procedure, debate theory, ethical conduct, organizational management, and the Society's operational protocols. Each Executive Intern shall be paired with a designated Full Member mentor who shall provide guidance, performance feedback, and professional development support throughout the internship period. Progression to Full Membership status shall be contingent upon the successful completion of prescribed milestones, including:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(i) satisfactory completion of all competency modules as verified by the supervising High Council Secretary;</p>
+                                <p>(ii) demonstrated proficiency in assigned operational tasks;</p>
+                                <p>(iii) positive evaluation from the assigned mentor; and</p>
+                                <p>(iv) submission of a reflective portfolio documenting growth and contribution to the Society.</p>
+                            </div>
+                            <p><span class="font-semibold text-amber-300">(c)</span> Upon the successful completion of the one (1) academic semester of service and a satisfactory performance rating from the supervising High Council Secretary, the individual shall be elevated to Full Member status.</p>
+                            <p><span class="font-semibold text-amber-300">(d)</span> Executive Interns shall have the right to participate in House activities and debates; however, they shall be restricted from voting on High Council-level Constitutional amendments and from seeking elective office until their Full Membership is formally conferred.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Each House shall have the exclusive right to recruit, evaluate, and accept its own members in accordance with its internal membership policy, values, and traditions.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Any eligible individual who seeks to become part of the Society may do so by applying directly to one of the four Houses. Admission into a House shall constitute formal membership in the Society. However, all House recruitment must adhere to the following rules:
+                    </p>
+                    <div class="sub-list space-y-1 text-white/70 pl-6 border-l-2 border-amber-400/30 mt-2">
+                        <p>(a) All membership applications shall be approved by a majority vote of the respective House Council.</p>
+                        <p>(b) No individual may be a member of more than one House at a time.</p>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Each House shall maintain and publicly disclose its own Membership Policy, which must be aligned with the Society's Constitution and Policies, uphold the principles of fairness, transparency, and merit, and be reviewed and approved by the President, with the concurrence of the House Council, before implementation.</span>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Transfers between Houses may only occur during official transfer periods and require the mutual consent of both Houses involved.</span>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">The membership shall be valid for one (1) academic year and shall be renewed for the following academic year.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Renewal of membership to a House only requires the approval of the House Council and does not need the approval of the President.
+                    </p>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Members shall abide by their respective House Charter, House policies, the Society Constitution, and the Society policies.</span>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">The High Council and the House Councils may sanction members for misconduct, based on collected evidence, inclusion policy, and prior warnings.</span>
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">Alumni Associate Membership.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Individuals who have attained Full Membership status and subsequently graduated from Benguet State University or otherwise departed the Society in good standing may apply for designation as an Alumni Associate. Alumni Associates shall retain advisory privileges, including the right to receive Society communications, attend open Society events as observers, and provide consultative input to House Councils or the High Council upon invitation. However, Alumni Associates shall not possess voting rights on any Society matter, shall not be eligible to hold elective or appointive office within the Society, and shall not participate in internal disciplinary proceedings except as witnesses or character references. The terms of Alumni Associate engagement shall be governed by policies established by the Council of House Chancellors and approved by the President, which shall ensure that student-led government remains paramount and that Alumni Associate involvement remains strictly consultative in nature.
+                    </p>
+                </section>
+
+                <!-- Section 10 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 10.</span>
+                        <span class="section-title-text">Re-admission of Former Members.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        Individuals who previously held Full Membership status and departed the Society in good standing, as certified by the Office of Internal Affairs, may petition for re-admission to the Society. Such petitions shall be submitted in writing to the relevant House Council and shall include a statement of intent, evidence of prior good standing, and a commitment to abide by all current Society policies. Re-admission shall require: (a) approval by majority vote of the petitioning House Council; (b) verification of good standing by the Society Office of Internal Affairs; and (c) concurrence of the President. Re-admitted members shall be restored to Full Membership status without requirement to repeat the Executive Internship, provided their departure occurred no more than three (3) academic years prior to the petition. Re-admitted members shall retain all rights and privileges of Full Membership, subject to any amendments to the Constitution or Policies enacted during their period of absence.
+                    </p>
+                </section>
+
+                <!-- Section 11 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 11.</span>
+                        <span class="section-title-text">Every member of the Society is required to pay a membership fee at the commencement of each semester.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-amber-400/30">
+                        The specific amount of the fee shall be determined through a deliberation and majority vote of the Council of House Chancellors, subject to the final approval of the President.
+                    </p>
+                </section>
+
+                <!-- Constitutional Note – with Gold Border -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Authority</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                The Constitution of the BSU Debate Society, known as The Red Book, is the supreme governing document of the organization. All policies, rules, and procedures must conform to its provisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article V · Membership</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

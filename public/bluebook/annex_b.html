@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Annex B (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .sub-list-2 {
+            margin-left: 1.5rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Table styling */
+        .point-table-wrap {
+            overflow-x: auto;
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .point-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .point-table th {
+            background: rgba(212, 175, 55, 0.12);
+            color: #fcd34d;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .point-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d1d5db;
+            vertical-align: top;
+        }
+        .point-table tr:last-child td {
+            border-bottom: none;
+        }
+        .point-table tr:hover td {
+            background: rgba(212, 175, 55, 0.04);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list,
+        .justify-text .sub-list-2,
+        .justify-text .point-table-wrap {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list,
+            .sub-list-2 {
+                border-left-color: #D4AF37 !important;
+            }
+            .point-table th {
+                background: rgba(212, 175, 55, 0.2) !important;
+                color: #fcd34d !important;
+            }
+            .point-table td {
+                color: #d1d5db !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list,
+            .justify-text .sub-list-2,
+            .justify-text .point-table-wrap {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Annex B – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Annex Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Annex B</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Standard Debate Formats and Procedures</h3>
+                <p class="text-xs text-white/50 italic mt-1">Standard Formats, Adjudication, and Tournament Organization</p>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–11 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This Annex establishes the standard debate formats, procedures, and adjudication criteria for all Society-sanctioned debates, including inter-House tournaments, the Inter-House Debate Cup, practice debates, and external competitions where the Society adopts its own format. These procedures shall govern the conduct of debates to ensure fairness, intellectual rigor, and consistency across all competitive activities. This Annex operates in conjunction with Article I (House Point System) and Article III (Debate League) of the Rules and Procedures.
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Authorized Debate Formats.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        The Society recognizes the following debate formats for official competitions. The High Council shall determine the applicable format for each tournament prior to the commencement of the competition.
+                    </p>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80 mt-3">
+
+                        <!-- (1) Oxford-Oregon Format -->
+                        <div>
+                            <p class="font-semibold text-amber-300">(1) Oxford-Oregon Format</p>
+                            <p class="text-white/70 pl-1">A three-on-three parliamentary-style debate format.</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Two Teams.</span> The Affirmative (Government) and Negative (Opposition), each composed of three speakers.</p>
+                                <p><span class="font-semibold text-amber-200">(b) Speech Structure.</span> Three constructive speeches per team, followed by a rebuttal speech from each team.</p>
+                                <p><span class="font-semibold text-amber-200">(c) Time Limits.</span> Constructive speeches shall not exceed seven (7) minutes. Rebuttal speeches shall not exceed five (5) minutes. The Timekeeper shall provide warnings at the following intervals:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Time Marker</th><th>Signal</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2 minutes remaining</td><td>Audible bell or verbal "Two minutes"</td></tr>
+                                            <tr><td>1 minute remaining</td><td>Audible bell or verbal "One minute"</td></tr>
+                                            <tr><td>30 seconds remaining</td><td>Audible bell or verbal "Thirty seconds"</td></tr>
+                                            <tr><td>Time expired</td><td>Audible bell or verbal "Time"</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(d) Points of Information (POI).</span> POIs are permitted during constructive speeches only. POIs shall not exceed fifteen (15) seconds. The speaker may accept or decline a POI at their discretion. There is no universal minimum or maximum number of POIs in standard Oxford-Oregon. However, the Society may adopt specific POI requirements for its internal tournaments by resolution of the High Council. If such requirements are adopted, they shall be published in the tournament guidelines at least seven (7) days prior to the competition.</p>
+                                <p><span class="font-semibold text-amber-200">(e) Speaker Order:</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Order</th><th>Speaker</th><th>Role</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>First Affirmative</td><td>(Constructive Speech) Introduce and define the motion; present core arguments</td></tr>
+                                            <tr><td>2</td><td>First Negative</td><td>(Constructive Speech) Rebut Affirmative arguments; present negative case</td></tr>
+                                            <tr><td>3</td><td>Second Affirmative</td><td>(Constructive Speech) Defend Affirmative case; advance additional arguments</td></tr>
+                                            <tr><td>4</td><td>Second Negative</td><td>(Constructive Speech) Rebut Affirmative case; advance negative arguments</td></tr>
+                                            <tr><td>5</td><td>Third Affirmative</td><td>(Constructive Speech) Rebut Negative case; consolidate Affirmative position</td></tr>
+                                            <tr><td>6</td><td>Third Negative</td><td>(Constructive Speech) Rebut Affirmative case; consolidate Negative position</td></tr>
+                                            <tr><td>7</td><td>Affirmative Rebuttal</td><td>(Rebuttal Speech) Summarize and defend Affirmative case (5 min)</td></tr>
+                                            <tr><td>8</td><td>Negative Rebuttal</td><td>(Rebuttal Speech) Summarize and defend Negative case (5 min)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(f) Preparation Time.</span> Each team shall be granted a total of fifteen (15) minutes of preparation time after the motion is announced and before the debate begins. No preparation time shall be granted between speeches. The fifteen (15) minutes shall be strictly timed and announced by the Timekeeper, who shall signal when five (5) minutes remain and when time expires.</p>
+                            </div>
+                        </div>
+
+                        <!-- (2) British Parliamentary Format -->
+                        <div>
+                            <p class="font-semibold text-amber-300">(2) British Parliamentary Format (BP)</p>
+                            <p class="text-white/70 pl-1">A four-team format commonly used in internal competitions.</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Teams.</span> The debate consists of four teams, each composed of two speakers:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>Government: Opening Government + Closing Government</p>
+                                    <p>Opposition: Opening Opposition + Closing Opposition</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b) Speech Structure.</span> Each of the four teams consists of two speakers. The debate consists of eight speeches delivered in the following order:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Order</th><th>Speaker</th><th>Title</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Opening Government</td><td>Prime Minister</td></tr>
+                                            <tr><td>2</td><td>Opening Opposition</td><td>Leader of Opposition</td></tr>
+                                            <tr><td>3</td><td>Opening Government</td><td>Deputy Prime Minister</td></tr>
+                                            <tr><td>4</td><td>Opening Opposition</td><td>Deputy Leader of Opposition</td></tr>
+                                            <tr><td>5</td><td>Closing Government</td><td>Member of Government</td></tr>
+                                            <tr><td>6</td><td>Closing Opposition</td><td>Member of Opposition</td></tr>
+                                            <tr><td>7</td><td>Closing Government</td><td>Government Whip</td></tr>
+                                            <tr><td>8</td><td>Closing Opposition</td><td>Opposition Whip</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(c) Time Limits.</span> Each speech shall not exceed seven (7) minutes.</p>
+                                <p><span class="font-semibold text-amber-200">(d) Timekeeping Signals.</span> Standard BP timekeeping shall be as follows:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Time Marker</th><th>Signal</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1 minute elapsed</td><td>Single knock</td></tr>
+                                            <tr><td>6 minutes elapsed</td><td>Single knock (with optional visual cue, e.g., raised hand or yellow card)</td></tr>
+                                            <tr><td>7 minutes elapsed</td><td>Double knock (time expired)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>No countdown warnings are given in standard BP. All speakers must conclude within the seven (7) minute limit. If a speaker continues past the double knock, the Timekeeper shall immediately signal for them to stop.</p>
+                                <p><span class="font-semibold text-amber-200">(e) Points of Information (POI).</span> POIs are permitted during all speeches except the Whip speeches (Government Whip and Opposition Whip). This includes:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Allowed</th><th>Not Allowed</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Prime Minister</td><td>Government Whip</td></tr>
+                                            <tr><td>Leader of Opposition</td><td>Opposition Whip</td></tr>
+                                            <tr><td>Deputy Prime Minister</td><td>—</td></tr>
+                                            <tr><td>Deputy Leader of Opposition</td><td>—</td></tr>
+                                            <tr><td>Member of Government</td><td>—</td></tr>
+                                            <tr><td>Member of Opposition</td><td>—</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>POIs shall not exceed fifteen (15) seconds. The speaker may accept or decline a POI at their discretion.</p>
+                                <p><span class="font-semibold text-amber-200">(f) Opening and Closing Team Roles.</span></p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Opening Government (OG): Introduces the Government's first substantive arguments. Defines the motion and establishes the framework for the debate.</p>
+                                    <p>(ii) Opening Opposition (OO): Introduces the Opposition's first substantive arguments. Challenges the Government's definition and presents the Opposition's case.</p>
+                                    <p>(iii) Closing Government (CG): Introduces new arguments that distinguish them from Opening Government. Must remain consistent with the Government's overall position but must add substantive value beyond what OG presented.</p>
+                                    <p>(iv) Closing Opposition (CO): Introduces new arguments that distinguish them from Opening Opposition. Must remain consistent with the Opposition's overall position but must add substantive value beyond what OO presented.</p>
+                                    <p>(v) Whip Speeches (Government Whip and Opposition Whip): Serve as the final speeches for each side. They must:</p>
+                                    <div class="sub-list-2 space-y-1">
+                                        <p>(A) Summarize the debate from their side's perspective;</p>
+                                        <p>(B) Compare their team's arguments to the opposing side;</p>
+                                        <p>(C) Identify and explain why their side has won the debate;</p>
+                                        <p>(D) Not introduce new arguments (new analysis or new examples may be permitted, but not entirely new case material).</p>
+                                    </div>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(g) Preparation Time.</span> Each team shall be granted (15) minutes of preparation time after the motion is announced and before the debate begins. No preparation time shall be granted between speeches.</p>
+                            </div>
+                        </div>
+
+                        <!-- (3) Asian Parliamentary Format -->
+                        <div>
+                            <p class="font-semibold text-amber-300">(3) Asian Parliamentary Format</p>
+                            <p class="text-white/70 pl-1">A three-on-three format used in Asian debating circuits.</p>
+                            <div class="sub-list space-y-2 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Two Teams.</span> Government and Opposition, each composed of three speakers.</p>
+                                <p><span class="font-semibold text-amber-200">(b) Speech Structure.</span> The debate consists of six speeches delivered in the following order:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Order</th><th>Speaker</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Prime Minister</td></tr>
+                                            <tr><td>2</td><td>Leader of Opposition</td></tr>
+                                            <tr><td>3</td><td>Deputy Prime Minister</td></tr>
+                                            <tr><td>4</td><td>Deputy Leader of Opposition</td></tr>
+                                            <tr><td>5</td><td>Government Whip</td></tr>
+                                            <tr><td>6</td><td>Opposition Whip</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(c) Time Limits.</span> Each speech shall not exceed seven (7) minutes.</p>
+                                <p><span class="font-semibold text-amber-200">(d) Timekeeping Signals.</span> The Timekeeper shall provide warnings at the following intervals:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Time Marker</th><th>Signal</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2 minutes remaining</td><td>Audible bell or verbal "Two minutes"</td></tr>
+                                            <tr><td>1 minute remaining</td><td>Audible bell or verbal "One minute"</td></tr>
+                                            <tr><td>30 seconds remaining</td><td>Audible bell or verbal "Thirty seconds"</td></tr>
+                                            <tr><td>Time expired</td><td>Audible bell or verbal "Time"</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(e) Points of Information.</span> POIs are permitted during all speeches except Whip speeches. POIs shall not exceed fifteen (15) seconds.</p>
+                                <p><span class="font-semibold text-amber-200">(f) Whip Speeches.</span> Whip speeches must summarize the debate, compare arguments, and explain why their side has won. No new arguments shall be introduced.</p>
+                                <p><span class="font-semibold text-amber-200">(g) Preparation Time.</span> Each team shall be granted twenty (20) minutes of preparation time after the motion is announced and before the debate begins. No preparation time shall be granted between speeches.</p>
+                            </div>
+                        </div>
+
+                        <!-- (4) Other Formats -->
+                        <div>
+                            <p class="font-semibold text-amber-300">(4) Other Formats.</p>
+                            <p class="text-white/70 pl-1">The High Council may authorize additional formats for specific tournaments, provided that:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The format is announced at least fourteen (14) days prior to the competition;</p>
+                                <p>(b) The format's rules and procedures are published in writing to all participating teams;</p>
+                                <p>(c) The format aligns with the Society's principles of intellectual rigor and fair competition.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Tournament Organization and Administration.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <!-- (1) Tournament Classification -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Tournament Classification.</span></p>
+                            <p class="text-white/70 pl-1">Tournaments sanctioned by the Society shall be classified into the following categories:</p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Category</th><th>Description</th><th>Responsible Body</th></tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Inter-House Debate Cup</td>
+                                            <td>Semesterly round-robin competition among the four Houses (Article I, Section 10(1))</td>
+                                            <td>High Council, through the Office of Internal Affairs</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Society-Wide Open Tournament</td>
+                                            <td>Open to all Society members</td>
+                                            <td>High Council</td>
+                                        </tr>
+                                        <tr>
+                                            <td>House-Sanctioned</td>
+                                            <td>Organized by a House for its members or open to other Houses with High Council approval</td>
+                                            <td>House Council or House Councils involved (with High Council oversight)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>External Competition</td>
+                                            <td>Tournaments where members represent BSU (local or national) or the Society (e.g., intercollegiate debates, invitational debates)</td>
+                                            <td>Office of External Affairs (with High Council coordination)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Practice Debate</td>
+                                            <td>Informal debates for skill development</td>
+                                            <td>Organizing body (House Council, team, or High Council)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- (2) Tournament Director -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Tournament Director.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Appointment.</span> Each Society-sanctioned tournament shall have a designated Tournament Director appointed by the High Council. For House-sanctioned tournaments, the Tournament Director shall be appointed by the House Chancellor with the concurrence of the High Council.</p>
+                                <p><span class="font-semibold text-amber-200">(b) Responsibilities.</span> The Tournament Director shall be responsible for:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Responsibility</th><th>Description</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Overall organization</td><td>Coordinate all tournament logistics, scheduling, and communications</td></tr>
+                                            <tr><td>Venue and facilities</td><td>Secure and prepare debate rooms, preparation areas, and equipment</td></tr>
+                                            <tr><td>Personnel</td><td>Appoint adjudicators, timekeepers, and support staff</td></tr>
+                                            <tr><td>Rule enforcement</td><td>Ensure compliance with tournament rules and this Annex</td></tr>
+                                            <tr><td>Dispute resolution</td><td>Resolve disputes and rule on protests</td></tr>
+                                            <tr><td>Documentation</td><td>Ensure proper recording of results and submission of post-tournament reports</td></tr>
+                                            <tr><td>Member briefings</td><td>Conduct pre-tournament briefings for participants</td></tr>
+                                            <tr><td>Safety</td><td>Ensure compliance with safety and emergency protocols</td></tr>
+                                            <tr><td>Wellness</td><td>Ensure mandatory wellness breaks are observed per Section 3(9)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (3) Tournament Committee -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Tournament Committee.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Composition.</span> Each tournament shall have a Tournament Committee composed of:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Role</th><th>Responsibilities</th><th>Appointed By</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Tournament Director</td><td>Overall coordination and leadership</td><td>High Council or House Chancellor</td></tr>
+                                            <tr><td>Adjudication Coordinator</td><td>Recruit and manage judges; ensure fair adjudication</td><td>Tournament Director, in consultation with Secretary of Internal Affairs</td></tr>
+                                            <tr><td>Timekeeping Coordinator</td><td>Recruit and train timekeepers; manage timekeeping equipment</td><td>Tournament Director</td></tr>
+                                            <tr><td>Logistics Coordinator</td><td>Manage venue, equipment, and materials</td><td>Tournament Director</td></tr>
+                                            <tr><td>Documentation Officer</td><td>Record results, compile reports, and submit to Secretary of Internal Affairs</td><td>Tournament Director</td></tr>
+                                            <tr><td>Motion Committee (Chair)</td><td>Prepare and release motions</td><td>Secretary of Internal Affairs (as Chair)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b) Meetings.</span> The Tournament Committee shall meet as needed to plan and coordinate the tournament. At a minimum, the Committee shall convene:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Meeting</th><th>Timing</th><th>Purpose</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Planning Meeting</td><td>At least 14 days before tournament</td><td>Finalize format, schedule, and logistics</td></tr>
+                                            <tr><td>Coordination Meeting</td><td>At least 3 days before tournament</td><td>Confirm personnel, venues, and materials</td></tr>
+                                            <tr><td>Pre-Tournament Briefing</td><td>Immediately before tournament</td><td>Orient all participants and finalize details</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (4) Tournament Personnel -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Tournament Personnel: Roles and Responsibilities.</span></p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Role</th><th>Number Required</th><th>Qualifications</th><th>Primary Responsibilities</th></tr></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tournament Director</td>
+                                            <td>1 per tournament</td>
+                                            <td>Active member in good standing, experienced in debate administration</td>
+                                            <td>Overall coordination; final authority on disputes</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Adjudicators</td>
+                                            <td>Minimum 3 per debate round</td>
+                                            <td>Active members with at least 1 semester of debate participation, or qualified alumni</td>
+                                            <td>Evaluate debates; submit ballots and feedback</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chief Adjudicator</td>
+                                            <td>1 per debate room</td>
+                                            <td>Experienced adjudicator with knowledge of all formats</td>
+                                            <td>Oversee all judges; resolve adjudication disputes; ensure consistency</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Timekeepers</td>
+                                            <td>1 per debate room</td>
+                                            <td>Active members in good standing, impartial</td>
+                                            <td>Manage time signals; maintain Time Logs</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chief Timekeeper</td>
+                                            <td>1 per debate room</td>
+                                            <td>Experienced timekeeper</td>
+                                            <td>Train and supervise timekeepers; resolve timekeeping disputes</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Documentation Officer</td>
+                                            <td>1 per tournament</td>
+                                            <td>Active member with record-keeping skills</td>
+                                            <td>Compile results; prepare post-tournament reports</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Room Monitors</td>
+                                            <td>1 or more per debate room (optional)</td>
+                                            <td>Active member/s</td>
+                                            <td>Ensure room readiness; assist with logistics</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- (5) Tournament Phases -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Tournament Phases.</span></p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Phase</th><th>Activities</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Pre-Tournament Planning</td><td>Form Tournament Committee; secure venue; appoint personnel; prepare motions</td></tr>
+                                        <tr><td>Registration</td><td>Receive team registrations; collect fees (if applicable); confirm participants</td></tr>
+                                        <tr><td>Briefing</td><td>Orient participants on format, rules, and schedule</td></tr>
+                                        <tr><td>Tournament Proper</td><td>Conduct debate rounds; adjudicate; collect ballots</td></tr>
+                                        <tr><td>Awards and Closing</td><td>Announce winners; distribute awards; closing remarks</td></tr>
+                                        <tr><td>Post-Tournament</td><td>Submit reports; archive documents; process reimbursements</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-white/70 mt-1">The Tournament Director shall establish specific timelines for each phase and communicate them to all participants at least seven (7) days prior to the tournament.</p>
+                        </div>
+
+                        <!-- (6) Team Registration and Eligibility -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Team Registration and Eligibility.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Registration Process.</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Step</th><th>Action</th><th>Responsibility</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Announce tournament and registration period</td><td>Tournament Director</td></tr>
+                                            <tr><td>2</td><td>Submit team roster and required forms</td><td>Team Captain</td></tr>
+                                            <tr><td>3</td><td>Verify eligibility of team members</td><td>Tournament Director (with Secretary of Internal Affairs)</td></tr>
+                                            <tr><td>4</td><td>Confirm registration and publish team list</td><td>Tournament Director</td></tr>
+                                            <tr><td>5</td><td>Collect fees (if applicable)</td><td>Finance Officer (Society or House)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b) Eligibility Requirements.</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Requirement</th><th>Description</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Membership</td><td>All participants must be active Society members in good standing</td></tr>
+                                            <tr><td>House Affiliation</td><td>For inter-House tournaments, participants must be members of the House they represent</td></tr>
+                                            <tr><td>Academic Standing</td><td>Participants must be currently enrolled students (unless alumni exceptions are granted)</td></tr>
+                                            <tr><td>Disciplinary Status</td><td>Participants must not be under active disciplinary suspension</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(c) Team Roster Limits.</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Format</th><th>Team Size</th><th>Minimum Team Size</th><th>Maximum Teams per House</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Oxford-Oregon</td><td>3 Speakers</td><td>3 (no substitutes)</td><td rowspan="3">Determined by Tournament Director</td></tr>
+                                            <tr><td>British Parliamentary</td><td>2 speakers per team</td><td>2</td></tr>
+                                            <tr><td>Asian Parliamentary</td><td>3 speakers</td><td>3 (no substitutes)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(d) Late Registration.</span> Late registrations may be accepted at the discretion of the Tournament Director, subject to availability and a late fee (if applicable). No registrations shall be accepted less than twenty-four (24) hours before the tournament.</p>
+                            </div>
+                        </div>
+
+                        <!-- (7) Debate Room Setup -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(7) Debate Room Setup and Equipment.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Standard Debate Room Requirements.</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Item</th><th>Requirement</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Tables</td><td>One table per team (minimum 4 seats)</td></tr>
+                                            <tr><td>Chairs</td><td>Sufficient seating for speakers, judges, timekeepers, and audience</td></tr>
+                                            <tr><td>Judges' Table</td><td>Separate table for adjudication panel (3 seats minimum)</td></tr>
+                                            <tr><td>Timekeeper Table</td><td>Separate table with clear view of all speakers</td></tr>
+                                            <tr><td>Podium/Stand</td><td>Optional, for speakers (if available)</td></tr>
+                                            <tr><td>Name Cards</td><td>Team names and speaker positions displayed</td></tr>
+                                            <tr><td>Audio/Visual</td><td>Microphones (if needed); projection for online/hybrid (if applicable)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b) Timekeeping Equipment.</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Item</th><th>Required</th><th>Recommended</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Timer (stopwatch/app)</td><td>Yes</td><td>—</td></tr>
+                                            <tr><td>Bell/Knock Signal</td><td>Yes</td><td>—</td></tr>
+                                            <tr><td>Visual Cue (flag/card)</td><td>Optional</td><td>Yes (especially for BP)</td></tr>
+                                            <tr><td>Backup Timer</td><td>Yes</td><td>—</td></tr>
+                                            <tr><td>Time Log Sheets</td><td>Yes</td><td>—</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(c) Preparation Room Requirements.</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Item</th><th>Requirement</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Space</td><td>Quiet, private area for each team</td></tr>
+                                            <tr><td>Seating</td><td>Adequate for team members</td></tr>
+                                            <tr><td>Tables</td><td>Workspace for preparation materials</td></tr>
+                                            <tr><td>Writing Materials</td><td>Paper, pens, markers</td></tr>
+                                            <tr><td>Internet Access</td><td>If required and authorized</td></tr>
+                                            <tr><td>Whiteboard/Flipchart</td><td>Optional for brainstorming</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (8) Tournament Scheduling -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(8) Tournament Scheduling Guidelines.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Scheduling Authority.</span> The Tournament Director, in consultation with the Tournament Committee, shall have full authority to establish tournament scheduling, including:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Number and timing of debate rounds;</p>
+                                    <p>(ii) Break schedules and meal periods;</p>
+                                    <p>(iii) Motion release and preparation times;</p>
+                                    <p>(iv) Awards ceremony timing.</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b) Schedule Publication.</span> The tournament schedule shall be published to all participants at least seven (7) days prior to the tournament, or immediately upon finalizing for impromptu events.</p>
+                                <p><span class="font-semibold text-amber-200">(c) Schedule Adjustments.</span> The Tournament Director may adjust the schedule during the tournament to accommodate unforeseen circumstances (e.g., delays, technical issues, emergencies). Such adjustments shall be communicated to all participants as soon as possible.</p>
+                                <p><span class="font-semibold text-amber-200">(d) Round Scheduling.</span> The Tournament Director shall determine the pairing system for debate rounds, which may include:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>System</th><th>Description</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Round-Robin</td><td>All teams debate all other teams once</td></tr>
+                                            <tr><td>Swiss System</td><td>Teams with similar records are paired against each other</td></tr>
+                                            <tr><td>Knockout</td><td>Teams are eliminated after a loss</td></tr>
+                                            <tr><td>Hybrid</td><td>Combination of systems (e.g., Swiss then knockout)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (9) Breaks and Wellness -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(9) Breaks and Wellness.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a) Mandatory Wellness Breaks.</span> In accordance with Article 3, Section 13 of the Constitution and Article IV, Section 4(5)(f) of these Rules, tournaments shall include mandatory wellness breaks to support member well-being and sustained engagement.</p>
+                                <p><span class="font-semibold text-amber-200">(b) Break Scheduling.</span> The Tournament Director shall schedule breaks at intervals that prevent excessive fatigue and maintain participant well-being. The timing and frequency of breaks shall be determined based on:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The total duration of the tournament;</p>
+                                    <p>(ii) The number of debate rounds;</p>
+                                    <p>(iii) Meal times;</p>
+                                    <p>(iv) Venue constraints;</p>
+                                    <p>(v) Participant feedback.</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(c) Break Announcement.</span> The Tournament Director shall announce all breaks at the start of the tournament and provide reminders prior to each break.</p>
+                                <p><span class="font-semibold text-amber-200">(d) Break Activities.</span> Breaks may be used for rest, hydration, meals, and brief personal respite. Participants are encouraged to step away from debate preparation during breaks.</p>
+                                <p><span class="font-semibold text-amber-200">(e) Exceptions.</span> In cases of emergency or extraordinary circumstances, the Tournament Director may adjust break schedules. Such adjustments shall be communicated to all participants.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Motion Setting and Release.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Motion Categories.</span> Debate motions shall be classified into the following categories:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Policy Motions. Motions proposing a specific policy change, framed as "This House would [policy action]" or "This House supports [policy action]."</p>
+                                <p>(b) Value Motions. Motions debating moral or philosophical propositions, framed as "This House believes that [value proposition]" or "This House regrets [state of affairs]."</p>
+                                <p>(c) Fact Motions. Motions debating empirical claims, framed as "This House believes that [factual claim]."</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Motion Selection.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a)</span> For Inter-House Debate Cup matches and Society-organized open tournaments, motions shall be prepared by a Motion Committee composed of:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Role</th><th>Responsibility</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Secretary of Internal Affairs (Chair)</td><td>Lead the committee; ensure timely release of motions</td></tr>
+                                            <tr><td>One representative from each House (nominated by House Chancellor)</td><td>Provide diverse perspectives; ensure fairness</td></tr>
+                                            <tr><td>High Council President or designee (non-voting consultant)</td><td>Provide guidance and oversight</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b)</span> The Motion Committee shall prepare a bank of at least ten (10) motions per category, ensuring diversity of topics and alignment with the Society's educational mission.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Motion Release Schedule.</span></p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Round Type</th><th>Release Timing</th><th>Responsibility</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Prepared Rounds</td><td>At least 7 calendar days before competition</td><td>Motion Committee Chair</td></tr>
+                                        <tr><td>Impromptu Rounds</td><td>At start of preparation time (after announcement)</td><td>Motion Committee Chair or Tournament Director</td></tr>
+                                        <tr><td>Hybrid Formats</td><td>As designated by Motion Committee</td><td>Motion Committee Chair</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Motion Approval.</span> All motions shall be approved by the Motion Committee. In the event of a dispute regarding a motion, the High Council President shall have final authority to approve or reject the motion.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Adjudication Criteria.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <!-- (1) Adjudication Panels -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Adjudication Panels.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Each debate match shall be adjudicated by a panel of at least three (3) qualified judges.</p>
+                                <p>(b) Judges shall be appointed by the Tournament Director in consultation with the Secretary of Internal Affairs.</p>
+                                <p>(c) Judges must be active members in good standing who have completed at least one (1) academic semester of active participation in the Society's debate activities, training, or mentorship programs, or alumni members who have demonstrated proficiency in the applicable debate format.</p>
+                                <p>(d) No judge shall adjudicate a match involving their own House or a team they have coached or mentored, to avoid conflicts of interests.</p>
+                                <p>(e) The Chief Adjudicator shall oversee all judges, resolve disputes, and ensure consistency in adjudication.</p>
+                            </div>
+                        </div>
+
+                        <!-- (2) Oxford-Oregon Criteria -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Adjudication Criteria for Oxford-Oregon Format.</span></p>
+                            <p class="text-white/70 pl-1">Judges shall evaluate teams based on the following weighted criteria:</p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Criterion</th><th>Weight</th><th>Description</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Content</td><td>40%</td><td>Quality of arguments, evidence, and analysis</td></tr>
+                                        <tr><td>Style</td><td>30%</td><td>Clarity, rhetoric, and delivery</td></tr>
+                                        <tr><td>Strategy</td><td>30%</td><td>Responsiveness, refutation, and time management</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- (3) BP Criteria -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Adjudication Criteria for British Parliamentary Format.</span></p>
+                            <p class="text-white/70 pl-1">In standard BP tournaments, judges do not use fixed percentage weights. Instead, judges rank teams 1st to 4th based on their overall contribution to the debate. The ranking is holistic and considers:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Quality of arguments and analysis (relevance, depth, reasoning, use of evidence);</p>
+                                <p>(b) Responsiveness (engagement with opposing arguments, ability to adapt to the debate);</p>
+                                <p>(c) Clarity and persuasion (delivery, organization, rhetorical effectiveness);</p>
+                                <p>(d) Strategic positioning (team coordination, meeting burdens, distinguishing from Opening/Closing counterparts, effective use of POIs).</p>
+                            </div>
+                            <p class="text-white/70 mt-1">Verdict Determination. Each judge shall rank the four teams from 1st (best) to 4th (worst). The team with the highest total ranking (with 1st receiving 4 points, 2nd receiving 3 points, 3rd receiving 2 points, and 4th receiving 1 point) shall be declared the winner. In the event of a tie in total ranking points, the Chair of the adjudication panel shall have the casting vote to determine the final ranking.</p>
+                        </div>
+
+                        <!-- (4) Asian Parliamentary Criteria -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Adjudication Criteria for Asian Parliamentary Format.</span></p>
+                            <p class="text-white/70 pl-1">Judges shall evaluate teams based on the following weighted criteria:</p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Criterion</th><th>Weight</th><th>Description</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Content</td><td>40%</td><td>Quality of arguments, evidence, and analysis</td></tr>
+                                        <tr><td>Style</td><td>30%</td><td>Clarity, rhetoric, and delivery</td></tr>
+                                        <tr><td>Strategy</td><td>30%</td><td>Responsiveness, refutation, and time management</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- (5) Individual Speaker Awards -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Individual Speaker Awards.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p><span class="font-semibold text-amber-200">(a)</span> The Best Speaker award shall be given to the individual who demonstrates the highest overall debating skill, judged on:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Clarity and persuasiveness of arguments (30%)</p>
+                                    <p>(ii) Effective use of evidence and reasoning (25%)</p>
+                                    <p>(iii) Oratory and delivery (25%)</p>
+                                    <p>(iv) Responsiveness to opposing arguments (20%)</p>
+                                </div>
+                                <p><span class="font-semibold text-amber-200">(b)</span> Individual speaker scores shall be submitted by each judge after every debate round. The speaker with the highest cumulative score across all rounds shall be declared the Best Speaker of the tournament.</p>
+                                <p><span class="font-semibold text-amber-200">(c)</span> In the event of a tie, the following tiebreakers shall apply in order:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The speaker whose team won the most debate rounds;</p>
+                                    <p>(ii) The speaker with the highest score in the final round;</p>
+                                    <p>(iii) The speaker who demonstrated the most effective engagement with POIs (based on judge feedback);</p>
+                                    <p>(iv) Drawing of lots.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (6) Adjudication Procedure -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Adjudication Procedure.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Judges shall submit written ballots within fifteen (15) minutes of the conclusion of each debate.</p>
+                                <p>(b) Ballots shall include:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The winning team for each round;</p>
+                                    <p>(ii) Individual speaker scores (on a scale of 0-100, with 70 representing an average performance);</p>
+                                    <p>(iii) A brief justification for the decision, identifying key factors;</p>
+                                    <p>(iv) The name of the Best Speaker for that round.</p>
+                                </div>
+                                <p>(c) If the panel is divided, the majority decision shall prevail. In the event of a 1-1-1 split (three judges with different winners), the Tournament Director shall break the tie based on average speaker scores.</p>
+                                <p>(d) Teams shall have the right to request written feedback from the adjudication panel. Feedback shall be provided in writing within three (3) business days of the competition's conclusions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Timekeeping and Notification Protocols.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <!-- (1) Timekeeper Appointment -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Timekeeper Appointment.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Each debate match shall have a designated Timekeeper appointed by the Tournament Director.</p>
+                                <p>(b) Timekeepers must be active members in good standing who are impartial and not affiliated with any competing team.</p>
+                                <p>(c) Timekeepers shall be trained in the applicable format's time limits and notification procedures prior to the tournament.</p>
+                            </div>
+                        </div>
+
+                        <!-- (2) Timekeeping Procedures -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Timekeeping Procedures by Format.</span></p>
+
+                            <!-- Oxford-Oregon -->
+                            <div class="sub-list space-y-1 text-white/70 mt-2">
+                                <p><span class="font-semibold text-amber-200">(a) Oxford-Oregon Format:</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Notification</th><th>Timing</th><th>Signal</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2 Minutes Remaining</td><td>2:00 from end of speech</td><td>Audible bell or verbal "Two minutes"</td></tr>
+                                            <tr><td>1 Minute Remaining</td><td>1:00 from end of speech</td><td>Audible bell or verbal "One minute"</td></tr>
+                                            <tr><td>30 Seconds Remaining</td><td>0:30 from end of speech</td><td>Audible bell or verbal "Thirty seconds"</td></tr>
+                                            <tr><td>Time Expired</td><td>0:00</td><td>Audible bell or verbal "Time"</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>A grace period of fifteen (15) seconds shall be permitted after time expires for the speaker to conclude their current sentence. After fifteen (15) seconds, the Timekeeper shall signal the speaker to stop.</p>
+
+                                <p><span class="font-semibold text-amber-200 mt-2 block">(b) British Parliamentary Format:</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Notification</th><th>Timing</th><th>Signal</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1 Minute Elapsed</td><td>1:00</td><td>Single knock or bell</td></tr>
+                                            <tr><td>6 Minutes Elapsed</td><td>6:00</td><td>Single knock or bell (with optional visual cue, e.g., raised hand or yellow card)</td></tr>
+                                            <tr><td>Time Expired</td><td>7:00</td><td>Double knock or bell</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>No countdown warnings are given in standard BP. Speeches must conclude upon double knock. If a speaker continues past the double knock, the Timekeeper shall immediately call "Time" and the speaker must stop. No grace period is permitted.</p>
+                                <p><span class="font-semibold text-amber-200">Penalty for BP Time Violations:</span> Any speech that continues after the Timekeeper's signal to stop shall incur a -5 point deduction from the individual speaker's score. The speaker must stop immediately upon the Timekeeper's signal.</p>
+
+                                <p><span class="font-semibold text-amber-200 mt-2 block">(c) Asian Parliamentary Format:</span></p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Notification</th><th>Timing</th><th>Signal</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>2 Minutes Remaining</td><td>2:00 from end of speech</td><td>Audible bell or verbal "Two minutes"</td></tr>
+                                            <tr><td>1 Minute Remaining</td><td>1:00 from end of speech</td><td>Audible bell or verbal "One minute"</td></tr>
+                                            <tr><td>30 Seconds Remaining</td><td>0:30 from end of speech</td><td>Audible bell or verbal "Thirty seconds"</td></tr>
+                                            <tr><td>Time Expired</td><td>0:00</td><td>Audible bell or verbal "Time"</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>A grace period of ten (10) seconds shall be permitted after time expires for the speaker to conclude their current sentence. After ten (10) seconds, the Timekeeper shall signal the speaker to stop.</p>
+                            </div>
+                        </div>
+
+                        <!-- (3) Penalties -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Penalties for Time Violations (All Formats Except BP).</span></p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Excess Time</th><th>Penalty</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>1-15 seconds beyond grace</td><td>Warning from the Timekeeper; no penalty</td></tr>
+                                        <tr><td>16-30 seconds beyond grace</td><td>-2 points on individual speaker score</td></tr>
+                                        <tr><td>31-60 seconds beyond grace</td><td>-5 points on individual speaker score</td></tr>
+                                        <tr><td>More than 60 seconds beyond grace</td><td>Disqualification from individual speaker award; team may still win match</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-white/70 mt-1">Repeated time violations (three or more) by a team shall result in a -5 point deduction to the team's overall adjudication score.</p>
+                        </div>
+
+                        <!-- (4) Notification -->
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Notification to Participants.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Timekeeping rules and signals shall be communicated to all participants at least one (1) hour prior to the start of each tournament.</p>
+                                <p>(b) A brief orientation session on timekeeping procedures shall be conducted for speakers prior to the first round.</p>
+                                <p>(c) Timekeepers shall keep a Time Log for each debate, recording:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The start and end times of each speech;</p>
+                                    <p>(ii) Any warnings or penalties issued;</p>
+                                    <p>(iii) POI counts and acknowledgements.</p>
+                                </div>
+                                <p>(d) The Time Log shall be submitted to the Tournament Director within one (1) hour of the debate's conclusion and shall be made available to teams upon request.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Procedure for Points of Information (POI).</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) General Principles.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) POIs are intended to promote active engagement and intellectual rigor, not to disrupt or intimidate.</p>
+                                <p>(b) POIs shall be offered respectfully and concisely.</p>
+                                <p>(c) The speaker has the right to accept or decline POIs at their discretion. Declining a POI is acceptable and is a legitimate strategic choice, particularly if accepting it would disrupt the flow of the speech.</p>
+                                <p>(d) The key consideration in evaluating POI engagement is whether the speaker is substantively engaging with the opposing side's arguments, not the number of POIs accepted.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Criteria for Acceptable POIs.</span></p>
+                            <p class="text-white/70 pl-1">A POI must:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Be a question or brief challenge to the speaker's argument;</p>
+                                <p>(b) Not exceed fifteen (15) seconds in duration;</p>
+                                <p>(c) Be delivered in a civil and professional tone;</p>
+                                <p>(d) Not be a personal attack or ad hominem argument; and</p>
+                                <p>(e) Not introduce new arguments that should have been presented in the speaker's own speech.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) POI Procedure by Format.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Oxford-Oregon Format. POIs are permitted during constructive speeches only. POIs are not permitted during rebuttal speeches.</p>
+                                <p>(b) British Parliamentary Format. POIs are permitted during all speeches except the Whip speeches (Government Whip and Opposition Whip).</p>
+                                <p>(c) Asian Parliamentary Format. POIs are permitted during all speeches except Whip speeches.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) POI Conduct.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) To offer a POI, a member of the opposing team shall stand and say "Point of Information" or "On that point." The member shall remain standing until acknowledged or declined.</p>
+                                <p>(b) The speaker may acknowledge the POI by saying "Yes" or "Accepted," or decline by saying "No" or "Not at this time."</p>
+                                <p>(c) If accepted, the questioning member shall deliver the POI within fifteen (15) seconds.</p>
+                                <p>(d) The speaker shall respond to the POI within the remainder of their speaking time.</p>
+                                <p>(e) Accepting and responding effectively to POIs shall be considered positively in the Method/Strategy criterion (Oxford-Oregon) or overall contribution (BP).</p>
+                                <p>(f) Declining POIs is acceptable if done respectfully. A pattern of declining all POIs without substantive engagement with opposing arguments may be considered negatively in the Method/Strategy criterion, but declining POIs to maintain flow is a legitimate strategic choice that shall not be penalized in itself.</p>
+                                <p>(g) POIs that are disruptive, disrespectful, or exceeding time limits shall result in a -2 point deduction from the offering member's individual speaker score.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) POI Log.</span> The Timekeeper shall maintain a POI Log recording:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Each POI offered, accepted, or declined;</p>
+                                <p>(b) The time during the speech when offered;</p>
+                                <p>(c) Any violations of POI conduct rules.</p>
+                                <p>(d) The POI Log shall be submitted to the Tournament Director with the Time Log.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Code of Conduct for Debaters.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) General Standards.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Debaters shall treat all participants – opponents, judges, and audience members – with respect and civility.</p>
+                                <p>(b) Debaters shall not engage in personal attacks, harassment, or discriminatory language.</p>
+                                <p>(c) Debaters shall adhere to the rules of the debate format and the rulings of the Presiding Officer and Timekeeper.</p>
+                                <p>(d) Debaters shall not use electronic devices during speeches, except as necessary for reading prepared materials or accessing evidence as permitted by the format.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Academic Integrity.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Debaters shall properly cite sources and evidence used in their arguments.</p>
+                                <p>(b) Fabrication of evidence, misrepresentation of sources, or fraudulent data shall constitute a Major Violation under Article VI.</p>
+                                <p>(c) Debaters shall disclose the use of AI tools in the preparation of their cases, as required by the AI-Assisted Case & Research Disclosure Template established in these Rules.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Disruptive Behavior.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Any behavior that materially disrupts a debate match shall be grounds for:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Behavior</th><th>Sanction</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>First minor disruption (talking over, interrupting)</td><td>Warning from Presiding Officer</td></tr>
+                                            <tr><td>Second minor disruption</td><td>-5 points from speaker's individual score</td></tr>
+                                            <tr><td>Major disruption (shouting, harassment, leaving seat)</td><td>Immediate removal from debate; team may forfeit</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>(b) The Presiding Officer shall have the authority to suspend a debate and rule on disruptive conduct. The decision of the Presiding Officer may be appealed to the Tournament Director, whose decision shall be final.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Dress Code.</span></p>
+                            <p class="text-white/70 pl-1">No mandatory dress code shall be imposed for any tournament, provided that the attire worn does not contravene any provision of the BSU Student Code of Conduct. Notwithstanding the foregoing, members are encouraged to wear attire that appropriately identifies or represents their respective House or the Society during participation in internal or external competitions.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Representation of the Society.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Members representing the Society in external competitions shall conduct themselves in a manner that upholds the Society's reputation.</p>
+                                <p>(b) Any conduct that brings disrepute to the Society shall constitute a Major Violation under Article VI, and may result in:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Disqualification from the Debate League;</p>
+                                    <p>(ii) Revocation of Society support for future competition; and</p>
+                                    <p>(iii) Referral to the High Tribunal for disciplinary proceedings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">Dispute Resolution.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Types of Disputes.</span></p>
+                            <div class="point-table-wrap">
+                                <table class="point-table">
+                                    <thead><tr><th>Type</th><th>Description</th><th>Examples</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Minor Disputes</td><td>Brief, low-impact issues resolved on the spot</td><td>Disputed time signals, brief interruptions, minor procedural questions</td></tr>
+                                        <tr><td>Major Disputes</td><td>Serious issues requiring formal adjudication</td><td>Allegations of bias, severe rule violations, eligibility disputes</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Minor Dispute Resolution.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Teams may raise minor disputes with the Tournament Director, who shall resolve them on the spot.</p>
+                                <p>(b) The Tournament Director's decision on minor disputes shall be final and not subject to appeal.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Major Dispute Resolution.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Teams may file a formal protest for major disputes in writing to the Tournament Director:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The protest must specify the grounds and provide supporting evidence;</p>
+                                    <p>(ii) The Tournament Director shall convene an emergency adjudication panel to review the protest;</p>
+                                    <p>(iii) The panel shall render a decision within one (1) hour of the protest filing.</p>
+                                </div>
+                                <p>(b) The emergency adjudication panel shall be composed of:</p>
+                                <div class="point-table-wrap">
+                                    <table class="point-table">
+                                        <thead><tr><th>Member</th><th>Role</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Tournament Director</td><td>Chair (non-voting)</td></tr>
+                                            <tr><td>Chief Adjudicator</td><td>Voting member</td></tr>
+                                            <tr><td>One judge not involved in the disputed debate</td><td>Voting member</td></tr>
+                                            <tr><td>Secretary of Internal Affairs or designee</td><td>Voting member</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p>(c) The panel's decision shall be by majority vote. In the event of a tie, the Tournament Director shall cast the deciding vote.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Appeals to the High Council President.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) The decision of the emergency adjudication panel may be appealed to the High Council President within twenty-four (24) hours of the decision.</p>
+                                <p>(b) The appeal must be submitted in writing and specify the grounds for appeal.</p>
+                                <p>(c) The President shall render a decision within forty-eight (48) hours of receiving the appeal.</p>
+                                <p>(d) The President's decision shall be final and executory.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Dispute Resolution Log.</span> The Tournament Director shall maintain a Dispute Resolution Log recording:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) All disputes raised, including date, time, and parties involved;</p>
+                                <p>(b) The nature of each dispute and how it was resolved;</p>
+                                <p>(c) Any sanctions or penalties imposed;</p>
+                                <p>(d) The log shall be submitted to the Secretary of Internal Affairs with the post-tournament report.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 10 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 10.</span>
+                        <span class="section-title-text">External Competition Standards.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Representation Standards.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Members selected to represent the Society in external competitions under Article III (Debate League) shall:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Demonstrate proficiency in the applicable debate format;</p>
+                                    <p>(ii) Maintain an active participation rate in Society activities;</p>
+                                    <p>(iii) Adhere to the Society's code of conduct at all times;</p>
+                                    <p>(iv) Submit required documentation (e.g., pre-tournament preparation plans, post-tournament reports).</p>
+                                </div>
+                                <p>(b) Selection criteria for external competitions shall include:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Individual Debate Point ranking;</p>
+                                    <p>(ii) Performance in Society-sanctioned tournaments;</p>
+                                    <p>(iii) Availability and commitment; and</p>
+                                    <p>(iv) Demonstrated ability to work effectively in a team.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Preparation for External Competitions.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Debate League members selected for external competitions shall engage in preparatory activities as coordinated by the Secretary of Internal Affairs:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Pre-tournament workshops (minimum 2 sessions);</p>
+                                    <p>(ii) Practice debates (minimum 3 matches);</p>
+                                    <p>(iii) Case-building sessions (minimum 3 sessions); and</p>
+                                    <p>(iv) Research and preparation supervision.</p>
+                                </div>
+                                <p>(b) The Society shall provide access to:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The Society's case library and research resources;</p>
+                                    <p>(ii) Mentorship from senior members or alumni;</p>
+                                    <p>(iii) Practice debate facilities; and</p>
+                                    <p>(iv) Logistical support for travel and accommodation, subject to Article III, Section 4.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Post-Tournament Reporting.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Within seven (7) calendar days of the conclusion of an external tournament, the member(s) shall submit a Post-Tournament Report to the Secretary of Internal Affairs.</p>
+                                <p>(b) The Report shall include:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Tournament name, date, and location;</p>
+                                    <p>(ii) Team members and roles;</p>
+                                    <p>(iii) Summary of debate rounds and outcomes;</p>
+                                    <p>(iv) Key lessons learned and areas for improvement;</p>
+                                    <p>(v) Recommendations for future participants;</p>
+                                    <p>(vi) Acknowledgement of Society support provided.</p>
+                                </div>
+                                <p>(c) The Secretary of Internal Affairs shall compile the reports and submit a summary to the High Council for review and archiving.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) External Competition Fees and Resources.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Competition fees, registration costs, and travel expenses for Debate League members selected for external competitions shall be managed in accordance with Article V (Financial and Resource Management Protocols).</p>
+                                <p>(b) Reimbursement requests shall be submitted with the Post-Tournament Report.</p>
+                                <p>(c) The High Council shall prioritize funding for tournaments that:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Have the highest prestige and relevance to the Society's mission;</p>
+                                    <p>(ii) Offer the greatest skill development opportunities for members; and</p>
+                                    <p>(iii) Provide the best return on investment in terms of exposure and network building.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 11 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 11.</span>
+                        <span class="section-title-text">Practice Debates.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-6 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Purpose and Eligibility.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Practice debates are intended to help members develop debating skills, test arguments, and prepare for competitions.</p>
+                                <p>(b) Practice debates may be organized by:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) A House Council for its members;</p>
+                                    <p>(ii) A team preparing for an external competition;</p>
+                                    <p>(iii) The High Council for Society-wide skill development.</p>
+                                </div>
+                                <p>(c) Any active member may participate in practice debates.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Approval and Point Eligibility.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Practice debates must be approved by the High Council to be eligible for Individual Debate Points under Article III.</p>
+                                <p>(b) Approval shall be granted if:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) The practice debate has defined format and rules;</p>
+                                    <p>(ii) Qualified adjudicators are appointed;</p>
+                                    <p>(iii) A Timekeeper is designated;</p>
+                                    <p>(iv) Results are documented and submitted to the Secretary of Internal Affairs.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Practice Debate Standards.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Practice debates should follow the procedures outlined in this Annex.</p>
+                                <p>(b) Feedback shall be provided to participants by adjudicators.</p>
+                                <p>(c) A Practice Debate Log shall be maintained by the organizer, recording:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Date and time of practice debate;</p>
+                                    <p>(ii) Participants and teams;</p>
+                                    <p>(iii) Format used and motion debated;</p>
+                                    <p>(iv) Adjudication results;</p>
+                                    <p>(v) Feedback summary.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Practice Debate Best Practices.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Organizers are encouraged to:</p>
+                                <div class="sub-list-2 space-y-1">
+                                    <p>(i) Rotate roles so members gain experience in all speaker positions;</p>
+                                    <p>(ii) Use a variety of debate formats and motion types;</p>
+                                    <p>(iii) Incorporate training exercises (e.g., POI practice, rebuttal drills) into sessions;</p>
+                                    <p>(iv) Record sessions for self-review (with participants' consent).</p>
+                                </div>
+                                <p>(b) Experienced members and Debate League members are encouraged to mentor novice participants in practice debates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Annex B · Standard Debate Formats and Procedures</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>

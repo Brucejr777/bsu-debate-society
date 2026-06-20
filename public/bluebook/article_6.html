@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Blue Book · Article VI (Verbatim · Enhanced)</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
+    <!-- Google Fonts: Cinzel + Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Theme – consistent with the Blue Book */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030712;
+        }
+
+        .serif-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #AA771C 100%) 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37 20%, #D4AF37 80%, transparent);
+        }
+
+        .gold-divider-thick {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37 10%, #FCF6BA 50%, #D4AF37 90%, transparent);
+        }
+
+        .article-scroll {
+            scroll-behavior: smooth;
+        }
+        .article-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-scroll::-webkit-scrollbar-track {
+            background: #0B1B3D;
+        }
+        .article-scroll::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 8px;
+        }
+
+        /* Section Heading Enhancement */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.08);
+            padding: 0.1rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+        .section-title-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fcd34d;
+        }
+
+        /* Sub-list styling */
+        .sub-list {
+            margin-left: 1rem;
+            padding-left: 1.25rem;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Justified Text */
+        .justify-text {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+        .justify-text p,
+        .justify-text .pl-4,
+        .justify-text .pl-5,
+        .justify-text .pl-6,
+        .justify-text .border-l-2,
+        .justify-text .sub-list {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0.2in !important;
+            }
+            .article-scroll {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .main-card {
+                background: #0B1B3D !important;
+                border: 1px solid #D4AF37 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            .gold-gradient-text {
+                -webkit-text-fill-color: #D4AF37 !important;
+                background: none !important;
+                color: #D4AF37 !important;
+            }
+            .text-amber-400\/80,
+            .text-amber-400\/90,
+            .text-amber-300 {
+                color: #D4AF37 !important;
+            }
+            .text-white\/70,
+            .text-white\/80,
+            .text-white\/90 {
+                color: #e0e0e0 !important;
+            }
+            .text-white\/60 {
+                color: #b0b0b0 !important;
+            }
+            .border-\[#D4AF37\]\/30 {
+                border-color: #D4AF37 !important;
+            }
+            .bg-black\/20,
+            .bg-black\/30 {
+                background: rgba(0, 0, 0, 0.3) !important;
+            }
+            .bg-gradient-to-b {
+                background: #0B1B3D !important;
+            }
+            .gold-gradient-border {
+                border-image: none !important;
+                border: 1px solid #D4AF37 !important;
+            }
+            .gold-divider {
+                background: #D4AF37 !important;
+                height: 1px !important;
+            }
+            .gold-divider-thick {
+                background: #D4AF37 !important;
+                height: 2px !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .text-white\/30,
+            .text-white\/40,
+            .text-white\/50 {
+                color: #aaa !important;
+            }
+            .border-white\/5 {
+                border-color: #2a3a5a !important;
+            }
+            .section-number {
+                background: rgba(212, 175, 55, 0.15) !important;
+                border-color: #D4AF37 !important;
+                color: #D4AF37 !important;
+            }
+            .section-title-text {
+                color: #fcd34d !important;
+            }
+            .sub-list {
+                border-left-color: #D4AF37 !important;
+            }
+            .justify-text p,
+            .justify-text .pl-4,
+            .justify-text .pl-5,
+            .justify-text .pl-6,
+            .justify-text .border-l-2,
+            .justify-text .sub-list {
+                text-align: justify !important;
+                text-justify: inter-word !important;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8 antialiased">
+
+    <div class="main-card relative w-full max-w-5xl bg-gradient-to-b from-[#0B1B3D] via-[#071126] to-[#040A17] text-white shadow-2xl border border-white/5 overflow-hidden rounded-2xl">
+
+        <!-- Decorative background rings -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04] flex items-center justify-center no-print">
+            <div class="w-[150%] h-[150%] border-[2px] border-amber-400 rotate-45 rounded-full flex items-center justify-center">
+                <div class="w-[80%] h-[80%] border-[1px] border-dashed border-amber-400 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Header – BSU Debate Society -->
+        <header class="relative z-10 text-center pt-8 pb-2 px-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.4em] font-medium text-white/70 uppercase">Benguet State University</h2>
+            <h1 class="text-sm md:text-base tracking-[0.5em] font-bold text-white uppercase">Debate Society</h1>
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-3"></div>
+        </header>
+
+        <!-- Main Content: Article VI – VERBATIM (FULL) Enhanced -->
+        <main class="relative z-10 px-6 md:px-10 py-6 article-scroll max-h-[80vh] overflow-y-auto">
+
+            <!-- Article Title Block -->
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-amber-400/80 font-medium">Rules and Procedures</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-extrabold mt-3 gold-gradient-text tracking-wide">Article VI</h2>
+                <h3 class="text-xl md:text-2xl font-light text-white/90 mt-1 tracking-wide">Disciplinary Procedures and Due Process Implementation</h3>
+                <div class="gold-divider-thick w-1/2 mx-auto mt-4"></div>
+            </div>
+
+            <!-- VERBATIM CONTENT – Sections 1–11 -->
+            <div class="space-y-8 text-white/90 text-sm md:text-base leading-relaxed justify-text">
+
+                <!-- Section 1 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 1.</span>
+                        <span class="section-title-text">Purpose and Scope.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        This Article establishes operational procedures for addressing alleged violations of the Society's Constitution, Rules and Procedures, House Charters, or Code of Conduct. It implements the due process rights guaranteed under Article 4, Sections 11-12 of the Constitution and the judicial authority of the High Tribunal under Article 10 of the Constitution. This Article does not alter constitutional rights, Tribunal composition, or substantive standards of conduct, but specifies administrative workflows to ensure fair, timely, and transparent resolution of disciplinary matters. All proceedings under this Article shall uphold the Society's principles under Article 3, particularly Sections 5 (honesty and ethical conduct), 7 (constructive competition), and 10 (education as empowerment).
+                    </p>
+                </section>
+
+                <!-- Section 2 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 2.</span>
+                        <span class="section-title-text">Jurisdiction and Classification.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Jurisdiction.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) House Councils shall have original jurisdiction over Minor Violations involving members of their respective House, as authorized under Article 7, Section 2(5) of the Constitution.</p>
+                                <p>(b) The High Tribunal shall have original and final jurisdiction over Major Violations involving serious breaches of the Constitution, Rules and Procedures, or Code of Conduct, as mandated under Article 10 of the Constitution.</p>
+                                <p>(c) The High Council may intervene in House-level proceedings only if a constitutional violation is alleged, if there is a conflict of interest within the House Council, or if the House Council requests assistance.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Classification of Violations.</span> Violations shall be classified as Minor or Major consistent with the definitions in Article I, Section 2(4)-(5) of these Rules:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Minor Violations include: failure to submit requirements, minor disrespect not disrupting activities, minor negligence in custody of assets, or first-time procedural non-compliance. Tardiness, unexcused absences, and attendance-related issues shall be handled through internal House administrative measures and shall not constitute a Minor Violation under this Article.</p>
+                                <p>(b) Major Violations include: dishonesty or falsification of records, harassment or intimidation, intentional disruption or sabotage, discrimination, repeated Minor Violations after warning, misappropriation of funds, disclosure of a debate motion prior to its release, or any other acts bringing significant disrepute to the Society or University.</p>
+                            </div>
+                        </div>
+
+                        <p><span class="font-semibold text-amber-300">(3) Initial Classification.</span> The Office of Internal Affairs (OIA) shall make an initial classification of a reported violation within three (3) business days of receipt of a complaint. This classification is provisional and subject to review by the adjudicating body (House Council or High Tribunal).</p>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 3.</span>
+                        <span class="section-title-text">Reporting and Preliminary Review.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Filing a Complaint.</span> Any active member may report an alleged violation by submitting a written Complaint Form to the Office of Internal Affairs (for Society-wide/Major violations) or the relevant House Council's Office of Internal Affairs (for House-level/Minor violations) within fourteen (14) calendar days of the incident or discovery thereof.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Contents of Complaint.</span> The form must include: the name and House of the accused member (Respondent); date, time, and location of the alleged incident; specific provision(s) alleged to be violated; a factual description with supporting evidence or witness information; and the complainant's signature.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Preliminary Review.</span> Upon receipt, the OIA or House Internal Affairs Director shall conduct a preliminary review within three (3) business days to determine: (a) sufficiency in form and substance; (b) proper classification (Minor or Major) per Section 2(2); and (c) jurisdiction. If insufficient, the complainant may amend within five (5) days. If sufficient, the matter shall proceed to adjudication.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Notice to Respondent.</span> The Respondent shall be notified in writing within two (2) business days of the determination of sufficiency. The notice shall include: a summary of allegations, specific provisions implicated, classification, the adjudicating body, and a statement of their rights under Article 4 of the Constitution and this Article.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 4.</span>
+                        <span class="section-title-text">Adjudication of Minor Violations (House Council).</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Procedure.</span> House Councils shall conduct hearings for Minor Violations within seven (7) calendar days of the Respondent's notification. Proceedings shall be informal but documented, and shall guarantee the Respondent's rights to written notice, to be heard, to present evidence, and to receive a written decision. The strict public trial and compulsory process requirements of Article 4, Section 11 of the Constitution shall not apply to these House-level administrative proceedings.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Rights of the Respondent.</span> The Respondent shall have the right to: (a) receive notice of charges; (b) be present and heard; (c) present evidence and witnesses; (d) be accompanied by a Society member advisor; and (e) receive a written decision.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Mandatory Reporting to Society OIA.</span> Within three (3) business days of a finalized sanction, the House Internal Affairs Director shall transmit a copy of the Decision and Sanction Order to the Society Office of Internal Affairs (OIA). This submission is mandatory for the sanction to be considered executory. The Society OIA shall record the sanction in the Society Disciplinary Ledger and instruct the Point Keeper to apply the corresponding House Point deduction under Article I, Section 3(4).</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Sanctions.</span> Sanctions for Minor Violations may include: (a) verbal or written warning; (b) required community service within the House (up to ten (10) hours); (c) temporary suspension from House activities (up to two (2) weeks); or (d) point deductions to the House under Article I, Section 3(4).</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Appeal.</span> Decisions may be appealed to the High Council's Office of Internal Affairs within five (5) calendar days on grounds of procedural error or disproportionate sanction. The OIA shall review and render a decision within seven (7) business days.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Confidential Whistleblower Disclosure and Anti-Retaliation Protection.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Any member who has knowledge of a Minor Violation sanction that was not reported to the Society Office of Internal Affairs, or who has knowledge of any misconduct, ethical violation, or administrative malfeasance within the Society, may file a Confidential Disclosure Form directly with the Society Office of Internal Affairs or the Society Chief Adviser. Such disclosures shall be accepted through secure, anonymous channels established by the Office of Internal Affairs to protect the identity of the disclosing member.</p>
+                                <p>(b) Anonymity Guarantee. Members who submit disclosures in good faith shall have their identity protected to the fullest extent permitted by due process requirements. The Office of Internal Affairs and Chief Adviser shall implement procedural safeguards to prevent unauthorized disclosure of whistleblower identity, including redaction of identifying information in investigative records and limitation of access to disclosure materials to authorized adjudicating personnel only.</p>
+                                <p>(c) Good-Faith Standard. Protection under this subsection shall extend to any member who reasonably believes, based on available information, that the reported conduct constitutes a violation of the Constitution, Rules and Procedures, or Code of Conduct. A disclosure shall be deemed made in good faith unless proven to be knowingly false or made with malicious intent.</p>
+                                <p>(d) Retaliation Prohibited. Any act of retaliation, intimidation, harassment, adverse membership action, or other adverse treatment directed against a member for making a good-faith disclosure under this Section shall constitute a Major Violation under Article I, Section 2(5) of these Rules. Retaliation shall include, but not be limited to: exclusion from Society activities, denial of opportunities or benefits, unwarranted disciplinary action, public disparagement, or creation of a hostile environment.</p>
+                                <p>(e) Sanctions for Retaliation. A finding of retaliation under this Section shall result in: (i) immediate provisional suspension of the retaliating member pending final adjudication; (ii) a mandatory fifteen-point (-15) deduction to the retaliating member's House under Article I, Section 3(4)(b); and (iii) eligibility for sanctions under Section 5(6), including removal from office, probation, or recommendation for expulsion. The Office of Internal Affairs shall prioritize investigation of retaliation complaints and shall report findings to the High Tribunal for expedited adjudication.</p>
+                                <p>(f) Preservation of Due Process. Nothing in this Section shall impair the Respondent's constitutional rights under Article 4 of the Constitution, including the right to confront accusers and present evidence. In cases where whistleblower anonymity conflicts with due process requirements, the High Tribunal may order limited disclosure of identifying information strictly necessary for fair adjudication, subject to protective orders limiting further dissemination.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 5.</span>
+                        <span class="section-title-text">Adjudication of Major Violations (High Tribunal).</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Constitutional Composition.</span> Proceedings for Major Violations shall be conducted by the High Tribunal as constituted under Article 10 of the Constitution:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Presiding Judge: The Society President;</p>
+                                <p>(b) Jury of the Pillars: The four (4) House Chancellors;</p>
+                                <p>(c) Tribunal Secretary: The Executive Secretary of the High Council.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Adversarial Mandate.</span> In accordance with Article 10, Section 3 of the Constitution:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Counsel for the Defense: The Chancellor of the House to which the Respondent belongs shall act as defense counsel. If the Respondent is a member of the High Council, the Chancellor of the House to which the officer belongs shall act as Defense.</p>
+                                <p>(b) Commission on Prosecution: The remaining three (3) House Chancellors shall constitute the prosecution, representing the Society's interests.</p>
+                                <p>(c) Mandatory Duty: Service as Defense Counsel or Prosecutor is a Constitutional Obligation. Chancellors are required to participate in adjudications regardless of personal sentiment toward the Respondent, unless a formal conflict of interest is declared and approved by the Presiding Judge.</p>
+                                <p>(d) Right to Counsel: The Respondent may retain additional counsel (who must be a Society member or University-recognized legal aid) to assist the Defense Chancellor.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Forms of Address and Procedural Protocol.</span> To maintain decorum, clarity, and respect for the judicial nature of High Tribunal proceedings, the following forms of address and protocols shall be observed:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Presiding Judge. The Society President, serving as Presiding Judge, shall be addressed as "Your Honor" by all participants, including Chancellors, counsel, the Respondent, and observers.</p>
+                                <p>(b) The Accused Party. The member facing charges shall be formally referred to as the "Respondent" throughout all written submissions, oral arguments, and official records.</p>
+                                <p>(c) Defense Counsel. The House Chancellor representing the Respondent shall be addressed as "Counsel for the Defense" or "Defense Chancellor."</p>
+                                <p>(d) Prosecution. The three House Chancellors constituting the prosecution shall be collectively addressed as "The Commission on Prosecution" or individually as "Prosecuting Chancellor."</p>
+                                <p>(e) Written Submissions. All motions, briefs, and evidence submitted to the Tribunal shall use the formal titles specified above. The Tribunal Secretary shall return any submission that fails to comply with this subsection for correction before docketing.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Trial Timeline.</span></p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) Pre-Trial Conference: Shall be convened within seven (7) days of the Tribunal's docketing to establish timelines and exchange evidence.</p>
+                                <p>(b) Trial Proper: Shall commence within fourteen (14) calendar days of the pre-trial conference.</p>
+                                <p>(c) Verdict: Shall be rendered within seven (7) business days of the trial's conclusion.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Due Process Standards.</span> All Tribunal proceedings shall uphold Article 4, Sections 11-12 of the Constitution, including: presumption of innocence, right to confront witnesses, privilege against self-incrimination, and speedy trial. The Presiding Judge shall ensure these rights are protected throughout.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(6) Sanctions.</span> Sanctions for Major Violations may include:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) formal reprimand;</p>
+                                <p>(b) suspension from Society activities (up to one (1) semester);</p>
+                                <p>(c) removal from office, the Debate League, or other positions;</p>
+                                <p>(d) probation; or</p>
+                                <p>(e) recommendation for expulsion to the society, subject to ratification under Article 9, Section 2 of the Constitution.</p>
+                            </div>
+                            <p class="text-white/70 mt-1">Point deductions under Article I, Section 3(4) shall automatically apply upon final verdict.</p>
+                            <div class="sub-list space-y-1 text-white/70 mt-1">
+                                <p><span class="font-semibold text-amber-300">(f) Mental Health Consideration in Sanction Determination.</span> In determining appropriate sanctions under this Section, the High Tribunal shall consider documented mental health factors presented by the Respondent or Defense Counsel, including but not limited to:</p>
+                                <div class="sub-list space-y-1">
+                                    <p>(i) professional evaluation or diagnosis from a licensed mental health provider;</p>
+                                    <p>(ii) evidence of acute psychological distress contemporaneous with the alleged misconduct; or</p>
+                                    <p>(iii) documented history of mental health conditions that may have contributed to the Respondent's conduct.</p>
+                                </div>
+                                <p>Such considerations shall inform the Tribunal's assessment of culpability, intent, and rehabilitative potential, and may warrant modification of sanction type or duration to prioritize therapeutic intervention, probation with counseling requirements, or other restorative measures. However, mental health factors shall not excuse or justify misconduct that poses a risk to member safety, institutional integrity, or the rights of others. Sanctions imposed with mental health considerations shall maintain proportionality to the violation, uphold the Society's standards of conduct, and align with the rehabilitative purpose of disciplinary proceedings under Article 3, Section 13 of the Constitution. The Tribunal shall state in its written decision whether and how mental health factors influenced its sanction determination.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 6.</span>
+                        <span class="section-title-text">Appeal and Re-Trial.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Right to Appeal.</span> In accordance with Article 10, Section 5 of the Constitution, any party aggrieved by the High Tribunal's verdict reserves the right to a singular appeal.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Re-Trial Procedure.</span> Upon filing a timely appeal within five (5) calendar days of the verdict:</p>
+                            <div class="sub-list space-y-1 text-white/70">
+                                <p>(a) A Re-Trial shall be convened presided over by the Society's Chief Adviser.</p>
+                                <p>(b) The Adviser shall sit as the presiding authority to review evidence and law.</p>
+                                <p>(c) The adversarial structure (Defense Chancellor and Prosecution Chancellors) shall remain consistent with Section 5(2).</p>
+                                <p>(d) The Adviser's decision shall be final, executory, and beyond further challenge.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Effect of Appeal.</span> Filing an appeal shall not automatically stay the imposition of a sanction, unless the Presiding Judge or the Adviser expressly orders a stay pending resolution.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 7.</span>
+                        <span class="section-title-text">Provisional Measures.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Immediate Risk.</span> In cases involving alleged Major Violations that pose an immediate risk to member safety, Society integrity, or preservation of evidence, the President may impose provisional measures pending final adjudication.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Types of Measures.</span> Measures may include: (a) temporary suspension from Debate League activities or external representation; (b) restriction from accessing Society resources; or (c) temporary relief from office duties (without removal).</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Duration.</span> Provisional measures shall not exceed fourteen (14) days and must be reviewed by the High Tribunal at its first session. The Respondent may request an expedited hearing to challenge the measure.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 8 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 8.</span>
+                        <span class="section-title-text">Records, Confidentiality, and Restoration.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Disciplinary Ledger.</span> The Society Office of Internal Affairs (OIA) shall maintain a confidential Society Disciplinary Ledger recording all complaints, hearings, decisions, and sanctions for both Minor and Major Violations.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Access.</span> Access shall be restricted to the High Council, relevant House Chancellors, and the Respondent regarding their own record. However, the Point Keeper (Secretary of Internal Affairs) shall have full access to the Ledger for the sole purpose of applying House Point deductions under Article I.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Confidentiality.</span> All proceedings shall be confidential to protect privacy. However, final decisions involving suspension, removal, or expulsion shall be summarized (without victim/witness details) and reported to the Society General Meeting for transparency.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(4) Expungement.</span> Sanction records shall be expunged one (1) year after the member's departure from the Society, unless the sanction involved expulsion or academic dishonesty.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(5) Restoration.</span> Members who have completed a sanction period and demonstrated rehabilitation may petition the High Council for restoration of privileges (e.g., Debate League eligibility, office candidacy). The petition shall include a statement of reflection and endorsements from two (2) Society members. The High Council shall review within fourteen (14) days.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 9 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 9.</span>
+                        <span class="section-title-text">Checks and Balances.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-4 text-white/80">
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(1) Escalation.</span> While House Councils have original jurisdiction over Minor Violations, the High Council may intervene if a Minor Violation reveals patterns of systemic abuse or if the House Council fails to act within the prescribed timeline.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(2) Referral.</span> The High Tribunal may refer a Major Violation to a House Council for preliminary fact-finding if the violation originated within House activities, provided the House Council recuses itself from the final adjudication.</p>
+                        </div>
+
+                        <div>
+                            <p><span class="font-semibold text-amber-300">(3) Oversight.</span> The High Council retains the authority to review sanctions imposed by House Councils to ensure proportionality and consistency across the Society.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 10 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 10.</span>
+                        <span class="section-title-text">Prosecution Recommendation.</span>
+                    </div>
+                    <p class="pl-6 text-white/80 border-l-2 border-[#D4AF37]/30">
+                        After the determination of sufficiency, the three prosecuting Chancellors shall review the case and forward to the Presiding Judge their recommended sanction for the Respondent. This recommendation shall be considered during deliberation but shall not bind the High Tribunal's final verdict.
+                    </p>
+                </section>
+
+                <!-- Section 11 -->
+                <section>
+                    <div class="section-head">
+                        <span class="section-number">Section 11.</span>
+                        <span class="section-title-text">Membership Terms and Continuing Jurisdiction.</span>
+                    </div>
+                    <div class="pl-6 border-l-2 border-[#D4AF37]/30 space-y-3 text-white/80">
+                        <p><span class="font-semibold text-amber-300">(1) Terms of Membership.</span> All Society members must sign a Terms and Conditions agreement upon admission.</p>
+                        <p><span class="font-semibold text-amber-300">(2) Continuing Jurisdiction.</span> Resignation from membership does not signify that the Debate Society no longer has jurisdiction over the member regarding cases they might have been involved in prior to resignation. If a member committed violations while active, even if they resign, they may still be called to the High Tribunal for their case. Sanctions may include permanent bans from re-admission or recognition.</p>
+                    </div>
+                </section>
+
+                <!-- Constitutional Supremacy Note -->
+                <div class="gold-gradient-border border p-5 mt-8 bg-black/30 backdrop-blur-xs rounded-md">
+                    <div class="flex items-start gap-4">
+                        <span class="text-amber-400 text-lg mt-0.5">⚖️</span>
+                        <div>
+                            <h4 class="text-[10px] tracking-widest font-bold text-amber-400 uppercase">Constitutional Supremacy Note</h4>
+                            <p class="text-sm leading-relaxed text-white/70 font-light italic">
+                                In accordance with Article IX, Section 7(3) of these Rules and Procedures: "In the event of any conflict between these Rules and Procedures and the Constitution of the BSU Debate Society, the Constitution shall prevail. Any provision of these Rules found to be inconsistent with the Constitution shall be deemed null and void to the extent of the inconsistency."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end verbatim content -->
+
+            <!-- Footer -->
+            <div class="mt-10 text-center text-[10px] text-white/30 tracking-widest border-t border-white/5 pt-4">
+                <span class="uppercase">Ratified July __, 2026 · First Edition</span>
+                <span class="mx-2 text-[#D4AF37]/40">|</span>
+                <span class="text-white/20">Article VI · Disciplinary Procedures and Due Process Implementation</span>
+            </div>
+
+        </main>
+
+        <!-- Subtle footer line -->
+        <div class="relative z-10 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
+
+    </div>
+
+</body>
+</html>
